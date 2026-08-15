@@ -1,0 +1,38 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "available_capital": {
+      "type": "number"
+    },
+    "hours_per_week": {
+      "type": "number"
+    },
+    "risk_tolerance": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "default": "medium"
+    },
+    "income_goal": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "available_capital",
+    "hours_per_week",
+    "risk_tolerance",
+    "income_goal"
+  ]
+}

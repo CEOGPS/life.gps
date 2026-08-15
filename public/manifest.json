@@ -1,0 +1,19 @@
+{
+  "name": "CEO GPS | LifeOS1",
+  "short_name": "LifeOS1",
+  "description": "LifeOS1 — your all-in-one CEO GPS command center.",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "icons": [
+    {
+      "src": "/Life-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

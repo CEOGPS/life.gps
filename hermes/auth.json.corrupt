@@ -1,0 +1,357 @@
+{
+  "version": 1,
+  "providers": {
+    "xai-oauth": {
+      "tokens": {
+        "access_token": "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Im9hdXRoMi1wcm9kdWN0aW9uLTIwMjYtMDItMTkifQ.eyJpc3MiOiJodHRwczovL2F1dGgueC5haSIsInN1YiI6ImJhNjc3MTEwLWU4ZmYtNDQ1OC05YTQ0LTgzMzg5OWUyMTc2MCIsImF1ZCI6ImIxYTAwNDkyLTA3M2EtNDdlYS04MTZmLTRjMzI5MjY0YTgyOCIsImV4cCI6MTc4NTQyNDc4NSwiaWF0IjoxNzg1NDAzMTg1LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIG9mZmxpbmVfYWNjZXNzIGdyb2stY2xpOmFjY2VzcyBhcGk6YWNjZXNzIiwicHJpbmNpcGFsX3R5cGUiOiJVc2VyIiwicHJpbmNpcGFsX2lkIjoiYmE2NzcxMTAtZThmZi00NDU4LTlhNDQtODMzODk5ZTIxNzYwIiwiY2xpZW50X2lkIjoiYjFhMDA0OTItMDczYS00N2VhLTgxNmYtNGMzMjkyNjRhODI4IiwianRpIjoiMzcwYWY4MzUtMzBiMC00OWY3LThkNmYtMDRhMGJiYjAwYTgwIiwidGVhbV9pZCI6IjAxNmRmOTVjLTllZTMtNGM1MS1hM2I3LTMyYWFiYjZjNzliYiJ9.m10D_Mg3UvWsJIrvYohoFCasBQ-77DN0sg0n-bkMZgZTXX6ZsjGq00_SIGrTj6_uPkKE0IVVtv-s4Hj09EYBIA",
+        "refresh_token": "E0ONau6uKNRkUlG02oxGn45tNDOnRh3fviry6bm1MN1kOhNZ-QYcWSme-__FU7s25g8lqJ7EjLrLwj2DLogjAA",
+        "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Im9hdXRoMi1wcm9kdWN0aW9uLTIwMjYtMDItMTkifQ.eyJpc3MiOiJodHRwczovL2F1dGgueC5haSIsInN1YiI6ImJhNjc3MTEwLWU4ZmYtNDQ1OC05YTQ0LTgzMzg5OWUyMTc2MCIsImF1ZCI6ImIxYTAwNDkyLTA3M2EtNDdlYS04MTZmLTRjMzI5MjY0YTgyOCIsImV4cCI6MTc4MzczNjY0MywiaWF0IjoxNzgzNzE1MDQzLCJnaXZlbl9uYW1lIjoiQ2hyaXMiLCJmYW1pbHlfbmFtZSI6IkdyZWVuIiwiZW1haWwiOiJjaHJpc0BjZW9ncHMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWV9.WUMqfHNuDhlvcbntWZWTliG2r6_4Dlcyd1eTVsd_mefE7KNZa9UWMSmHdAkK7vQrTS2svoePN7ujhF3bzecKyw",
+        "expires_in": 21600,
+        "token_type": "Bearer"
+      },
+      "last_refresh": "2026-07-30T09:19:43.350288Z",
+      "auth_mode": "oauth_device_code",
+      "discovery": {
+        "token_endpoint": "https://auth.x.ai/oauth2/token"
+      }
+    },
+    "openai-codex": {
+      "tokens": {
+        "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IldjNzdXREtWTkN2N1ZYSGxqZUhzZjZZUjFhM3I3MmxYMnhJdG9zaVF4NHciLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSJdLCJjbGllbnRfaWQiOiJhcHBfRU1vYW1FRVo3M2YwQ2tYYVhwN2hyYW5uIiwiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS9hdXRoIjp7ImNoYXRncHRfYWNjb3VudF9pZCI6IjU3MGFlMGRmLTRiZGMtNDU5ZS1iYmE2LWM1NDI4ZTNhNWY1NyIsImNoYXRncHRfYWNjb3VudF91c2VyX2lkIjoidXNlci1QYTZXSWFHQ1ZCb1RMMkFLU2M1RWZTSzFfXzU3MGFlMGRmLTRiZGMtNDU5ZS1iYmE2LWM1NDI4ZTNhNWY1NyIsImNoYXRncHRfY29tcHV0ZV9yZXNpZGVuY3kiOiJub19jb25zdHJhaW50IiwiY2hhdGdwdF9wbGFuX3R5cGUiOiJmcmVlIiwiY2hhdGdwdF91c2VyX2lkIjoidXNlci1QYTZXSWFHQ1ZCb1RMMkFLU2M1RWZTSzEiLCJwb2lkIjoib3JnLUpWNHFkM3dvT1FPNGlNMzdPY0tJQlhGdiIsInVzZXJfaWQiOiJ1c2VyLVBhNldJYUdDVkJvVEwyQUtTYzVFZlNLMSIsImFtciI6WyJ1cm46b3BlbmFpOmFtcjpnb29nbGUiXX0sImh0dHBzOi8vYXBpLm9wZW5haS5jb20vcHJvZmlsZSI6eyJlbWFpbCI6ImNocmlzQGNlb2dwcy5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkNocmlzIEdyZWVuIn0sImlzcyI6Imh0dHBzOi8vYXV0aC5vcGVuYWkuY29tIiwicHdkX2F1dGhfdGltZSI6MTc4MzgwNjUxOTgwOCwic2NwIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCIsIm9mZmxpbmVfYWNjZXNzIl0sInNlc3Npb25faWQiOiJhdXRoc2Vzc19uMHRqNzc5Y1ByYjFId29BMG9nSmR6d3UiLCJzbCI6dHJ1ZSwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTgxNjY0NTAyODcyMjYxNzAxNjUiLCJpYXQiOjE3ODQ3MjcxMDAsImV4cCI6MTc4NTU5MTEwMCwianRpIjoiNGIyZmE4ZDYwMzg5NGRjODllNzFlODYzMWJlYzRjZWUiLCJuYmYiOjE3ODQ3MjcxMDB9.ZWeKhd5UchcgWGW_n50we2xL5fLelPxYf3oog7fPzTSbb9yJHbv7cVItgMBUgVKqQiPRq93-jNSyIOFrX_D6q2-G-idQLmV3Xluw2HbAWRyAXV8g1o0mj9fugObTabLUyIRoZpWWl5z6AVQAYyRB2k91dIt77oUgoT6Tx1lu7ht-idka3hFoGwQCfhtcQBcD11YeFyELOcqdr5EVV7XrxoTJJnlX1hVjBtZYlGpNTMle0apetQMp31d4eIFi6ZHDmpwNyHfUpvmmQ1FCrvUpybX8GGmZv6UeNA4xVRf5_UvTXuonzy-3095sWco-R1dPn5MbXtPcAOtHKGeKid0ICw",
+        "refresh_token": "rt.1.AABhK8E7EsxPZIgcpqVeRnTSv73N2hVamE9TuoDlst2VYlHKjtLb5vIlX2r3cT1WlSmENgDR-bRsz25iui58urGhsk8Tah0s8NYGVkWAR3cXBRGLq8zq9d4Aum8YU1bkH5cdhRduM4h8ULRYoPUfVM7WiUY8M05_ogjcJlqNithax0Mm-HqqEZB-dGNPn04VFTPRdJwRUtPO6A"
+      },
+      "last_refresh": "2026-07-22T13:31:40.316195Z",
+      "auth_mode": "chatgpt"
+    }
+  },
+  "active_provider": "xai-oauth",
+  "updated_at": "2026-07-30T09:19:43.351287+00:00",
+  "credential_pool": {
+    "ollama-cloud": [
+      {
+        "id": "9dea85",
+        "label": "OLLAMA_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:OLLAMA_API_KEY",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://ollama.com/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:280f6052458b0dd8"
+      }
+    ],
+    "xai-oauth": [
+      {
+        "id": "da259c",
+        "label": "device_code",
+        "auth_type": "oauth",
+        "priority": 0,
+        "source": "device_code",
+        "access_token": "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Im9hdXRoMi1wcm9kdWN0aW9uLTIwMjYtMDItMTkifQ.eyJpc3MiOiJodHRwczovL2F1dGgueC5haSIsInN1YiI6ImJhNjc3MTEwLWU4ZmYtNDQ1OC05YTQ0LTgzMzg5OWUyMTc2MCIsImF1ZCI6ImIxYTAwNDkyLTA3M2EtNDdlYS04MTZmLTRjMzI5MjY0YTgyOCIsImV4cCI6MTc4NTI4NjEyOCwiaWF0IjoxNzg1MjY0NTI4LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIG9mZmxpbmVfYWNjZXNzIGdyb2stY2xpOmFjY2VzcyBhcGk6YWNjZXNzIiwicHJpbmNpcGFsX3R5cGUiOiJVc2VyIiwicHJpbmNpcGFsX2lkIjoiYmE2NzcxMTAtZThmZi00NDU4LTlhNDQtODMzODk5ZTIxNzYwIiwiY2xpZW50X2lkIjoiYjFhMDA0OTItMDczYS00N2VhLTgxNmYtNGMzMjkyNjRhODI4IiwianRpIjoiYzlkODk0YzctZWFlZS00Y2E0LThjOGUtY2MxYTI1YWQwN2I0IiwidGVhbV9pZCI6IjAxNmRmOTVjLTllZTMtNGM1MS1hM2I3LTMyYWFiYjZjNzliYiJ9._-jowQPXO0AYSOX9QqSiXiynWRG4yrbtaBdQFAC5TDOb6SR1l11wf3DUubdszuZplkd0O_hsyAMnvkybA61hHQ",
+        "refresh_token": "uTvbRenSR2O_iL16nEE7q7fKOtqfTgxla0LhocrhhjhJ7ITDgIS_zDYfE4PlzuD8HoXiOHULotsQkVMlO5dOrA",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.x.ai/v1",
+        "last_refresh": "2026-07-28T18:48:48.519794Z",
+        "request_count": 0
+      }
+    ],
+    "openai-codex": [
+      {
+        "id": "123e00",
+        "label": "device_code",
+        "auth_type": "oauth",
+        "priority": 0,
+        "source": "device_code",
+        "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IldjNzdXREtWTkN2N1ZYSGxqZUhzZjZZUjFhM3I3MmxYMnhJdG9zaVF4NHciLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSJdLCJjbGllbnRfaWQiOiJhcHBfRU1vYW1FRVo3M2YwQ2tYYVhwN2hyYW5uIiwiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS9hdXRoIjp7ImNoYXRncHRfYWNjb3VudF9pZCI6IjU3MGFlMGRmLTRiZGMtNDU5ZS1iYmE2LWM1NDI4ZTNhNWY1NyIsImNoYXRncHRfYWNjb3VudF91c2VyX2lkIjoidXNlci1QYTZXSWFHQ1ZCb1RMMkFLU2M1RWZTSzFfXzU3MGFlMGRmLTRiZGMtNDU5ZS1iYmE2LWM1NDI4ZTNhNWY1NyIsImNoYXRncHRfY29tcHV0ZV9yZXNpZGVuY3kiOiJub19jb25zdHJhaW50IiwiY2hhdGdwdF9wbGFuX3R5cGUiOiJmcmVlIiwiY2hhdGdwdF91c2VyX2lkIjoidXNlci1QYTZXSWFHQ1ZCb1RMMkFLU2M1RWZTSzEiLCJwb2lkIjoib3JnLUpWNHFkM3dvT1FPNGlNMzdPY0tJQlhGdiIsInVzZXJfaWQiOiJ1c2VyLVBhNldJYUdDVkJvVEwyQUtTYzVFZlNLMSIsImFtciI6WyJ1cm46b3BlbmFpOmFtcjpnb29nbGUiXX0sImh0dHBzOi8vYXBpLm9wZW5haS5jb20vcHJvZmlsZSI6eyJlbWFpbCI6ImNocmlzQGNlb2dwcy5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkNocmlzIEdyZWVuIn0sImlzcyI6Imh0dHBzOi8vYXV0aC5vcGVuYWkuY29tIiwicHdkX2F1dGhfdGltZSI6MTc4MzgwNjUxOTgwOCwic2NwIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCIsIm9mZmxpbmVfYWNjZXNzIl0sInNlc3Npb25faWQiOiJhdXRoc2Vzc19uMHRqNzc5Y1ByYjFId29BMG9nSmR6d3UiLCJzbCI6dHJ1ZSwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTgxNjY0NTAyODcyMjYxNzAxNjUiLCJpYXQiOjE3ODQ3MjcxMDAsImV4cCI6MTc4NTU5MTEwMCwianRpIjoiNGIyZmE4ZDYwMzg5NGRjODllNzFlODYzMWJlYzRjZWUiLCJuYmYiOjE3ODQ3MjcxMDB9.ZWeKhd5UchcgWGW_n50we2xL5fLelPxYf3oog7fPzTSbb9yJHbv7cVItgMBUgVKqQiPRq93-jNSyIOFrX_D6q2-G-idQLmV3Xluw2HbAWRyAXV8g1o0mj9fugObTabLUyIRoZpWWl5z6AVQAYyRB2k91dIt77oUgoT6Tx1lu7ht-idka3hFoGwQCfhtcQBcD11YeFyELOcqdr5EVV7XrxoTJJnlX1hVjBtZYlGpNTMle0apetQMp31d4eIFi6ZHDmpwNyHfUpvmmQ1FCrvUpybX8GGmZv6UeNA4xVRf5_UvTXuonzy-3095sWco-R1dPn5MbXtPcAOtHKGeKid0ICw",
+        "refresh_token": "rt.1.AABhK8E7EsxPZIgcpqVeRnTSv73N2hVamE9TuoDlst2VYlHKjtLb5vIlX2r3cT1WlSmENgDR-bRsz25iui58urGhsk8Tah0s8NYGVkWAR3cXBRGLq8zq9d4Aum8YU1bkH5cdhRduM4h8ULRYoPUfVM7WiUY8M05_ogjcJlqNithax0Mm-HqqEZB-dGNPn04VFTPRdJwRUtPO6A",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://chatgpt.com/backend-api/codex",
+        "last_refresh": "2026-07-22T13:31:40.316195Z",
+        "request_count": 0
+      }
+    ],
+    "anthropic": [
+      {
+        "id": "37d2fe",
+        "label": "ANTHROPIC_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:ANTHROPIC_API_KEY",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.anthropic.com",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:33eec138c3a7fe7a"
+      }
+    ],
+    "deepseek": [
+      {
+        "id": "e644ca",
+        "label": "DEEPSEEK_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:DEEPSEEK_API_KEY",
+        "last_status": "exhausted",
+        "last_status_at": 1783813541.8779504,
+        "last_error_code": 402,
+        "last_error_reason": "invalid_request_error",
+        "last_error_message": "Insufficient Balance",
+        "last_error_reset_at": null,
+        "base_url": "https://api.deepseek.com",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:f9d993051d610339"
+      }
+    ],
+    "nvidia": [
+      {
+        "id": "64ac99",
+        "label": "NVIDIA_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:NVIDIA_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://build.nvidia.com/qwen/qwen3.5-397b-a17b",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:6185466cbcf6b362"
+      }
+    ],
+    "huggingface": [
+      {
+        "id": "38723e",
+        "label": "HF_TOKEN",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:HF_TOKEN",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://router.huggingface.co/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:347c6383d5a312a3"
+      }
+    ],
+    "alibaba": [
+      {
+        "id": "454990",
+        "label": "DASHSCOPE_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:DASHSCOPE_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://{WorkspaceId}.ap-southeast-1.maas.aliyuncs.com/api/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:53f6bd059e12e60b"
+      }
+    ],
+    "alibaba-coding-plan": [
+      {
+        "id": "9b4791",
+        "label": "DASHSCOPE_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:DASHSCOPE_API_KEY",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://coding-intl.dashscope.aliyuncs.com/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:53f6bd059e12e60b"
+      }
+    ],
+    "openrouter": [
+      {
+        "id": "177e8c",
+        "label": "OPENROUTER_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:OPENROUTER_API_KEY",
+        "last_status": "exhausted",
+        "last_status_at": 1785000402.814819,
+        "last_error_code": 402,
+        "last_error_reason": null,
+        "last_error_message": "Error code: 402 - {'error': {'message': 'Insufficient credits. This account never purchased credits. Make sure your key is on the correct account or org, and if so, purchase more at https://openrouter.ai/settings/credits', 'code': 402}}",
+        "last_error_reset_at": null,
+        "base_url": "https://openrouter.ai/api/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:d92832ccc9887caa"
+      }
+    ],
+    "gemini": [
+      {
+        "id": "64213a",
+        "label": "GOOGLE_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:GOOGLE_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:49a3efda8ee5ea91"
+      },
+      {
+        "id": "5c8000",
+        "label": "GEMINI_API_KEY",
+        "auth_type": "api_key",
+        "priority": 1,
+        "source": "env:GEMINI_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:55b45bc4d4ae7e9e"
+      }
+    ],
+    "openai-api": [
+      {
+        "id": "ede743",
+        "label": "OPENAI_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:OPENAI_API_KEY",
+        "last_status": "ok",
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.openai.com/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:08be079d8f00c019"
+      }
+    ],
+    "kimi-coding": [
+      {
+        "id": "6f08cb",
+        "label": "KIMI_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:KIMI_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.moonshot.ai/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:f678ac760ef9acc9"
+      }
+    ],
+    "xai": [
+      {
+        "id": "8ab4ed",
+        "label": "XAI_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:XAI_API_KEY",
+        "last_status": "exhausted",
+        "last_status_at": 1785264212.480961,
+        "last_error_code": 403,
+        "last_error_reason": null,
+        "last_error_message": "Error code: 403 - {'code': 'permission-denied', 'error': \"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/b8e06434-d18f-4810-9b35-b1e4400d98f8.\"}",
+        "last_error_reset_at": null,
+        "base_url": "https://api.x.ai/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:9a1310feb735b5a8"
+      }
+    ],
+    "xiaomi": [
+      {
+        "id": "f73800",
+        "label": "XIAOMI_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:XIAOMI_API_KEY",
+        "last_status": "exhausted",
+        "last_status_at": 1784464674.7122276,
+        "last_error_code": 402,
+        "last_error_reason": "402",
+        "last_error_message": "Insufficient account balance",
+        "last_error_reset_at": null,
+        "base_url": "https://api.xiaomimimo.com/v1",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:12c18c62e196086e"
+      }
+    ],
+    "zai": [
+      {
+        "id": "935826",
+        "label": "GLM_API_KEY",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "env:GLM_API_KEY",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.z.ai/api/paas/v4",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:8ada156db8b18a5f"
+      }
+    ],
+    "copilot": [
+      {
+        "id": "b8a60c",
+        "label": "gh auth token",
+        "auth_type": "api_key",
+        "priority": 0,
+        "source": "gh_cli",
+        "last_status": null,
+        "last_status_at": null,
+        "last_error_code": null,
+        "last_error_reason": null,
+        "last_error_message": null,
+        "last_error_reset_at": null,
+        "base_url": "https://api.githubcopilot.com",
+        "request_count": 0,
+        "secret_fingerprint": "sha256:5d2be32b67deef0c"
+      }
+    ]
+  }
+}

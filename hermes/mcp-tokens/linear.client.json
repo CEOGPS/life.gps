@@ -1,0 +1,16 @@
+{
+  "redirect_uris": [
+    "http://127.0.0.1:59277/callback"
+  ],
+  "token_endpoint_auth_method": "none",
+  "grant_types": [
+    "authorization_code",
+    "refresh_token"
+  ],
+  "response_types": [
+    "code"
+  ],
+  "client_name": "Hermes Agent",
+  "client_id": "dMsS1IzO6xklhqt3",
+  "client_id_issued_at": 1783721997
+}

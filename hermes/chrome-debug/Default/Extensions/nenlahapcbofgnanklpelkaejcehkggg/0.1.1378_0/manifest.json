@@ -1,0 +1,57 @@
+{
+   "action": {
+      "default_icon": {
+         "19": "assets/icons/browser/browseraction-gray19.png",
+         "38": "assets/icons/browser/browseraction-gray38.png"
+      }
+   },
+   "background": {
+      "service_worker": "bg.js",
+      "type": "module"
+   },
+   "content_scripts": [ {
+      "js": [ "notifications/injectors/apps/pageView.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "notifications/wikibuy.js" ],
+      "matches": [ "*://*.capitaloneshopping.com/*", "*://*.ivf-stage.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "notifications/injectors/apps/priceComparison.js" ],
+      "matches": [ "*://*.amazon.com/*", "*://*.bestbuy.com/*", "*://*.homedepot.com/*", "*://*.zappos.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "notifications/injectors/apps/pie.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start",
+      "type": "module"
+   }, {
+      "all_frames": true,
+      "js": [ "notifications/injectors/apps/retailMeNot.js" ],
+      "matches": [ "*://dealfinder.retailmenot.com/experience/app*" ],
+      "run_at": "document_start"
+   } ],
+   "description": "A simple and free way to help you save online",
+   "host_permissions": [ "*://*/*" ],
+   "icons": {
+      "128": "assets/icons/shopping-icon128.png",
+      "16": "assets/icons/shopping-icon16.png",
+      "48": "assets/icons/shopping-icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuGYggbuTpnT/i+GcuBoO1kO8i7t9s9jJwIgsnMZSZ7PXXN26wx7MVL7HfLkYvHaWTj/YSWRvZIf3ozFEOrT8W1Uk2AKd5AqvtH1iKTE8cf0nDSeE1H9i8hiWTb0+FBeBpF6pyRiCNx1MBjsRe1I/E+CPLnVhOpI86jSjRJUpxofNG4dUA5d42e7ZE3Y53eHQT/xmnDYW8qDQbRy4PRZklQ3x7dEfjfpWjCcReMnOQC02saESl9wTJj+qSu8BrglHjrl8gedAW2Sqvu3MzMiUbv6h8pG0IZBoUW0ei/43ghZEY1AgB8h5kzhjMqrQYwu0O/K81fqhGijtORoy8YvgYQIDAQAB",
+   "manifest_version": 3,
+   "name": "Capital One Shopping: Save Now",
+   "options_ui": {
+      "browser_style": true,
+      "page": "options.html"
+   },
+   "permissions": [ "alarms", "tabs", "contextMenus", "storage", "cookies", "webRequest", "scripting", "offscreen", "sidePanel" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.1.1378",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "assets/*", "chunks/*", "css/*", "global-less/*", "notifications/*", "static/**/*" ]
+   } ]
+}

@@ -1,0 +1,1 @@
+import{a as e,c as a}from"./chunk-J2625W26.js";import{la as o}from"./chunk-AEOFJBCD.js";a();var n=i=>o("hasDismissedAnyNotification",i);var f=(i,t,r)=>o("setNotificationEvent",{event:i,type:t,subType:r});function E(i,t){f(e,i,t)}function y(){return n(864e5)}function T(){let i;return{reset(){i?.()},setUnload(t){i=t}}}export{E as a,y as b,T as c};

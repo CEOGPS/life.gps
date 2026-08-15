@@ -1,0 +1,690 @@
+import { useState, useEffect, useRef } from "react";
+import { kvGet, kvSet } from "@/utils/storage";
+import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/lib/FirebaseAuthContext";
+import { getApiKey, saveApiKey } from "@/api/ceogpsclient.jsx";
+import { Button, Input } from "@/lib/ui";
+import { 
+  Calendar,
+  CheckSquare,
+  Contact,
+  FolderKanban,
+  LineChart as LucideLineChart,
+  Wallet,
+  BarChart3 as LucideBarChart3,
+  Share2,
+  Music,
+  Bot,
+  Send,
+  BookOpen,
+  Bell,
+  Search,
+  Wand2
+} from 'lucide-react';
+import React from "react";
+import { hermesHealth, hermesChat } from "@/lib/connectors/hermesChat";
+import { useAgentDockOptional } from "@/lib/AgentDockContext";
+import {
+  Calendar7Day,
+  YouTubeDashboard,
+  MusicPlaylistMini,
+  AIMonitorPanel,
+  AIInsightsPanel,
+  OmniSearchWidget,
+} from "@/components/lifeos/dashboard/DashboardWidgets";
+import { loadFinanceHubSnapshot, refreshFinanceKv } from "@/lib/dashboard/financeDashSync";
+import { load, save } from "@/utils/lifeosStorage";
+
+const WORKER = import.meta.env.VITE_WORKER_URL || "https://lifeos1.ceogps.workers.dev";
+
+function ClockWidget() {
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div style={{ fontSize: "14px", lineHeight: 1.3 }}>
+      <div style={{ fontWeight: 700 }}>{now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</div>
+      <div style={{ color: "var(--t3)", fontSize: "12px" }}>{now.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</div>
+      <div style={{ color: "var(--t3)", fontSize: "12px" }}>Atlanta</div>
+    </div>
+  );
+}
+
+function RailColumn({ children, gridColumn = "span 3" }) {
+  return (
+    <div style={{ gridColumn, display: "flex", flexDirection: "column", gap: 14, minWidth: 0 }}>
+      {children}
+    </div>
+  );
+}
+
+const GridCard = ({ title, icon, actions, children, style: styleProp, gridColumn }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const hoverGlow = isHovered 
+    ? "0 0 0 2px rgba(255, 0, 13, 0.32), 0 10px 30px rgba(255, 0, 13, 0.2)" 
+    : "none";
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        gridColumn: gridColumn === false ? undefined : (gridColumn || "span 4"),
+        position: "relative",
+        borderRadius: "16px",
+        padding: "3px",
+        border: isHovered ? "1px solid rgba(255, 0, 13, 0.3)" : "1px solid rgba(255,255,255,0.09)",
+        transition: "all 0.2s ease",
+        boxShadow: hoverGlow,
+        ...styleProp,
+      }}
+    >
+      <div className="liquid-glass" style={{
+        padding: "16px 18px",
+        minHeight: "auto",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "14px",
+      }}>
+        {(title || icon || actions) && (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            paddingBottom: 10,
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            marginBottom: 10,
+            flexShrink: 0,
+          }}>
+            {icon && <span style={{ fontSize: 18, color: "#ff000d" }}>{icon}</span>}
+            {title && (
+              <span style={{
+                flex: 1,
+                fontSize: "14.5px",
+                fontWeight: 700,
+                letterSpacing: ".04em",
+                textTransform: "uppercase",
+                color: "#ff000d",
+              }}>
+                {title}
+              </span>
+            )}
+            {actions}
+          </div>
+        )}
+        <div style={{ flex: 1, overflow: "hidden", fontSize: "14px", lineHeight: "1.45" }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function DashboardPanel({ setActive }) {
+  const dock = useAgentDockOptional();
+  const [notes, setNotes] = useState(() => load("lifeos_dash_notes", ""));
+  const [previousNotes, setPreviousNotes] = useState(load("lifeos_dash_previous_notes", []));
+  const [products, setProducts] = useState(() => load("lifeos_dash_products", [
+    { name: "Online Course", moRev: 12450, ytdRev: 87200, moSales: 42, ytdSales: 298 },
+    { name: "1:1 Coaching", moRev: 9800, ytdRev: 65100, moSales: 11, ytdSales: 72 },
+    { name: "Ebook Bundle", moRev: 3150, ytdRev: 21850, moSales: 185, ytdSales: 1240 },
+  ]));
+  const [editProducts, setEditProducts] = useState(false);
+  const [productInputs, setProductInputs] = useState({});
+
+  const [budgetDesc, setBudgetDesc] = useState("");
+  const [budgetAmount, setBudgetAmount] = useState("");
+  const [budgetItems, setBudgetItems] = useState(load("lifeos_dash_budget", []));
+
+  const [financeInstitutions, setFinanceInstitutions] = useState(load("lifeos_dash_finance_institutions", [
+    { name: "Sofi", checking: 8500, savings: 42000 },
+    { name: "Stripe", checking: 2450, savings: 0 },
+    { name: "Square", checking: 1120, savings: 0 },
+    { name: "CashApp", checking: 680, savings: 320 },
+    { name: "Venmo", checking: 290, savings: 0 },
+    { name: "Paypal", checking: 1540, savings: 0 },
+    { name: "OnePay", checking: 750, savings: 9800 },
+  ]));
+  const [editFinance, setEditFinance] = useState(false);
+  const [financeInputs, setFinanceInputs] = useState({});
+  const [editCredit, setEditCredit] = useState(false);
+  const [credInput, setCredInput] = useState({});
+
+  const [tasks, setTasks] = useState([]);
+  const [links, setLinks] = useState(load("lifeos_dash_links", []));
+  const [newLinkLabel, setNewLinkLabel] = useState("");
+  const [newLinkUrl, setNewLinkUrl] = useState("");
+  const [newTaskInput, setNewTaskInput] = useState("");
+  const [leads, setLeads] = useState([]);
+
+  const [social, setSocial] = useState(null);
+  const [notifStream, setNotifStream] = useState([]);
+  const [aiTips, setAiTips] = useState([]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [supabaseTodos, setSupabaseTodos] = useState([]);
+  const [newSupabaseTodo, setNewSupabaseTodo] = useState("");
+  const [financeSnap, setFinanceSnap] = useState(() => loadFinanceHubSnapshot());
+
+  const [spencerOnline, setSpencerOnline] = useState(false);
+  const [spencerOllama, setSpencerOllama] = useState(false);
+  const [spencerBusy, setSpencerBusy] = useState(false);
+  const [spencerInput, setSpencerInput] = useState("");
+  const [spencerReply, setSpencerReply] = useState("");
+  const [spencerErr, setSpencerErr] = useState("");
+
+  const { user: fbUser } = useAuth();
+
+  useEffect(() => {
+    const poll = () => hermesHealth().then((h) => {
+      setSpencerOnline(!!h.hermes || !!h.ollama);
+      setSpencerOllama(!!h.ollama);
+    });
+    poll();
+    const t = setInterval(poll, 15000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    refreshFinanceKv().then(setFinanceSnap);
+    const iv = setInterval(() => refreshFinanceKv().then(setFinanceSnap), 90000);
+    return () => clearInterval(iv);
+  }, []);
+
+  useEffect(() => {
+    const acc = financeSnap.accounts || [];
+    if (acc.length) {
+      setFinanceInstitutions((prev) => {
+        const merged = acc.map((a) => ({
+          name: a.name || a.institution || "Account",
+          checking: Number(a.checking ?? a.balance ?? 0) || 0,
+          savings: Number(a.savings ?? 0) || 0,
+        }));
+        return merged.length ? merged : prev;
+      });
+    }
+    if (financeSnap.credit?.karma) setCredInput((c) => ({ ...c, karma: financeSnap.credit.karma }));
+    if (financeSnap.credit?.experian) setCredInput((c) => ({ ...c, exper: financeSnap.credit.experian }));
+  }, [financeSnap]);
+
+  useEffect(() => {
+    kvGet("activity_events").then((d) => {
+      const list = Array.isArray(d) ? d.slice(0, 12) : [];
+      setNotifStream(list.map((e) => ({
+        text: e.message || e.title || e.type || "Activity",
+        ts: e.ts || e.created_at || e.at,
+      })));
+    });
+  }, []);
+
+  async function askSpencer() {
+    const msg = spencerInput.trim();
+    if (!msg || spencerBusy) return;
+    setSpencerBusy(true);
+    setSpencerErr("");
+    try {
+      const { text } = await hermesChat([{ role: "user", content: msg }]);
+      setSpencerReply(text || "(empty response)");
+      setSpencerInput("");
+    } catch (e) {
+      setSpencerErr(e.message || "Hermes offline — start gateway with LifeOS profile");
+    } finally {
+      setSpencerBusy(false);
+    }
+  }
+
+  const go = id => setActive && setActive(id);
+
+  function addBudget(desc, amount) {
+    if (!desc.trim() || !amount) return;
+    const next = [...budgetItems, { id: Date.now(), desc: desc.trim(), amount: Number(amount) || 0, paid: false }];
+    setBudgetItems(next);
+    save("lifeos_dash_budget", next);
+  }
+
+  function toggleBudgetPaid(id) {
+    const next = budgetItems.map(item => item.id === id ? { ...item, paid: !item.paid } : item);
+    setBudgetItems(next);
+    save("lifeos_dash_budget", next);
+  }
+
+  function deleteBudget(id) {
+    const next = budgetItems.filter(item => item.id !== id);
+    setBudgetItems(next);
+    save("lifeos_dash_budget", next);
+  }
+
+  function saveProducts() {
+    if (editProducts) {
+      const next = products.map((p, idx) => ({
+        name: productInputs[`${idx}-name`] ?? p.name,
+        moRev: Number(productInputs[`${idx}-moRev`] ?? p.moRev) || 0,
+        ytdRev: Number(productInputs[`${idx}-ytdRev`] ?? p.ytdRev) || 0,
+        moSales: Number(productInputs[`${idx}-moSales`] ?? p.moSales) || 0,
+        ytdSales: Number(productInputs[`${idx}-ytdSales`] ?? p.ytdSales) || 0,
+      }));
+      setProducts(next);
+      save("lifeos_dash_products", next);
+      setProductInputs({});
+    } else {
+      const seed = {};
+      products.forEach((p, idx) => {
+        seed[`${idx}-name`] = p.name;
+        seed[`${idx}-moRev`] = p.moRev;
+        seed[`${idx}-ytdRev`] = p.ytdRev;
+        seed[`${idx}-moSales`] = p.moSales;
+        seed[`${idx}-ytdSales`] = p.ytdSales;
+      });
+      setProductInputs(seed);
+    }
+    setEditProducts(e => !e);
+  }
+
+  function saveFinanceInstitutions() {
+    if (editFinance) {
+      const next = financeInstitutions.map((inst, idx) => ({
+        name: financeInputs[`${idx}-name`] ?? inst.name,
+        checking: Number(financeInputs[`${idx}-checking`] ?? inst.checking) || 0,
+        savings: Number(financeInputs[`${idx}-savings`] ?? inst.savings) || 0,
+      }));
+      setFinanceInstitutions(next);
+      save("lifeos_dash_finance_institutions", next);
+      setFinanceInputs({});
+    } else {
+      const seed = {};
+      financeInstitutions.forEach((inst, idx) => {
+        seed[`${idx}-name`] = inst.name;
+        seed[`${idx}-checking`] = inst.checking;
+        seed[`${idx}-savings`] = inst.savings;
+      });
+      setFinanceInputs(seed);
+    }
+    setEditFinance(e => !e);
+  }
+
+  async function addTask() {
+    if (!newTaskInput.trim()) return;
+    const current = await kvGet("tasks_queue") || [];
+    const newT = { id: Date.now(), title: newTaskInput.trim(), done: false };
+    const updated = [...current, newT];
+    await kvSet("tasks_queue", updated);
+    setTasks(updated.filter(t => !t.done).slice(0, 6));
+    setNewTaskInput("");
+  }
+
+  async function deleteTask(id) {
+    const current = await kvGet("tasks_queue") || [];
+    const updated = current.filter(t => t.id !== id);
+    await kvSet("tasks_queue", updated);
+    setTasks(updated.filter(t => !t.done).slice(0, 6));
+  }
+
+  function addLink() {
+    if (!newLinkLabel.trim() || !newLinkUrl.trim()) return;
+    const u = [...links, { label: newLinkLabel.trim(), url: newLinkUrl.trim(), brand: "link" }];
+    setLinks(u);
+    save("lifeos_dash_links", u);
+    setNewLinkLabel("");
+    setNewLinkUrl("");
+  }
+
+  function deleteLink(idx) {
+    const u = links.filter((_, i) => i !== idx);
+    setLinks(u);
+    save("lifeos_dash_links", u);
+  }
+
+  function saveNote() {
+    if (!notes.trim()) return;
+    setPreviousNotes(prev => {
+      const next = [notes.trim(), ...prev];
+      save("lifeos_dash_previous_notes", next);
+      return next;
+    });
+    setNotes("");
+    save("lifeos_dash_notes", "");
+  }
+
+  function removePrevious(idx) {
+    setPreviousNotes(prev => {
+      const next = prev.filter((_, i) => i !== idx);
+      save("lifeos_dash_previous_notes", next);
+      return next;
+    });
+  }
+
+  const moneyTipsList = [
+    "Post in local FB groups offering free value first.",
+    "Offer a 15-min free audit to 5 local businesses/day.",
+    "Create a simple lead magnet and pin it.",
+    "Reply to 'looking for' posts with helpful non-sales answer.",
+    "Record a 60s tip video for Instagram Reels.",
+    "Partner with one complementary local business for cross promo.",
+    "List your service on 3 free directories today.",
+    "DM 10 people who liked similar posts with value.",
+    "Host a free 20-min webinar on a pain point.",
+    "Turn one client win into a case study post.",
+    "Use Google My Business posts daily.",
+    "Ask happy clients for referrals with a simple script.",
+    "Comment thoughtfully on 20 industry posts.",
+    "Create a free checklist and share in groups.",
+    "Offer a limited 'founding member' discount to 3 people.",
+    "Post before/after in local community pages.",
+    "Run a poll in a relevant group to engage.",
+    "Email 5 past clients with a quick win idea.",
+    "Join 2 new relevant FB groups and introduce yourself helpfully.",
+    "Turn a common question into a short guide."
+  ];
+  const lifeHacksList = [
+    "Batch all non-urgent emails to 2x per day.",
+    "Use the 2-minute rule for small tasks.",
+    "Prep outfits the night before.",
+    "Keep a 'done' list to boost motivation.",
+    "Set phone to grayscale after 8pm.",
+    "One-tab rule for focused work.",
+    "Drink water before coffee.",
+    "Walk while on calls when possible.",
+    "Review tomorrow's calendar tonight.",
+    "Say 'no' to one thing per day.",
+    "Use voice notes for quick ideas.",
+    "Clean your desk at end of day.",
+    "Read 10 pages before bed.",
+    "Meal prep Sundays for the week.",
+    "Limit social media to 20 min blocks.",
+    "Write 3 things you're grateful for daily.",
+    "Stand up and stretch every 45 min.",
+    "Keep a 'later' list for distractions.",
+    "Turn off notifications during deep work.",
+    "Celebrate small wins out loud."
+  ];
+  const getDaily = (list, count = 5) => {
+    const day = new Date().getDate() + new Date().getMonth() * 31;
+    const start = day % Math.max(1, list.length - count);
+    return list.slice(start, start + count);
+  };
+  const getDailyMoneyTips = () => getDaily(moneyTipsList);
+  const getDailyLifeHacks = () => getDaily(lifeHacksList);
+
+  const karmaScore = Number(credInput.karma ?? financeSnap.credit?.karma) || 0;
+  const experScore = Number(credInput.exper ?? financeSnap.credit?.experian) || 0;
+  const creditAvg = financeSnap.credit?.avg || (karmaScore && experScore ? Math.round((karmaScore + experScore) / 2) : karmaScore || experScore || 0);
+  const creditPct = Math.max(0, Math.min(100, ((creditAvg - 300) / 550) * 100));
+
+const dashboardGridStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(12, 1fr)",
+  gap: 12,
+  alignItems: "start",
+  gridAutoRows: "min-content",
+  width: "100%",
+  height: "100%",
+  maxWidth: "none",   // ← remove centering
+  margin: "0",        // ← remove centering
+};
+
+ return (
+  <div style={{ 
+    width: "100%", 
+    height: "100%", 
+    background: "transparent", 
+    padding: "16px 20px", 
+    boxSizing: "border-box",
+    overflowY: "auto"
+  }}>
+    <div style={dashboardGridStyle}>
+      {/* all your RailColumn and GridCard content */}
+    </div>
+  </div>
+);
+
+      <div style={dashboardGridStyle}>
+        {/* LEFT RAIL */}
+        <RailColumn gridColumn="span 3">
+          <GridCard title="Time & Weather" icon={<Calendar size={18} />} gridColumn={false}>
+            <ClockWidget />
+          </GridCard>
+
+          <GridCard title="Search" icon={<Search size={18} />} gridColumn={false}>
+            <OmniSearchWidget />
+          </GridCard>
+
+          <GridCard title="Calendar (7-day)" icon={<Calendar size={18} />} gridColumn={false}>
+            <Calendar7Day />
+          </GridCard>
+
+          <GridCard title="TASKS" icon={<CheckSquare size={18} />} gridColumn={false}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: "14px" }}>
+              {tasks.map(t => (
+                <div key={t.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>{t.title}</span>
+                  <button onClick={() => deleteTask(t.id)} style={{ background: "none", border: "none", color: "var(--t3)", cursor: "pointer", fontSize: "18px" }}>×</button>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+              <Input value={newTaskInput} onChange={e => setNewTaskInput(e.target.value)} onKeyDown={e => e.key === "Enter" && addTask()} placeholder="Add task" style={{ fontSize: "14px", padding: "8px 10px", flex: 1 }} />
+              <Button onClick={addTask} style={{ padding: "8px 12px", fontSize: "14px" }}>+</Button>
+            </div>
+          </GridCard>
+
+          <GridCard title="LINKS" icon={<FolderKanban size={18} />} gridColumn={false}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: "14px" }}>
+              {links.map((l, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <a href={l.url} target="_blank" rel="noreferrer" style={{ flex: 1, color: "var(--t1)", textDecoration: "none" }}>{l.label}</a>
+                  <button onClick={() => deleteLink(i)} style={{ background: "none", border: "none", color: "var(--t3)", cursor: "pointer", fontSize: "18px" }}>×</button>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+              <Input value={newLinkLabel} onChange={e => setNewLinkLabel(e.target.value)} placeholder="Label" style={{ fontSize: "14px", padding: "8px 10px", flex: 1 }} />
+              <Input value={newLinkUrl} onChange={e => setNewLinkUrl(e.target.value)} placeholder="URL" style={{ fontSize: "14px", padding: "8px 10px", flex: 1 }} />
+              <Button onClick={addLink} style={{ padding: "8px 12px", fontSize: "14px" }}>+</Button>
+            </div>
+          </GridCard>
+        </RailColumn>
+
+        {/* CENTER RAIL */}
+        <RailColumn gridColumn="span 6">
+          <GridCard title="YouTube" icon={<Send size={18} />} style={{ minHeight: 220 }}>
+            <YouTubeDashboard />
+          </GridCard>
+
+          <GridCard title="Spencer (Hermes)" icon={<Bot size={18} />} style={{ minHeight: 160 }}>
+            <div style={{ fontSize: "13px", color: spencerOnline ? "#00ff9d" : "var(--t3)", marginBottom: 8 }}>
+              {spencerOnline ? (spencerOllama ? "● Qwen @ Ollama" : "● Hermes API online") : "○ Start Ollama + gateway"}
+            </div>
+            {spencerReply && <div style={{ fontSize: "13.5px", color: "var(--t2)", maxHeight: 80, overflow: "auto", marginBottom: 10, whiteSpace: "pre-wrap" }}>{spencerReply}</div>}
+            {spencerErr && <div style={{ fontSize: "13px", color: "#ff6b6b", marginBottom: 8 }}>{spencerErr}</div>}
+            <div style={{ display: "flex", gap: 8 }}>
+              <Button onClick={() => dock?.openDock?.({ agentId: "spencer" })} style={{ padding: "8px 14px", fontSize: "14px" }}>Open Dock</Button>
+              <Input value={spencerInput} onChange={e => setSpencerInput(e.target.value)} onKeyDown={e => e.key === "Enter" && askSpencer()} placeholder="Ask Spencer..." style={{ fontSize: "14px", padding: "8px 12px", flex: 1 }} disabled={spencerBusy} />
+              <Button onClick={askSpencer} disabled={spencerBusy || !spencerOnline} style={{ padding: "8px 14px", fontSize: "14px" }}>{spencerBusy ? "…" : "Send"}</Button>
+            </div>
+          </GridCard>
+
+          <GridCard title="AI Insights" icon={<Bot size={18} />}>
+            <AIInsightsPanel />
+          </GridCard>
+        </RailColumn>
+
+        {/* RIGHT RAIL */}
+        <RailColumn gridColumn="span 3">
+          <GridCard title="Notifications" icon={<Bell size={18} />} gridColumn={false}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--crimson)", animation: "dash-blink 1s infinite" }} />
+              <span style={{ fontSize: "13px", color: "var(--crimson)" }}>Live</span>
+            </div>
+            <div style={{ fontSize: "14px", maxHeight: 140, overflow: "auto" }}>
+              {(notifStream.length ? notifStream : [{ text: "No events yet" }]).map((n, i) => (
+                <div key={i} style={{ marginBottom: 6, color: "var(--t2)" }}>{n.text}</div>
+              ))}
+            </div>
+          </GridCard>
+
+          <GridCard title="LEADS" icon={<Contact size={18} />} gridColumn={false}>
+            <div style={{ fontSize: "14px", color: "var(--t2)" }}>
+              {leads.length ? leads.slice(0, 6).map((l, i) => (
+                <div key={i} style={{ marginBottom: 10 }}>
+                  <div>{l.name || l.fullName || l.email || "Lead"}{l.company ? " @ " + l.company : ""}</div>
+                  {(l._ts || l.created_at) && <div style={{ fontSize: "12px", color: "var(--t3)" }}>{new Date(l._ts || l.created_at).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>}
+                </div>
+              )) : <div>No leads yet</div>}
+            </div>
+          </GridCard>
+
+          <GridCard title="Finance snapshot" icon={<Wallet size={18} />} gridColumn={false}>
+            <div style={{ fontSize: "14px", color: "var(--t2)" }}>
+              <div>Hub: ${Math.round(financeSnap.totalBalances || 0).toLocaleString()}</div>
+              <div>Credit: {creditAvg || "—"}</div>
+              <button type="button" onClick={() => go("finance")} style={{ fontSize: "13px", color: "var(--crimson)", background: "none", border: "none", cursor: "pointer", marginTop: 6 }}>Finance Hub →</button>
+            </div>
+          </GridCard>
+
+          <GridCard title="AI Monitor" icon={<Bot size={18} />} gridColumn={false}>
+            <AIMonitorPanel />
+          </GridCard>
+        </RailColumn>
+
+        {/* BOTTOM ROW */}
+        <GridCard title="NOTES" icon={<BookOpen size={18} />} gridColumn="span 12" style={{ minHeight: 180 }}>
+          <div style={{ display: "flex", gap: 16, minHeight: 160 }}>
+            <textarea value={notes} onChange={e => { setNotes(e.target.value); save("lifeos_dash_notes", e.target.value); }} placeholder="Current note…" style={{ flex: 1, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: 12, fontSize: "14px", color: "var(--t1)", resize: "vertical" }} />
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+              <Button onClick={saveNote} style={{ fontSize: "14px", padding: "8px 16px", alignSelf: "flex-start" }}>Save Note →</Button>
+              <div style={{ fontSize: "13.5px", overflow: "auto", flex: 1 }}>
+                {previousNotes.map((n, i) => (
+                  <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+                    <span style={{ flex: 1 }}>{n}</span>
+                    <button type="button" onClick={() => removePrevious(i)} style={{ background: "none", border: "none", color: "var(--crimson)", cursor: "pointer" }}>×</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </GridCard>
+
+        <GridCard title="Product Revenue" icon={<LucideLineChart size={18} />} gridColumn="span 5" actions={
+          <Button variant={editProducts ? "primary" : "ghost"} style={{ padding: "6px 12px", fontSize: "13px" }} onClick={saveProducts}>
+            {editProducts ? "SAVE" : "EDIT"}
+          </Button>
+        }>
+          <div style={{ fontSize: "13px", color: "var(--t3)", marginBottom: 6 }}>Sources: KPI Revenue</div>
+          <div style={{ fontSize: "14px", display: "grid", gridTemplateColumns: "1.2fr 0.8fr 0.8fr", gap: 8 }}>
+            {products.map((p, i) => (
+              <React.Fragment key={i}>
+                <div style={{ fontWeight: 600 }}>
+                  {editProducts ? <input value={productInputs[`${i}-name`] ?? p.name} onChange={e => setProductInputs(pi => ({...pi, [`${i}-name`]: e.target.value}))} style={{width:"100%", fontSize:"14px"}} /> : p.name}
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  {editProducts ? <input type="number" value={productInputs[`${i}-moRev`] ?? p.moRev} onChange={e => setProductInputs(pi => ({...pi, [`${i}-moRev`]: e.target.value}))} style={{width:"100%", fontSize:"14px"}} /> : "$" + p.moRev}
+                </div>
+                <div style={{ textAlign: "right", color: "var(--t3)" }}>
+                  {editProducts ? <input type="number" value={productInputs[`${i}-ytdRev`] ?? p.ytdRev} onChange={e => setProductInputs(pi => ({...pi, [`${i}-ytdRev`]: e.target.value}))} style={{width:"100%", fontSize:"14px"}} /> : "$" + p.ytdRev}
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </GridCard>
+
+        <GridCard title="Financial Balances" icon={<Wallet size={18} />} gridColumn="span 4" actions={
+          <Button variant={editFinance ? "primary" : "ghost"} style={{ padding: "6px 12px", fontSize: "13px" }} onClick={saveFinanceInstitutions}>
+            {editFinance ? "SAVE" : "EDIT"}
+          </Button>
+        }>
+          <div style={{ fontSize: "14px" }}>
+            {financeInstitutions.map((inst, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span>{inst.name}</span>
+                <span style={{ color: "var(--crimson)" }}>
+                  ${(editFinance ? Number(financeInputs[`${i}-checking`] ?? inst.checking) : inst.checking) + (editFinance ? Number(financeInputs[`${i}-savings`] ?? inst.savings) : inst.savings)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </GridCard>
+
+        <GridCard title="Credit Score" icon={<LucideBarChart3 size={18} />} gridColumn="span 3" actions={
+          <Button variant={editCredit ? "primary" : "ghost"} style={{ padding: "6px 12px", fontSize: "13px" }} onClick={() => setEditCredit(!editCredit)}>
+            {editCredit ? "SAVE" : "EDIT"}
+          </Button>
+        }>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: "14px" }}>
+            <div style={{ position: "relative", width: "100%", height: 32 }}>
+              <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 8, background: "linear-gradient(to right, #ff4f5e, #888, #ff000d)", borderRadius: 4 }} />
+              <div style={{ position: "absolute", left: `${creditPct}%`, bottom: 12, transform: "translateX(-50%)", fontSize: "18px", fontWeight: 900, color: "#ff000d" }}>{creditAvg || "—"}</div>
+            </div>
+          </div>
+          <div style={{ fontSize: "13px", color: "var(--t3)", marginTop: 8 }}>Karma: {karmaScore || "—"} · Experian: {experScore || "—"}</div>
+        </GridCard>
+
+        <GridCard title="Budget (Finance Hub)" icon={<Wallet size={18} />} gridColumn="span 4">
+          <div style={{ fontSize: "14px", color: "var(--t2)" }}>
+            {(financeSnap.budget?.categories || []).slice(0, 5).map((c, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span>{c.name || c.label || "Category"}</span>
+                <span>${c.spent ?? 0}/{c.allocated ?? 0}</span>
+              </div>
+            ))}
+            {!(financeSnap.budget?.categories || []).length && <div>Set categories in Finance Hub</div>}
+          </div>
+        </GridCard>
+
+        <GridCard title="Low-effort Money Tips" icon={<Bot size={18} />} gridColumn="span 6">
+          <div style={{ fontSize: "14px", color: "var(--t2)", display: "flex", flexDirection: "column", gap: 6 }}>
+            {getDailyMoneyTips().map((tip, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ flex: 1 }}>{tip}</span>
+                <button type="button" style={{ fontSize: "13px", border: "1px solid var(--crimson)", color: "var(--crimson)", background: "transparent", padding: "2px 8px", cursor: "pointer", borderRadius: 4 }}>+</button>
+              </div>
+            ))}
+          </div>
+        </GridCard>
+
+        <GridCard title="Life Hacks" icon={<BookOpen size={18} />} gridColumn="span 6">
+          <div style={{ fontSize: "14px", color: "var(--t2)", display: "flex", flexDirection: "column", gap: 6 }}>
+            {getDailyLifeHacks().map((h, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ flex: 1 }}>{h}</span>
+                <button type="button" style={{ fontSize: "13px", border: "1px solid var(--crimson)", color: "var(--crimson)", background: "transparent", padding: "2px 8px", cursor: "pointer", borderRadius: 4 }}>+</button>
+              </div>
+            ))}
+          </div>
+        </GridCard>
+
+        <GridCard title="Social Hub" icon={<Share2 size={18} />} gridColumn="span 3">
+          <div style={{ fontSize: "14px", color: "var(--t2)" }}>
+            {social ? [
+              social.meta?.instagram ? `IG ${social.meta.instagram.followers ?? "—"}` : null,
+              social.x ? `X ${social.x.followers ?? "—"}` : null,
+              social.yt ? `YT ${social.yt.subscribers ?? "—"}` : null,
+            ].filter(Boolean).map((s, i) => <div key={i} style={{ marginBottom: 6 }}>{s}</div>) : "Loading…"}
+          </div>
+        </GridCard>
+
+        <GridCard title="Playlist" icon={<Music size={18} />} gridColumn="span 3">
+          <MusicPlaylistMini />
+        </GridCard>
+
+        <GridCard title="Quick budget" icon={<Wallet size={18} />} gridColumn="span 6">
+          <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+            <Input placeholder="Desc" value={budgetDesc} onChange={e => setBudgetDesc(e.target.value)} style={{ fontSize: "14px", padding: "8px 12px", flex: 2 }} />
+            <Input placeholder="$" type="number" value={budgetAmount} onChange={e => setBudgetAmount(e.target.value)} style={{ fontSize: "14px", padding: "8px 12px", flex: 1 }} />
+            <Button style={{ padding: "8px 16px", fontSize: "14px" }} onClick={() => addBudget(budgetDesc, budgetAmount)}>+</Button>
+          </div>
+          <div style={{ fontSize: "14px", maxHeight: 140, overflow: "auto" }}>
+            {budgetItems.map(item => (
+              <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <input type="checkbox" checked={item.paid} onChange={() => toggleBudgetPaid(item.id)} />
+                <span style={{ flex: 1, textDecoration: item.paid ? "line-through" : "none" }}>{item.desc} ${item.amount}</span>
+                <button onClick={() => deleteBudget(item.id)} style={{ background: "none", border: "none", color: "var(--t3)", cursor: "pointer", fontSize: "16px" }}>×</button>
+              </div>
+            ))}
+          </div>
+        </GridCard>
+      </div>
+    </div>
+  );
+}

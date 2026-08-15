@@ -1,0 +1,1084 @@
+{
+  "Bonus_Reward_Notification_Cxt_User": {
+    "bonus_reward_text": "Start saving with us: {bonusRewardText} on your next {merchant} purchase",
+    "primary_cta_text": "Get this offer",
+    "secondary_cta_text": "No thanks",
+    "terms_cta_text": "Exclusions and Terms",
+    "terms_text": "Limit 1 Extension Bonus per user. The spend requirement must be met in a single transaction, on non-excluded items, after discounts, store credits, and redemption dollars are applied, and before taxes and shipping fees are applied. You must complete an eligible purchase within 24 hours of activating the offer, and the Capital One Shopping extension must be installed and fully enabled on the browser in which you complete the purchase. The payout takes the form of Shopping Rewards; Capital One Shopping terms apply."
+  },
+  "Bonus_Reward_Notification_New_User": {
+    "bonus_reward_text": "Start saving with us: {bonusRewardText} on your next purchase",
+    "primary_cta_text": "Get this offer",
+    "secondary_cta_text": "No thanks",
+    "terms_cta_text": "Exclusions and Terms",
+    "terms_text_prefix_amz": "Offer not available for purchases made on Amazon Prime Video, the Amazon FSA/HSA Store, or on the following Amazon domains: https://pharmacy.amazon.com, https://health.amazon.com, https://music.amazon.com.",
+    "terms_text": "This offer may only be used one time. The spend requirement must be met in a single transaction, on non-excluded items, after discounts, store credits, and redemption dollars are applied, and before taxes and shipping fees are applied. You must complete an eligible purchase within 24 hours of activating the offer, and the Capital One Shopping extension must be installed and fully enabled on the browser in which you complete the purchase. The payout takes the form of Shopping Rewards; Capital One Shopping terms apply."
+  },
+  "Bonus_Reward_Notification": {
+    "bonus_reward_text": "Special Offer: {bonusRewardText}",
+    "primary_cta_text": "Get this offer",
+    "secondary_cta_text": "No thanks, just give me {standardRewardText}",
+    "terms_cta_text": "Exclusions and Terms",
+    "terms_text": "By clicking 'Get this Offer' while logged in to your Capital One Shopping account, you agree to receive marketing emails from Capital One Shopping. Limited-time offer. Only available to users who have never previously completed an email offer from Capital One Shopping. The spend requirement must be met in a single transaction, on non-excluded items, after discounts, store credits, and redemption dollars are applied, and before taxes and shipping fees are applied. We reserve the right to modify or terminate this offer at any time without notice. Additional terms apply; please see the Capital One Shopping Terms of Service for more details. Please see the email for exclusions."
+  },
+  "Bonus_Reward_Notification_DTMA": {
+    "qr_code_instructions": "Scan the QR code below to access the offer:",
+    "qr_code_terms": "Bonus only available to users who have not downloaded or purchased on the mobile app previously. Not available to Android users. Email must be in good standing. Additional terms apply.",
+    "terms_cta_text": "Exclusions and Terms",
+    "terms_text": "Limited-time offer. Only available within 7 days of last seeing the desktop notification. Users must download the mobile extension and allow access to all Shopping sites. Offer only available to users who have not downloaded or purchased on the mobile app previously. The spend requirement must be met in a single transaction, on non-excluded items, after discounts, store credits, and redemption dollars are applied, and before taxes and shipping fees are applied. We reserve the right to modify or terminate this offer at any time without notice.",
+    "primary_cta_text": "Email me this offer!",
+    "secondary_cta_text": "No thanks, just give me {standardRewardText}",
+    "bonus_reward_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "class": "font-semibold",
+          "text": "You’re eligible for a special offer which "
+        },
+        {
+          "class": "font-bold",
+          "text": "expires soon"
+        },
+        {
+          "class": "font-semibold",
+          "text": ". Download and set up our iOS mobile app and extension, and "
+        },
+        {
+          "class": "font-semibold text-green-550",
+          "text": "{bonusRewardText}"
+        },
+        {
+          "class": "font-semibold",
+          "text": " at {vendor}."
+        }
+      ]
+    }
+  },
+  "Rewards": {
+    "prefix": "Get ",
+    "prefix_lower": "get ",
+    "threshold_prefix": "Earn ",
+    "threshold_prefix_lower": "earn ",
+    "up_to": "Up to ",
+    "up_to_lower": "up to ",
+    "suffix": " back",
+    "max_payout": " ({formattedMaxPayoutAmount} max)",
+    "suffix_threshold_condition": " when you spend {formattedSpendThreshold}"
+  },
+  "Cashback_Rewards": {
+    "cta_text": "Ok",
+    "dismiss_button_text": "No thanks, I don't want rewards",
+    "offer_activating": "Activating",
+    "offer_found_rewards": "Found Rewards",
+    "offer_at_vendor_text": "at {vendor}.",
+    "cta_text_activating": "Activating",
+    "cta_text_activated": "Activated",
+    "disclaimer_quill": "*All HP, Epson, and Samsung products are excluded from coupons, discounts, and rewards offers.",
+    "disclaimer_wayfair": "*Items in cart prior to rewards activation will not be eligible for rewards.",
+    "disclaimer_exchange_rates": "* Rewards may vary based on exchange rates.",
+    "disclaimer_exclusions": "Terms and exclusions apply,",
+    "disclaimer_exclusions_button": "view details.",
+    "categories_header": "Rewards by Category",
+    "tiers_header": "Rewards by Spend",
+    "tier_description": "Spend {spend_min} - {spend_max} ",
+    "tier_description_last": "Spend {spend_min} or more",
+    "tier_percentage_reward": "{tier_reward}% back",
+    "exclusions_header": "Exclusions Apply:",
+    "button_show_more": "Show more",
+    "button_show_less": "Show less",
+    "new_user_bonus_button": "Details",
+    "threshold_tooltip_trigger": "*Terms and Conditions Apply",
+    "threshold_tooltip_title": "This limited time offer is available for one use only.",
+    "threshold_tooltip_content": "The spend requirement must be met in a single transaction, on non-excluded items, after discounts, store credits, and redemption dollars are applied, and before taxes and shipping fees are applied.",
+    "threshold_tooltip_exclusions_button": "view details.",
+    "threshold_tooltip_exclusions_text": "Exclusions apply, ",
+    "new_user_bonus": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Get an "
+        },
+        {
+          "class": "font-bold",
+          "text": "additional $10 in Shopping Rewards"
+        },
+        {
+          "text": " today with a qualifying purchase of $25."
+        }
+      ]
+    }
+  },
+  "Email_Create_Account_Block_Notification": {
+    "header_content": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "Create a Capital One Shopping account so you can claim your ",
+          "style": ""
+        },
+        {
+          "text": "{rewardsText} ",
+          "style": "text-green-600"
+        },
+        {
+          "text": "and redeem them!",
+          "style": ""
+        }
+      ]
+    },
+    "incentive_content": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "Plus earn an additional ",
+          "style": ""
+        },
+        {
+          "text": "bonus ",
+          "style": "text-green-600"
+        },
+        {
+          "text": "for signing up today.",
+          "style": ""
+        }
+      ]
+    },
+    "sign_in_button_text": "Already have an account? Sign in.",
+    "create_account_button_text": "Create Account"
+  },
+  "Post_Checkout_Email_Create_Account_Block_Notification": {
+    "header_content": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "Thank you for shopping at {merchantName}. Create a Capital One Shopping account now to earn free rewards at your favorite stores.",
+          "style": ""
+        }
+      ]
+    },
+    "incentive_content": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "Plus, redeem a free ",
+          "style": ""
+        },
+        {
+          "text": "bonus!",
+          "style": ""
+        }
+      ]
+    },
+    "sign_in_button_text": "Already have an account? Sign in.",
+    "create_account_button_text": "Create your account in seconds!"
+  },
+  "Notification_Savings_Reminder": {
+    "cta_text": "Got it!",
+    "header_text": "Savings applied at checkout",
+    "sub_header_text": "Add to cart, continue to checkout, and click try codes to see your discount."
+  },
+  "Post_Checkout_All_Deals_Feed_Vertical": {
+    "card_header": "Save at {merchant}",
+    "exclusions_apply": "Exclusions may apply",
+    "all_deals_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-app-light-cap-one-logo.svg",
+    "all_deals_button_text": "See all offers",
+    "all_deals_text": "See all of your deals",
+    "product_header_style": "font-semibold mb-1 line-clamp-1 text-ellipsis",
+    "subheader": "Some exclusive offers for you",
+    "header": "Thanks for using Capital One Shopping!",
+    "product_header_text": "{primarytext}",
+    "reward_text": "+ {rewardtext} Back",
+    "product_coupon_description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "After {rewardtext}"
+        }
+      ]
+    },
+    "product_coupon_sub_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-black",
+          "text": "with code "
+        },
+        {
+          "style": "text-black underline decoration-dashed",
+          "text": "{couponcode}"
+        }
+      ]
+    },
+    "product_coupon_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "{priceafterrewards} "
+        },
+        {
+          "style": "text-sm text-gray-400 line-through",
+          "text": "{oldprice}"
+        }
+      ]
+    },
+    "price_drop_description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-gray-500",
+          "text": "List Price: "
+        },
+        {
+          "style": "text-red-500 line-through",
+          "text": "{newprice}"
+        }
+      ]
+    },
+    "price_drop_sub_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "{priceafterrewards}"
+        },
+        {
+          "style": "",
+          "text": " after "
+        },
+        {
+          "style": "text-green-500",
+          "text": "{rewardtext} back"
+        }
+      ]
+    },
+    "price_drop_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "font-semibold mb-1 line-clamp-1 text-ellipsis",
+          "text": "{primarytext}"
+        }
+      ]
+    },
+    "product_description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-gray-500",
+          "text": "List Price: "
+        },
+        {
+          "style": "text-red-500 line-through",
+          "text": "{newprice}"
+        }
+      ]
+    },
+    "product_sub_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "{priceafterrewards}"
+        },
+        {
+          "style": "",
+          "text": " after "
+        },
+        {
+          "style": "text-green-500",
+          "text": "{rewardtext} back"
+        }
+      ]
+    }
+  },
+  "Post_Checkout_Deals_Feed_Single_Offer": {
+    "secondary_cta_event": "allDealsClick",
+    "secondary_cta_text": "View Other Offers",
+    "secondary_cta_style": "hidden",
+    "cta_event": "singleOfferClick",
+    "cta_text": "Unlock Your Offer",
+    "item_reward_text": "Earn {currentDealCashback} back",
+    "subheader": "An exclusive offer for you",
+    "header": "Thanks for using Capital One Shopping!"
+  },
+  "Post_Checkout_Products_Feed_Vertical": {
+    "card_header": "Save at {merchant}",
+    "exclusions_apply": "Exclusions may apply",
+    "all_deals_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-app-light-cap-one-logo.svg",
+    "all_deals_button_text": "See all offers",
+    "all_deals_text": "See all of your deals",
+    "reward_text": "+ {rewardtext} Back",
+    "subheader": "Some exclusive offers for you",
+    "header": "Thanks for using Capital One Shopping!",
+    "item_description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-gray-500",
+          "text": "List Price: "
+        },
+        {
+          "style": "text-red-500 line-through",
+          "text": "{newprice}"
+        },
+        {
+          "style": "",
+          "text": ""
+        }
+      ]
+    },
+    "item_sub_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "{priceafterrewards}"
+        },
+        {
+          "style": "",
+          "text": " after "
+        },
+        {
+          "text": "{rewardtext} back",
+          "style": "text-green-500"
+        }
+      ]
+    }
+  },
+  "Post_Checkout_Recommended_Offers": {
+    "card_header": "Save at {merchant}",
+    "exclusions_apply": "Exclusions may apply",
+    "all_deals_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-app-light-cap-one-logo.svg",
+    "all_deals_button_text": "See all offers",
+    "all_deals_text": "See all of your deals",
+    "reward_text": "+ {rewardtext} Back",
+    "subheader": "Some exclusive offers for you",
+    "header": "Thanks for using Capital One Shopping!"
+  },
+  "Pre_Checkout_Notification_Tooltip": {
+    "savings_text": "Get {savings} back at {merchant}"
+  },
+  "sitehub_store_content_data": {
+    "header": "Personalized Offers"
+  },
+  "Post_Checkout_No_Rewards": {
+    "header": "Thanks for using Capital One Shopping!",
+    "sub_header": "Some exclusive offers for you",
+    "exclusions_text": "Exclusions may apply",
+    "offers_link": "See all of your offers",
+    "merchant_offer": "Save at {merchant}",
+    "cashback_text": "+ {cashback} back",
+    "merchant_offer_prefix": "Save at",
+    "back_text": "back"
+  },
+  "Post_Checkout_Deals_Non_VM": {
+    "image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-safari-ext-shopping-celebrate.svg",
+    "image_style": "",
+    "header_text": "Interested in more savings?",
+    "header_style": "",
+    "sub_header": {
+      "type": "sequence",
+      "items": [
+        {
+          "style": "",
+          "text": "Get up to "
+        },
+        {
+          "style": "text-blue-400",
+          "text": "{topRewardNoExclusions}%"
+        },
+        {
+          "style": "",
+          "text": " back at other merchants"
+        }
+      ]
+    },
+    "cta_text": "Continue",
+    "cta_event": "exploreDeals",
+    "secondary_cta_style": "hidden",
+    "secondary_cta_text": "",
+    "secondary_cta_event": "dismiss"
+  },
+  "Post_Checkout_Recommended_Single_Offer": {
+    "header": "Thanks for using Capital One Shopping!",
+    "subheader": "An exclusive offer for you",
+    "item_reward_text": "Earn {currentDealCashback} back",
+    "cta_text": "Unlock Your Offer",
+    "cta_event": "singleOfferClick",
+    "secondary_cta_style": "hidden",
+    "secondary_cta_text": "View Other Offers",
+    "secondary_cta_event": "allDealsClick",
+    "item_threshold_text": "Spend {threshold}, get {threshold_reward} back",
+    "offer_exclusions": {
+      "type": "rich_text",
+      "items": [
+        {
+          "class": "italic text-gray-400 text-sm",
+          "text": "Terms and exclusions apply, "
+        },
+        {
+          "class": "italic text-gray-400 text-sm underline font-bold",
+          "href": "{offer_exclusions}",
+          "target": "_blank",
+          "is_link": "true",
+          "text": "view exclusions"
+        }
+      ]
+    }
+  },
+  "Post_Checkout_Recommended_Single_Product": {
+    "card_header": "Save at {merchant}",
+    "subheader": "An exclusive offer for you",
+    "cta_text": "Unlock Your Offer",
+    "cta_event": "singleOfferClick",
+    "secondary_cta_style": "hidden",
+    "secondary_cta_text": "View Other Offers",
+    "secondary_cta_event": "allDealsClick",
+    "item_reward_text": "Earn {currentDealCashback} back",
+    "header": "Thanks for using Capital One Shopping!",
+    "reward_text": "+ {rewardtext} Back",
+    "all_deals_text": "See all of your deals",
+    "all_deals_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-app-light-cap-one-logo.svg",
+    "exclusions_apply": "Exclusions may apply",
+    "all_deals_button_text": "See all offers",
+    "item_description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "List Price: ",
+          "style": "text-gray-500"
+        },
+        {
+          "text": "{newprice}",
+          "style": "text-red-500 line-through"
+        },
+        {
+          "text": "",
+          "style": ""
+        }
+      ]
+    },
+    "item_sub_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-green-500",
+          "text": "{priceafterrewards}"
+        },
+        {
+          "style": "",
+          "text": " after "
+        },
+        {
+          "style": "text-green-500",
+          "text": "{rewardtext} back"
+        }
+      ]
+    },
+    "header_offer_rate": {
+      "type": "rich_text",
+      "items": [
+        {
+          "style": "text-lg text-green-500 font-bold",
+          "text": "Earn {rewardtext} back"
+        }
+      ]
+    }
+  },
+  "Post_Checkout_Referrals": {
+    "refer_friends_button_text": "Refer Friends",
+    "referral_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/postcheckout_modal_ref_control.png",
+    "referral_image_alt": "Refer a friend. {sender_bonus_text} for you, {sender_bonus_text} for them!",
+    "link_header": "Your Referral Link",
+    "copy_button_text": "Copy",
+    "separator_text": "or",
+    "show_terms_button_text": "Terms and Conditions",
+    "close_terms_button_text": "Close Terms and Conditions",
+    "terms_content": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "Offer terms may change at any time. The operative offer terms for both Referrer and Refer-ee will be determined at the time the Refer-ee creates a Shopping User Account using a referral link. Check back at ",
+          "isLink": "",
+          "linkUrl": "",
+          "linkToNewTab": "",
+          "style": ""
+        },
+        {
+          "text": "this page ",
+          "isLink": "true",
+          "linkUrl": "https://capitaloneshopping.com/account-settings/invite-friends",
+          "linkToNewTab": "true",
+          "style": "underline text-blue-500"
+        },
+        {
+          "text": "for current offer terms. This offer is available only for Refer-ees who are new Capital One Shopping users (real people who do not have [and have not previously had] a Capital One Shopping User Account). For either the Referrer or Refer-ee to be eligible for a referral bonus, the Refer-ee must install either the Shopping desktop or mobile extension in their primary browser with full permissions, and on a device in which the extension has never previously been installed. The Refer-ee must install the Shopping extension within 7 days of creating a Shopping User Account using a referral link. The Refer-ee must then regularly use the Shopping extension and shop as they normally would, on their primary browser and with full permissions granted, for 90 days following the installation date. The referral bonus will be automatically applied to the relevant accounts within 30 days after the Referrer and Refer-ee have satisfied all requirements. Uninstalling the Shopping extension or changing its permissions at any time during the trial period will prevent both the Referrer and Refer-ee from receiving a referral bonus. To be eligible for this offer, both the Referrer and Refer-ee must be located in and reside in the United States. Both the Referrer and Refer-ee must also provide a verified email address and complete Capital One Shopping User Account. Additional identity, location, and other eligibility verification may be required. If a Refer-ee is not deemed eligible for a referral bonus, then neither will the Referrer, and vice versa. Capital One Shopping users may only earn up to $500 in referral bonuses from the referral program. Users must comply with all additional  ",
+          "isLink": "",
+          "linkUrl": "",
+          "linkToNewTab": "",
+          "style": ""
+        },
+        {
+          "text": "Terms of Service. ",
+          "isLink": "true",
+          "linkUrl": "https://capitaloneshopping.com/our-terms/terms-of-service",
+          "linkToNewTab": "true",
+          "style": "underline text-blue-500"
+        },
+        {
+          "text": "All referral bonuses are subject to review. Capital One Shopping reserves the right to withhold, deny, or cancel any referral bonuses and/or Shopping Rewards and/or to terminate Capital One Shopping User Accounts if Capital One Shopping, in its sole discretion, deems any attempt to redeem a referral bonus to be fraudulent, abusive, unethical, suspicious, or otherwise inconsistent with any terms and conditions that accompany this offer, our ",
+          "isLink": "",
+          "linkUrl": "",
+          "linkToNewTab": "",
+          "style": ""
+        },
+        {
+          "text": "Terms of Service ",
+          "isLink": "true",
+          "linkUrl": "https://capitaloneshopping.com/our-terms/terms-of-service",
+          "linkToNewTab": "true",
+          "style": "underline text-blue-500"
+        },
+        {
+          "text": "or any other applicable law or regulation.",
+          "isLink": "",
+          "linkUrl": "",
+          "linkToNewTab": "",
+          "style": ""
+        }
+      ]
+    },
+    "refer_message": {
+      "type": "sequence",
+      "items": [
+        {
+          "text": "",
+          "style": ""
+        },
+        {
+          "text": "Refer your friends and family to Capital One Shopping and ",
+          "style": ""
+        },
+        {
+          "text": "get ${senderBonus} for each friend you refer",
+          "style": ""
+        }
+      ]
+    }
+  },
+  "Pre_Checkout_SponsoredProduct_Multi_Offer": {
+    "logo": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/mobile-app-light-cap-one-logo.svg",
+    "title": "Rewards offers available based on your search results.",
+    "offer_reward": "{displayReward} back",
+    "prefixed_rewards_text": "Up to {displayReward} back",
+    "cta_button_text": "Activate Offer",
+    "info_tooltip_content": "Terms and exclusions apply, ",
+    "info_tooltip_content_link_text": "view exclusions."
+  },
+  "llm_scraper_gemini": {
+    "containerQuery": "div.conversation-container",
+    "containerElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "buttonLinks",
+          "query": "div > ul > li:has(a.ng-star-inserted)"
+        }
+      ]
+    },
+    "buttonLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.ng-star-inserted",
+          "linkText": "a.ng-star-inserted",
+          "title": "p > b",
+          "description": "p"
+        }
+      ]
+    }
+  },
+  "llm_scraper_cpt": {
+    "shoppingModeQuery": "div.flex > button.__composer-pill",
+    "shoppingResearchButtonText": "Shopping research",
+    "containerQuery": "div[class*=\"group-focus-within/turn-messages:[mask-position:0_0]\"]",
+    "containerElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "nonLinkAnchor",
+          "query": "p:has(a.decorated-link[target='_new'])",
+          "hasClickListener": "false",
+          "watchForClick": "false",
+          "linkedClickable": "",
+          "hasParseDomain": "false",
+          "parseDomainProp": ""
+        },
+        {
+          "name": "textLink",
+          "query": "a[target='_new']:not([class])",
+          "hasClickListener": "false",
+          "watchForClick": "false",
+          "linkedClickable": "",
+          "hasParseDomain": "false",
+          "parseDomainProp": ""
+        },
+        {
+          "name": "buttonLink",
+          "query": "p:has(a.rounded-xl), tr td:has(a.rounded-xl)",
+          "hasClickListener": "false",
+          "watchForClick": "false",
+          "linkedClickable": "",
+          "hasParseDomain": "false",
+          "parseDomainProp": ""
+        },
+        {
+          "name": "nonLinkButton",
+          "query": "div.flex.flex-row div.group:has(img)",
+          "hasClickListener": "true",
+          "watchForClick": "true",
+          "linkedClickable": "strong > span.inline.underline.decoration-token-text-secondary, strong > span.inline.entity-underline",
+          "hasParseDomain": "true",
+          "parseDomainProp": "description"
+        }
+      ]
+    },
+    "nonLinkAnchor": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.decorated-link[target='_new']",
+          "linkText": ":scope",
+          "title": "strong",
+          "description": ":scope"
+        }
+      ]
+    },
+    "textLink": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": ":scope"
+        }
+      ]
+    },
+    "buttonLink": {
+      "type": "sequence",
+      "items": [
+        {
+          "title": "strong",
+          "description": ":scope",
+          "link": "a.rounded-xl"
+        }
+      ]
+    },
+    "nonLinkButton": {
+      "type": "sequence",
+      "items": [
+        {
+          "img": "img",
+          "title": "div.line-clamp-2.text-ellipsis",
+          "price": "div.text-token-text-secondary.text-sm > div:not([class])",
+          "description": "div.text-token-text-secondary.text-sm"
+        }
+      ]
+    },
+    "responseQuery": "article.text-token-text-primary",
+    "popoverQuery": "div[data-radix-popper-content-wrapper]",
+    "popoverElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "primaryLink"
+        }
+      ]
+    },
+    "primaryLink": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "div > div.items-center div.text-token-text-primary span.flex-col a",
+          "linkCount": "div > div.items-center div.text-token-text-primary span.text-token-text-tertiary"
+        }
+      ]
+    },
+    "sidePanel": {
+      "type": "sequence",
+      "items": [
+        {
+          "query": "div.bg-token-sidebar-surface-primary",
+          "loadingIndicator": "div.rounded-md.origin-left.bg-token-border-default",
+          "runLimit": "10000",
+          "runInterval": "500",
+          "runTime": "0"
+        }
+      ]
+    },
+    "sidePanelElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "panelOption",
+          "query": "div.flex-col.rounded-xl.p-3"
+        }
+      ]
+    },
+    "panelOption": {
+      "type": "sequence",
+      "items": [
+        {
+          "title": "div.text-sm.items-center.font-medium div.truncate",
+          "price": "div.flex-row.items-center span.font-semibold"
+        }
+      ]
+    }
+  },
+  "llm_scraper_gaim": {
+    "containerQuery": "div.CKgc1d[jsname=\"CS7uPe\"][jscontroller=\"uUCgYd\"][data-complete=\"true\"]",
+    "containerElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "textLinks",
+          "query": "li[jscontroller=\"vsuOFb\"]:has(a.H23r4e) > span.T286Pc"
+        },
+        {
+          "name": "responseButtonLinks",
+          "query": "div.TmlDpd"
+        },
+        {
+          "name": "responseButtonLinksVariant2",
+          "query": "div.NJWURd"
+        },
+        {
+          "name": "sourcePanelLinks",
+          "query": "div.MFrAxb.BKnikc"
+        },
+        {
+          "name": "webResultButtonLinks",
+          "query": "div.lHqILb"
+        }
+      ]
+    },
+    "textLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.H23r4e",
+          "title": "B",
+          "description": ":scope"
+        }
+      ]
+    },
+    "responseButtonLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.SmjhRb.amIOac",
+          "title": "span.fXRQ6b",
+          "price": "span.hkdwEc, span[class=\"\"]",
+          "oldPrice": "span.RHPjke"
+        }
+      ]
+    },
+    "responseButtonLinksVariant2": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.PTs6Oe[jsname=\"sQeGi\"]",
+          "title": "div.FV4RVb"
+        }
+      ]
+    },
+    "sourcePanelLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.NDNGvf",
+          "title": "div.tKv03",
+          "description": "div.vhJ6Pe"
+        }
+      ]
+    },
+    "webResultButtonLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.ZbQNgf",
+          "title": "div.Nn35F",
+          "description": "div.gtDXBf"
+        }
+      ]
+    },
+    "searchPaneQuery": "div.PG8i1e.Ooz8t.PyLEff",
+    "searchPaneElements": {
+      "type": "sequence",
+      "items": [
+        {
+          "name": "searchPaneLinks",
+          "query": "div.PshwNb"
+        }
+      ]
+    },
+    "searchPanelLinks": {
+      "type": "sequence",
+      "items": [
+        {
+          "link": "a.P9159d.hMk97e.BbI1ub",
+          "title": "div.hP4iBf.gUf0b.uWvFpd",
+          "description": "div.Rp8BL.CpcIhb.y1FcZd.rYkzq",
+          "price": "span.Pgbknd.xUrPFc,div.GBgquf.JIep9e",
+          "oldPrice": "div.AoPnCe.JPwIxc.tBtgqf"
+        }
+      ]
+    },
+    "googleHeaderQuery": "a[selected], div[selected]",
+    "AIModeText": "AI Mode"
+  },
+  "Pre_Checkout_SponsoredProduct_Multi_Offer_Price_Display": {
+    "title": "Reward Offers Found",
+    "not_logged_in_title": "Reward Offers Found",
+    "offer_reward": "{displayReward} back",
+    "prefixed_rewards_text": "Up to {displayReward} back",
+    "info_tooltip_content": "Terms and exclusions apply, ",
+    "info_tooltip_content_link_text": "view exclusions.",
+    "list_price": "List Price",
+    "rewards": "Up to {displayReward} in Rewards",
+    "mid_offer_rewards": "{displayReward} in Rewards",
+    "price_after_rewards": "Price after Rewards",
+    "cta_button_text": "Activate Offer",
+    "rewards_tooltip_content": "Price after Rewards is subject to exclusions, ",
+    "rewards_tooltip_content_link_text": "view exclusions",
+    "card_dm_bg_color": "#474747"
+  },
+  "Post_Checkout_Amazon_Notif": {
+    "title": "Click to Activate Exclusive Offers for You",
+    "rewards_tooltip_content": "Rewards are subject to exclusions, ",
+    "rewards_tooltip_content_link_text": "view exclusions",
+    "containerBgColor": "bg-gray-50",
+    "threshold_reward_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Spend {threshold}, get {threshold_reward} back",
+          "style": "text-green-550 font-bold text-lg"
+        }
+      ]
+    },
+    "rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "{displayReward} back",
+          "style": "text-green-550 font-bold text-lg"
+        }
+      ]
+    },
+    "prefixed_rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Up to {displayReward} back",
+          "style": "text-green-550 font-bold text-lg"
+        }
+      ]
+    },
+    "description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "{merchant}",
+          "style": "text-sm text-gray-400"
+        }
+      ]
+    },
+    "threshold_disclaimer": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Limit one Post Order Bonus offer per user",
+          "style": "text-sm text-gray-400 italic"
+        }
+      ]
+    },
+    "offer_info_icon_color": "text-blue-500",
+    "info_tooltip_content": "Terms and exclusions apply, ",
+    "info_tooltip_content_link_text": "view exclusions."
+  },
+  "Post_Checkout_Multi_Ad_Referrals": {
+    "sub_deal_image": "https://cdn.capitaloneshopping.com/wikibuy-assets/images/upload_content/desktop_pcm_multi_offer_ref.jpeg",
+    "sub_deal_header": {
+      "type": "rich_text",
+      "items": [
+        {
+          "class": "font-bold",
+          "text": "Claim your {senderBonus}!"
+        }
+      ]
+    },
+    "sub_deal_subheader": {
+      "type": "rich_text",
+      "items": [
+        {
+          "class": "font-semibold text-green-500",
+          "text": "Refer to give and get {senderBonus}!"
+        }
+      ]
+    }
+  },
+  "Pre_Checkout_AISearch_CGPT": {
+    "scrollContainer": "div[class*=\"overflow-y-auto\"]:has(div > article)",
+    "title": "Reward Offers Found",
+    "rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Up to {displayReward} back",
+          "style": "text-green-550 dark:text-green-350 font-bold text-lg"
+        }
+      ]
+    },
+    "prefixed_rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Up to {displayReward} back",
+          "style": "text-green-550 dark:text-green-350 font-bold text-lg"
+        }
+      ]
+    },
+    "description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "{merchant}",
+          "style": "text-sm text-gray-400 dark:text-gray-200"
+        }
+      ]
+    },
+    "info_tooltip_content": "Terms and exclusions apply, ",
+    "info_tooltip_content_link_text": "view exclusions.",
+    "rewards_tooltip_content": "Terms placeholder content",
+    "rewards_tooltip_content_link_text": "Link to terms goes here."
+  },
+  "Pre_Checkout_AISearch_CGPT_UR_Embedded": {
+    "headerQuery": "header#page-header",
+    "fullChatContainerQuery": "div:has(> article)",
+    "chatMenuPanelQuery": "div#stage-sidebar-tiny-bar",
+    "scrollContainer": "div[class*=\"overflow-y-auto\"]:has(div > article)",
+    "header": "Click to continue and earn rewards",
+    "rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Up to {displayReward} back",
+          "class": "line-clamp-1 text-green-500 dark:text-green-350 text-lg font-semibold"
+        }
+      ]
+    },
+    "prefixed_rewards_text": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Up to {displayReward} back",
+          "class": "line-clamp-1 text-green-500 dark:text-green-350 text-lg font-semibold"
+        }
+      ]
+    },
+    "description": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "{merchant}",
+          "style": "font-light text-sm text-gray-300 dark:text-gray-100"
+        }
+      ]
+    },
+    "exclusions": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Terms and exclusions apply, ",
+          "style": "italic text-gray-400 dark:text-gray-300"
+        },
+        {
+          "text": "view exclusions",
+          "style": "italic underline text-gray-400 dark:text-gray-300 cursor-pointer",
+          "event": "view_terms"
+        }
+      ]
+    }
+  },
+  "Pre_Checkout_SponsoredProduct_Shadow_User_Modal_Ext": {
+    "loading_text": "Loading your rewards...",
+    "send_rewards": "Where should we send your rewards?",
+    "no_rewards": "No thanks, I don't want my {formattedRewards} rewards",
+    "no_rewards_v_one": "No thanks, I don't want my {formattedRewards} rewards",
+    "no_rewards_v_two": "Proceed to site, I will sign up later",
+    "no_rewards_v_three": "Proceed to site, I will sign up later",
+    "thanks_message": "Thanks! We may email you with important account updates."
+  },
+  "Pre_Checkout_Amazon_Side_Panel_Multi_Offer": {
+    "header": "Reward Offers Found",
+    "activate_offer_cta": "See Offers",
+    "header_click_to_activate": "Click to Activate Rewards",
+    "lifetime_savings": "Lifetime Savings",
+    "offer_list_price": "List Price",
+    "price_after_rewards": "Price after Rewards",
+    "activate_offer": "Activate Offer",
+    "terms_and_exclusions": "Terms and Exclusions",
+    "estimated_rewards": "Estimated Rewards",
+    "lifetime_savings_tooltip": "'Savings' includes price comparison, codes and Shopping Rewards.",
+    "offer_reward": "{display_reward} back",
+    "rewards_tooltip_content": "Price after Rewards is subject to exclusions, view exclusions."
+  },
+  "Pre_Checkout_Amazon_Notification": {
+    "reward_offers_found": "{numberOfOffers} Reward Offers Found",
+    "button_cta_text": "View Offers",
+    "footer": "",
+    "terms_text": "Terms apply.",
+    "body_pre": "Earn up to ",
+    "body_post": " on your purchase."
+  },
+  "Pre_Checkout_Amazon_Overlay_Multi_Offer": {
+    "header_text": "Up to {max_reward} in Rewards found",
+    "offer_list_price": "List Price",
+    "estimated_rewards": "Estimated Rewards",
+    "rewards_tooltip_content": "Price after Rewards is subject to exclusions, view exclusions.",
+    "price_after_rewards": "Price after Rewards",
+    "terms_and_exclusions": "Terms & Exclusions",
+    "header_text_two": "on your search results",
+    "header_text_combined": "Up to {max_reward} in Rewards found on your search results",
+    "offer_reward": "{display_reward} back",
+    "terms": "Terms",
+    "rewards_tooltip_content_rich": {
+      "type": "rich_text",
+      "items": [
+        {
+          "text": "Price after Rewards is subject to exclusions, "
+        },
+        {
+          "class": "underline",
+          "text": "view exclusions"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  },
+  "lifetime_savings": {
+    "lifetime_savings_prefix": "Lifetime",
+    "lifetime_savings_hover_text": "Savings",
+    "lifetime_savings_tooltip": "\"Savings\" includes price comparison, codes, and Shopping Rewards."
+  },
+  "Desktop_Rewards_Notif_Pin_Pill": {
+    "reward_prefix_text_activate": "Click to get",
+    "reward_suffix_text_activate": "back",
+    "reward_prefix_text_activated": "Activated",
+    "reward_suffix_text_activated": "Rewards",
+    "hide_rewards_rate_fallback": "Click to activate rewards"
+  }
+}

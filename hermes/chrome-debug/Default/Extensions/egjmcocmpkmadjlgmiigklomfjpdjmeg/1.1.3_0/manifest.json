@@ -1,0 +1,31 @@
+{
+   "action": {
+      "default_popup": "popup.html",
+      "default_title": "Spectre"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "content-scripts/content.js" ],
+      "matches": [ "https://docs.google.com/*" ],
+      "run_at": "document_start"
+   } ],
+   "description": "",
+   "icons": {
+      "128": "icon/128.png",
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyHfrk+go+rxQgT0SexaQfS28ia6EhlA/AqlrxreW4xryFTrB1kfX1x43XDc8yYmh+lheb4a9MFEHBfRtpCSS0w/R4lY8O5O6/ZNUQLt3ooYG7MzlB5XEr3FbCMv8TZO3zPBvZ5j+ZZkNZFl7Yb4A+ieC370Otyk4SidIiQnMBHEAc8s7wOLg/Imkv2vyPfpExUhkVTUviIS44+PjQhd/UEl528pHKhOVyfhYPxsoCc4g0v0HXBXZ7Q20E1HY6KiPib+z5vcpktfIPdAOhrI88AY7y724PlTbR0xrYWI+G6Wu1mgoGXppbALuzRK1xuoWLkH7tK0eeUlkWkCK4fbUNQIDAQAB",
+   "manifest_version": 3,
+   "name": "Spectre: AI Editor for Google Docs",
+   "permissions": [ "storage", "tabs" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.1.3",
+   "web_accessible_resources": [ {
+      "matches": [ "https://docs.google.com/*" ],
+      "resources": [ "gdocs-main.js" ]
+   } ]
+}

@@ -1,0 +1,35 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "icons/icon16.png",
+         "48": "icons/icon48.png"
+      },
+      "default_title": "Toggle SnapCode"
+   },
+   "background": {
+      "service_worker": "service-worker-loader.js",
+      "type": "module"
+   },
+   "content_scripts": [ {
+      "css": [  ],
+      "js": [ "assets/index.tsx-C4LnaxBA.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "description": "A floating code formatting and export tool for developers.",
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA01lb8k73vDZaWoYCracqwCRQ/sDmVzGVDFlhf8sTi+9iEtbU5APYHn2Yk4pNAQJNQ4bagvLoVAnhA3bidcNTf80t7FxR3sK5ONkTCkW8WDd/wIzmPmOZBpCpvwgLk7FZ/GkE1ZUw7oSawo0TXlszPQtL2VY7oiZ3tW0TQPtlKK1a/xuOxWoY24d+5AytzVKIn59yMGSBkY4Ta73H+EBn3/BkMSpICQKe6uj8YiquroPXVdVHtv7qgS59CIgtvXKGguOlFtMK/fGb5ckgDDY5VhhNqCRXjDSkgTRO9Vgl+KNOJgB+KrVNXNTLlmRPv/ibWBPZdpj0hL6IKkAM0OvrowIDAQAB",
+   "manifest_version": 3,
+   "name": "SnapCode",
+   "permissions": [ "activeTab", "storage", "clipboardRead" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.1.3",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "assets/*", "src/content/styles.css", "assets/index.tsx-C4LnaxBA.js" ],
+      "use_dynamic_url": false
+   } ]
+}

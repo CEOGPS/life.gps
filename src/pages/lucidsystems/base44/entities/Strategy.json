@@ -1,0 +1,43 @@
+{
+  "name": "Strategy",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "how_it_works": {
+      "type": "string"
+    },
+    "estimated_profit_min": {
+      "type": "number"
+    },
+    "estimated_profit_max": {
+      "type": "number"
+    },
+    "risks": {
+      "type": "string"
+    },
+    "time_commitment": {
+      "type": "string"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "platforms_needed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "approved", "declined"],
+      "default": "pending"
+    }
+  },
+  "required": ["name", "description", "difficulty"]
+}

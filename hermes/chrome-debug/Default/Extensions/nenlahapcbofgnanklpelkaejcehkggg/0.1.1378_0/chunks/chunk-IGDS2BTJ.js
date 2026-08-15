@@ -1,0 +1,1 @@
+import{e,f as o}from"./chunk-HZKW245B.js";import{C as i,c as r,u as t}from"./chunk-AEOFJBCD.js";o();function f({params:n={},isWbPublisher:a=!1}={}){return e({params:n,isWbPublisher:a,sessionId:r.get(["session","id"]),rewardsEngineEnabled:t("rewards_engine_enabled"),WIKIBUY_API:i})}export{f as a};

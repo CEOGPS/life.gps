@@ -1,0 +1,1 @@
+import{d as n,L as o,v as a,h as s,e as r}from"./sidepanel-DRMP5oPj.js";const m=n({__name:"MonetizationModeContent",setup(i){const{isMonetizationEnabled:e}=o();return(t,_)=>r(e)?a(t.$slots,"default",{key:0}):s("",!0)}});export{m as _};

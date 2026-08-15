@@ -1,0 +1,36 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "assets/sheetsgpt (128 x 128 px).png",
+         "16": "assets/sheetsgpt (16 x 16px).png",
+         "48": "assets/sheetsgpt (48 x 48 px).png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "dist/background.js",
+      "type": "module"
+   },
+   "content_scripts": [ {
+      "js": [ "content_script.js" ],
+      "matches": [ "*://www.sheets-gpt.com/*" ]
+   } ],
+   "content_security_policy": {
+      "sandbox": "sandbox allow-scripts; script-src 'self'"
+   },
+   "description": "AI extension that uses AI to provide Sheets functions",
+   "externally_connectable": {
+      "matches": [ "*://www.sheets-gpt.com/*" ]
+   },
+   "icons": {
+      "128": "assets/sheetsgpt (128 x 128 px).png",
+      "16": "assets/sheetsgpt (16 x 16px).png",
+      "48": "assets/sheetsgpt (48 x 48 px).png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgAhW/IgTwon/7v2tgZ0UlPsO4iqgXxgys6WDh0at3OvC3WsORaZGF0SIkJB2F8AoxCZ2zBvJQxmQvxDQCIQR65lDw0atHgI2RsVw4SgMQtNB7eV6ev6MvbIpFF33z5YcKi4RgTICll+J96o4PWV/FGBfa4eYZxxGtT1KJvjx+TLiyIGFQ5QrsLthDKY8siO0zT4ICl1fyAE5fl/1zOLDKZPpEVHAW5EMWVrA+Me1Q8He7VB2EEy9TO1xBKuaBw47Hw61fTawRWM2yL4zx6JR2wVumv5vZtD+KthuNy0jnMJQEJY30BwAoKTvdNsvCDHP/tLvgaOZouKnGOuqGQmETQIDAQAB",
+   "manifest_version": 3,
+   "name": "SheetsGPT - AI Google Sheets Formula Maker",
+   "permissions": [ "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.3"
+}

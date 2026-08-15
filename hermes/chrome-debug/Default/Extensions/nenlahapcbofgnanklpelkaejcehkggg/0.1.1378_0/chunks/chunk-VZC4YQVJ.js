@@ -1,0 +1,1 @@
+import{b as t}from"./chunk-DXB73IDG.js";function n(){return new Promise(e=>{chrome.storage.local.get(o,r=>{e(r[o])})})}function i(e){return new Promise(r=>{chrome.storage.local.set({[o]:e},r)})}var o,s=t(()=>{"use strict";o="crossWorldScriptSignature"});export{n as a,i as b,s as c};

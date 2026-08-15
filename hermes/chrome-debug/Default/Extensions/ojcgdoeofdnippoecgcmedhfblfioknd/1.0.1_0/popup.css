@@ -1,0 +1,195 @@
+/* SnapCode Pro - Popup Specific Styles */
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --success: #10b981;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    --border: #e2e8f0;
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+
+
+.sc-popup-body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    min-width: 340px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.sc-container {
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.sc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.sc-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sc-logo-box {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.sc-title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.sc-title-group span {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Menu */
+.sc-menu {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sc-menu-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+    font-family: inherit;
+}
+
+.sc-menu-item:hover {
+    border-color: var(--primary);
+    background-color: var(--bg-alt, #f7f9ff);
+    transform: translateX(4px);
+}
+
+.sc-icon-wrapper {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+}
+
+.sc-icon-extract {
+    background-color: var(--primary);
+}
+
+.sc-icon-full {
+    background-color: #10b981;
+}
+
+.sc-icon-element {
+    background-color: #f59e0b;
+}
+
+.sc-menu-info {
+    flex: 1;
+}
+
+.sc-menu-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 2px 0;
+}
+
+.sc-menu-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.sc-arrow {
+    color: var(--text-light);
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.sc-menu-item:hover .sc-arrow {
+    color: var(--primary);
+    transform: translateX(2px);
+}
+
+/* IconButton */
+.sc-btn-icon {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.sc-btn-icon:hover {
+    color: var(--text-main);
+    border-color: var(--primary);
+}
+
+/* Footer */
+.sc-footer {
+    padding: 12px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+}
+
+.sc-version {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* 
+ * SnapCode Shadow DOM Styles
+ * These styles are injected into the Shadow DOM, providing complete isolation
+ * from the host page's styles.
+ */
+
+/* Prevent scroll chaining to the host page */
+.snap-code-scrollbar,
+.overflow-auto,
+.overflow-y-auto,
+.overflow-x-auto {
+  overscroll-behavior: contain;
+}
+
+/* Custom scrollbar for the code editor */
+.snap-code-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.snap-code-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.snap-code-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.5);
+  border-radius: 4px;
+}
+
+.snap-code-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.8);
+}

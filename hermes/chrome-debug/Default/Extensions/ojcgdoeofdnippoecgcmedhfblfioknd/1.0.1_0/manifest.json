@@ -1,0 +1,31 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icons/icon128.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "SnapCode Pro"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "css": [ "styles.css" ],
+      "js": [ "content.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "description": "Capture the Design, Extract the Code. High-fidelity HTML/CSS extraction and intelligent full-page screenshots for modern developers.",
+   "icons": {
+      "128": "icons/icon128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtANKvwz1sfz37B9/9DSjVl/ugMZHE7ZgcVVx+2upMPvWPa8Jo3wc6LPN7tfbudthbu+f1YvgNUMzkvLXAswdZ/ZQw5hKieyeQ262NwqRymzRoDTFnMUPBXE2Hr16YFRdMHU/ZHFYO8rp7h9RKTm9xhcAyO73RUxcyu84kWJIzXXBZnKaWsQDhCeav3P/m1CpySXX5sNOUndcr8IuY3TQpHC1Xiqx9YsV2GzaUDoYxCc7aQGVMLmLc+SleCaUb8vFOlLh7+5RLvKuu0Hqo1/+qPjn8nNyR1bKs8VSIByw4IheW2+q+ppAKUQxNYyo1hB+fFvBnci3dnpa+IEL2qz8XwIDAQAB",
+   "manifest_version": 3,
+   "name": "SnapCode Pro",
+   "permissions": [ "activeTab", "scripting", "storage", "downloads", "tabs" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.1",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "styles.css" ]
+   } ]
+}

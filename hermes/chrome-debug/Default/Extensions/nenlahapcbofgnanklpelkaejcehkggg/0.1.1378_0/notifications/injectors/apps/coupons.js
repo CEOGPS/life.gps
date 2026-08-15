@@ -1,0 +1,1 @@
+(async function(){let{injectNotificationScript:i}=await import(chrome.runtime.getURL("/notifications/injectors/injectNotificationScript.js"));if(chrome.runtime.getManifest().manifest_version>2){let{perfLog:t}=await import("../../../chunks/console-3NZUETXM.js");t("COUPON INJECTOR")}i("watch"),i("coupons"),i("mirageNotification"),i("dewey")})();

@@ -1,0 +1,42 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icons/icon128.png",
+         "16": "icons/icon16.png",
+         "48": "icons/icon48.png"
+      },
+      "default_popup": "popup/index.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "commands": {
+      "toggle-dark-mode": {
+         "description": "Toggle dark mode on/off",
+         "suggested_key": {
+            "default": "Alt+Shift+D",
+            "mac": "Alt+Shift+D"
+         }
+      }
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "content.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "description": "Thoughtful dark mode for Google™ Docs — theme presets, focus mode, and auto-schedule.",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvSK9ajJWiDrDbmuZF8PLRLcyGRAztX+lz0IaMs4fVfpmgx5Gxkwcr7h4iPgUuPlgAXaamQpXULdejFti7ELDoKG/Z1K/nFcB2hQMbM8oMRcT5i0UDfgFTGwOh0CNQH/Q8IFCI3p2L4agbuDJ3ihZLrDSBrC/uIqmYlC32hMOXDCQqeeHen6W+O3LFWad1GbvsHClNHI1sMxOmVpB4XvlxPKLKYMElxylY0wXUVgva/TP4LLtONisqNoqb5Y1j7i+37ZKZ0Ks+TwIOdav5lA235cgBw1bmdXoGGD+jlvC08olQ1laJYiLjK5NhM0Yz/EOwiEl8RKqTtiODJbXIutO1wIDAQAB",
+   "manifest_version": 3,
+   "name": "Dark mode for Google™ Docs",
+   "optional_permissions": [ "alarms" ],
+   "permissions": [ "storage", "scripting", "notifications" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.3.4"
+}

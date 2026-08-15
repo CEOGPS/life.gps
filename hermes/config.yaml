@@ -1,0 +1,693 @@
+model:
+  base_url: ''
+  default: deepseek-coder:6.7b
+  provider: ollama-local
+  routing:
+    accessibility: claude-3-haiku:free
+    coding: qwen/qwen-2.5-coder-32b-instruct:free
+    performance: meta-llama/llama-3.3-70b-instruct:free
+    testing: deepseek/deepseek-v4-pro:free
+    ui_design: google/gemini-2.0-pro-exp-02-05:free
+providers:
+  ollama-launch:
+    api: http://127.0.0.1:11434/v1
+    default_model: gemma4:e4b
+    models:
+      - gemma4:e4b
+      - qwen3.6:35b-a3b
+      - kimi-k2.6:cloud
+      - moondream:latest
+    name: Ollama
+  ollama-local:
+    base_url: http://localhost:11434/v1
+    default_model: qwen2.5-coder:14b
+    extra_body:
+      enable_thinking: true
+      temperature: 0.3
+      top_p: 0.9
+    models:
+      - qwen2.5-coder:14b
+      - deepseek-coder:6.7b
+      - llama3.3:latest
+      - codellama:13b
+  openrouter:
+    base_url: https://openrouter.ai/api/v1
+    default_model: google/gemini-2.0-flash-exp:free
+    max_retries: 3
+    models:
+      - google/gemini-2.0-pro-exp-02-05:free
+      - google/gemini-2.0-flash-exp:free
+      - anthropic/claude-3-haiku:free
+      - qwen/qwen-2.5-coder-32b-instruct:free
+      - deepseek/deepseek-coder-6.7b-instruct:free
+      - mistral/mistral-7b-instruct:free
+      - meta-llama/llama-3.3-70b-instruct:free
+      - microsoft/phi-3.5-mini-128k-instruct:free
+      - nousresearch/hermes-2-pro-llama-3-8b:free
+      - perplexity/llama-3.1-sonar-small-128k-online:free
+    timeout: 120
+toolsets:
+  - hermes-cli
+  - web
+  - browser
+  - file
+  - terminal
+  - code_execution
+  - memory
+  - skills
+  - figma
+  - sketch
+  - adobe_xd
+  - penpot
+  - react
+  - vue
+  - svelte
+  - angular
+  - tailwind
+  - bootstrap
+  - material_ui
+  - chakra_ui
+  - radix_ui
+  - shadcn_ui
+  - vite
+  - webpack
+  - rollup
+  - esbuild
+  - parcel
+  - jest
+  - vitest
+  - cypress
+  - playwright
+  - storybook
+  - chromatic
+  - lighthouse
+  - web_vitals
+  - bundle_analyzer
+  - image_optimizer
+  - font_optimizer
+  - axe
+  - pa11y
+  - wave
+  - design_tokens
+  - style_dictionary
+  - theming
+  - framer_motion
+  - gsap
+  - anime_js
+  - lottie
+  - vercel
+  - netlify
+  - cloudflare
+  - github_pages
+  - surge
+  - prettier
+  - eslint
+  - stylelint
+  - typescript
+  - biome
+  - supabase
+  - firebase
+  - appwrite
+  - pocketbase
+  - rest_api
+  - graphql
+  - websocket
+  - git
+  - github
+  - gitlab
+  - trello
+  - jira
+  - linear
+  - notion
+agent:
+  max_turns: 500
+  api_max_retries: 5
+  service_tier: normal
+  personalities:
+    webgod: 'You are Thanos, a godlike UI/UX architect and full-stack engineer with
+      20 years of experience. You work at a digital marketing agency (CEO GPS) under
+      Chris.
+
+
+      UI/UX DESIGN PHILOSOPHY:
+
+      - Design with purpose: Every element serves a user need or business goal
+
+      - Mobile-first responsive design
+
+      - Accessibility is not optional (WCAG 2.1 AA minimum)
+
+      - Performance is UX: sub-2s initial load, sub-100ms interactions
+
+      - Design systems over one-offs: consistent components, tokens, patterns
+
+      - Test with real users; iterate based on feedback
+
+
+      UI DESIGN PROCESS (12-HOUR DAY):
+
+      1. 00:00-02:00: Discovery (user flows, wireframes, requirements)
+
+      2. 02:00-04:00: Design System (colors, typography, spacing, components)
+
+      3. 04:00-07:00: High-Fidelity Mockups (Figma/HTML prototypes)
+
+      4. 07:00-09:00: Implementation (React/Vue/Svelte components)
+
+      5. 09:00-10:30: Testing & Optimization (performance, accessibility)
+
+      6. 10:30-12:00: Polish & Deployment (animations, edge cases, prod)
+
+
+      FRAMEWORK STACKS (Auto-detect and use best):
+
+      - React: Next.js, Vite, CRA, Tailwind, Chakra, Material-UI, Radix
+
+      - Vue: Nuxt, Vite, Quasar, Vuetify, Tailwind
+
+      - Svelte: SvelteKit, Vite, Tailwind
+
+      - Vanilla: HTML5, CSS3, JavaScript, Web Components
+
+
+      RESPONSE STYLE:
+
+      - Actionable: Give me code, not theory
+
+      - Complete: Full files with imports, exports, types
+
+      - Performant: Optimized for Core Web Vitals
+
+      - Accessible: aria labels, semantic HTML, keyboard navigation
+
+      - Beautiful: Attention to spacing, color, typography, animation
+
+      '
+  reasoning_effort: medium
+  verbose: true
+terminal:
+  backend: local
+  cwd: C:/dev/LifeOS1
+  timeout: 900
+  home_mode: auto
+  container_cpu: 8
+  container_memory: 32768
+  container_disk: 204800
+  container_persistent: true
+  docker_mount_cwd_to_workspace: true
+  lifetime_seconds: 7200
+  path_prefix: C:/Users/chris/AppData/Local/hermes/bin;C:/Program Files/nodejs;C:/dev/LifeOS1/node_modules/.bin
+browser:
+  inactivity_timeout: 600
+  allow_private_urls: true
+  devtools: true
+  headless: false
+  pdf_export: true
+  screenshots: true
+  user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+  viewport:
+    height: 1080
+    width: 1920
+checkpoints:
+  enabled: true
+  auto_save: true
+  checkpoint_dir: ~/.hermes/checkpoints
+  max_checkpoints: 20
+  save_interval: 3
+tool_loop_guardrails:
+  warnings_enabled: true
+  hard_stop_enabled: true
+  warn_after:
+    exact_failure: 3
+    same_tool_failure: 3
+    idempotent_no_progress: 3
+  hard_stop_after:
+    exact_failure: 10
+    same_tool_failure: 8
+    idempotent_no_progress: 10
+compression:
+  enabled: true
+  threshold: 0.7
+  target_ratio: 0.3
+  protect_last_n: 50
+  protect_first_n: 10
+prompt_caching:
+  cache_ttl: 30m
+  enabled: true
+  max_cache_size: 2000
+  similarity_threshold: 0.9
+display:
+  compact: false
+  personality: concise
+  busy_input_mode: interrupt
+  bell_on_complete: true
+  show_reasoning: true
+  streaming: true
+  skin: default
+  interim_assistant_messages: true
+  background_process_notifications: all
+  busy_ack_detail: true
+  cleanup_progress: true
+  debug_mode: false
+  long_running_notifications: true
+  tool_progress: all
+tts:
+  edge:
+    voice: Rain
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  memory_char_limit: 10000
+  user_char_limit: 4000
+  embedding_model: togethercomputer/m2-bert-80M-8k-retrieval:free
+  flush_min_turns: 10
+  nudge_interval: 12
+delegation:
+  model: deepseek-v4-pro
+  provider: ollama-local
+  max_iterations: 150
+  reasoning_effort: medium
+  max_concurrent_children: 4
+  auto_configure: true
+  cost_aware: true
+  smart_routing: true
+  ui_specific:
+    a11y_lead: anthropic/claude-3-haiku:free
+    component_lead: qwen/qwen-2.5-coder-32b-instruct:free
+    design_lead: google/gemini-2.0-pro-exp-02-05:free
+    perf_lead: meta-llama/llama-3.3-70b-instruct:free
+moa:
+  presets:
+    accessibility_check:
+      aggregator_model: anthropic/claude-3-haiku:free
+      fanout: per_turn
+      min_models: 2
+      reference_models:
+        - anthropic/claude-3-haiku:free
+        - google/gemini-2.0-flash-exp:free
+    component_building:
+      aggregator_model: microsoft/phi-3.5-mini-128k-instruct:free
+      fanout: per_iteration
+      min_models: 3
+      reference_models:
+        - qwen/qwen-2.5-coder-32b-instruct:free
+        - deepseek/deepseek-coder-6.7b-instruct:free
+        - google/gemini-2.0-flash-exp:free
+    ui_design:
+      aggregator_model: google/gemini-2.0-flash-exp:free
+      fanout: per_iteration
+      min_models: 5
+      reference_models:
+        - google/gemini-2.0-pro-exp-02-05:free
+        - qwen/qwen-2.5-coder-32b-instruct:free
+        - anthropic/claude-3-haiku:free
+        - meta-llama/llama-3.3-70b-instruct:free
+        - mistral/mistral-7b-instruct:free
+  aggregator:
+    model: google/gemini-2.0-flash-exp:free
+    provider: openrouter
+    system_prompt: 'Synthesize the best UI/UX design from multiple perspectives.
+
+      Choose the most accessible, performant, and visually appealing solution.
+
+      '
+    temperature: 0.3
+  enabled: true
+  fanout: per_iteration
+  max_tokens: 8192
+  min_models: 4
+  reference_models:
+    - model: google/gemini-2.0-pro-exp-02-05:free
+      provider: openrouter
+      temperature: 0.2
+      weight: 1
+    - model: qwen/qwen-2.5-coder-32b-instruct:free
+      provider: openrouter
+      temperature: 0.2
+      weight: 1
+    - model: anthropic/claude-3-haiku:free
+      provider: openrouter
+      temperature: 0.1
+      weight: 0.9
+    - model: meta-llama/llama-3.3-70b-instruct:free
+      provider: openrouter
+      temperature: 0.3
+      weight: 0.8
+    - model: mistral/mistral-7b-instruct:free
+      provider: openrouter
+      temperature: 0.7
+      weight: 0.6
+    - model: microsoft/phi-3.5-mini-128k-instruct:free
+      provider: openrouter
+      temperature: 0.1
+      weight: 0.5
+skills:
+  auto_create: true
+  creation_nudge_interval: 10
+  skillsets:
+    - name: Responsive Design
+      description: Mobile-first responsive layouts with Tailwind
+      examples:
+        - Create a responsive dashboard with Tailwind CSS
+        - Build a mobile-first navigation system
+    - name: Component Library
+      description: Build reusable component systems
+      examples:
+        - Create a button system with variants
+        - Design a form component library
+    - name: Design Tokens
+      description: Generate and manage design tokens
+      examples:
+        - Convert Figma design tokens to CSS
+        - Create a theme system with CSS variables
+    - name: Accessibility
+      description: WCAG 2.1 AA compliance testing and fixes
+      examples:
+        - Run accessibility audit on the current page
+        - Fix color contrast issues
+    - name: Performance Optimization
+      description: Core Web Vitals optimization
+      examples:
+        - Analyze Lighthouse scores and optimize
+        - Optimize bundle size with code splitting
+    - name: Animation
+      description: Smooth animations and micro-interactions
+      examples:
+        - Add a fade-in animation to elements
+        - Create a loading skeleton with animations
+    - name: Design to Code
+      description: Convert designs to production code
+      examples:
+        - Implement Figma design in React
+        - Convert design mockup to HTML/CSS
+command_allowlist:
+  - npm init
+  - npm install
+  - npm install -D
+  - npm install --save
+  - npm install --workspace
+  - yarn add
+  - yarn add -D
+  - yarn create
+  - pnpm add
+  - pnpm install
+  - bun install
+  - bun add
+  - deno install
+  - npm run build
+  - npm run dev
+  - npm run start
+  - npm run preview
+  - npm run serve
+  - npm run generate
+  - npm run export
+  - npm run build:prod
+  - npm run build:dev
+  - yarn build
+  - yarn dev
+  - yarn start
+  - yarn preview
+  - pnpm build
+  - pnpm dev
+  - pnpm start
+  - npx create-react-app
+  - npx create-next-app
+  - npx create-vite
+  - npx create-nuxt-app
+  - npx create-svelte
+  - npx create-remix
+  - ng new
+  - vue create
+  - svelte add
+  - nuxt build
+  - next build
+  - npx tailwindcss init
+  - npx shadcn-ui@latest init
+  - npx @chakra-ui/cli tokens
+  - npx @material-ui/codemod
+  - npm test
+  - npm run test:coverage
+  - npm run test:ui
+  - npm run test:e2e
+  - npm run test:watch
+  - yarn test
+  - yarn test:coverage
+  - yarn test:ui
+  - vitest
+  - vitest run
+  - vitest watch
+  - vitest coverage
+  - cypress run
+  - cypress open
+  - playwright test
+  - playwright codegen
+  - npx storybook@latest init
+  - npm run storybook
+  - npm run build-storybook
+  - npm run chromatic
+  - npm run lighthouse
+  - npm run web-vitals
+  - npm run bundle-analyzer
+  - npx lighthouse-ci
+  - npx web-vitals
+  - npx bundle-wizard
+  - npx axe
+  - npx pa11y
+  - npm run a11y
+  - npx @axe-core/cli
+  - npx figma-cli
+  - npx @figma/plugin-typings
+  - npx figma-export
+  - npx design-tokens
+  - vite build
+  - vite preview
+  - webpack build
+  - webpack serve
+  - rollup build
+  - esbuild build
+  - parcel build
+  - npx vercel
+  - npx vercel deploy
+  - npx netlify deploy
+  - npx netlify build
+  - npx wrangler publish
+  - npx wrangler dev
+  - npx surge
+  - npx gh-pages
+  - npx prettier --write
+  - npx prettier --check
+  - npx eslint --fix
+  - npx eslint .
+  - npx stylelint --fix
+  - npx stylelint .
+  - npx tsc --noEmit
+  - npx tsc --build
+  - npx biome check
+  - npx biome format
+  - npx imagemin
+  - npx sharp
+  - npx squoosh
+  - npx @squoosh/cli
+  - npx svgo
+  - npx optimize-images
+  - git init
+  - git add
+  - git commit
+  - git push
+  - git pull
+  - git branch
+  - git checkout
+  - git merge
+  - git rebase
+  - git stash
+  - git tag
+  - git log
+  - git status
+  - git diff
+  - git reset
+  - git revert
+  - git cherry-pick
+  - gh repo create
+  - gh pr create
+  - gh pr merge
+  - gh issue list
+  - gh issue create
+  - gh workflow run
+  - gh release create
+  - ls
+  - ls -la
+  - ls -al
+  - grep
+  - grep -r
+  - find
+  - tree
+  - cat
+  - head
+  - tail
+  - wc
+  - du
+  - df
+  - ps aux
+  - kill
+  - pkill
+  - curl
+  - wget
+  - python
+  - python3
+  - node
+  - npm
+  - npx
+  - yarn
+  - pnpm
+  - bun
+  - deno
+security:
+  allow_private_urls: true
+  allowed_domains:
+    - figma.com
+    - sketch.com
+    - adobe.com
+    - github.com
+    - npmjs.com
+    - cdn.jsdelivr.net
+    - fonts.googleapis.com
+    - fonts.gstatic.com
+  file_access: project_only
+  network_access: full
+  sandbox_level: moderate
+code_execution:
+  languages:
+    react:
+      build: npm run build
+      dev: npm run dev
+      frameworks:
+        - next
+        - vite
+        - cra
+        - remix
+        - gatsby
+      interpreter: node
+      lint: npm run lint
+      packages: npm
+      test: npm test
+    svelte:
+      build: npm run build
+      dev: npm run dev
+      frameworks:
+        - sveltekit
+        - vite
+      interpreter: node
+      packages: npm
+      test: npm test
+    vanilla:
+      build: npm run build
+      dev: npm run dev
+      frameworks:
+        - vite
+        - parcel
+      interpreter: node
+      packages: npm
+    vue:
+      build: npm run build
+      dev: npm run dev
+      frameworks:
+        - nuxt
+        - vite
+        - vue-cli
+      interpreter: node
+      lint: npm run lint
+      packages: npm
+      test: npm test
+  max_tool_calls: 200
+  memory_limit: 4096
+  timeout: 900
+streaming:
+  enabled: true
+  chunk_size: 50
+onboarding:
+  seen:
+    busy_input_prompt: true
+    tool_progress_prompt: true
+updates:
+  pre_update_backup: true
+  backup_keep: 10
+  non_interactive_local_changes: stash
+  auto_update: false
+_config_version: 33
+gui_tools:
+  color_tools:
+    accessibility_contrast: true
+    color_palette: true
+    enabled: true
+    theme_generator: true
+  enabled: true
+  figma_integration:
+    api_key_env: FIGMA_API_KEY
+    enabled: true
+    export_formats:
+      - svg
+      - png
+      - pdf
+      - html
+      - css
+      - react
+      - vue
+      - svelte
+  tools:
+    - figma_auto_layout
+    - color_palette_generator
+    - typography_scale
+    - spacing_grid
+    - component_browser
+    - design_tokens_manager
+    - responsive_preview
+    - accessibility_checker
+    - performance_analyzer
+    - animation_timeline
+  typography_tools:
+    enabled: true
+    font_pairing: true
+    google_fonts: true
+    responsive_typography: true
+session_reset:
+  at_hour: 23
+  idle_minutes: 120
+  mode: gentle
+
+# ── Security ──────────────────────────────────────────────────────────
+# Secret redaction is ON by default — strings that look like API keys,
+# tokens, and passwords are masked in tool output, logs, and chat
+# responses before the model or user ever sees them. Set redact_secrets
+# to false to disable (e.g. when developing the redactor itself).
+# tirith pre-exec scanning is enabled by default when the tirith binary
+# is available. Configure via security.tirith_* keys or env vars
+# (TIRITH_ENABLED, TIRITH_BIN, TIRITH_TIMEOUT, TIRITH_FAIL_OPEN).
+#
+# security:
+#   redact_secrets: true
+#   tirith_enabled: true
+#   tirith_path: "tirith"
+#   tirith_timeout: 5
+#   tirith_fail_open: true
+
+# ── Fallback Model ────────────────────────────────────────────────────
+# Automatic provider failover when primary is unavailable.
+# Uncomment and configure to enable. Triggers on rate limits (429),
+# overload (529), service errors (503), or connection failures.
+#
+# Supported providers:
+#   openrouter   (OPENROUTER_API_KEY)  — routes to any model
+#   openai-codex (OAuth — hermes auth) — OpenAI Codex
+#   nous         (OAuth — hermes auth) — Nous Portal
+#   zai          (ZAI_API_KEY)         — Z.AI / GLM
+#   kimi-coding  (KIMI_API_KEY)        — Kimi / Moonshot
+#   kimi-coding-cn (KIMI_CN_API_KEY)   — Kimi / Moonshot (China)
+#   minimax      (MINIMAX_API_KEY)     — MiniMax
+#   minimax-cn   (MINIMAX_CN_API_KEY)  — MiniMax (China)
+#   bedrock      (AWS IAM / boto3)     — AWS Bedrock (Converse API)
+#
+# For custom OpenAI-compatible endpoints, add base_url and key_env.
+#
+# fallback_model:
+#   provider: openrouter
+#   model: anthropic/claude-sonnet-4

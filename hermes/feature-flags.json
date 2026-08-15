@@ -1,0 +1,31 @@
+{
+  "version": "2.2.1",
+  "flags": {
+    "user_surveys": false,
+    "onboarding_injection": false,
+    "welcome_page_enabled": true,
+    "welcome_page_excluded_clients": [],
+    "experiments": {
+      "OnboardingPreTool": {
+        "variants": [
+          {
+            "name": "showOnboardingPage",
+            "weight": 100
+          }
+        ]
+      },
+      "McpUiPreviews": {
+        "variants": [
+          {
+            "name": "showMCPUi",
+            "weight": 50
+          },
+          {
+            "name": "notShowMCPUi",
+            "weight": 50
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,497 @@
+{
+   "BulkTitleAvailable": {
+      "message": "Опція масового пошуку доступна лише користувачам на преміум-тарифах"
+   },
+   "addToList": {
+      "message": "Додати до списку"
+   },
+   "allDomainEmails": {
+      "message": "Усі адреси з домену"
+   },
+   "allOther": {
+      "message": "Інші"
+   },
+   "alreadySavedProspect": {
+      "message": "Раніше ви вже зберігали цей контакт"
+   },
+   "alreadySavedProspectText": {
+      "message": "Клікніть на профіль контакта, щоб побачити всі зібрані дані, або «\u003Cb>Зберегти\u003C/b>», щоб додати контакт до іншого списку."
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Знаходьте email-адреси на будь-якому сайті. Наш Email Finder дозволяє збирати адреси пошти лідів та збільшувати продажі."
+   },
+   "appName": {
+      "description": "Maximum of 45 characters. The title of the application, displayed in the web store and in install dialog.",
+      "message": "Email Finder від Snov.io"
+   },
+   "appShortName": {
+      "description": "Maximum of 12 characters recommended. Is a short version of the app's name.",
+      "message": "Snov.io"
+   },
+   "back": {
+      "message": "Назад"
+   },
+   "backToCompanies": {
+      "message": "Назад до компаній"
+   },
+   "cantFindList": {
+      "message": "Не вдалося знайти список"
+   },
+   "chooseWhatNeed": {
+      "message": "Виберіть:"
+   },
+   "collectCompYelp": {
+      "message": "Збирайте дані компаній з Yelp.com"
+   },
+   "collectContactsWebsite": {
+      "message": "Збирайте контакти на будь-якому сайті"
+   },
+   "collectingProspects": {
+      "message": "Збираємо контакти..."
+   },
+   "collectingProspectsText": {
+      "message": "Не закривайте вікно, допоки ми не збережемо всі контакти."
+   },
+   "company_foundOnPage": {
+      "message": "Знайдено компанії на цій сторінці"
+   },
+   "createNewList": {
+      "message": "Новий список"
+   },
+   "createSelectList": {
+      "message": "Створіть або виберіть список"
+   },
+   "creditFreeLimit": {
+      "message": "На жаль, ви вичерпали денний ліміт 10 кредитів, установлений для вашого акаунта."
+   },
+   "creditsUsed": {
+      "message": "Використано кредитів"
+   },
+   "css_no_credits": {
+      "message": "Немає кредитів"
+   },
+   "css_savingError": {
+      "message": "Помилка збереження"
+   },
+   "css_unsavable": {
+      "message": "Неможливо зберегти"
+   },
+   "css_update": {
+      "message": "оновити"
+   },
+   "deletedProfile": {
+      "message": "Неможливо зберегти профіль контакта у зв'язку з вимогою власника приховати його дані."
+   },
+   "departmentEmails": {
+      "message": "Адреси відділів"
+   },
+   "doesntWorkOnFbText": {
+      "message": "Спробуйте знайти своїх ідеальних лідів з десятком інших \u003Ca href='https://snov.io/knowledgebase/ua/prospecting_tools-ua/' target='_blank'>тулів для пошуку потенційних клієнтів\u003C/a> на нашій онлайн-платформі Snov.io."
+   },
+   "doesntWorkOnFbTitle": {
+      "message": "Халепа! Це розширення не працює у Facebook"
+   },
+   "doesntWorkOnLiText": {
+      "message": "Спробуйте інші \u003Ca href=\"https://snov.io/extension\" target=\"_blank\">розширення Snov.io\u003C/a> та знайдіть своїх ідеальних лідів!"
+   },
+   "doesntWorkOnLiTitle": {
+      "message": "Халепа! Це розширення не працює у LinkedIn"
+   },
+   "email": {
+      "message": "email-адреса"
+   },
+   "emailType": {
+      "message": "Тип email-адрес:"
+   },
+   "emails": {
+      "message": "email-адреси"
+   },
+   "emails5": {
+      "message": "email-адрес"
+   },
+   "emailsFound": {
+      "message": "Знайдено email-адрес"
+   },
+   "emailsNotFound": {
+      "message": "Email-адреси не знайдені"
+   },
+   "emailsNotFoundText": {
+      "message": "Не знайдено email-адреси, пов'язані з цією компанією. Спробуйте знайти своїх ідеальних лідів з десятком інших \u003Ca href='https://snov.io/knowledgebase/ua/prospecting_tools-ua/' target='_blank'>тулів для пошуку потенційних клієнтів\u003C/a> на нашій онлайн-платформі Snov.io."
+   },
+   "emailsOnly": {
+      "message": "Тільки email-адреси"
+   },
+   "emailsPerDomain": {
+      "message": "К-сть email-адрес з домену:"
+   },
+   "emailsSaved": {
+      "message": "Email-адреси збережено!"
+   },
+   "employeeEmails": {
+      "message": "Адреси працівників"
+   },
+   "employees": {
+      "message": "співробітників"
+   },
+   "error": {
+      "message": "Помилка"
+   },
+   "errorSaveTwitter": {
+      "message": "Не вдається зберегти контакт. Вийдіть з облікового запису Twitter та спробуйте ще раз."
+   },
+   "f5": {
+      "message": "Будь ласка, спробуйте оновити сторінку"
+   },
+   "findContacts": {
+      "message": "Шукати контакти \u003Cimg src='../img/svg/arrow-corner.svg' alt='go-to-list-arrow'>"
+   },
+   "findIndEmails": {
+      "message": "Шукайте email-адреси конкретних контактів"
+   },
+   "getRelevantEmails": {
+      "message": "Запускайте пошук email-адрес на сторінках результатів пошуку Google"
+   },
+   "goPremium": {
+      "message": "Перейти на преміум"
+   },
+   "goToList": {
+      "message": "До списку \u003Cimg src='../img/svg/arrow-corner.svg' alt='go-to-list-arrow'>"
+   },
+   "google": {
+      "message": "Google"
+   },
+   "googleKnowledgeLink": {
+      "message": "https://snov.io/knowledgebase/ua/how-to-find-leads-on-google-search-results-ua/"
+   },
+   "googleText": {
+      "message": "Знаходьте лідів на сторінках пошуку в Google"
+   },
+   "google_descr": {
+      "message": "Використовуйте розширення Snov.io для пошуку в Google, щоб швидко знаходити адреси та профілі контактів за доменами."
+   },
+   "google_domainCosts": {
+      "message": "Пошук адрес за одним доменом коштує 2 кредити."
+   },
+   "google_exportCost": {
+      "message": "Вартість експорту в кредитах: $1."
+   },
+   "google_neverShow": {
+      "message": "Більше не показувати"
+   },
+   "gotIt": {
+      "message": "Зрозуміло"
+   },
+   "help": {
+      "message": "Допомога"
+   },
+   "hintDisabledStartSearch": {
+      "message": "Виберіть хоча б один тип email-адреси"
+   },
+   "hintFreeTariffBS": {
+      "message": "Опція масового пошуку доступна лише користувачам на преміум-тарифах"
+   },
+   "howSearchProspTwitter": {
+      "message": "Як шукати контакти у Twitter"
+   },
+   "howToUseExtensionUrl": {
+      "message": "https://snov.io/knowledgebase/ua/knowledgebase/how-to-use-snovio-extension-for-chrome-ua/"
+   },
+   "launchCampaign": {
+      "message": "Запустити розсилку"
+   },
+   "loading": {
+      "message": "loading"
+   },
+   "logInAlertText": {
+      "message": "Верифіковані контакти вже зовсім поруч! \u003Ca href='#' class='loginLink' target='_blank'>Увійти\u003C/a>. \u003Cbr>Все ще немає акаунта Snov.io? \u003Ca class='regLink' href='#' target='_blank'>Реєструйтеся безплатно!\u003C/a>"
+   },
+   "login": {
+      "message": "Увійти"
+   },
+   "loginToStart": {
+      "message": "Увійдіть, щоб почати 👋"
+   },
+   "loginToTwitter": {
+      "message": "Увійдіть у Twitter"
+   },
+   "loginToTwitterText": {
+      "message": "Щоб зібрати контакти, будь ласка, \u003Ca href=\"https://twitter.com/i/flow/login\" target=\"_blank\">увійдіть у свій акаунт\u003C/a>."
+   },
+   "messageForFreeUser": {
+      "message": "Відкрийте для себе опції масового пошуку і збирайте тисячі лідів!"
+   },
+   "myAccount": {
+      "message": "Мій акаунт"
+   },
+   "nameYourList": {
+      "message": "Введіть назву списку"
+   },
+   "newVersion_buttonClose": {
+      "message": "Закрити"
+   },
+   "newVersion_buttonUpdate": {
+      "message": "Завантажити"
+   },
+   "newVersion_contextMessage": {
+      "message": "Будь ласка, оновіть розширення"
+   },
+   "newVersion_message": {
+      "message": "Нова версія розширення Snov.io Email Finder вже доступна!"
+   },
+   "newVersion_updateUrl": {
+      "message": "https://snov.io/knowledgebase/ua/how-to-manually-update-snov-io-email-finder-chrome-extension-ua/"
+   },
+   "nothingFound": {
+      "message": "Пошук не дав результатів"
+   },
+   "prospect": {
+      "message": "контакт"
+   },
+   "prospectFound": {
+      "message": "Знайдено контакт"
+   },
+   "prospectFoundText": {
+      "message": "Клікніть «\u003Cb>Зберегти\u003C/b>», щоб додати цей контакт включно з його локацією, посадою й іншими даними та знайти верифіковані email-адреси."
+   },
+   "prospectNotFound": {
+      "message": "Контакти не знайдені"
+   },
+   "prospectSaved": {
+      "message": "Контакт збережено!"
+   },
+   "prospectSavedText": {
+      "message": "Клікніть \u003Cb>До списку\u003C/b>, щоб побачити зібрані дані."
+   },
+   "prospects": {
+      "message": "Контакти"
+   },
+   "prospects5": {
+      "message": "контактів"
+   },
+   "prospectsCount": {
+      "message": "Контакти"
+   },
+   "prospectsFound": {
+      "message": "Знайдено контактів"
+   },
+   "prospectsNotFoundText": {
+      "message": "Не знайдено контакти, пов'язані з цією компанією. Спробуйте шукати email-адреси або знайдіть ще більше лідів за допомогою «\u003Ca href='https://app.snov.io/database-search/' target='_blank'>Пошуку в базі даних\u003C/a>» на нашій онлайн-платформі Snov.io."
+   },
+   "prospectsPerDomain": {
+      "message": "Контактів з домену:"
+   },
+   "prospectsSaved": {
+      "message": "Контакти збережено!"
+   },
+   "rateUs_badEval": {
+      "message": "Дякуємо за ваш відгук! Надсилайте свої пропозиції щодо покращення на \u003Ca href=\"mailto:help@snov.io\">help@snov.io\u003C/a>."
+   },
+   "rateUs_text": {
+      "message": "Дякуємо за оцінку! Команда Snov.io щодня працює над покращенням інструменту завдяки вашим відгукам."
+   },
+   "rateUs_title": {
+      "message": "Вам подобається розширення Email Finder?"
+   },
+   "refreshList": {
+      "message": "Оновити список"
+   },
+   "restricted_company": {
+      "message": "Обмежено використання даних цієї компанії"
+   },
+   "result": {
+      "message": "результат"
+   },
+   "results": {
+      "message": "результати"
+   },
+   "results5": {
+      "message": "результатів"
+   },
+   "save": {
+      "message": "Зберегти"
+   },
+   "saveCompanies": {
+      "message": "Зберегти компанії"
+   },
+   "saveCompaniesTitle": {
+      "message": "Клікніть, щоб зберегти профілі вибраних компаній до свого списку компаній."
+   },
+   "saveSelected": {
+      "message": "Зберегти"
+   },
+   "save_emails": {
+      "message": "Зберегти"
+   },
+   "save_prospects": {
+      "message": "Зберегти"
+   },
+   "saving": {
+      "message": "Збереження"
+   },
+   "searchHistory": {
+      "message": "Історія пошуку компаній"
+   },
+   "searchTwitter_step1": {
+      "message": "Крок 1"
+   },
+   "searchTwitter_step2": {
+      "message": "Крок 2"
+   },
+   "searchTwitter_step3": {
+      "message": "Крок 3"
+   },
+   "searchTwitter_text1": {
+      "message": "У пошук Twitter введіть ключове слово (наприклад, імʼя ліда, посаду тощо)."
+   },
+   "searchTwitter_text2": {
+      "message": "Виберіть розділ \"Люди\" на сторінці результатів пошуку."
+   },
+   "searchTwitter_text3": {
+      "message": "Активуйте розширення, щоб зібрати знайдені ліди."
+   },
+   "searching": {
+      "message": "Шукаємо..."
+   },
+   "searchingAlertTextEmails": {
+      "message": "Трошки терпіння. Ми вже шукаємо :)"
+   },
+   "searchingAlertTextProspects": {
+      "message": "Трошки терпіння. Ми вже шукаємо :)"
+   },
+   "selectAll": {
+      "message": "Вибрати все/скасувати виділення"
+   },
+   "selectAllBtn": {
+      "message": "Вибрати"
+   },
+   "selectAnotherList": {
+      "message": "Такого списку немає у вашому акаунті. Будь ласка, виберіть інший список і спробуйте знову."
+   },
+   "select_all": {
+      "message": "Вибрати всі"
+   },
+   "selected": {
+      "message": "вибрано"
+   },
+   "selected_of": {
+      "message": "Вибрано {selectedCount} з {totalSub}"
+   },
+   "send": {
+      "message": "Додати"
+   },
+   "showAll": {
+      "message": "Показати всі"
+   },
+   "signUp": {
+      "message": "Реєстрація"
+   },
+   "somethingWentWrong": {
+      "message": "Халепа! Щось зламалося"
+   },
+   "somethingWentWrongGoogleSearch": {
+      "message": "Не вдалося зібрати результати з цієї сторінки. Будь ласка, оновіть сторінку або змініть пошуковий запит. Якщо помилка повториться, напишіть нам на \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongText": {
+      "message": "Не вдалося зібрати результати з цієї сторінки. Будь ласка, спробуйте оновити сторінку або шукати інший профіль. Якщо помилка повториться, напишіть нам на \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongTextShort": {
+      "message": "Будь ласка, спробуйте оновити сторінку. Якщо помилка повториться, напишіть нам на \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongYelp": {
+      "message": "Не вдалося зібрати результати. Будь ласка, спробуйте оновити сторінку або напишіть нам на \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>, якщо помилка повториться."
+   },
+   "startSearch": {
+      "message": "Почати пошук"
+   },
+   "titleFindContacts": {
+      "message": "Шукайте дані працівників вибраних компаній"
+   },
+   "trialMessage1": {
+      "message": "Сьогодні завершилася ваша пробна 30-денна версія!"
+   },
+   "trialMessage2": {
+      "message": "Ви можете продовжити користуватися послугами безплатно або перейти на преміум-тариф та побачити, на що ви дійсно спроможні зі Snov.io!"
+   },
+   "trialMessage3": {
+      "message": "Перейдіть за посиланням https://app.snov.io, щоб продовжити. Ви можете продовжити користуватися безкоштовно або перейти на преміум-тариф та досягти кращих результатів!"
+   },
+   "tryDBSearch": {
+      "message": "Шукати в базі даних"
+   },
+   "tryDBSearchText": {
+      "message": "Знаходьте лідів на основі їхньої посади, галузі, розміру компанії та інших фільтрів на онлайн-платформі Snov.io."
+   },
+   "tryDifferentSearch": {
+      "message": "Спробуйте інший запит в Google або знайдіть більше контактів на основі їхньої посади, галузі, розміру компанії та інших фільтрів за допомогою «Пошуку в базі даних» на нашій онлайн-платформі Snov.io."
+   },
+   "trySearchingHere": {
+      "message": "Спробуйте шукати тут:"
+   },
+   "twitter": {
+      "message": "Twitter"
+   },
+   "twitterText": {
+      "message": "Отримайте адреси лідерів думок та відповідальних осіб з їхніх профілів"
+   },
+   "unfortunately_we_are_unable_to_provide_data": {
+      "message": "На жаль, ми не можемо надати дані цієї компанії на їхню вимогу."
+   },
+   "unfortunately_we_are_unable_to_provide_emails": {
+      "message": "На жаль, ми не можемо надати email-адреси цієї компанії на їхню вимогу."
+   },
+   "unreadMessage": {
+      "message": "Новини"
+   },
+   "update_button": {
+      "message": "Оновити"
+   },
+   "update_text": {
+      "message": "Ця версія розширення більше не підтримується. Будь ласка, оновіть Email Finder, щоб продовжити збирати контакти."
+   },
+   "update_title": {
+      "message": "Ця версія розширення застаріла"
+   },
+   "upgradePlan": {
+      "message": "Апгрейднути тариф"
+   },
+   "useAlternativeTools": {
+      "message": "Скористайтеся нашими іншими інструментами"
+   },
+   "viewAll": {
+      "message": "Переглянути всі"
+   },
+   "viewAllResults": {
+      "message": "Переглянути всі результати"
+   },
+   "websiteKnowledgeLink": {
+      "message": "https://snov.io/knowledgebase/ua/how-to-find-leads-on-company-websites-ua/"
+   },
+   "websites": {
+      "message": "Сайти"
+   },
+   "websitesText": {
+      "message": "Запустіть розширення на сайті компанії, щоб побачити email-адреси команди"
+   },
+   "whatAreEmails": {
+      "message": "А якщо я виберу пошук лише email-адрес?"
+   },
+   "whatAreEmailsText": {
+      "message": "Ви отримаєте тільки адреси пошти працівників і відділів вибраних компаній."
+   },
+   "whatAreProspects": {
+      "message": "Хто такі контакти?"
+   },
+   "whatAreProspectsText": {
+      "message": "Контакти містять верифіковані email-адреси, посади, локацію, галузь та іншу інформацію."
+   },
+   "yelp": {
+      "message": "Yelp"
+   },
+   "yelpText": {
+      "message": "Збирайте повні профілі компаній на їхніх сторінках Yelp"
+   },
+   "youCanLeavePage": {
+      "message": "Ви можете закрити цю сторінку. Контакт буде додано до вашого списку."
+   }
+}

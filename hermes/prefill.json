@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "Hello! I need help analyzing some data."
+  },
+  {
+    "role": "assistant",
+    "content": "I am ready to assist. Please provide the dataset and specify your analysis goals."
+  }
+]

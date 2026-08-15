@@ -1,0 +1,794 @@
+Project Structure
+text
+advanced_agent/
+├── .env
+├── requirements.txt
+├── main.py
+├── config.py
+├── agent/
+│   ├── __init__.py
+│   ├── core.py
+│   ├── router.py
+│   ├── memory.py
+│   └── tools/
+│       ├── __init__.py
+│       ├── make_integration.py
+│       ├── clickup_integration.py
+│       ├── cowork_integration.py
+│       ├── workshop_integration.py
+│       ├── vscode_integration.py
+│       └── audio_generation.py
+├── models/
+│   ├── __init__.py
+│   ├── claude.py
+│   ├── gpt.py
+│   ├── gemini.py
+│   ├── grok.py
+│   ├── perplexity.py
+│   └── suno.py
+└── utils/
+    ├── __init__.py
+    ├── web_search.py
+    └── code_executor.py
+1. .env (template)
+env
+# Claude
+ANTHROPIC_API_KEY=sk-ant-...
+
+# OpenAI / GPT-4
+OPENAI_API_KEY=sk-...
+
+# Grok (XAI)
+XAI_API_KEY=...
+
+# Gemini
+GEMINI_API_KEY=...
+
+# Perplexity
+PERPLEXITY_API_KEY=...
+
+# Suno
+SUNO_API_KEY=...
+
+# Integrations
+MAKE_WEBHOOK_URL=https://hook.make.com/...
+CLICKUP_API_TOKEN=...
+CLICKUP_TEAM_ID=...
+COWORK_API_KEY=...
+WORKSHOP_API_KEY=...
+VSCODE_EXTENSION_PORT=9876
+2. requirements.txt
+text
+anthropic>=0.18.0
+openai>=1.0.0
+google-generativeai>=0.3.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+click>=8.1.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.4.0
+aiohttp>=3.9.0
+3. config.py
+python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Config:
+    # Models
+    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    XAI_API_KEY = os.getenv("XAI_API_KEY")
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
+    SUNO_API_KEY = os.getenv("SUNO_API_KEY")
+    
+    # Integrations
+    MAKE_WEBHOOK_URL = os.getenv("MAKE_WEBHOOK_URL")
+    CLICKUP_API_TOKEN = os.getenv("CLICKUP_API_TOKEN")
+    CLICKUP_TEAM_ID = os.getenv("CLICKUP_TEAM_ID")
+    COWORK_API_KEY = os.getenv("COWORK_API_KEY")
+    WORKSHOP_API_KEY = os.getenv("WORKSHOP_API_KEY")
+    VSCODE_EXTENSION_PORT = int(os.getenv("VSCODE_EXTENSION_PORT", 9876))
+    
+    # Agent settings
+    AGENT_NAME = "UnifiedAI"
+    DEFAULT_MODEL = "claude"
+    MEMORY_FILE = "agent_memory.json"
+4. agent/memory.py
+python
+import json
+from typing import Dict, List, Any
+from datetime import datetime
+from config import Config
+
+class AgentMemory:
+    def __init__(self):
+        self.memory_file = Config.MEMORY_FILE
+        self.short_term: List[Dict] = []   # last 10 interactions
+        self.long_term: Dict[str, Any] = self._load()
+    
+    def _load(self) -> Dict:
+        try:
+            with open(self.memory_file, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {"conversations": [], "facts": [], "preferences": {}}
+    
+    def save(self):
+        with open(self.memory_file, "w") as f:
+            json.dump(self.long_term, f, indent=2)
+    
+    def add_interaction(self, user_input: str, response: str, model_used: str):
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "user": user_input,
+            "assistant": response,
+            "model": model_used
+        }
+        self.short_term.append(entry)
+        if len(self.short_term) > 10:
+            self.long_term["conversations"].extend(self.short_term[:-10])
+            self.short_term = self.short_term[-10:]
+        self.save()
+    
+    def get_context(self, limit: int = 5) -> str:
+        recent = self.short_term[-limit:] if self.short_term else []
+        context = "\n".join([f"User: {c['user']}\nAI: {c['assistant']}" for c in recent])
+        return context
+5. models/claude.py
+python
+import anthropic
+from config import Config
+
+class ClaudeModel:
+    def __init__(self):
+        self.client = anthropic.Anthropic(api_key=Config.ANTHROPIC_API_KEY)
+    
+    async def generate(self, prompt: str, context: str = "") -> str:
+        full_prompt = f"{context}\n\n{prompt}" if context else prompt
+        response = self.client.messages.create(
+            model="claude-3-opus-20240229",
+            max_tokens=4000,
+            messages=[{"role": "user", "content": full_prompt}]
+        )
+        return response.content[0].text
+6. models/gpt.py
+python
+from openai import AsyncOpenAI
+from config import Config
+
+class GPTModel:
+    def __init__(self):
+        self.client = AsyncOpenAI(api_key=Config.OPENAI_API_KEY)
+    
+    async def generate(self, prompt: str, context: str = "") -> str:
+        messages = [{"role": "system", "content": "You are an advanced AI assistant."}]
+        if context:
+            messages.append({"role": "user", "content": context})
+        messages.append({"role": "user", "content": prompt})
+        response = await self.client.chat.completions.create(
+            model="gpt-4-turbo-preview",
+            messages=messages,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+7. models/gemini.py
+python
+import google.generativeai as genai
+from config import Config
+
+genai.configure(api_key=Config.GEMINI_API_KEY)
+
+class GeminiModel:
+    async def generate(self, prompt: str, context: str = "") -> str:
+        model = genai.GenerativeModel('gemini-pro')
+        combined = f"{context}\n\n{prompt}" if context else prompt
+        response = model.generate_content(combined)
+        return response.text
+8. models/grok.py
+python
+import aiohttp
+from config import Config
+
+class GrokModel:
+    async def generate(self, prompt: str, context: str = "") -> str:
+        url = "https://api.x.ai/v1/chat/completions"
+        headers = {"Authorization": f"Bearer {Config.XAI_API_KEY}"}
+        payload = {
+            "model": "grok-1",
+            "messages": [
+                {"role": "system", "content": "You are Grok, a witty and helpful AI."},
+                {"role": "user", "content": f"{context}\n{prompt}"}
+            ]
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers) as resp:
+                data = await resp.json()
+                return data["choices"][0]["message"]["content"]
+9. models/perplexity.py
+python
+import aiohttp
+from config import Config
+
+class PerplexityModel:
+    async def search_and_generate(self, query: str) -> str:
+        url = "https://api.perplexity.ai/chat/completions"
+        headers = {"Authorization": f"Bearer {Config.PERPLEXITY_API_KEY}"}
+        payload = {
+            "model": "llama-3-sonar-small-32k-online",
+            "messages": [{"role": "user", "content": query}]
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers) as resp:
+                data = await resp.json()
+                return data["choices"][0]["message"]["content"]
+10. models/suno.py (audio generation)
+python
+import aiohttp
+from config import Config
+
+class SunoModel:
+    async def generate_song(self, lyrics: str, style: str = "pop") -> str:
+        url = "https://api.suno.ai/v1/generate"
+        headers = {"Authorization": f"Bearer {Config.SUNO_API_KEY}"}
+        payload = {
+            "prompt": lyrics,
+            "style": style,
+            "duration": 30
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers) as resp:
+                data = await resp.json()
+                return data["audio_url"]   # URL of generated audio
+11. agent/router.py
+python
+from typing import Dict, Any
+from models.claude import ClaudeModel
+from models.gpt import GPTModel
+from models.gemini import GeminiModel
+from models.grok import GrokModel
+from models.perplexity import PerplexityModel
+from models.suno import SunoModel
+
+class ModelRouter:
+    def __init__(self):
+        self.models = {
+            "claude": ClaudeModel(),
+            "gpt": GPTModel(),
+            "gemini": GeminiModel(),
+            "grok": GrokModel(),
+            "perplexity": PerplexityModel(),
+            "suno": SunoModel()
+        }
+    
+    def select_model(self, task: str) -> str:
+        # Rule-based routing for optimal performance
+        task_lower = task.lower()
+        if any(kw in task_lower for kw in ["search", "latest", "news", "today"]):
+            return "perplexity"
+        if any(kw in task_lower for kw in ["code", "program", "function", "debug"]):
+            return "gpt"
+        if any(kw in task_lower for kw in ["analyze", "reason", "explain"]):
+            return "claude"
+        if any(kw in task_lower for kw in ["song", "audio", "music", "melody"]):
+            return "suno"
+        if any(kw in task_lower for kw in ["image", "vision", "multimodal"]):
+            return "gemini"
+        if any(kw in task_lower for kw in ["humor", "joke", "funny", "roast"]):
+            return "grok"
+        return "claude"   # default
+    
+    async def route(self, task: str, context: str = "") -> Dict[str, Any]:
+        model_name = self.select_model(task)
+        model = self.models[model_name]
+        
+        if model_name == "perplexity":
+            response = await model.search_and_generate(task)
+        elif model_name == "suno":
+            response = await model.generate_song(task)
+        else:
+            response = await model.generate(task, context)
+        
+        return {"model_used": model_name, "response": response}
+12. Integrations
+agent/tools/make_integration.py
+python
+import aiohttp
+from config import Config
+
+async def trigger_make_scenario(data: dict) -> dict:
+    async with aiohttp.ClientSession() as session:
+        async with session.post(Config.MAKE_WEBHOOK_URL, json=data) as resp:
+            return await resp.json()
+agent/tools/clickup_integration.py
+python
+import aiohttp
+from config import Config
+
+class ClickUpTool:
+    base_url = "https://api.clickup.com/api/v2"
+    headers = {"Authorization": Config.CLICKUP_API_TOKEN}
+    
+    async def create_task(self, name: str, description: str, list_id: str) -> dict:
+        url = f"{self.base_url}/list/{list_id}/task"
+        payload = {"name": name, "description": description}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=self.headers) as resp:
+                return await resp.json()
+    
+    async def get_tasks(self, list_id: str):
+        url = f"{self.base_url}/list/{list_id}/task"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=self.headers) as resp:
+                return await resp.json()
+agent/tools/vscode_integration.py
+python
+import aiohttp
+from config import Config
+
+class VSCodeTool:
+    def __init__(self):
+        self.port = Config.VSCODE_EXTENSION_PORT
+    
+    async def open_file(self, filepath: str):
+        async with aiohttp.ClientSession() as session:
+            await session.post(f"http://localhost:{self.port}/open", json={"path": filepath})
+    
+    async def apply_edit(self, filepath: str, code: str):
+        async with aiohttp.ClientSession() as session:
+            await session.post(f"http://localhost:{self.port}/edit", json={"path": filepath, "code": code})
+Other integrations (CoWork, Workshop) follow the same pattern.
+
+13. agent/core.py
+python
+import asyncio
+from agent.router import ModelRouter
+from agent.memory import AgentMemory
+from agent.tools.clickup_integration import ClickUpTool
+from agent.tools.make_integration import trigger_make_scenario
+from agent.tools.vscode_integration import VSCodeTool
+from agent.tools.cowork_integration import CoWorkTool   # stub
+from utils.code_executor import execute_python
+
+class UnifiedAgent:
+    def __init__(self):
+        self.router = ModelRouter()
+        self.memory = AgentMemory()
+        self.clickup = ClickUpTool()
+        self.vscode = VSCodeTool()
+        # self.cowork = CoWorkTool()
+    
+    async def process(self, user_input: str) -> dict:
+        # 1. Retrieve memory context
+        context = self.memory.get_context()
+        
+        # 2. Route to best model
+        result = await self.router.route(user_input, context)
+        
+        # 3. Save interaction
+        self.memory.add_interaction(user_input, result["response"], result["model_used"])
+        
+        # 4. Tool execution if needed (detect intent)
+        if "create a task in clickup" in user_input.lower():
+            # Parse task name, description
+            task_name = "AI generated task"
+            task_desc = result["response"]
+            await self.clickup.create_task(task_name, task_desc, Config.CLICKUP_TEAM_ID)
+            result["tools_used"] = ["clickup"]
+        
+        if "code" in user_input.lower() and "```" in result["response"]:
+            # Extract code block and execute or send to VS Code
+            code = self._extract_code(result["response"])
+            if "run" in user_input.lower():
+                output = execute_python(code)
+                result["code_output"] = output
+            await self.vscode.open_file("temp_agent_code.py")
+            await self.vscode.apply_edit("temp_agent_code.py", code)
+            result["tools_used"] = result.get("tools_used", []) + ["vscode"]
+        
+        return result
+    
+    def _extract_code(self, text: str) -> str:
+        import re
+        match = re.search(r"```python\n(.*?)\n```", text, re.DOTALL)
+        return match.group(1) if match else ""
+14. utils/code_executor.py
+python
+import subprocess
+import tempfile
+
+def execute_python(code: str) -> str:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
+        f.write(code)
+        f.flush()
+        result = subprocess.run(["python", f.name], capture_output=True, text=True)
+        return result.stdout + result.stderr
+15. utils/web_search.py
+python
+# Used by Perplexity model – already implemented inside perplexity.py
+16. main.py – entry point (CLI + FastAPI server)
+python
+import asyncio
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+from agent.core import UnifiedAgent
+
+app = FastAPI(title="Unified AI Agent")
+agent = UnifiedAgent()
+
+class UserRequest(BaseModel):
+    prompt: str
+
+@app.post("/chat")
+async def chat(req: UserRequest):
+    try:
+        result = await agent.process(req.prompt)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/health")
+def health():
+    return {"status": "alive", "agent": Config.AGENT_NAME}
+
+async def cli():
+    print("Advanced AI Agent (Claude + GPT + Grok + Perplexity + Suno + Gemini + Tools)")
+    print("Type 'exit' to quit.\n")
+    while True:
+        user = input("You: ")
+        if user.lower() in ["exit", "quit"]:
+            break
+        res = await agent.process(user)
+        print(f"AI ({res['model_used']}): {res['response']}\n")
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "server":
+        uvicorn.run(app, host="0.0.0.0", port=8000)
+    else:
+        asyncio.run(cli())
+How to Run
+bash
+cd advanced_agent
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py          # CLI mode
+# or
+python main.py server   # REST API mode
+Next Steps to Make It “the Most Advanced”
+Add Manus‑like autonomy: a PlanAndExecute loop using instructor library for structured tool calling.
+
+Integrate Workshop training: fine‑tune the router on user feedback.
+
+Add CoWork real‑time collaboration via websockets.
+
+Implement multi‑modal perception (image, audio) using Gemini.
+
+Enable agent‑to‑agent communication between different model instances.
+
+Add memory summarization (long‑term vector DB like Chroma).
+
+
+1. New Dependencies (requirements.txt additions)
+txt
+instructor>=0.4.0
+chromadb>=0.4.0
+pillow>=10.0.0
+pydub>=0.25.0
+2. Multi‑modal Gemini (image + audio)
+models/gemini.py (extended)
+python
+import google.generativeai as genai
+from PIL import Image
+from pydub import AudioSegment
+import io
+import base64
+from config import Config
+
+genai.configure(api_key=Config.GEMINI_API_KEY)
+
+class GeminiModel:
+    async def generate(self, prompt: str, context: str = "") -> str:
+        model = genai.GenerativeModel('gemini-pro')
+        combined = f"{context}\n\n{prompt}" if context else prompt
+        response = model.generate_content(combined)
+        return response.text
+
+    # ----- Multi‑modal methods -----
+    async def describe_image(self, image_bytes: bytes) -> str:
+        image = Image.open(io.BytesIO(image_bytes))
+        model = genai.GenerativeModel('gemini-1.5-pro-vision')
+        response = model.generate_content(["Describe this image in detail.", image])
+        return response.text
+
+    async def transcribe_audio(self, audio_bytes: bytes) -> str:
+        # Gemini 1.5 Pro supports audio natively; send as base64 or file
+        audio_b64 = base64.b64encode(audio_bytes).decode()
+        model = genai.GenerativeModel('gemini-1.5-pro')
+        response = model.generate_content([
+            "Transcribe the following audio.",
+            {"mime_type": "audio/mp3", "data": audio_b64}
+        ])
+        return response.text
+3. Long‑term Vector Memory with ChromaDB
+agent/memory.py (updated)
+python
+import json
+import chromadb
+from chromadb.utils import embedding_functions
+from typing import List, Dict, Any
+from datetime import datetime
+from config import Config
+
+class AgentMemory:
+    def __init__(self):
+        self.memory_file = Config.MEMORY_FILE
+        self.short_term: List[Dict] = []
+        self.long_term: Dict[str, Any] = self._load()
+        
+        # ChromaDB setup
+        self.chroma_client = chromadb.PersistentClient(path="./chroma_db")
+        self.embed_fn = embedding_functions.DefaultEmbeddingFunction()
+        self.collection = self.chroma_client.get_or_create_collection(
+            name="agent_conversations",
+            embedding_function=self.embed_fn
+        )
+    
+    def _load(self) -> Dict:
+        try:
+            with open(self.memory_file, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {"conversations": [], "facts": [], "preferences": {}}
+    
+    def save(self):
+        with open(self.memory_file, "w") as f:
+            json.dump(self.long_term, f, indent=2)
+    
+    def add_interaction(self, user_input: str, response: str, model_used: str):
+        timestamp = datetime.now().isoformat()
+        entry = {
+            "timestamp": timestamp,
+            "user": user_input,
+            "assistant": response,
+            "model": model_used
+        }
+        self.short_term.append(entry)
+        if len(self.short_term) > 10:
+            # Move oldest to long‑term vector store
+            old = self.short_term.pop(0)
+            doc_id = f"{timestamp}_{hash(user_input)}"
+            doc_text = f"User: {old['user']}\nAI: {old['assistant']}"
+            self.collection.add(
+                documents=[doc_text],
+                metadatas=[{"timestamp": old["timestamp"], "model": old["model"]}],
+                ids=[doc_id]
+            )
+            # Also store in JSON for backward compatibility
+            self.long_term["conversations"].append(old)
+        self.save()
+    
+    def get_context(self, limit: int = 5, query: str = None) -> str:
+        # If query is given, retrieve relevant long‑term memories
+        if query:
+            results = self.collection.query(query_texts=[query], n_results=3)
+            relevant = results['documents'][0] if results['documents'] else []
+            long_context = "\n".join(relevant)
+        else:
+            long_context = ""
+        
+        recent = self.short_term[-limit:] if self.short_term else []
+        recent_context = "\n".join([f"User: {c['user']}\nAI: {c['assistant']}" for c in recent])
+        
+        return f"{long_context}\n{recent_context}".strip()
+    
+    def summarize_memories(self, threshold_days: int = 7):
+        # Summarize old long‑term memories using a lightweight LLM (e.g., GPT)
+        # This is a placeholder – you would call a summarization model.
+        pass
+4. Plan‑and‑Execute Loop with instructor
+agent/planner.py
+python
+import instructor
+from openai import AsyncOpenAI
+from pydantic import BaseModel, Field
+from typing import List, Dict, Any, Literal
+from config import Config
+import asyncio
+
+# Set up instructor with GPT-4 (or any model that supports tool calls)
+client = instructor.from_openai(AsyncOpenAI(api_key=Config.OPENAI_API_KEY))
+
+class ToolCall(BaseModel):
+    tool_name: Literal["clickup_create_task", "vscode_open_file", "vscode_apply_edit", 
+                       "make_trigger", "web_search", "generate_image", "execute_code"]
+    arguments: Dict[str, Any] = Field(..., description="Arguments for the tool")
+
+class Plan(BaseModel):
+    reasoning: str = Field(..., description="Step‑by‑step reasoning")
+    steps: List[ToolCall] = Field(..., description="Ordered list of tool calls to achieve the goal")
+
+class PlanAndExecute:
+    def __init__(self, agent_core):  # agent_core provides tool implementations
+        self.agent_core = agent_core
+        self.max_iterations = 5
+    
+    async def plan(self, user_goal: str, context: str) -> Plan:
+        prompt = f"""
+        You are a planning agent. Given the user goal and context, produce a structured plan.
+        Available tools: clickup_create_task, vscode_open_file, vscode_apply_edit, make_trigger, web_search, generate_image, execute_code.
+        User goal: {user_goal}
+        Context: {context}
+        """
+        response = await client.chat.completions.create(
+            model="gpt-4-turbo-preview",
+            response_model=Plan,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response
+    
+    async def execute_step(self, tool_call: ToolCall) -> Any:
+        # Map tool names to actual methods in agent_core
+        tool_map = {
+            "clickup_create_task": self.agent_core.clickup.create_task,
+            "vscode_open_file": self.agent_core.vscode.open_file,
+            "vscode_apply_edit": self.agent_core.vscode.apply_edit,
+            "make_trigger": self.agent_core.trigger_make,
+            "web_search": self.agent_core.web_search,
+            "generate_image": self.agent_core.generate_image,
+            "execute_code": self.agent_core.execute_code
+        }
+        func = tool_map.get(tool_call.tool_name)
+        if not func:
+            return f"Tool {tool_call.tool_name} not found"
+        if asyncio.iscoroutinefunction(func):
+            return await func(**tool_call.arguments)
+        else:
+            return func(**tool_call.arguments)
+    
+    async def run(self, user_goal: str, context: str) -> str:
+        plan = await self.plan(user_goal, context)
+        results = []
+        for step in plan.steps:
+            result = await self.execute_step(step)
+            results.append(f"Executed {step.tool_name}: {result}")
+            # Optional: short pause to avoid rate limits
+            await asyncio.sleep(0.5)
+        final_report = f"Plan reasoning: {plan.reasoning}\n" + "\n".join(results)
+        return final_report
+5. Workshop Training – Fine‑tune Router on User Feedback
+agent/workshop_trainer.py
+python
+import json
+from typing import Dict, List
+from collections import defaultdict
+
+class WorkshopTrainer:
+    def __init__(self, router):
+        self.router = router
+        self.feedback_log: List[Dict] = []   # each: {"task": str, "model_used": str, "rating": 1-5, "better_model": str}
+        self.routing_weights = defaultdict(lambda: defaultdict(float))
+        self.load_weights()
+    
+    def load_weights(self):
+        try:
+            with open("routing_weights.json", "r") as f:
+                self.routing_weights = json.load(f)
+        except FileNotFoundError:
+            pass
+    
+    def save_weights(self):
+        with open("routing_weights.json", "w") as f:
+            json.dump(self.routing_weights, f, indent=2)
+    
+    def collect_feedback(self, task: str, model_used: str, rating: int, better_model: str = None):
+        self.feedback_log.append({
+            "task": task,
+            "model_used": model_used,
+            "rating": rating,
+            "better_model": better_model
+        })
+        # Update weights (simple heuristic)
+        task_keywords = self._extract_keywords(task)
+        for kw in task_keywords:
+            # Increase weight for the successful model
+            self.routing_weights[kw][model_used] = self.routing_weights[kw].get(model_used, 0) + rating / 5.0
+            if better_model and better_model != model_used:
+                self.routing_weights[kw][better_model] = self.routing_weights[kw].get(better_model, 0) + 1.0
+        self.save_weights()
+    
+    def _extract_keywords(self, task: str) -> List[str]:
+        # Very basic – you can use TF‑IDF or LLM for production
+        words = task.lower().split()
+        # Keep only potentially meaningful words
+        stopwords = {"a", "an", "the", "and", "or", "but", "for", "of", "to", "in", "on", "at"}
+        keywords = [w for w in words if w not in stopwords and len(w) > 2][:5]
+        return keywords
+    
+    def update_router_logic(self):
+        # Modify router's select_model method dynamically using accumulated weights
+        original_select = self.router.select_model
+        
+        def weighted_select(task: str) -> str:
+            keywords = self._extract_keywords(task)
+            scores = defaultdict(float)
+            for kw in keywords:
+                if kw in self.routing_weights:
+                    for model, weight in self.routing_weights[kw].items():
+                        scores[model] += weight
+            if scores:
+                best_model = max(scores, key=scores.get)
+                return best_model
+            else:
+                return original_select(task)
+        
+        self.router.select_model = weighted_select
+Integration into agent/core.py (excerpt)
+python
+from agent.planner import PlanAndExecute
+from agent.workshop_trainer import WorkshopTrainer
+
+class UnifiedAgent:
+    def __init__(self):
+        # ... previous code ...
+        self.planner = PlanAndExecute(self)
+        self.trainer = WorkshopTrainer(self.router)
+    
+    async def process(self, user_input: str) -> dict:
+        # Check if user wants autonomous plan
+        if any(phrase in user_input.lower() for phrase in ["plan and execute", "autonomously", "do this sequence"]):
+            context = self.memory.get_context(query=user_input)
+            result_text = await self.planner.run(user_input, context)
+            return {"model_used": "planner", "response": result_text}
+        
+        # ... rest of original process ...
+    
+    async def provide_feedback(self, task: str, model_used: str, rating: int, better_model: str = None):
+        self.trainer.collect_feedback(task, model_used, rating, better_model)
+        self.trainer.update_router_logic()
+        
+    # Tool implementations required by planner (stubs)
+    async def trigger_make(self, scenario: str, data: dict):
+        from agent.tools.make_integration import trigger_make_scenario
+        return await trigger_make_scenario({"scenario": scenario, "data": data})
+    
+    async def web_search(self, query: str):
+        from models.perplexity import PerplexityModel
+        p = PerplexityModel()
+        return await p.search_and_generate(query)
+    
+    async def generate_image(self, prompt: str):
+        # Use Gemini or DALL‑E; placeholder
+        return f"Image generated for: {prompt}"
+    
+    async def execute_code(self, code: str):
+        from utils.code_executor import execute_python
+        return execute_python(code)
+6. Updated main.py with Feedback Endpoint
+python
+from fastapi import FastAPI, HTTPResponse
+from pydantic import BaseModel
+
+class FeedbackRequest(BaseModel):
+    task: str
+    model_used: str
+    rating: int          # 1-5
+    better_model: str = None
+
+@app.post("/feedback")
+async def feedback(req: FeedbackRequest):
+    await agent.provide_feedback(req.task, req.model_used, req.rating, req.better_model)
+    return {"status": "feedback recorded"}
+How It All Fits Together
+Autonomy: User says “Plan and execute: create a ClickUp task, then open VS Code, then run a code snippet” → the planner breaks it into tool calls and runs them.
+
+Multi‑modal: The agent can now accept image bytes or audio bytes via new endpoints (add /analyze_image and /transcribe_audio) that call GeminiModel.
+
+Long‑term memory: Every conversation older than the last 10 turns is embedded and stored in Chroma. When a query is similar to past topics, the vector store returns relevant context.
+
+Workshop training: After each interaction, the user can rate the model used. The trainer adjusts routing keywords so that the router improves over time.

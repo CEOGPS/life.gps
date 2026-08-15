@@ -1,0 +1,25 @@
+packages:
+  - .
+
+onlyBuiltDependencies:
+  - "@swc/core"
+  - "@tailwindcss/oxide"
+  - "esbuild"
+  - "@firebase/util"
+  - "protobufjs"
+  - "sharp"
+  - "workerd"
+  - "agent-browser"
+
+blockExoticSubdeps: true
+
+minimumReleaseAge: 4320
+
+allowBuilds:
+  '@firebase/util': set this to true or false
+  '@swc/core': set this to true or false
+  agent-browser: set this to true or false
+  esbuild: set this to true or false
+  protobufjs: set this to true or false
+  sharp: set this to true or false
+  workerd: set this to true or false

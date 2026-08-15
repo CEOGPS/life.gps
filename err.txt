@@ -1,0 +1,3 @@
+error: Could not read 82ea495d36de10c71ff10a87bab14b4877ac9bfb
+error: could not parse commit 82ea495d36de10c71ff10a87bab14b4877ac9bfb
+fatal: bad revision 'ca40c5272dd1a443ba73bb497d00843f0911b118...d56e932add690e45c94dc18ac57d436de7c50ec2'

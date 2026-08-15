@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "installed": {
+    "blender-mcp": {
+      "source": "official",
+      "identifier": "official/creative\\blender-mcp",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:e568bc061765717b",
+      "install_path": "blender-mcp",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:09.722779+00:00",
+      "updated_at": "2026-07-10T22:42:09.722779+00:00"
+    },
+    "canvas": {
+      "source": "official",
+      "identifier": "official/productivity\\canvas",
+      "trust_level": "builtin",
+      "scan_verdict": "dangerous",
+      "content_hash": "sha256:a87177ea8cd25580",
+      "install_path": "canvas",
+      "files": [
+        "SKILL.md",
+        "scripts\\canvas_api.py"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:14.995695+00:00",
+      "updated_at": "2026-07-10T22:42:14.995695+00:00"
+    },
+    "blackbox": {
+      "source": "official",
+      "identifier": "official/autonomous-ai-agents\\blackbox",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:0521570777866c6a",
+      "install_path": "blackbox",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:26.338690+00:00",
+      "updated_at": "2026-07-10T22:42:26.338690+00:00"
+    },
+    "axolotl": {
+      "source": "official",
+      "identifier": "official/mlops\\training\\axolotl",
+      "trust_level": "builtin",
+      "scan_verdict": "dangerous",
+      "content_hash": "sha256:214b99bf079532f6",
+      "install_path": "axolotl",
+      "files": [
+        "SKILL.md",
+        "references\\api.md",
+        "references\\dataset-formats.md",
+        "references\\index.md",
+        "references\\other.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:43.156786+00:00",
+      "updated_at": "2026-07-10T22:42:43.156786+00:00"
+    },
+    "antigravity-cli": {
+      "source": "official",
+      "identifier": "official/autonomous-ai-agents\\antigravity-cli",
+      "trust_level": "builtin",
+      "scan_verdict": "dangerous",
+      "content_hash": "sha256:9a40f928d24833b5",
+      "install_path": "antigravity-cli",
+      "files": [
+        "SKILL.md",
+        "references\\cli-docs.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:47.439436+00:00",
+      "updated_at": "2026-07-10T22:42:47.439436+00:00"
+    },
+    "agentmail": {
+      "source": "official",
+      "identifier": "official/email\\agentmail",
+      "trust_level": "builtin",
+      "scan_verdict": "dangerous",
+      "content_hash": "sha256:98f1ec2d8201e472",
+      "install_path": "agentmail",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:42:55.300802+00:00",
+      "updated_at": "2026-07-10T22:42:55.300802+00:00"
+    },
+    "3-statement-model": {
+      "source": "official",
+      "identifier": "official/finance\\3-statement-model",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:678149f0d87680f6",
+      "install_path": "3-statement-model",
+      "files": [
+        "SKILL.md",
+        "references\\formatting.md",
+        "references\\formulas.md",
+        "references\\sec-filings.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:43:33.354387+00:00",
+      "updated_at": "2026-07-10T22:43:33.354387+00:00"
+    },
+    "1password": {
+      "source": "official",
+      "identifier": "official/security\\1password",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:bb4f9c9ac5f985e3",
+      "install_path": "1password",
+      "files": [
+        "SKILL.md",
+        "references\\cli-examples.md",
+        "references\\get-started.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:43:44.142312+00:00",
+      "updated_at": "2026-07-10T22:43:44.142312+00:00"
+    },
+    "bioinformatics": {
+      "source": "official",
+      "identifier": "official/research\\bioinformatics",
+      "trust_level": "builtin",
+      "scan_verdict": "caution",
+      "content_hash": "sha256:a8c6045133b473cb",
+      "install_path": "bioinformatics",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:43:56.259956+00:00",
+      "updated_at": "2026-07-10T22:43:56.259956+00:00"
+    },
+    "baoyu-article-illustrator": {
+      "source": "official",
+      "identifier": "official/creative\\baoyu-article-illustrator",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:1a4464073f93ee8b",
+      "install_path": "baoyu-article-illustrator",
+      "files": [
+        "PORT_NOTES.md",
+        "SKILL.md",
+        "prompts\\system.md",
+        "references\\prompt-construction.md",
+        "references\\style-presets.md",
+        "references\\styles.md",
+        "references\\usage.md",
+        "references\\workflow.md",
+        "references\\palettes\\macaron.md",
+        "references\\palettes\\mono-ink.md",
+        "references\\palettes\\neon.md",
+        "references\\palettes\\warm.md",
+        "references\\styles\\blueprint.md",
+        "references\\styles\\chalkboard.md",
+        "references\\styles\\editorial.md",
+        "references\\styles\\elegant.md",
+        "references\\styles\\fantasy-animation.md",
+        "references\\styles\\flat-doodle.md",
+        "references\\styles\\flat.md",
+        "references\\styles\\ink-notes.md",
+        "references\\styles\\intuition-machine.md",
+        "references\\styles\\minimal.md",
+        "references\\styles\\nature.md",
+        "references\\styles\\notion.md",
+        "references\\styles\\pixel-art.md",
+        "references\\styles\\playful.md",
+        "references\\styles\\retro.md",
+        "references\\styles\\scientific.md",
+        "references\\styles\\screen-print.md",
+        "references\\styles\\sketch-notes.md",
+        "references\\styles\\sketch.md",
+        "references\\styles\\vector-illustration.md",
+        "references\\styles\\vintage.md",
+        "references\\styles\\warm.md",
+        "references\\styles\\watercolor.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:44:03.589310+00:00",
+      "updated_at": "2026-07-10T22:44:03.589310+00:00"
+    },
+    "baoyu-comic": {
+      "source": "official",
+      "identifier": "official/creative\\baoyu-comic",
+      "trust_level": "builtin",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:2c5f77a1f93a5b14",
+      "install_path": "baoyu-comic",
+      "files": [
+        "PORT_NOTES.md",
+        "SKILL.md",
+        "references\\analysis-framework.md",
+        "references\\auto-selection.md",
+        "references\\base-prompt.md",
+        "references\\character-template.md",
+        "references\\ohmsha-guide.md",
+        "references\\partial-workflows.md",
+        "references\\storyboard-template.md",
+        "references\\workflow.md",
+        "references\\art-styles\\chalk.md",
+        "references\\art-styles\\ink-brush.md",
+        "references\\art-styles\\ligne-claire.md",
+        "references\\art-styles\\manga.md",
+        "references\\art-styles\\minimalist.md",
+        "references\\art-styles\\realistic.md",
+        "references\\layouts\\cinematic.md",
+        "references\\layouts\\dense.md",
+        "references\\layouts\\four-panel.md",
+        "references\\layouts\\mixed.md",
+        "references\\layouts\\splash.md",
+        "references\\layouts\\standard.md",
+        "references\\layouts\\webtoon.md",
+        "references\\presets\\concept-story.md",
+        "references\\presets\\four-panel.md",
+        "references\\presets\\ohmsha.md",
+        "references\\presets\\shoujo.md",
+        "references\\presets\\wuxia.md",
+        "references\\tones\\action.md",
+        "references\\tones\\dramatic.md",
+        "references\\tones\\energetic.md",
+        "references\\tones\\neutral.md",
+        "references\\tones\\romantic.md",
+        "references\\tones\\vintage.md",
+        "references\\tones\\warm.md"
+      ],
+      "metadata": {},
+      "installed_at": "2026-07-10T22:44:07.401111+00:00",
+      "updated_at": "2026-07-10T22:44:07.401111+00:00"
+    }
+  }
+}

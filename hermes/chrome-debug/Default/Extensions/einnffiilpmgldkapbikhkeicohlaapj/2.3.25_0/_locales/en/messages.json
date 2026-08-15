@@ -1,0 +1,476 @@
+{
+   "BulkTitleAvailable": {
+      "message": "Bulk search is only available to premium users"
+   },
+   "addToList": {
+      "message": "Add to list"
+   },
+   "allDomainEmails": {
+      "message": "All domain emails"
+   },
+   "allOther": {
+      "message": "All other"
+   },
+   "alreadySavedProspect": {
+      "message": "You've already saved this prospect"
+   },
+   "alreadySavedProspectText": {
+      "message": "Click on their profile to see all the data you collected or click \u003Cb>Save\u003C/b> to save this prospect to another list."
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Find email addresses on any website. Our Email Finder lets you collect leads and grow sales on the go."
+   },
+   "appName": {
+      "description": "Maximum of 45 characters. The title of the application, displayed in the web store and in install dialog.",
+      "message": "Email Finder by Snov.io"
+   },
+   "appShortName": {
+      "description": "Maximum of 12 characters recommended. Is a short version of the app's name.",
+      "message": "Snov.io"
+   },
+   "back": {
+      "message": "Back"
+   },
+   "backToCompanies": {
+      "message": "Back to companies"
+   },
+   "cantFindList": {
+      "message": "Can't find list"
+   },
+   "chooseWhatNeed": {
+      "message": "Choose what you need:"
+   },
+   "collectCompYelp": {
+      "message": "Collects companies from Yelp.com"
+   },
+   "collectContactsWebsite": {
+      "message": "Collect contacts from any website you visit"
+   },
+   "collectingProspects": {
+      "message": "Collecting prospects..."
+   },
+   "collectingProspectsText": {
+      "message": "Don't close the window until all prospects are saved."
+   },
+   "company_foundOnPage": {
+      "message": "Companies found on this page"
+   },
+   "createNewList": {
+      "message": "Create new list"
+   },
+   "createSelectList": {
+      "message": "Create or select list"
+   },
+   "creditFreeLimit": {
+      "message": "Sorry, you've hit your account limit of 10 credits/day"
+   },
+   "creditsUsed": {
+      "message": "Credits used"
+   },
+   "css_no_credits": {
+      "message": "No credits"
+   },
+   "css_savingError": {
+      "message": "Saving error"
+   },
+   "css_unsavable": {
+      "message": "Unsavable"
+   },
+   "css_update": {
+      "message": "update"
+   },
+   "deletedProfile": {
+      "message": "This profile can not be saved due to owner's request"
+   },
+   "departmentEmails": {
+      "message": "Department emails"
+   },
+   "doesntWorkOnFbText": {
+      "message": "Try searching for your perfect lead with over a dozen other Snov.io \u003Ca href='https://snov.io/knowledgebase/prospecting_tools/' target='_blank'>prospecting tools\u003C/a> in our web app."
+   },
+   "doesntWorkOnFbTitle": {
+      "message": "This extension doesn't work on Facebook"
+   },
+   "doesntWorkOnLiText": {
+      "message": "Check out other Snov.io \u003Ca href=\"https://snov.io/extension\" target=\"_blank\">extensions\u003C/a> to find your perfect lead!"
+   },
+   "doesntWorkOnLiTitle": {
+      "message": "This extension doesn't work on LinkedIn"
+   },
+   "emailType": {
+      "message": "Email type:"
+   },
+   "emails": {
+      "message": "emails"
+   },
+   "emailsFound": {
+      "message": "Emails found"
+   },
+   "emailsNotFound": {
+      "message": "Emails not found"
+   },
+   "emailsNotFoundText": {
+      "message": "There are no emails connected to this company. Try searching for your perfect lead with over a dozen other Snov.io \u003Ca href='https://snov.io/knowledgebase/prospecting_tools/' target='_blank'>prospecting tools\u003C/a> in our web app."
+   },
+   "emailsOnly": {
+      "message": "Emails only"
+   },
+   "emailsPerDomain": {
+      "message": "Emails per domain:"
+   },
+   "emailsSaved": {
+      "message": "Emails saved!"
+   },
+   "employeeEmails": {
+      "message": "Employee emails"
+   },
+   "employees": {
+      "message": "employees"
+   },
+   "error": {
+      "message": "Error"
+   },
+   "errorSaveTwitter": {
+      "message": "Unable to save the prospect. Log out of Twitter and try again."
+   },
+   "f5": {
+      "message": "Please try refreshing the page in your browser"
+   },
+   "findContacts": {
+      "message": "Find contacts \u003Cimg src='../img/svg/arrow-corner.svg' alt='go-to-list-arrow'>"
+   },
+   "findIndEmails": {
+      "message": "Find individual emails"
+   },
+   "getRelevantEmails": {
+      "message": "Get relevant emails from Google search results"
+   },
+   "goToList": {
+      "message": "Go to list \u003Cimg src='../img/svg/arrow-corner.svg' alt='go-to-list-arrow'>"
+   },
+   "google": {
+      "message": "Google"
+   },
+   "googleKnowledgeLink": {
+      "message": "https://snov.io/knowledgebase/how-to-find-leads-on-google-search-results/"
+   },
+   "googleText": {
+      "message": "Find leads in bulk on Google search results"
+   },
+   "google_descr": {
+      "message": "Use Snov.io Extension with Google search results to quickly find email addresses and prospects from domains."
+   },
+   "google_domainCosts": {
+      "message": "One domain search for emails costs 2 credits."
+   },
+   "google_exportCost": {
+      "message": "Export will take $1 credits."
+   },
+   "google_neverShow": {
+      "message": "Never show this tip again"
+   },
+   "gotIt": {
+      "message": "Got it"
+   },
+   "help": {
+      "message": "Help"
+   },
+   "hintDisabledStartSearch": {
+      "message": "Select at least one email type"
+   },
+   "hintFreeTariffBS": {
+      "message": "Bulk search is only available to premium users"
+   },
+   "howSearchProspTwitter": {
+      "message": "How to search for prospects on Twitter"
+   },
+   "howToUseExtensionUrl": {
+      "message": "https://snov.io/knowledgebase/knowledgebase/how-to-use-snovio-extension-for-chrome/"
+   },
+   "launchCampaign": {
+      "message": "Launch campaign"
+   },
+   "loading": {
+      "message": "loading"
+   },
+   "logInAlertText": {
+      "message": "Pre-verified contacts are just a click away! \u003Ca href='#' class='loginLink' target='_blank'>Log in\u003C/a>. \u003Cbr>Don't have an account yet? \u003Ca class='regLink' href='#' target='_blank'>Sign up, it's free.\u003C/a>"
+   },
+   "login": {
+      "message": "Log in"
+   },
+   "loginToStart": {
+      "message": "Log in to start 👋"
+   },
+   "loginToTwitter": {
+      "message": "Log into Twitter"
+   },
+   "loginToTwitterText": {
+      "message": "To collect prospects, please \u003Ca href=\"https://twitter.com/i/flow/login\" target=\"_blank\">log into your account\u003C/a>."
+   },
+   "messageForFreeUser": {
+      "message": "Unlock bulk search and collect thousands more leads!"
+   },
+   "myAccount": {
+      "message": "My account"
+   },
+   "nameYourList": {
+      "message": "Name your list"
+   },
+   "newVersion_buttonClose": {
+      "message": "Close"
+   },
+   "newVersion_buttonUpdate": {
+      "message": "Download"
+   },
+   "newVersion_contextMessage": {
+      "message": "Please update your extension."
+   },
+   "newVersion_message": {
+      "message": "A new updated version of Snov.io Email Finder is already available. Download now."
+   },
+   "newVersion_updateUrl": {
+      "message": "https://snov.io/knowledgebase/how-to-manually-update-snov-io-email-finder-chrome-extension/"
+   },
+   "nothingFound": {
+      "message": "Nothing found"
+   },
+   "prospectFound": {
+      "message": "Prospect found"
+   },
+   "prospectFoundText": {
+      "message": "Click \u003Cb>Save\u003C/b> to collect this prospect with data like location, job position, etc., and search for verified contact emails."
+   },
+   "prospectNotFound": {
+      "message": "Prospects not found"
+   },
+   "prospectSaved": {
+      "message": "Prospect saved!"
+   },
+   "prospectSavedText": {
+      "message": "Click \u003Cb>Go to list\u003C/b> to see the data you've collected."
+   },
+   "prospects": {
+      "message": "Prospects"
+   },
+   "prospectsCount": {
+      "message": "Prospects"
+   },
+   "prospectsFound": {
+      "message": "Prospects found"
+   },
+   "prospectsNotFoundText": {
+      "message": "There are no prospects connected to this company. Try searching for emails or collect more enriched contacts using \u003Ca href='https://app.snov.io/database-search/' target='_blank'>Database Search\u003C/a> in Snov.io web app."
+   },
+   "prospectsPerDomain": {
+      "message": "Prospects per domain:"
+   },
+   "prospectsSaved": {
+      "message": "Prospects saved!"
+   },
+   "rateUs_badEval": {
+      "message": "Thanks for your feedback! You can help us improve by sending your suggestions to \u003Ca href=\"mailto:help@snov.io\">help@snov.io\u003C/a>."
+   },
+   "rateUs_text": {
+      "message": "Thanks for rating us! Every day Snov.io improves with your feedback."
+   },
+   "rateUs_title": {
+      "message": "How much are you enjoying Email Finder?"
+   },
+   "refreshList": {
+      "message": "Refresh list"
+   },
+   "restricted_company": {
+      "message": "Restricted company"
+   },
+   "results": {
+      "message": "results"
+   },
+   "save": {
+      "message": "Save"
+   },
+   "saveCompanies": {
+      "message": "Save companies"
+   },
+   "saveCompaniesTitle": {
+      "message": "Click to save selected company profiles to one of your company lists."
+   },
+   "saveSelected": {
+      "message": "Save selected"
+   },
+   "save_emails": {
+      "message": "Save emails"
+   },
+   "save_prospects": {
+      "message": "Save prospects"
+   },
+   "saving": {
+      "message": "Saving"
+   },
+   "searchHistory": {
+      "message": "Сompany search history"
+   },
+   "searchTwitter_step1": {
+      "message": "Step 1"
+   },
+   "searchTwitter_step2": {
+      "message": "Step 2"
+   },
+   "searchTwitter_step3": {
+      "message": "Step 3"
+   },
+   "searchTwitter_text1": {
+      "message": "Type one of your target keywords (for example, person's name, job title or others) in Twitter search."
+   },
+   "searchTwitter_text2": {
+      "message": "Choose People section on the results page."
+   },
+   "searchTwitter_text3": {
+      "message": "Launch the extension to collect prospects in bulk."
+   },
+   "searching": {
+      "message": "Searching..."
+   },
+   "searchingAlertTextEmails": {
+      "message": "We're looking for emails, this may take a moment."
+   },
+   "searchingAlertTextProspects": {
+      "message": "We're looking for prospects, this may take a moment."
+   },
+   "selectAll": {
+      "message": "Select/unselect all"
+   },
+   "selectAllBtn": {
+      "message": "Select all"
+   },
+   "selectAnotherList": {
+      "message": "We can't find this list in your account. Please select another list and try again."
+   },
+   "select_all": {
+      "message": "Select all"
+   },
+   "selected": {
+      "message": "selected"
+   },
+   "selected_of": {
+      "message": "Selected {selectedCount} of {totalSub}"
+   },
+   "send": {
+      "message": "Send"
+   },
+   "showAll": {
+      "message": "Show all"
+   },
+   "signUp": {
+      "message": "Sign Up"
+   },
+   "somethingWentWrong": {
+      "message": "Oops! Something went wrong"
+   },
+   "somethingWentWrongGoogleSearch": {
+      "message": "We couldn't collect results from this page. Please refresh the page or try another search request. If the issue persists, contact us at \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongText": {
+      "message": "We couldn't collect results from this page. Please try refreshing the page or searching another profile. If the issue persists, contact us at \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongTextShort": {
+      "message": "Please try refreshing the page. If the issue persists, contact us at \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a>."
+   },
+   "somethingWentWrongYelp": {
+      "message": "We couldn't collect the results. Please try refreshing the page or contacting us at \u003Ca href=\"mailto:help@snov.io\" target=\"_blank\">help@snov.io\u003C/a> if the issue persists."
+   },
+   "startSearch": {
+      "message": "Start search"
+   },
+   "titleFindContacts": {
+      "message": "Search for employee data of selected companies"
+   },
+   "trialMessage1": {
+      "message": "Looks like your 30-day trial has ended today!"
+   },
+   "trialMessage2": {
+      "message": "You can still use the service for free or explore the full power of Snov.io with our monthly and yearly plans."
+   },
+   "trialMessage3": {
+      "message": "Visit https://app.snov.io to continue with a free trial or a paid plan to boost your performance!"
+   },
+   "tryDBSearch": {
+      "message": "Try Database Search"
+   },
+   "tryDBSearchText": {
+      "message": "Find prospects based on their job title, industry, company size and other filters in Snov.io web app."
+   },
+   "tryDifferentSearch": {
+      "message": "Try a different Google search or find more prospects based on their job title, industry, company size and other filters with Database Search in Snov.io web app."
+   },
+   "trySearchingHere": {
+      "message": "Try searching here:"
+   },
+   "twitter": {
+      "message": "Twitter"
+   },
+   "twitterText": {
+      "message": "Get emails of influencers and decision makers from their profiles"
+   },
+   "unfortunately_we_are_unable_to_provide_data": {
+      "message": "Unfortunately, we are unable to provide data from this company at their request."
+   },
+   "unfortunately_we_are_unable_to_provide_emails": {
+      "message": "Unfortunately, we are unable to provide emails from this company at their request."
+   },
+   "unreadMessage": {
+      "message": "News and updates"
+   },
+   "update_button": {
+      "message": "Update now"
+   },
+   "update_text": {
+      "message": "This version no longer works. Please update Email Finder Extension to continue collecting prospects."
+   },
+   "update_title": {
+      "message": "This extension version is obsolete"
+   },
+   "upgradePlan": {
+      "message": "Upgrade my plan"
+   },
+   "useAlternativeTools": {
+      "message": "Use our alternative tools"
+   },
+   "viewAll": {
+      "message": "View all"
+   },
+   "viewAllResults": {
+      "message": "View all results"
+   },
+   "websiteKnowledgeLink": {
+      "message": "https://snov.io/knowledgebase/how-to-find-leads-on-company-websites/"
+   },
+   "websites": {
+      "message": "Websites"
+   },
+   "websitesText": {
+      "message": "Launch the extension on company websites to view employee emails"
+   },
+   "whatAreEmails": {
+      "message": "What if I choose emails only?"
+   },
+   "whatAreEmailsText": {
+      "message": "You will get employee and department emails of selected companies."
+   },
+   "whatAreProspects": {
+      "message": "What are prospects?"
+   },
+   "whatAreProspectsText": {
+      "message": "Prospects contain verified emails, job position, location, industry and other info."
+   },
+   "yelp": {
+      "message": "Yelp"
+   },
+   "yelpText": {
+      "message": "Collect enriched company profiles from their Yelp pages"
+   },
+   "youCanLeavePage": {
+      "message": "You can leave the page, we've got this. You'll find the prospect in your list."
+   }
+}

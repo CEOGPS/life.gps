@@ -1,0 +1,36 @@
+{
+   "action": {
+      "default_popup": "html/popup.html"
+   },
+   "background": {
+      "service_worker": "js/sw.js"
+   },
+   "content_scripts": [ {
+      "js": [ "js/content.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   }, {
+      "js": [ "js/snovio/snovioEvents.js" ],
+      "matches": [ "https://app.snov.io/*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "js/snovio/presence.js" ],
+      "matches": [ "https://app.snov.io/*" ],
+      "run_at": "document_idle"
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_appDesc__",
+   "host_permissions": [ "http://*/", "https://*/" ],
+   "icons": {
+      "128": "img/128.png",
+      "19": "img/19.png",
+      "48": "img/48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5jk82Hmgapk9yrIewtSti8kyquXrRP3qkFE3pmRpYJ7xYPWRJ6h2BT7ZZZMhfoqeiUTgm9KgN+MRek15L7Oz3vuCF6Ti566JBnfNMBi0Q2DzWubBmJ/wn3SvM0FxYtDaDZaWzWHZsN8DaKS1OIKjFXPkSpnJGqkwOSxE5oAV486OHy/XKl88X6vUuPqDjLm6etwTCrDqP4UHYkxrxx0EeqYJkRnzIhvmVPF2y9AxyFkQUEf1KgZ+Zu37EjcgqdWED/lgKYRXzRI9F3uwZzjhX8CyBbZ0xAcZXXcQD7jRrfsYhtsMxvwHlUSIlXBvw6uC0yaOmeymkwzGBt4lcUkaYwIDAQAB",
+   "manifest_version": 3,
+   "minimum_chrome_version": "92",
+   "name": "__MSG_appName__",
+   "permissions": [ "tabs", "cookies", "notifications", "storage" ],
+   "short_name": "__MSG_appShortName__",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.3.25"
+}

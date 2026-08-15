@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dark mode for Google™ Docs</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="panel">
+
+    <!-- Header -->
+    <header class="panel-header">
+      <img class="panel-icon" src="../icons/icon48.png" alt="" />
+      <div class="panel-title">
+        <strong>Dark mode for Google™ Docs</strong>
+      </div>
+      <label class="pill-switch" title="Toggle dark mode (Alt+Shift+D)">
+        <input type="checkbox" id="active-switch" />
+        <span class="pill-switch__track"></span>
+      </label>
+    </header>
+
+    <!-- Content (dims when off) -->
+    <div id="panel-body">
+
+      <!-- Theme presets -->
+      <section class="section">
+        <p class="section-label">Theme</p>
+        <div class="preset-row" id="preset-row">
+          <button class="preset-chip" data-preset="default">Dark</button>
+          <button class="preset-chip" data-preset="nord">Nord</button>
+          <button class="preset-chip" data-preset="dracula">Dracula</button>
+          <button class="preset-chip" data-preset="solarized">Solarized</button>
+          <button class="preset-chip" data-preset="monokai">Monokai</button>
+        </div>
+      </section>
+
+      <!-- Scope -->
+      <section class="section">
+        <p class="section-label">Apply to</p>
+        <div class="preset-row" id="scope-row">
+          <button class="scope-chip" data-scope="docs">Google Docs</button>
+          <button class="scope-chip" data-scope="all">All websites</button>
+        </div>
+      </section>
+
+      <!-- Fine-tune (collapsible) -->
+      <details class="section accordion" id="finetune">
+        <summary class="section-label accordion-summary">
+          Fine-tune
+          <span class="accordion-arrow">›</span>
+        </summary>
+        <div class="slider-group">
+          <div class="slider-row">
+            <label for="sl-brightness">Brightness</label>
+            <input type="range" id="sl-brightness" min="50" max="150" step="5" />
+            <output id="out-brightness"></output>
+          </div>
+          <div class="slider-row">
+            <label for="sl-contrast">Contrast</label>
+            <input type="range" id="sl-contrast" min="50" max="150" step="5" />
+            <output id="out-contrast"></output>
+          </div>
+          <div class="slider-row">
+            <label for="sl-sepia">Sepia</label>
+            <input type="range" id="sl-sepia" min="0" max="100" step="5" />
+            <output id="out-sepia"></output>
+          </div>
+          <button class="btn-reset" id="btn-reset">Reset to preset</button>
+        </div>
+      </details>
+
+      <!-- Features -->
+      <section class="section">
+        <p class="section-label">Features</p>
+
+        <div class="feature-row">
+          <div class="feature-info">
+            <span class="feature-name">Focus Mode</span>
+            <span class="feature-desc">Hide toolbar and sidebars</span>
+          </div>
+          <label class="pill-switch">
+            <input type="checkbox" id="focus-switch" />
+            <span class="pill-switch__track"></span>
+          </label>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-info">
+            <span class="feature-name">Auto-Schedule</span>
+            <span class="feature-desc">Enable between set hours</span>
+          </div>
+          <label class="pill-switch">
+            <input type="checkbox" id="schedule-switch" />
+            <span class="pill-switch__track"></span>
+          </label>
+        </div>
+
+        <div class="schedule-times" id="schedule-times" hidden>
+          <label>From <input type="time" id="schedule-from" /></label>
+          <span class="time-sep">→</span>
+          <label>To <input type="time" id="schedule-to" /></label>
+        </div>
+      </section>
+
+    </div><!-- /panel-body -->
+
+    <!-- Footer -->
+    <footer class="panel-footer">
+      <button class="btn-print" id="btn-print">🖨 Print</button>
+      <span class="shortcut-hint"><kbd>Alt+Shift+D</kbd> to toggle</span>
+    </footer>
+
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>

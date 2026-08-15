@@ -1,0 +1,5 @@
+2026/07/14-16:22:50.474 3ffc Creating DB C:\Users\chris\AppData\Local\hermes\chrome-debug\Default\Sync Data\LevelDB since it was missing.
+2026/07/14-16:22:50.541 3ffc Reusing MANIFEST C:\Users\chris\AppData\Local\hermes\chrome-debug\Default\Sync Data\LevelDB/MANIFEST-000001
+2026/07/14-16:45:13.445 5d88 Level-0 table #5: started
+2026/07/14-16:45:13.510 5d88 Level-0 table #5: 216690 bytes OK
+2026/07/14-16:45:13.557 5d88 Delete type=0 #3

@@ -1,0 +1,413 @@
+/* SnapCode Pro - Content Script Styles (Injected/Shadow DOM) */
+:host,
+.sc-vars {
+    --sc-primary: #4f46e5;
+    --sc-primary-hover: #4338ca;
+    --sc-success: #10b981;
+    --sc-bg-main: #f8fafc;
+    --sc-bg-card: #ffffff;
+    --sc-bg-overlay: rgba(0, 0, 0, 0.4);
+    --sc-text-main: #0f172a;
+    --sc-text-muted: #64748b;
+    --sc-text-light: #94a3b8;
+    --sc-border: #e2e8f0;
+    --sc-radius-lg: 12px;
+    --sc-radius-md: 8px;
+    --sc-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --sc-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --sc-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --sc-bg-alt: #f1f5f9;
+    --sc-bg-tab: #e2e8f0;
+}
+
+
+
+/* Modal UI (Content Script) */
+.sc-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: var(--sc-bg-overlay);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: opacity 0.2s ease;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+.sc-modal-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 85vh;
+    /* Fixed relative height */
+    max-height: 800px;
+    background: var(--sc-bg-card);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--sc-border);
+    box-shadow: var(--sc-shadow-lg);
+}
+
+
+.sc-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    border-bottom: 1px solid var(--sc-border);
+    flex-shrink: 0;
+}
+
+
+.sc-modal-header .sc-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sc-modal-header .sc-logo-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--sc-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+
+.sc-modal-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--sc-text-main);
+}
+
+.sc-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sc-text-muted);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.sc-close-btn:hover {
+    background: var(--sc-bg-alt);
+    color: var(--sc-text-main);
+}
+
+.sc-tabs-container {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+    background: var(--sc-bg-main);
+    flex-shrink: 0;
+}
+
+
+.sc-tabs {
+    background: var(--sc-bg-tab);
+    padding: 4px;
+    border-radius: 12px;
+    display: flex;
+    gap: 4px;
+}
+
+.sc-tab {
+    padding: 8px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--sc-text-muted);
+    transition: all 0.2s;
+}
+
+.sc-tab.active {
+    background: var(--sc-bg-card);
+    color: var(--sc-primary);
+    box-shadow: var(--sc-shadow-sm);
+}
+
+.sc-content-area {
+    flex: 1;
+    padding: 24px;
+    background: var(--sc-bg-main);
+    overflow: hidden;
+    display: flex;
+}
+
+.sc-pane {
+    flex: 1;
+    background: var(--sc-bg-card);
+    border: 1px solid var(--sc-border);
+    border-radius: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sc-pane.sc-pane-dark {
+    background: #0b0f1a !important;
+    color: #f8fafc !important;
+}
+
+
+.sc-pane.sc-pane-dark .sc-code-pane {
+    color: #f8fafc !important;
+}
+
+.sc-pane-header {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 8px;
+}
+
+.sc-contrast-btn {
+    background: var(--sc-bg-alt);
+    border: 1px solid var(--sc-border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sc-text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.sc-contrast-btn:hover {
+    background: var(--sc-bg-tab);
+    color: var(--sc-text-main);
+}
+
+.sc-contrast-btn.active {
+    background: var(--sc-primary);
+    color: white;
+    border-color: var(--sc-primary);
+}
+
+
+.sc-preview-pane-content {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+
+.sc-preview-pane-content>* {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+
+
+.sc-code-pane {
+    margin: 0;
+    padding: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--sc-text-main);
+    overflow: auto;
+    white-space: pre;
+    /* Changed from pre-wrap for performance */
+    word-break: normal;
+    /* Changed from break-all for performance */
+    flex: 1;
+}
+
+
+.sc-modal-footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--sc-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+    background: var(--sc-bg-card);
+}
+
+
+.sc-btn {
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    font-family: inherit;
+}
+
+.sc-btn-ghost {
+    background: var(--sc-bg-alt);
+    color: var(--sc-text-muted);
+    border-color: var(--sc-border);
+}
+
+.sc-btn-ghost:hover {
+    background: var(--sc-bg-tab);
+    color: var(--sc-text-main);
+}
+
+.sc-btn-primary {
+    background: var(--sc-primary);
+    color: white;
+}
+
+.sc-btn-primary:hover {
+    background: var(--sc-primary-hover);
+    transform: translateY(-1px);
+}
+
+.sc-btn-success {
+    background: var(--sc-success);
+    color: white;
+}
+
+/* Syntax Highlighting */
+.sc-hl-tag {
+    color: #be185d;
+}
+
+.sc-hl-attr {
+    color: #7c3aed;
+}
+
+.sc-hl-string {
+    color: #059669;
+}
+
+.sc-hl-punctuation {
+    color: #64748b;
+}
+
+.sc-hl-property {
+    color: #0891b2;
+}
+
+.sc-hl-value {
+    color: #d97706;
+}
+
+.sc-hl-selector {
+    color: #ea580c;
+}
+
+.sc-hl-comment {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.sc-hidden {
+    display: none !important;
+}
+
+/* Picker UI */
+.sc-picker-highlighter {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2147483647;
+    border-width: 2px;
+    border-style: solid;
+    transition: all 0.2s ease-out;
+    border-radius: 8px;
+}
+
+.sc-picker-info {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    color: white;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    box-shadow: var(--sc-shadow-md);
+    white-space: nowrap;
+}
+
+.sc-picker-help {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    z-index: 2147483647;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    animation: sc-fade-in-down 0.3s ease-out;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.sc-picker-help kbd {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+@keyframes sc-fade-in-down {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Scrollbar */
+.sc-pane::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.sc-pane::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.sc-pane::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

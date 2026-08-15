@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SheetsGPT</title>
+    
+    <link rel="stylesheet" type="text/css" href="popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+</head>
+<body style="width: 400px; margin: 0;">
+    <div class="gray_box" style="height: 50px; background-color: #f3f3f3; margin: 0;">
+        <img id="logo" alt="logo" src="assets\sheetsgpt-logo.png">
+        <h2 class="credits" id="creditNum">Credits: 0</h2>
+    </div>
+    <div id="content" class="body_section">
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column; width: 75%;">
+                <h1 class="hello" style="margin-bottom: 0;">Hey there!</h1>
+                <h1 style="margin-top: 0; color: #cccccc;">How can I help?</h1>
+            </div>
+
+            <div id="pills">
+                <button id="history_btn" title="View History">
+                    <span style="font-size: 20px;"class="material-symbols-outlined">
+                        history
+                    </span>
+                </button>
+            </div>
+        </div>
+        <p style="margin-top: 0px; margin-bottom: 5px; color: #999999;"><b>I need a formula for:</b></p>
+        <div class="type_container">
+            <div class="option">
+                <input type="radio" id="gsheets" name="group1" value="Google Sheets">
+                <label for="gsheets">Google Sheets</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="excel" name="group1" value="Excel">
+                <label for="excel">Excel</label>
+            </div>
+        </div>
+
+        <div id="history_container">
+            
+        </div>
+        <div id="response"></div>
+        <div id="outer_output">
+            <div id="output">
+                <div id="inner_output">
+                    <p id="ai_response">Generating...</p>
+                    
+                </div>
+            </div>
+            <div id="copy_container">
+                <svg id="clipboardIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
+                <i id="checkIcon" class="fas fa-check" style="display: none;"></i>
+            </div>
+
+        </div>
+        <div class="input" id="textInput" contenteditable="true" placeholder="Enter a prompt here"></div>
+        <button id="submitBtn">Get Sheets Formula</button>
+        <div id="creditResetMessage" style="display: none; margin-top:15px; margin-bottom: 0px;">Credits will reset in: <span id="timeUntilReset"></span></div>
+        <p style="margin-bottom: 5px; color: #999999; margin-top: 15px;" id="emailText">Not signed in</p>
+        <div id="signOut" style="display: block;">
+            <span id="signOutBtn">Sign Out</span> | 
+            <span id="privacyPolicyBtn">Privacy Policy</span> | 
+            <span id="termsBtn">Terms of Use</span>
+        </div>
+        <p id="upgradeBtn">Upgrade to SheetsGPT Pro</p>
+
+    </div>
+    <div id="loginSection" class="body_section">
+        <img id="loginHeader" src="assets\sheetsgpt_header.png" alt="sheetsgpt header">
+        <div style="display: block;"><h1>Welcome to <span id="SheetsGPT">SheetsGPT</span></h1></div>
+        <!-- <h1>Welcome to SheetsGPT</h1> -->
+        <p>Please sign in below to begin using SheetsGPT</p>
+        <button id="loginBtn">Sign In</button>
+    </div>
+    
+    
+    <script type="module" src="popup.js"></script>
+</body>
+</html>

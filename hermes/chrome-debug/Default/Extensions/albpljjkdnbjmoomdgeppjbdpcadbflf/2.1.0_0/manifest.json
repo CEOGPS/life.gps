@@ -1,0 +1,36 @@
+{
+   "action": {
+      "default_icon": "icons/icon48.png",
+      "default_popup": "popup.html"
+   },
+   "author": "Krofile",
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "js/content.js" ],
+      "matches": [ "*://*.facebook.com/*" ]
+   }, {
+      "js": [ "js/ExtPay.js" ],
+      "matches": [ "https://extensionpay.com/*" ],
+      "run_at": "document_start"
+   } ],
+   "description": "Extract contact info from Facebook profiles, pages & groups. Emails, phones, social links & 30+ data points. One-click CSV export.",
+   "homepage_url": "https://extractmyleads.com",
+   "host_permissions": [ "https://extensionpay.com/*" ],
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqUOzL5nXFwan5rIBCDidwiUscJaJ0vwnnBBSWR1W7LXNPtB/x4fSOBz58acyyeywKIjYtvH2LoMp91Wepu9Q0d6NFlY8C2+P148Z0nUaC2UUGzS+HBSYvr/W04wWN5DtUBAfC6IHdG+RYU0iaFz2W2ywJRGKerOuB1JkdH1bQRDBObfodhIvG+K/XJQiaTEbetQ3oKVx24ZKIIyL0m950v2vcRb/8eg49xvf41O7wy8t/JyMlD6M6LhwO53XzOn90RtSbu85TP8pML0wRCj8wt3D+vgIccc3gea8XT2HC5YxJ7gGAecoEr3mLfkH5/DLXuKGj6fg6TkfMUxWOk0gHQIDAQAB",
+   "manifest_version": 3,
+   "name": "Extract My Leads - Facebook Contact Extractor",
+   "permissions": [ "notifications", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.1.0",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "js/ExtPay.js" ]
+   } ]
+}

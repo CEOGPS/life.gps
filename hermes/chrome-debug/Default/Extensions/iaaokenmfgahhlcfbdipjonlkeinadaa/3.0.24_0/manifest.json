@@ -1,0 +1,39 @@
+{
+   "action": {
+      "default_popup": "popup.html",
+      "default_title": "Browser Not Supported"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "content-scripts/content.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_shortDesc__",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "icon/128.png",
+      "16": "icon/16.png",
+      "48": "icon/48.png",
+      "64": "icon/64.png",
+      "96": "icon/96.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8JAPt8bzWSV0QrzJles5pmg2bwOOcP/5gpynK0EBO4p7MN5dCqbqM1fvDGgerM5nXb8agF6IWt7XV+1ub0dM4uNDc1LdrMgUZD6RO/OM3KV7cBgJzGjyMs4kfsPL8izR3d6BkWHEQnN3GrIQGzH+Sri/ZZdqmx8yOhGVDE9TOrulrZ+gLhAkBKlOxPS8131XfYM68jNdTgBzRE7FeyK52OSrYjge+1l7N2SMqEfXIXgUmJJ6y6a04OMhUv9Pfb650KSC2LMz03IP2jjL0j8u8UY9APSpgTcGsYmxuKnAw7H+h0FY6zDIRn56QXSrj/6dHqbnv9NGVdGXY+p9mLGuSQIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_appName__",
+   "options_ui": {
+      "page": "options.html"
+   },
+   "permissions": [ "activeTab", "downloads", "storage", "sidePanel", "scripting", "offscreen" ],
+   "side_panel": {
+      "default_path": "sidepanel.html"
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.0.24",
+   "web_accessible_resources": [ {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "resources": [ "icon/16.png", "data/Extension-Technologies.html" ]
+   } ]
+}

@@ -1,0 +1,23 @@
+{
+   "action": {
+      "default_popup": "email_checker_popup.html"
+   },
+   "background": {
+      "service_worker": "./email_checker_background.js"
+   },
+   "default_locale": "en",
+   "description": "__MSG_shortDesc__",
+   "icons": {
+      "128": "./icons/128.png",
+      "16": "./icons/16.png",
+      "48": "./icons/48.png",
+      "64": "./icons/64.png",
+      "96": "./icons/96.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5HhJSdyeRipaEWhf1LLWAAAq84X0Kl/U0BsJ1A+67No/bJk1lHIGsLDnqXxSSAuagPeGHwFJ3IvvUlHYAO2U+rGBL20toDK9deLWMJtvF06umDq/Rn4a49EMcFzDqdyFc8aReaCaIb3lTxekrCw5D+qmNOIQeC1o1/v9C+cpkPpJsPVSHRLT2QwbymCLd5HFCWZBQKNheFr0vOeUkftdZKqGsp07MX7R0yhoXcQX91eIQn477YZGff3eRfIkkFDkHqMAhPLpbdRCSkCbUGmH638tnwowAcP6NqGDjKOjLDioo3pBi32YYVNA3yl0pWUU/Hzx04qTn00ZkSeUGDkYDwIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_appName__",
+   "permissions": [ "contextMenus", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.6"
+}

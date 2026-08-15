@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2025 Alexej Plate
+All rights reserved.
+
+This repository and its contents are the exclusive property of Alexej Plate.
+Unauthorized reproduction, modification, or distribution is strictly prohibited.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Panel</title>
+  <script type="module" crossorigin src="/chunks/sidepanel-B-KAhS5d.js"></script>
+  <link rel="modulepreload" crossorigin href="/chunks/_virtual_wxt-html-plugins-CUMPttkV.js">
+  <link rel="modulepreload" crossorigin href="/chunks/port-name-ervLBWAQ-BGMGn1dw.js">
+  <link rel="stylesheet" crossorigin href="/assets/sidepanel-CWB5mXQT.css">
+</head>
+<body>
+<div class="container">
+    <!-- Header section for top elements -->
+    <div class="header-section">
+        <div id="pin-tip" style="display: none;" class="pin-tip-container">
+            <div style="display: flex; align-items: center;">
+                <div class="pro-tip-box">
+                    Pro Tip
+                </div>
+                <span style="font-family: Arial, sans-serif; font-size: 14px; color: #333; margin-left: 8px;">
+                Pin the extension
+            </span>
+                <img src="/assets/img-Dy9YKdfY.png" alt="Pin Extension Arrow" class="arrow-image">
+            </div>
+        </div>
+
+        <a href="https://platform.fastica.dev/paywall/377/customer-portal/get" target="_blank" id="userIconLink" style="visibility: hidden;">
+            <img src="/assets/user-interface-Cv8p1vcP.png" alt="Manage Subscription" class="top-right-icon">
+        </a>
+    </div>
+
+    <div class="content">
+        <!-- Reload notification banner -->
+        <div id="reloadBanner" class="reload-banner" style="display: none;">
+            <div class="reload-banner-content">
+                <span class="reload-banner-text">Extension was just installed. Please reload the page to use it</span>
+                <button id="reloadButton" class="reload-button">Reload Page</button>
+            </div>
+        </div>
+
+        <!-- Above button section -->
+        <div class="above-button-container">
+            <div class="thank-you-message" id="thankYouMessage" style="visibility: hidden;">
+                Thank you for your support! <span class="heart-emoji">❤️</span>
+            </div>
+
+            <!-- Lottie loading animation (hidden by default) -->
+            <div id="lottieLoader" class="lottie-loader" aria-live="polite" aria-busy="false" style="display: none;">
+                <div id="lottieContainer" class="lottie-container"></div>
+            </div>
+
+            <div id="warningContainer" style="min-height: 30px; text-align: center; margin-bottom: 10px; visibility: visible;">
+                <p id="warningText" style="display: inline; font-family: Arial, sans-serif; font-size: 18px;"></p>
+            </div>
+
+            <!-- Floating emoji container -->
+            <div id="emojiContainer"></div>
+        </div>
+
+        <!-- Button container -->
+        <div class="button-container">
+            <button class="button" id="Download">Download</button>
+        </div>
+
+        <!-- Download chip (progress/success) -->
+        <div class="chip-container" aria-live="polite" aria-atomic="true">
+            <div id="downloadChip" class="download-chip" role="status">
+                <img class="check" aria-hidden="true" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='iso-8859-1'?%3e%3c!--%20Generator:%20Adobe%20Illustrator%2019.0.0,%20SVG%20Export%20Plug-In%20.%20SVG%20Version:%206.00%20Build%200)%20--%3e%3csvg%20version='1.1'%20id='Capa_1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20x='0px'%20y='0px'%20viewBox='0%200%20511.985%20511.985'%20style='enable-background:new%200%200%20511.985%20511.985;'%20xml:space='preserve'%3e%3cg%3e%3cg%3e%3cpath%20d='M500.088,83.681c-15.841-15.862-41.564-15.852-57.426,0L184.205,342.148L69.332,227.276%20c-15.862-15.862-41.574-15.862-57.436,0c-15.862,15.862-15.862,41.574,0,57.436l143.585,143.585%20c7.926,7.926,18.319,11.899,28.713,11.899c10.394,0,20.797-3.963,28.723-11.899l287.171-287.181%20C515.95,125.265,515.95,99.542,500.088,83.681z'/%3e%3c/g%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3c/svg%3e" alt="">
+                <span class="chip-text">Downloading in progress...</span>
+            </div>
+        </div>
+
+        <!-- Download actions (e.g., show in folder) -->
+        <div id="downloadActions" class="download-actions" style="visibility: hidden;">
+            <a href="#" id="showInFolderLink">Show in folder</a>
+        </div>
+
+        
+
+        <!-- Below button section -->
+        <div class="below-button-container">
+            <div id="infoPanel" style="min-height: 70px; margin-top: 10px; text-align: center; visibility: visible; margin-right: 10px; margin-left: 10px;">
+                <p id="infoText" style="font-family: Arial, sans-serif; font-size: 14px; color: #333; margin: 0;"></p>
+                <a href="#" id="cancel-link" style="visibility: hidden; font-size: 14px;">cancel</a>
+            </div>
+
+            <div class="rating-container" id="ratingContainer" style="visibility: hidden;">
+                <p class="rate-us" style="text-align: center; font-family: arial, sans-serif; font-size: 16px">
+                    Happy with your download? Leave a review
+                </p>
+                <div class="full-stars">
+                    <div class="rating-group">
+                        <input name="fst" value="5" type="radio" disabled checked>
+                        <label for="fst-1">
+                            <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                                </svg>
+                            </a>
+                        </label>
+                        <input name="fst" id="fst-1" value="1" type="radio">
+                        <label for="fst-2">
+                            <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                                </svg>
+                            </a>
+                        </label>
+                        <input name="fst" id="fst-2" value="2" type="radio">
+                        <label for="fst-3">
+                            <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                                </svg>
+                            </a>
+                        </label>
+                        <input name="fst" id="fst-3" value="3" type="radio">
+                        <label for="fst-4">
+                            <a href="https://chromewebstore.google.com/detail/iaaokenmfgahhlcfbdipjonlkeinadaa/reviews" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                                </svg>
+                            </a>
+                        </label>
+                        <input name="fst" id="fst-4" value="4" type="radio">
+                        <label for="fst-5">
+                            <a href="https://chromewebstore.google.com/detail/iaaokenmfgahhlcfbdipjonlkeinadaa/reviews" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                                </svg>
+                            </a>
+                        </label>
+                        <input name="fst" id="fst-5" value="5" type="radio">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="loadingSwitcher" class="loading-switcher">
+                <div id="linkDepthContainer" style="visibility: hidden;" class="link-depth-container">
+                    <label for="linkDepth" style="font-family: Arial, sans-serif; font-size: 14px;">
+                        Link Depth:
+                        <input type="number" id="linkDepth" min="0" max="10" value="1" style="width: 50px; margin-left: 10px; text-align: center;">
+                    </label>
+                    <div style="margin-top: 8px; color: #333; padding: 6px 12px; font-size: 12px; font-family: Arial, sans-serif; font-style: italic; max-width: 300px; margin-left: auto; margin-right: auto;">
+                        Links to other websites will not be downloaded
+                    </div>
+                </div>
+
+                <div class="toggle-buttons-container" style="display: flex; justify-content: center; gap: 0; font-family: Arial, sans-serif; font-size: 14px;">
+                    <div style="position: relative;">
+                        <button id="singlePageBtn" class="toggle-btn active" style="border-radius: 4px 0 0 4px; border: 1px solid #ccc; padding: 8px 16px; cursor: pointer; background-color: white;">
+                            Single Page
+                        </button>
+                    </div>
+                    <button id="multiPageBtn" class="toggle-btn" style="border-radius: 0 4px 4px 0; border: 1px solid #ccc; border-left: none; padding: 8px 16px; cursor: pointer; background-color: white;">
+                        Multi Page
+                    </button>
+                </div>
+            </div>
+            
+            <div id="page-initialized-marker" style="visibility: hidden;" data-test="loading"></div>
+        </div>
+    </div>
+    
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <button id="closeReviewModal" class="modal-close" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-family: Arial, sans-serif; font-size: 14px; color: #333; margin-top: 0; margin-bottom: 10px;">
+                    Please consider leaving a short review. It really helps others discover this extension.
+                </p>
+                <img src="/assets/how-to-review-B8Y58bmy.png" alt="How to add a review" class="modal-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom buttons moved outside content to allow proper flexbox positioning -->
+    <div class="bottom-buttons-container">
+        <div class="bottom-buttons-left">
+            <div id="shareButton" class="bottom-button">
+                <img src="/assets/share-C0Fj8I8i.png" alt="Share" class="bottom-icon">
+                <span>Share</span>
+            </div>
+            <div class="bottom-button support-button">
+                <a href="https://platform.fastica.dev/paywall/377/customer-portal/get?tab=support" target="_blank" class="support-button-link">
+                    <img src="/assets/mail-CoTVKf5L.png" alt="Support" class="bottom-icon">
+                    <span>Support</span>
+                </a>
+            </div>
+        </div>
+        <div id="restoreAccountLink" class="bottom-button">
+            <a href="https://platform.fastica.dev/paywall/377/customer-portal/get" target="_blank">Restore account</a>
+        </div>
+    </div>
+    
+    <!-- Bottom rating section -->
+    <div class="bottom-rating-container">
+        <span class="bottom-rating-label">Rate Us:</span>
+        <div class="full-stars bottom-rating-stars">
+            <div class="rating-group">
+                <input name="bottom-rating" value="5" type="radio" disabled checked>
+                <label for="bottom-rating-1">
+                    <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                        </svg>
+                    </a>
+                </label>
+                <input name="bottom-rating" id="bottom-rating-1" value="1" type="radio">
+                <label for="bottom-rating-2">
+                    <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                        </svg>
+                    </a>
+                </label>
+                <input name="bottom-rating" id="bottom-rating-2" value="2" type="radio">
+                <label for="bottom-rating-3">
+                    <a href="https://forms.gle/aJJJgzRgEMT2Ln1N9" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                        </svg>
+                    </a>
+                </label>
+                <input name="bottom-rating" id="bottom-rating-3" value="3" type="radio">
+                <label for="bottom-rating-4">
+                    <a href="https://chromewebstore.google.com/detail/iaaokenmfgahhlcfbdipjonlkeinadaa/reviews" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                        </svg>
+                    </a>
+                </label>
+                <input name="bottom-rating" id="bottom-rating-4" value="4" type="radio">
+                <label for="bottom-rating-5">
+                    <a href="https://chromewebstore.google.com/detail/iaaokenmfgahhlcfbdipjonlkeinadaa/reviews" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" />
+                        </svg>
+                    </a>
+                </label>
+                <input name="bottom-rating" id="bottom-rating-5" value="5" type="radio">
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating modal (full-screen) -->
+    <div id="ratingModal" class="rating-modal-overlay" style="display: none;">
+        <div class="rating-modal">
+            <div class="rating-modal-body">
+                <div class="rating-modal-title">How was your experience?</div>
+                <div class="rating-modal-stars">
+                    <button class="rating-modal-star" data-rating="1" aria-label="1 star">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2-137 73.2c-8 4.3-17.9 3.7-25.3-1.7s-11.1-14.6-9.6-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0z" />
+                        </svg>
+                    </button>
+                    <button class="rating-modal-star" data-rating="2" aria-label="2 stars">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2-137 73.2c-8 4.3-17.9 3.7-25.3-1.7s-11.1-14.6-9.6-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0z" />
+                        </svg>
+                    </button>
+                    <button class="rating-modal-star" data-rating="3" aria-label="3 stars">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2-137 73.2c-8 4.3-17.9 3.7-25.3-1.7s-11.1-14.6-9.6-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0z" />
+                        </svg>
+                    </button>
+                    <button class="rating-modal-star" data-rating="4" aria-label="4 stars">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2-137 73.2c-8 4.3-17.9 3.7-25.3-1.7s-11.1-14.6-9.6-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0z" />
+                        </svg>
+                    </button>
+                    <button class="rating-modal-star" data-rating="5" aria-label="5 stars">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2-137 73.2c-8 4.3-17.9 3.7-25.3-1.7s-11.1-14.6-9.6-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Survey popup (non-modal) -->
+    <div id="surveyPopup" class="survey-popup" style="display: none;">
+        <button id="closeSurveyPopup" class="survey-popup-close" aria-label="Close">×</button>
+        <div class="survey-popup-body">
+            <div class="survey-popup-text">Help us improve!</div>
+            <div class="survey-popup-sub">Got 2 minutes for a quick survey?</div>
+            <a id="surveyLink" href="https://forms.gle/JzpwSYqpesABikQd9" target="_blank" class="survey-popup-btn">Take Survey</a>
+        </div>
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div id="onboardingModal" class="onboarding-overlay" style="display: none;" data-theme="purple">
+        <div class="onboarding-modal">
+            <button id="skipOnboarding" class="onboarding-skip" aria-label="Skip">Skip</button>
+
+            <!-- Step 1: Welcome -->
+            <div class="onboarding-step" data-step="1">
+                <div class="onboarding-icon-container">
+                    <div class="onboarding-icon-pulse">
+                        <svg class="onboarding-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="onboarding-title">Welcome to Website Downloader!</h2>
+                <p class="onboarding-subtitle">You've made a great choice</p>
+                <p class="onboarding-text">Join <strong>100,000+ weekly users</strong> who trust us to save their favorite websites for offline access</p>
+                <div class="onboarding-social-proof">
+                    <div class="onboarding-badge">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="badge-text">Trusted Extension</span>
+                    </div>
+                    <span class="rating-text">Featured on Chrome Web Store</span>
+                </div>
+            </div>
+
+            <!-- Step 2: Core Feature -->
+            <div class="onboarding-step" data-step="2" style="display: none;">
+                <div class="onboarding-icon-container">
+                    <div class="onboarding-icon-pulse">
+                        <svg class="onboarding-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="onboarding-title">Save Any Website in Seconds</h2>
+                <p class="onboarding-text">Download complete websites with all images, styles, and content preserved. Perfect for:</p>
+                <div class="onboarding-benefits">
+                    <div class="benefit-item">
+                        <span class="benefit-icon">📱</span>
+                        <span class="benefit-text">Offline access anywhere</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">🔒</span>
+                        <span class="benefit-text">Keep content that might disappear</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">⚡</span>
+                        <span class="benefit-text">Fast, one-click downloads</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Advanced Features -->
+            <div class="onboarding-step" data-step="3" style="display: none;">
+                <div class="onboarding-icon-container">
+                    <div class="onboarding-icon-pulse">
+                        <svg class="onboarding-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="onboarding-title">Power User Features</h2>
+                <p class="onboarding-text">Go beyond single pages with advanced capabilities:</p>
+                <div class="onboarding-features">
+                    <div class="feature-card">
+                        <h3 class="feature-title">🔗 Multi-Page Mode</h3>
+                        <p class="feature-desc">Download entire website sections automatically</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">🎯 Link Depth Control</h3>
+                        <p class="feature-desc">Choose how many levels deep to follow links</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">🛡️ Smart Boundaries</h3>
+                        <p class="feature-desc">Stays within the same domain automatically</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="onboarding-navigation">
+                <div class="onboarding-dots">
+                    <span class="dot active" data-dot="1"></span>
+                    <span class="dot" data-dot="2"></span>
+                    <span class="dot" data-dot="3"></span>
+                </div>
+                <button id="onboardingNext" class="onboarding-btn onboarding-btn-primary">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

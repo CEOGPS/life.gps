@@ -1,0 +1,317 @@
+{
+   "1055686627716339120": {
+      "message": "Archive"
+   },
+   "11138431688427255": {
+      "message": "Add label"
+   },
+   "1122146167985532789": {
+      "message": "yesterday"
+   },
+   "1333255388111908292": {
+      "message": "Groceries"
+   },
+   "156056758267077118": {
+      "message": "Mint"
+   },
+   "1796799676667865488": {
+      "message": "The note cannot be edited due to an app installation change."
+   },
+   "1817584332952897497": {
+      "message": "Coral"
+   },
+   "1943542607990075955": {
+      "message": "Try again"
+   },
+   "1986228872461282439": {
+      "message": "Default"
+   },
+   "1988879857371940328": {
+      "message": "Remove label $1​"
+   },
+   "2054706891655675688": {
+      "message": "Clay"
+   },
+   "2125543233832238809": {
+      "message": "Sage"
+   },
+   "2159130950882492111": {
+      "message": "Cancel"
+   },
+   "223492684871721243": {
+      "message": "Create Note"
+   },
+   "2259263507947555096": {
+      "message": "Copy to Clipboard"
+   },
+   "2269286357657606271": {
+      "message": "Page address has been removed"
+   },
+   "2312889521150470080": {
+      "message": "Recipes"
+   },
+   "2323249770683736002": {
+      "message": "Create new label"
+   },
+   "2336058986978607910": {
+      "message": "Something went wrong. Please try again."
+   },
+   "2452145367257933677": {
+      "message": "Undo"
+   },
+   "2583571751348768508": {
+      "message": "Dusk"
+   },
+   "2633701539319779732": {
+      "message": "Send feedback (dogfood only)"
+   },
+   "2725627412280194969": {
+      "message": "Groceries"
+   },
+   "2780054062282129350": {
+      "message": "Add title"
+   },
+   "2973306402585941108": {
+      "message": "Morning"
+   },
+   "2983318659047499045": {
+      "message": "Reminders"
+   },
+   "3121560585545725724": {
+      "message": "$1​, $2​"
+   },
+   "3190546672187601036": {
+      "message": "Night"
+   },
+   "3249966726137025950": {
+      "message": "Collaborator's Family Group"
+   },
+   "3385831848537487538": {
+      "message": "Travel"
+   },
+   "3411924303211138921": {
+      "message": "Video"
+   },
+   "3418677553313974490": {
+      "message": "Trash"
+   },
+   "3542768157572111342": {
+      "message": "List editing not available"
+   },
+   "3551522853788442530": {
+      "message": "Go back"
+   },
+   "3623199266894863617": {
+      "message": "Create Note"
+   },
+   "3708201433602754428": {
+      "message": "Saving note..."
+   },
+   "4035272937326361881": {
+      "message": "Notes cannot be saved while offline. Try again after reconnecting to the internet."
+   },
+   "4047470251075013857": {
+      "message": "Remove page link"
+   },
+   "4144331746856352764": {
+      "message": "Default"
+   },
+   "4153306913989815073": {
+      "message": "Private image cannot be saved."
+   },
+   "4184329490330819477": {
+      "message": "The note could not be saved due to an app installation change."
+   },
+   "4343848624651344174": {
+      "message": "Afternoon"
+   },
+   "4424410218593071962": {
+      "message": "Sand"
+   },
+   "4533605085334699862": {
+      "message": "Quotes"
+   },
+   "456512308416555173": {
+      "message": "Books"
+   },
+   "4701373951880414388": {
+      "message": "Places"
+   },
+   "4840513623749850224": {
+      "message": "Movies"
+   },
+   "4914875522213193145": {
+      "message": "Storm"
+   },
+   "4930506384627295710": {
+      "message": "Settings"
+   },
+   "4962916837925056840": {
+      "message": "You must reconnect to the internet to continue editing."
+   },
+   "4974261966265341751": {
+      "message": "Disable dark theme"
+   },
+   "5061847320181369179": {
+      "message": "Take a note…"
+   },
+   "5207635742003539443": {
+      "message": "Sign in"
+   },
+   "5403636185480096151": {
+      "message": "TV"
+   },
+   "546766753072101168": {
+      "message": "Labels"
+   },
+   "5570885401952336951": {
+      "message": "Client log"
+   },
+   "5775346636203685655": {
+      "message": "Undo"
+   },
+   "577539731512680648": {
+      "message": "Open in Keep"
+   },
+   "6114840739553123863": {
+      "message": "Food"
+   },
+   "6127627095904149725": {
+      "message": "Fog"
+   },
+   "6175061706159277390": {
+      "message": "Page address saved"
+   },
+   "6252259197986158120": {
+      "message": "Yesterday"
+   },
+   "6366376928558090914": {
+      "message": "Food"
+   },
+   "6497197865876438261": {
+      "message": "Music"
+   },
+   "6510131849363684615": {
+      "message": "Tomorrow"
+   },
+   "6579707685908557993": {
+      "message": "Evening"
+   },
+   "6717438461651235082": {
+      "message": "Your note was saved successfully."
+   },
+   "6731295782882669401": {
+      "message": "Celebration"
+   },
+   "6857703948759289202": {
+      "message": "Link removed."
+   },
+   "689017442055275529": {
+      "message": "$1​'s Family Group"
+   },
+   "6932835915069019531": {
+      "message": "Remove image"
+   },
+   "7005745151564974365": {
+      "message": "Keyboard shortcuts"
+   },
+   "7102649289752747375": {
+      "message": "Send feedback"
+   },
+   "733701029503338559": {
+      "message": "You must sign in to use the Google Keep Chrome Extension"
+   },
+   "7384785369409503695": {
+      "message": "Enable dark theme"
+   },
+   "7420364754178516134": {
+      "message": "Debug tools"
+   },
+   "7528441140724145783": {
+      "message": "Edit labels"
+   },
+   "7585826646011739428": {
+      "message": "Edit"
+   },
+   "7669846901402551021": {
+      "message": "Today"
+   },
+   "7687507512675715498": {
+      "message": "View in Keep"
+   },
+   "7733569569331009603": {
+      "message": "Label $1​ added."
+   },
+   "7780849812478835865": {
+      "message": "Peach"
+   },
+   "7819314041543176992": {
+      "message": "Close"
+   },
+   "7911416166208830577": {
+      "message": "Help"
+   },
+   "8104421162933956065": {
+      "message": "Notes"
+   },
+   "8133866583554546341": {
+      "message": "$1​, $2​"
+   },
+   "8149439558305434788": {
+      "message": "$1​, $2​"
+   },
+   "8161188819557037260": {
+      "message": "Google Keep Chrome Extension"
+   },
+   "8169232898590866289": {
+      "message": "+ Create \"$1​\""
+   },
+   "8193677552005249631": {
+      "message": "App downloads"
+   },
+   "8342620486324515462": {
+      "message": "Dismiss"
+   },
+   "8384308820923710821": {
+      "message": "Travel"
+   },
+   "8388956891956075130": {
+      "message": "Chalk"
+   },
+   "8504497109904866374": {
+      "message": "Music"
+   },
+   "8602525917014156029": {
+      "message": "Places"
+   },
+   "865638597375909527": {
+      "message": "Blossom"
+   },
+   "9012868245012782693": {
+      "message": "Notes"
+   },
+   "911698676339750373": {
+      "message": "Family Group"
+   },
+   "9146862513672039744": {
+      "message": "Wipe account"
+   },
+   "9167784195765779453": {
+      "message": "Go to Keep"
+   },
+   "9218540601355708194": {
+      "message": "Delete note"
+   },
+   "appDesc": {
+      "description": "App description",
+      "message": "Save to Google Keep in a single click!"
+   },
+   "appName": {
+      "description": "App name",
+      "message": "Google Keep Chrome Extension"
+   },
+   "shortName": {
+      "description": "App short name",
+      "message": "Save to Keep"
+   }
+}

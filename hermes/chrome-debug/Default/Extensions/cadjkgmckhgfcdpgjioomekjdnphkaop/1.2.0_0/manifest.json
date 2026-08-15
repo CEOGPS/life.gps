@@ -1,0 +1,79 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "assets/ip8-128x128.png",
+         "16": "assets/ip8-16x16.png",
+         "32": "assets/ip8-32x32.png",
+         "48": "assets/ip8-48x48.png"
+      },
+      "default_popup": "index.html",
+      "default_title": "ip8.com"
+   },
+   "author": "Def24.com",
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "contentScript.js" ],
+      "matches": [ "https://*/*" ],
+      "run_at": "document_idle"
+   }, {
+      "all_frames": true,
+      "js": [ "tz_sync.js" ],
+      "match_about_blank": true,
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+   }, {
+      "all_frames": true,
+      "js": [ "tz_spoof.js" ],
+      "match_about_blank": true,
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "world": "MAIN"
+   }, {
+      "all_frames": true,
+      "js": [ "webrtc_sync.js" ],
+      "match_about_blank": true,
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+   }, {
+      "all_frames": true,
+      "js": [ "webrtc_block.js" ],
+      "match_about_blank": true,
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "world": "MAIN"
+   }, {
+      "js": [ "tempmail_bar.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "widget_bar.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' https://*.ip8.com https://api2.ip8.com https://api2.ip8.com/* https://dnsleaktest.org https://dnsleaktest.org/* https://raw.githubusercontent.com data:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://flagcdn.com https://*.dnsleaktest.org; font-src 'self' data:; frame-src 'self' https://openspeedtest.com https://fast.com;"
+   },
+   "description": "Comprehensive suite for digital diagnostics, offering an array of technical tools to enhance your security & privacy",
+   "host_permissions": [ "\u003Call_urls>", "https://*.ip8.com/*", "https://api2.ip8.com/*", "https://dnsleaktest.org/*", "https://openspeedtest.com/*", "https://fast.com/*", "https://raw.githubusercontent.com/*" ],
+   "icons": {
+      "128": "assets/ip8-128x128.png",
+      "16": "assets/ip8-16x16.png",
+      "32": "assets/ip8-32x32.png",
+      "48": "assets/ip8-48x48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvsPGaX7zFiGfL2Cs8f7QekETTsW7J4VuTdy+ZlQL4nhzJs65ewEHSmWQZaswowkuVWcoWyzfD8EYs53U37UDsRNyzpCBapCWcGrnSOMyXnqmp+foXUdxAC64eL+wJpAusDxHBlJYNRtpU+4RL2NhQwuUDyECBFMlfrt0sYaGzecmoULL4bCyiWNPDdMVLZ0514JZCP9KykjTWD9+WGkUj8+KIHztKN+ifKVfl7FR7zPCIp20IhR+nRkopTqWfLQb8Q5ej/Ekg9gOy3y9+HRFXbsSHAc++AUbOLMWHCOk45RI0YH9+pmY9aI43qKK/lClsZI9LWmwbJ4XOOpr9z6jQwIDAQAB",
+   "manifest_version": 3,
+   "minimum_chrome_version": "88",
+   "name": "ip8.com extension",
+   "permissions": [ "scripting", "tabs", "activeTab", "storage", "alarms", "webRequest", "privacy", "declarativeNetRequest", "declarativeNetRequestFeedback" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.2.0",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "replace_date.js", "send_active.js" ]
+   } ]
+}

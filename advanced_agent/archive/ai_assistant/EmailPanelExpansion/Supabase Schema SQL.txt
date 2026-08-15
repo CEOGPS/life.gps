@@ -1,0 +1,360 @@
+-- Run this in your Supabase SQL editor
+
+-- ============================================
+-- ENUMS
+-- ============================================
+
+CREATE TYPE email_status AS ENUM ('pending', 'sent', 'delivered', 'opened', 'clicked', 'bounced', 'spam', 'unsubscribed');
+CREATE TYPE bounce_type AS ENUM ('hard', 'soft', 'block');
+CREATE TYPE account_provider AS ENUM ('gmail', 'google_workspace', 'outlook', 'sendgrid', 'brevo');
+CREATE TYPE warmup_status AS ENUM ('cold', 'warming', 'warm', 'cooling');
+
+-- ============================================
+-- ACCOUNTS & CONNECTIONS
+-- ============================================
+
+-- Email accounts (connected Gmail, Outlook, etc.)
+CREATE TABLE email_accounts (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+    provider account_provider NOT NULL,
+    email TEXT NOT NULL,
+    display_name TEXT,
+    
+    -- OAuth tokens
+    access_token TEXT,
+    refresh_token TEXT,
+    token_expires_at TIMESTAMPTZ,
+    
+    -- Provider-specific
+    provider_user_id TEXT,
+    sendgrid_api_key TEXT ENCRYPTED,
+    brevo_api_key TEXT ENCRYPTED,
+    
+    -- Limits
+    daily_limit INT DEFAULT 500,
+    daily_sent INT DEFAULT 0,
+    warmup_status warmup_status DEFAULT 'cold',
+    warmup_progress INT DEFAULT 0, -- 0-100
+    
+    -- Metadata
+    is_primary BOOLEAN DEFAULT false,
+    is_active BOOLEAN DEFAULT true,
+    last_sync_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Email sync state (for tracking what was synced)
+CREATE TABLE email_sync_state (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    account_id UUID REFERENCES email_accounts(id) ON DELETE CASCADE,
+    last_history_id TEXT, -- Gmail history ID
+    last_sync_at TIMESTAMPTZ DEFAULT NOW(),
+    sync_status TEXT DEFAULT 'idle',
+    error_message TEXT,
+    total_synced INT DEFAULT 0
+);
+
+-- ============================================
+-- CONTACTS & LISTS
+-- ============================================
+
+-- Contact lists (segments)
+CREATE TABLE contact_lists (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    contact_count INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Contacts table with verification status
+CREATE TABLE contacts (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+    
+    -- Basic info
+    email TEXT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
+    company TEXT,
+    job_title TEXT,
+    
+    -- LinkedIn/Zoom enrichment
+    linkedin_url TEXT,
+    zoom_profile_id TEXT,
+    source TEXT, -- 'linkedin', 'zoom', 'csv', 'manual', 'scraper'
+    source_url TEXT,
+    
+    -- Verification (ZeroBounce)
+    verification_status TEXT DEFAULT 'pending', -- 'pending', 'valid', 'invalid', 'catch_all', 'unknown', 'spamtrap', 'abuse', 'do_not_mail'
+    verification_score INT, -- 0-100
+    verification_data JSONB, -- Full ZeroBounce response
+    verified_at TIMESTAMPTZ,
+    
+    -- Engagement
+    total_emails_sent INT DEFAULT 0,
+    total_opens INT DEFAULT 0,
+    total_clicks INT DEFAULT 0,
+    last_contacted_at TIMESTAMPTZ,
+    
+    -- Categories
+    category TEXT, -- 'customer', 'lead', 'cold', 'unqualified'
+    tags TEXT[] DEFAULT '{}',
+    
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    
+    UNIQUE(user_id, email)
+);
+
+-- Contact list association (many-to-many)
+CREATE TABLE contact_list_members (
+    contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
+    list_id UUID REFERENCES contact_lists(id) ON DELETE CASCADE,
+    added_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (contact_id, list_id)
+);
+
+-- ============================================
+-- CAMPAIGNS
+-- ============================================
+
+-- Email campaigns
+CREATE TABLE campaigns (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+    account_id UUID REFERENCES email_accounts(id) ON DELETE SET NULL,
+    
+    -- Campaign details
+    name TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    preview_text TEXT,
+    content_html TEXT,
+    content_text TEXT,
+    
+    -- Scheduling
+    status TEXT DEFAULT 'draft', -- 'draft', 'scheduled', 'sending', 'sent', 'paused', 'failed'
+    scheduled_at TIMESTAMPTZ,
+    sent_at TIMESTAMPTZ,
+    
+    -- Targeting
+    list_ids UUID[] DEFAULT '{}', -- Target lists
+    excluded_list_ids UUID[] DEFAULT '{}',
+    
+    -- Limits
+    daily_limit INT, -- Max emails per day for this campaign
+    total_limit INT, -- Max total sends
+    
+    -- Tracking
+    track_opens BOOLEAN DEFAULT true,
+    track_clicks BOOLEAN DEFAULT true,
+    
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Campaign sends (individual email records)
+CREATE TABLE campaign_sends (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    campaign_id UUID REFERENCES campaigns(id) ON DELETE CASCADE,
+    contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
+    account_id UUID REFERENCES email_accounts(id),
+    
+    -- Message details
+    message_id TEXT, -- Provider's message ID
+    subject TEXT,
+    
+    -- Status tracking
+    status email_status DEFAULT 'pending',
+    status_details TEXT,
+    
+    -- Bounce info
+    bounce_type bounce_type,
+    bounce_reason TEXT,
+    
+    -- Timestamps
+    sent_at TIMESTAMPTZ,
+    delivered_at TIMESTAMPTZ,
+    opened_at TIMESTAMPTZ,
+    last_opened_at TIMESTAMPTZ,
+    clicked_at TIMESTAMPTZ,
+    bounced_at TIMESTAMPTZ,
+    
+    -- Counters
+    open_count INT DEFAULT 0,
+    click_count INT DEFAULT 0,
+    
+    -- Tracking pixels
+    tracking_pixel_id TEXT,
+    
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Email events (granular tracking)
+CREATE TABLE email_events (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    send_id UUID REFERENCES campaign_sends(id) ON DELETE CASCADE,
+    
+    event_type TEXT NOT NULL, -- 'sent', 'delivered', 'opened', 'clicked', 'bounced', 'spam', 'unsubscribed'
+    event_data JSONB,
+    
+    -- For clicks
+    link_url TEXT,
+    link_label TEXT,
+    
+    -- User agent / device info
+    user_agent TEXT,
+    ip_address INET,
+    device_type TEXT,
+    
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ============================================
+-- ANALYTICS (Aggregated)
+-- ============================================
+
+-- Daily campaign analytics (for fast reporting)
+CREATE TABLE campaign_daily_stats (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    campaign_id UUID REFERENCES campaigns(id) ON DELETE CASCADE,
+    date DATE NOT NULL,
+    
+    sent_count INT DEFAULT 0,
+    delivered_count INT DEFAULT 0,
+    opened_count INT DEFAULT 0,
+    clicked_count INT DEFAULT 0,
+    bounced_count INT DEFAULT 0,
+    spam_count INT DEFAULT 0,
+    unsubscribed_count INT DEFAULT 0,
+    
+    revenue DECIMAL(10,2) DEFAULT 0, -- If tracking revenue
+    
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    
+    UNIQUE(campaign_id, date)
+);
+
+-- Account daily stats (for warmup tracking)
+CREATE TABLE account_daily_stats (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    account_id UUID REFERENCES email_accounts(id) ON DELETE CASCADE,
+    date DATE NOT NULL,
+    
+    sent_count INT DEFAULT 0,
+    delivered_count INT DEFAULT 0,
+    open_rate DECIMAL(5,2),
+    bounce_rate DECIMAL(5,2),
+    
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(account_id, date)
+);
+
+-- ============================================
+-- WARMUP PLANS
+-- ============================================
+
+CREATE TABLE warmup_plans (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+    name TEXT NOT NULL,
+    daily_start INT DEFAULT 20,
+    daily_max INT DEFAULT 200,
+    duration_days INT DEFAULT 30,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE account_warmup (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    account_id UUID REFERENCES email_accounts(id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES warmup_plans(id),
+    current_day INT DEFAULT 1,
+    today_target INT,
+    status warmup_status DEFAULT 'warming',
+    started_at TIMESTAMPTZ DEFAULT NOW(),
+    completed_at TIMESTAMPTZ
+);
+
+-- ============================================
+-- INDEXES
+-- ============================================
+
+CREATE INDEX idx_contacts_user_email ON contacts(user_id, email);
+CREATE INDEX idx_contacts_verification_status ON contacts(verification_status);
+CREATE INDEX idx_contacts_tags ON contacts USING GIN(tags);
+CREATE INDEX idx_campaign_sends_campaign ON campaign_sends(campaign_id);
+CREATE INDEX idx_campaign_sends_contact ON campaign_sends(contact_id);
+CREATE INDEX idx_campaign_sends_status ON campaign_sends(status);
+CREATE INDEX idx_email_events_send ON email_events(send_id);
+CREATE INDEX idx_email_events_created ON email_events(created_at);
+CREATE INDEX idx_campaign_daily_stats_campaign_date ON campaign_daily_stats(campaign_id, date);
+CREATE INDEX idx_email_accounts_user ON email_accounts(user_id);
+
+-- ============================================
+-- ROW LEVEL SECURITY (RLS)
+-- ============================================
+
+-- Enable RLS on all tables
+ALTER TABLE email_accounts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contacts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_lists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE campaigns ENABLE ROW LEVEL SECURITY;
+ALTER TABLE campaign_sends ENABLE ROW LEVEL SECURITY;
+
+-- Policies
+CREATE POLICY "Users can view their own email_accounts" ON email_accounts
+    FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own contacts" ON contacts
+    FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own contact_lists" ON contact_lists
+    FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own campaigns" ON campaigns
+    FOR ALL USING (auth.uid() = user_id);
+
+-- ============================================
+-- TRIGGERS
+-- ============================================
+
+-- Update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_email_accounts_updated_at BEFORE UPDATE ON email_accounts
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_contacts_updated_at BEFORE UPDATE ON contacts
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_contact_lists_updated_at BEFORE UPDATE ON contact_lists
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_campaigns_updated_at BEFORE UPDATE ON campaigns
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Update contact_count on lists
+CREATE OR REPLACE FUNCTION update_list_contact_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE contact_lists SET contact_count = contact_count + 1 WHERE id = NEW.list_id;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE contact_lists SET contact_count = contact_count - 1 WHERE id = OLD.list_id;
+    END IF;
+    RETURN NULL;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_contact_count AFTER INSERT OR DELETE ON contact_list_members
+    FOR EACH ROW EXECUTE FUNCTION update_list_contact_count();

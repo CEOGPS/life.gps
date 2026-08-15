@@ -1,0 +1,67 @@
+{
+   "checksum": "29e785d43f42440055dcc2038b2c06eb",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13426327915680579",
+            "date_last_used": "13428455074907573",
+            "guid": "df897dd2-1418-4d6f-b153-ba69955c3137",
+            "id": "5",
+            "name": "Sign In",
+            "type": "url",
+            "url": "https://console.wasabisys.com/login"
+         } ],
+         "date_added": "13428534170471337",
+         "date_last_used": "0",
+         "date_modified": "13426327915680579",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Bookmarks bar",
+         "type": "folder"
+      },
+      "other": {
+         "children": [ {
+            "date_added": "13421170096323293",
+            "date_last_used": "0",
+            "guid": "922d13b8-4bc0-4ab8-9e96-8e0d878cde75",
+            "id": "6",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "Top 100 AI Tools: The Most Popular and Trending AI Websites | 2026 | AIxploria",
+            "type": "url",
+            "url": "https://www.aixploria.com/en/top-100-ai/"
+         }, {
+            "date_added": "13421478975603530",
+            "date_last_used": "0",
+            "guid": "116be012-139d-4dc5-aca5-5d5098973c49",
+            "id": "7",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "LifeOS One Dashboard",
+            "type": "url",
+            "url": "https://lifeosdash-xresqan3.manus.space/"
+         } ],
+         "date_added": "13428534170471337",
+         "date_last_used": "0",
+         "date_modified": "13421478975603530",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other bookmarks",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13428534170471337",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile bookmarks",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CssCCqoCCIiBAhKjAiAAkgGPAgqMAgoOY2hyb21lX3N5bmNfYm0SBTUxIWJtGhIJleuAOJhWBgARleuAOJhWBgAiNAlSBlk4mFYGABADGWA/RwYz1EmSIAEqHDUxIWJtL2ZkOjkxNjM3MjM1NTk0Njg4OTMxNjEiNAlSBlk4mFYGABADGWA/RwYz1EmSIAEqHDUxIWJtL2ZkOjkxNjM3MjM1NTk0Njg4OTMxNjEiNAlSBlk4mFYGABADGWA/RwYz1EmSIAEqHDUxIWJtL2ZkOjkxNjM3MjM1NTk0Njg4OTMxNjEiNAlSBlk4mFYGABADGWA/RwYz1EmSIAEqHDUxIWJtL2ZkOjkxNjM3MjM1NTk0Njg4OTMxNjEpfBWBOJhWBgDqAQsIy73a0gYQ4MP3dBIAKhhqUko5NWpUVW9TdExpWWZQTUo3NkV3PT1IAxLDAQgCEr4BChxZY1NUb252RVNQd3FDczRMMmNyVmh2NjhMOTg9EmZaOkFEcXRBWnlqQk45ZTRMRGZPaDhxWk5qSjcwZFd4V2dORFFNWEpSY0szT1ovWGVGV3lHV210REZzMGVxUEpheXliVEErTFB5V3Uvb3NuNnM5TW5lNHowcHBEeHA1ZFlQWklRPT0YACAAKAAw0ozkwoPTlQM4AEAAShxvUFZraHdCUmJWNjVLQ1dSMitJT05IV29PdTg9WgBlAAAAABLrAQgHEuYBChxMYVpnQ3NQYnRQR3RoM3h3Y08zcVh1REg0ZnM9EmZaOkFEcXRBWnhCazI4eFE0Z3JKWVZnY3h1OGoxTGd5R1BuZ3RuNmdIYzJqSk16dEpQcGRIYy90SXhVM1BxZjczanhUWEhiSmRvcXltWkQ4SkRFVk5CdnlTcHFxYmd6a2todWVnPT0YACAAKAAwq7TzlMmIlAM4+OCY7tszQPjgmO7bM0ocbnNPUnVjRlA0bHY3akNNOEtqWVAvU042R093PVoeIhxzaE1Xd2RqamI2b0tzbThQUDZFcDRkWFI1VWc9ZSwuVfcS6wEIBhLmAQocV0RNd2t5dEJCNCs5eTBoZkZIWVRiNlNnNkRZPRJmWjpBRHF0QVp4QmsyOHhRNGdySllWZ2N4dThqMUxnaE1ONTFpWGEwUHYyZkJzNG9ldVlXZTJienJkVTdOUmk4OFY3Um5vaEdBdHVBOHd4MnQzUnZxUVQ5NnZZL3BKTGR4ZjBadz09GAAgACgAMMWXvJ3W/JMDOMuh9NraM0DLofTa2jNKHGxqRHpCd0IxQ0YvN0xmRG1DMFo0K0w3b3VSQT1aHiIcYkl2elZKaVI5ZGJlakk2aUJjbGdNeXUvcTNJPWXKP60+EusBCAUS5gEKHC9yY2tOQkV1RXczTnBoVTJ4WmVVSW5PZTB2cz0SZlo6QURxdEFaeEJrMjh4UTRnckpZVmdjeHU4ajFMZzZHYndJbHRSM3M3TG93UjBZRElqbHVNTVovUitoTVFWVE0yVjF1WkIvMEFuaTg3Z25wK3lLNnFzRG1DSnVzNGdUVFFLMFE9PRgAIAAoADCJspbz2NCVAzikyaz27TNApMms9u0zShxnMHFLWm1kd0pVcGpqTUtqN1pFemphaGNnY2s9Wh4iHFlWcTRmRkNUVldRQUN6bTJXMVV3ZU9KWnp3RT1lTDHH7xKrAQgBEqYBChx5eEovNmZ2a2VjcjdrcDVFUXpCNHRXTHBkYkU9Ek5aOkFEcXRBWndHM2htVEVmazBaMVVWMWtLQlV4c1hGeVpNWHBiVlN5YW0wS0VKUnh2TG8vaExQdFRUV0hqbmJVbGxsV3lkTVpkY25Vd08YACAAKAAw0ozkwoPTlQM4AEAAShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9WgBlAAAAABLDAQgDEr4BChxuamdEdTg4ZUNydlhwODZwRDdmSEdjcUZwODg9EmZaOkFEcXRBWnhCeHRBMVk1M2lPWHJmZUFVYTBxd21WSVY1SlAxZnJTV1RYenVzUVhwbSsxcnB5ZTRML0UzUktobUVicHFyd3YyNzFJYkhyWnAxMUxEbnYwWndkY05BWE1VOC9RPT0YACAAKAAw0ozkwoPTlQM4AEAAShx5ek5CMDFjbjU0QTdjUlUwdVQrL1BnbVR0VW89WgBlAAAAADABOAA=",
+   "version": 1
+}

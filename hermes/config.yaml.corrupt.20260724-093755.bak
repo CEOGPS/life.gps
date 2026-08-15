@@ -1,0 +1,637 @@
+_config_version: 33
+
+# ============ AGENT INTELLIGENCE ============
+agent:
+  api_max_retries: 5
+  max_turns: 300
+  personalities:
+    webgod: |
+      You are Erebus, a godlike systems architect and principal engineer with 30 years of experience.
+      
+      INTELLIGENCE PROTOCOL:
+      - Reason from first principles
+      - Consider entire system stack (hardware→kernel→runtime→app)
+      - Use formal methods where applicable (type theory, TLA+, invariants)
+      - Write code that is: correct → maintainable → performant → secure
+      - When debugging: hypothesize → test → eliminate → iterate
+      - Document architectural decisions with context and rationale
+      
+      FREE MODEL STRATEGY:
+      - Use open-source models for routine coding (Qwen, DeepSeek)
+      - Use reasoning models (Claude/Gemini free tiers) for architecture
+      - Cache and reuse solutions to minimize API calls
+      - Batch operations when possible
+      
+      You are assisting Chris, CEO of CEO GPS digital marketing.
+  reasoning_effort: maximum
+  service_tier: free  # Changed to prioritize free tiers
+  verbose: true
+
+# ============ INTELLIGENT MODEL ROUTING ============
+model:
+  # Default: Best free reasoning model
+  default: google/gemini-2.0-flash-exp:free
+  provider: openrouter
+  
+  # Task-specific routing
+  routing:
+    reasoning: google/gemini-2.0-pro-exp-02-05:free  # Best free reasoning
+    coding: qwen/qwen-2.5-coder-32b-instruct:free    # Best free coding
+    debugging: deepseek/deepseek-v4-pro:free         # Deep analysis
+    architecture: anthropic/claude-3-haiku:free      # Quick but capable
+    simple: microsoft/phi-3.5-mini-128k-instruct:free # Fast tiny model
+
+# ============ PROVIDERS (All Free) ============
+providers:
+  # OpenRouter - Access to all free models
+  openrouter:
+    base_url: https://openrouter.ai/api/v1
+    default_model: google/gemini-2.0-flash-exp:free
+    models:
+      # REASONING (Free)
+      - google/gemini-2.0-pro-exp-02-05:free     # Best free reasoning
+      - google/gemini-2.0-flash-exp:free         # Fast reasoning
+      - anthropic/claude-3-haiku:free            # Quick but capable
+      - deepseek/deepseek-v4-pro:free            # Deep analysis
+      
+      # CODING (Free)
+      - qwen/qwen-2.5-coder-32b-instruct:free    # Best free coder
+      - deepseek/deepseek-coder-6.7b-instruct:free # Good for routine
+      - mistral/mistral-7b-instruct:free         # General purpose
+      - meta-llama/llama-3.3-70b-instruct:free   # Strong fallback
+      
+      # FAST/TINY (Free)
+      - microsoft/phi-3.5-mini-128k-instruct:free # 3.8B params
+      - google/gemini-2.0-flash-lite-preview-02-05:free # Extremely fast
+      
+      # SPECIALIZED (Free)
+      - nousresearch/hermes-2-pro-llama-3-8b:free # Agentic tasks
+      - perplexity/llama-3.1-sonar-small-128k-online:free # Web search
+    timeout: 120
+    max_retries: 3
+    extra_body:
+      include_reasoning: true  # Get thinking process from models
+
+  # Ollama - Local free models (zero cost)
+  ollama-local:
+    base_url: http://localhost:11434/v1
+    default_model: qwen2.5-coder:14b
+    models:
+      - qwen2.5-coder:14b      # Best local coder
+      - deepseek-coder:6.7b    # Good for debugging
+      - llama3.3:latest        # General purpose
+      - phi3.5:3.8b            # Fast fallback
+      - codellama:13b          # Code-specific
+    extra_body:
+      enable_thinking: true
+      temperature: 0.3
+      top_p: 0.9
+
+# ============ MOA WITH FREE MODELS ============
+moa:
+  enabled: true
+  fanout: per_iteration
+  max_tokens: 8192
+  min_models: 3  # At least 3 models per decision
+  
+  aggregator:
+    model: google/gemini-2.0-flash-exp:free  # Fast aggregator
+    provider: openrouter
+    temperature: 0.3
+  
+  reference_models:
+    # Reasoning specialist (free)
+    - model: google/gemini-2.0-pro-exp-02-05:free
+      provider: openrouter
+      temperature: 0.2
+      weight: 1.0  # Highest weight for reasoning
+      
+    # Code generation specialist (free)
+    - model: qwen/qwen-2.5-coder-32b-instruct:free
+      provider: openrouter
+      temperature: 0.2
+      weight: 1.0  # Highest weight for coding
+      
+    # Deep analysis (free)
+    - model: deepseek/deepseek-v4-pro:free
+      provider: openrouter
+      temperature: 0.3
+      weight: 0.8
+      
+    # Quick verification (free)
+    - model: meta-llama/llama-3.3-70b-instruct:free
+      provider: openrouter
+      temperature: 0.1
+      weight: 0.6
+      
+    # Alternative perspective (free)
+    - model: mistral/mistral-7b-instruct:free
+      provider: openrouter
+      temperature: 0.7
+      weight: 0.5
+      
+    # Fast tiny model for syntax checking (free)
+    - model: microsoft/phi-3.5-mini-128k-instruct:free
+      provider: openrouter
+      temperature: 0.1
+      weight: 0.3
+      
+  presets:
+    # Architecture decisions - use all reasoning models
+    architecture:
+      fanout: per_iteration
+      aggregator_model: google/gemini-2.0-flash-exp:free
+      min_models: 4
+      reference_models:
+        - google/gemini-2.0-pro-exp-02-05:free
+        - deepseek/deepseek-v4-pro:free
+        - qwen/qwen-2.5-coder-32b-instruct:free
+        - meta-llama/llama-3.3-70b-instruct:free
+        
+    # Debugging - use coding + reasoning models
+    debugging:
+      fanout: per_iteration
+      aggregator_model: google/gemini-2.0-flash-exp:free
+      min_models: 4
+      reference_models:
+        - qwen/qwen-2.5-coder-32b-instruct:free
+        - deepseek/deepseek-coder-6.7b-instruct:free
+        - google/gemini-2.0-pro-exp-02-05:free
+        - mistral/mistral-7b-instruct:free
+        
+    # Simple coding - use fast models
+    simple_coding:
+      fanout: per_turn
+      aggregator_model: microsoft/phi-3.5-mini-128k-instruct:free
+      min_models: 2
+      reference_models:
+        - deepseek/deepseek-coder-6.7b-instruct:free
+        - qwen/qwen-2.5-coder-32b-instruct:free
+
+# ============ SMART CACHING (Save credits) ============
+prompt_caching:
+  cache_ttl: 30m  # Cache for 30 minutes
+  enabled: true
+  max_cache_size: 1000  # Store 1000 responses
+  similarity_threshold: 0.9  # High threshold for exact matches
+
+memory:
+  flush_min_turns: 10  # More context before flushing
+  memory_char_limit: 5000
+  memory_enabled: true
+  nudge_interval: 12
+  user_char_limit: 2500
+  user_profile_enabled: true
+  embedding_model: togethercomputer/m2-bert-80M-8k-retrieval:free  # Free embedding
+
+compression:
+  enabled: true
+  protect_first_n: 5
+  protect_last_n: 30
+  target_ratio: 0.35
+  threshold: 0.65
+
+# ============ IDE INTEGRATIONS ============
+toolsets:
+  - hermes-cli
+  - web
+  - browser
+  - file
+  - terminal
+  - code_execution
+  - memory
+  - skills
+  
+  # IDE/Editor integrations
+  - vscode        # VS Code integration
+  - cursor        # Cursor IDE integration
+  - intellij      # JetBrains IDEs
+  - neovim        # Neovim integration
+  
+  # Testing frameworks
+  - pytest        # Python testing
+  - jest          # JavaScript testing
+  - vitest        # Vite testing
+  - mocha         # Node.js testing
+  - junit         # Java testing
+  - rspec         # Ruby testing
+  
+  # Cloud & Deployment (Free tiers)
+  - vercel        # Vercel deployment
+  - netlify       # Netlify deployment  
+  - heroku        # Heroku deployment
+  - railway       # Railway deployment
+  - fly           # Fly.io deployment
+  - cloudflare    # Cloudflare Workers
+  - aws           # AWS (free tier)
+  - gcp           # Google Cloud (free tier)
+  - azure         # Azure (free tier)
+
+# ============ COMMAND ALLOWLIST (Complete Dev Toolchain) ============
+command_allowlist:
+  # VERSION CONTROL
+  - git operations
+  - gh (GitHub CLI)
+  - git commit
+  - git push
+  - git pull
+  - git merge
+  - git rebase
+  - git cherry-pick
+  - git stash
+  - git tag
+  - git log
+  - git blame
+  - git bisect
+  
+  # PACKAGE MANAGEMENT
+  - npm install
+  - npm run
+  - npm test
+  - npm build
+  - npm start
+  - npm ci  # Clean install
+  - npm audit
+  - npm outdated
+  - npm update
+  
+  - pip install
+  - pip3 install
+  - pip freeze
+  - pip list
+  - pip show
+  - poetry install
+  - poetry add
+  - poetry remove
+  - poetry update
+  - poetry build
+  - poetry publish
+  
+  - yarn install
+  - yarn add
+  - yarn remove
+  - yarn build
+  - yarn test
+  - yarn start
+  
+  - cargo build
+  - cargo run
+  - cargo test
+  - cargo add
+  - cargo remove
+  - cargo update
+  
+  - go build
+  - go run
+  - go test
+  - go get
+  - go mod
+  
+  # DOCKER & CONTAINERS
+  - docker compose up
+  - docker compose down
+  - docker compose logs
+  - docker compose exec
+  - docker compose restart
+  - docker build
+  - docker run
+  - docker stop
+  - docker logs
+  - docker ps
+  - docker images
+  - docker pull
+  - docker push
+  - docker tag
+  - docker rm
+  - docker rmi
+  - docker network
+  - docker volume
+  
+  # TESTING
+  - pytest
+  - coverage
+  - pytest-cov
+  - unittest
+  - nose
+  - jest
+  - vitest
+  - mocha
+  - chai
+  - sinon
+  - rspec
+  - minitest
+  - gradle test
+  - mvn test
+  - go test
+  - cargo test
+  
+  # CODE QUALITY
+  - npx prettier
+  - npx eslint
+  - npx tsc
+  - npx stylelint
+  - black
+  - ruff
+  - pylint
+  - flake8
+  - mypy
+  - isort
+  - autoflake
+  - golangci-lint
+  - cargo clippy
+  
+  # BUILD TOOLS
+  - webpack
+  - vite
+  - rollup
+  - esbuild
+  - parcel
+  - make
+  - cmake
+  - ninja
+  - gcc
+  - g++
+  - clang
+  - rustc
+  - javac
+  - scalac
+  - dotnet build
+  - dotnet run
+  
+  # DATABASES (Free tools)
+  - psql
+  - mysql
+  - mongosh
+  - redis-cli
+  - sqlite3
+  - pg_restore
+  - pg_dump
+  - mysqldump
+  - mongodump
+  - mongorestore
+  
+  # CLOUD & DEPLOYMENT (Free tier commands)
+  - vercel deploy
+  - vercel dev
+  - netlify deploy
+  - netlify build
+  - heroku deploy
+  - heroku run
+  - railway deploy
+  - fly deploy
+  - wrangler publish  # Cloudflare Workers
+  - wrangler dev
+  - aws s3
+  - aws lambda
+  - gcloud app deploy
+  - azure webapp
+  
+  # SYSTEM EXPLORATION (Safe)
+  - ls
+  - ls -la
+  - ls -al
+  - grep
+  - find
+  - tree
+  - cat
+  - head
+  - tail
+  - wc
+  - du
+  - df
+  - ps aux
+  - ps aux | grep
+  - netstat
+  - ss
+  - curl
+  - wget
+  - ping
+  - nslookup
+  - dig
+  - traceroute
+  
+  # DEVELOPMENT UTILITIES
+  - script execution via -e/-c flag
+  - overwrite project env/config via redirection
+  - editor
+  - code  # VS Code
+  - cursor
+  - vim
+  - nano
+  - zed
+  - python
+  - node
+  - deno
+  - bun
+  - ruby
+  - php
+  - perl
+
+# ============ IDE PLUGIN CONFIGURATIONS ============
+ide_integrations:
+  vscode:
+    enabled: true
+    extension: hermes-vscode
+    commands:
+      - code .
+      - code --goto
+      - code --diff
+      - code --install-extension
+      - code --list-extensions
+      
+  cursor:
+    enabled: true
+    commands:
+      - cursor .
+      - cursor --goto
+      
+  intellij:
+    enabled: true
+    commands:
+      - idea .
+      - idea --line
+      
+  neovim:
+    enabled: true
+    commands:
+      - nvim
+      - nvim +PluginInstall
+      - nvim +LspInstall
+
+# ============ TESTING FRAMEWORK CONFIG ============
+testing:
+  frameworks:
+    pytest:
+      patterns:
+        - test_*.py
+        - *_test.py
+      commands:
+        - pytest
+        - pytest -v
+        - pytest -x
+        - pytest --cov
+        - pytest --cov-report
+        - pytest --pdb
+        
+    jest:
+      patterns:
+        - *.test.js
+        - *.spec.js
+      commands:
+        - npm test
+        - npm run test:watch
+        - npm run test:coverage
+        - npm run test:ui
+        
+    vitest:
+      patterns:
+        - *.test.js
+        - *.spec.js
+      commands:
+        - vitest
+        - vitest run
+        - vitest watch
+        - vitest coverage
+        
+    cargo_test:
+      patterns:
+        - tests/*.rs
+      commands:
+        - cargo test
+        - cargo test -- --nocapture
+        - cargo test -- --test-threads=1
+
+# ============ CODE EXECUTION ============
+code_execution:
+  max_tool_calls: 150
+  timeout: 600
+  memory_limit: 2048
+  
+  # Language-specific settings
+  languages:
+    python:
+      interpreter: python3
+      packages: pip
+      formatter: black
+      linter: ruff
+      test: pytest
+      
+    javascript:
+      interpreter: node
+      packages: npm
+      formatter: prettier
+      linter: eslint
+      test: jest
+      
+    typescript:
+      interpreter: node
+      packages: npm
+      formatter: prettier
+      linter: eslint
+      compiler: tsc
+      test: jest
+      
+    rust:
+      interpreter: cargo
+      packages: cargo
+      formatter: rustfmt
+      linter: clippy
+      test: cargo test
+
+terminal:
+  backend: local
+  container_cpu: 4
+  container_disk: 102400
+  container_memory: 16384
+  container_persistent: true
+  cwd: C:/dev/LifeOS1
+  docker_mount_cwd_to_workspace: true
+  home_mode: auto
+  lifetime_seconds: 3600
+  path_prefix: C:/Users/chris/AppData/Local/hermes/bin;C:/Program Files/nodejs
+  timeout: 600
+
+# ============ DELEGATION ============
+delegation:
+  max_iterations: 100
+  model: qwen2.5-coder:14b
+  provider: ollama-local
+  reasoning_effort: maximum
+  auto_configure: true
+  cost_aware: true  # Prioritize free models
+  smart_routing: true  # Route to best free model for task
+
+# ============ GUARDRAILS ============
+tool_loop_guardrails:
+  hard_stop_after:
+    exact_failure: 8
+    idempotent_no_progress: 8
+    same_tool_failure: 6
+  hard_stop_enabled: true
+  warn_after:
+    exact_failure: 3
+    idempotent_no_progress: 3
+    same_tool_failure: 3
+  warnings_enabled: true
+
+# ============ BROWSER ============
+browser:
+  allow_private_urls: true
+  inactivity_timeout: 300
+  headless: false
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+# ============ DISPLAY ============
+display:
+  background_process_notifications: all
+  bell_on_complete: true
+  busy_ack_detail: true
+  busy_input_mode: interrupt
+  cleanup_progress: false
+  compact: false
+  interim_assistant_messages: true
+  long_running_notifications: true
+  personality: concise
+  show_reasoning: true
+  skin: default
+  streaming: true
+  tool_progress: all
+  debug_mode: true
+
+# ============ CHECKPOINTS ============
+checkpoints:
+  enabled: true
+  checkpoint_dir: ~/.hermes/checkpoints
+  auto_save: true
+  save_interval: 5  # Save every 5 turns
+
+# ============ UPDATES ============
+updates:
+  backup_keep: 10
+  non_interactive_local_changes: stash
+  pre_update_backup: true
+  auto_update: true
+
+# ============ STREAMS ============
+streaming:
+  enabled: true
+  chunk_size: 100
+
+# ============ SECURITY ============
+security:
+  allow_private_urls: true
+  sandbox_level: moderate
+  file_access: project_only  # Restrict to project directory
+  network_access: limited  # Only allow outbound to known services
+
+# ============ SESSION ============
+session_reset:
+  at_hour: 5
+  idle_minutes: 2880
+  mode: gentle
+
+# ============ ONBOARDING ============
+onboarding:
+  seen:
+    busy_input_prompt: true
+    tool_progress_prompt: true

@@ -1,0 +1,314 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=79653bf1"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.__vite_plugin_react_preamble_installed__) {
+    throw new Error("@vitejs/plugin-react can't detect preamble. Something is wrong. See https://github.com/vitejs/vite-plugin-react/pull/11#discussion_r430879201");
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = (type, id) => {
+    RefreshRuntime.register(type, "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx " + id);
+  };
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=79653bf1"; const useState = __vite__cjsImport3_react["useState"];
+import { calculateKPIStatus, getKPIColor } from "/src/lib/kpiService.js";
+import { C } from "/src/lib/lifeosUi.js";
+export default function HealthAnalytics({ kpis, onUpdateKPI }) {
+  _s();
+  const [editingId, setEditingId] = useState(null);
+  const [editValue, setEditValue] = useState("");
+  const sleep = kpis.find((k) => k.id === "sleep")?.value || 0;
+  const exercise = kpis.find((k) => k.id === "exercise")?.value || 0;
+  const water = kpis.find((k) => k.id === "water")?.value || 0;
+  const stress = kpis.find((k) => k.id === "stress")?.value || 0;
+  const summary = [
+    { label: "Avg Sleep", value: `${sleep}h`, color: C.blue },
+    { label: "Weekly Exercise", value: `${exercise}m`, color: C.teal },
+    { label: "Daily Water", value: `${water} cups`, color: C.pink },
+    { label: "Stress Level", value: `${stress}/10`, color: C.orange }
+  ];
+  return /* @__PURE__ */ jsxDEV("div", { style: { padding: 16, overflow: "auto", height: "100%" }, children: [
+    /* @__PURE__ */ jsxDEV("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }, children: summary.map(
+      (item, idx) => /* @__PURE__ */ jsxDEV(
+        "div",
+        {
+          style: {
+            padding: 16,
+            background: "#1a1b2a",
+            borderRadius: 8,
+            border: `1px solid ${item.color}30`,
+            textAlign: "center"
+          },
+          children: [
+            /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 11, color: "#6aaedd", marginBottom: 8 }, children: item.label }, void 0, false, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+              lineNumber: 38,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 18, fontWeight: 700, color: item.color }, children: item.value }, void 0, false, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+              lineNumber: 39,
+              columnNumber: 13
+            }, this)
+          ]
+        },
+        idx,
+        true,
+        {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+          lineNumber: 28,
+          columnNumber: 9
+        },
+        this
+      )
+    ) }, void 0, false, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+      lineNumber: 26,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }, children: kpis.map((kpi) => {
+      const status = calculateKPIStatus(kpi);
+      const color = getKPIColor(status);
+      const progress = kpi.value / kpi.target * 100;
+      return /* @__PURE__ */ jsxDEV(
+        "div",
+        {
+          style: {
+            padding: 16,
+            background: "#1a1b2a",
+            borderRadius: 8,
+            border: `1px solid ${color}30`
+          },
+          children: [
+            /* @__PURE__ */ jsxDEV("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 12 }, children: [
+              /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 12, fontWeight: 700, color: "#f0ede8" }, children: kpi.name }, void 0, false, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 65,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 10, color: "#6aaedd", marginTop: 2 }, children: [
+                  "Target: ",
+                  kpi.target,
+                  " ",
+                  kpi.unit
+                ] }, void 0, true, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 68,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                lineNumber: 64,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { style: {
+                padding: "4px 8px",
+                borderRadius: 4,
+                background: `${color}20`,
+                border: `1px solid ${color}40`,
+                fontSize: 9,
+                fontWeight: 700,
+                color,
+                textTransform: "uppercase"
+              }, children: status }, void 0, false, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                lineNumber: 72,
+                columnNumber: 17
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+              lineNumber: 63,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(
+              "div",
+              {
+                onClick: () => {
+                  setEditingId(kpi.id);
+                  setEditValue(kpi.value.toString());
+                },
+                style: {
+                  padding: 12,
+                  background: "rgba(255,255,255,0.05)",
+                  borderRadius: 6,
+                  marginBottom: 12,
+                  cursor: "pointer",
+                  border: editingId === kpi.id ? `2px solid ${C.blue}` : "1px solid rgba(255,255,255,0.1)"
+                },
+                children: editingId === kpi.id ? /* @__PURE__ */ jsxDEV(
+                  "input",
+                  {
+                    type: "number",
+                    value: editValue,
+                    onChange: (e) => setEditValue(e.target.value),
+                    onBlur: () => {
+                      onUpdateKPI(kpi.id, parseFloat(editValue) || 0);
+                      setEditingId(null);
+                    },
+                    onKeyDown: (e) => {
+                      if (e.key === "Enter") {
+                        onUpdateKPI(kpi.id, parseFloat(editValue) || 0);
+                        setEditingId(null);
+                      }
+                    },
+                    autoFocus: true,
+                    style: {
+                      width: "100%",
+                      background: "transparent",
+                      border: "none",
+                      color,
+                      fontSize: 20,
+                      fontWeight: 700,
+                      outline: "none"
+                    }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                    lineNumber: 101,
+                    columnNumber: 17
+                  },
+                  this
+                ) : /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 20, fontWeight: 700, color }, children: [
+                  kpi.value,
+                  " ",
+                  /* @__PURE__ */ jsxDEV("span", { style: { fontSize: 14 }, children: kpi.unit }, void 0, false, {
+                    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                    lineNumber: 128,
+                    columnNumber: 33
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 127,
+                  columnNumber: 17
+                }, this)
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                lineNumber: 86,
+                columnNumber: 15
+              },
+              this
+            ),
+            /* @__PURE__ */ jsxDEV("div", { style: { marginBottom: 12 }, children: [
+              /* @__PURE__ */ jsxDEV("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 4 }, children: [
+                /* @__PURE__ */ jsxDEV("span", { style: { fontSize: 10, color: "#6aaedd" }, children: "Progress" }, void 0, false, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 135,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("span", { style: { fontSize: 10, color, fontWeight: 700 }, children: [
+                  progress.toFixed(0),
+                  "%"
+                ] }, void 0, true, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 136,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                lineNumber: 134,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { style: {
+                height: 6,
+                background: "rgba(255,255,255,0.1)",
+                borderRadius: 3,
+                overflow: "hidden"
+              }, children: /* @__PURE__ */ jsxDEV(
+                "div",
+                {
+                  style: {
+                    height: "100%",
+                    width: `${Math.min(progress, 100)}%`,
+                    background: color,
+                    transition: "width 0.3s"
+                  }
+                },
+                void 0,
+                false,
+                {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                  lineNumber: 146,
+                  columnNumber: 19
+                },
+                this
+              ) }, void 0, false, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+                lineNumber: 140,
+                columnNumber: 17
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+              lineNumber: 133,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { style: {
+              padding: 8,
+              background: `${kpi.trend > 0 ? "#00c896" : "#ff4f5e"}15`,
+              borderRadius: 4,
+              fontSize: 11,
+              color: kpi.trend > 0 ? "#00c896" : "#ff4f5e",
+              fontWeight: 600,
+              textAlign: "center"
+            }, children: [
+              kpi.trend > 0 ? "↑" : "↓",
+              " ",
+              Math.abs(kpi.trend),
+              "% vs last period"
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+              lineNumber: 157,
+              columnNumber: 15
+            }, this)
+          ]
+        },
+        kpi.id,
+        true,
+        {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+          lineNumber: 54,
+          columnNumber: 13
+        },
+        this
+      );
+    }) }, void 0, false, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+      lineNumber: 47,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx",
+    lineNumber: 24,
+    columnNumber: 5
+  }, this);
+}
+_s(HealthAnalytics, "ZMYwdrjJJzF8xsWy9JrUVdGqOXs=");
+_c = HealthAnalytics;
+var _c;
+$RefreshReg$(_c, "HealthAnalytics");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/HealthAnalytics.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUE7QUFBQTtBQUFBO0FBQUEscUJBY0E7QUFBQSxpQkFyQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFzQkE7QUFBQSxZQUVBLHVCQUFDLFNBQUksT0FBTztBQUFBLGNBQ1ZwQyxTQUFTO0FBQUEsY0FDVFUsWUFBWSxHQUFHTSxJQUFJcUIsUUFBUSxJQUFJLFlBQVksU0FBUztBQUFBLGNBQ3BEMUIsY0FBYztBQUFBLGNBQ2RHLFVBQVU7QUFBQSxjQUNWbkIsT0FBT3FCLElBQUlxQixRQUFRLElBQUksWUFBWTtBQUFBLGNBQ25DdEIsWUFBWTtBQUFBLGNBQ1pGLFdBQVc7QUFBQSxZQUNiLEdBQ0dHO0FBQUFBLGtCQUFJcUIsUUFBUSxJQUFJLE1BQU07QUFBQSxjQUFJO0FBQUEsY0FBRUgsS0FBS0ksSUFBSXRCLElBQUlxQixLQUFLO0FBQUEsY0FBRTtBQUFBLGlCQVRuRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQVVBO0FBQUE7QUFBQTtBQUFBLFFBaEhLckIsSUFBSTVCO0FBQUFBLFFBRFg7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxNQWtIQTtBQUFBLElBRUosQ0FBQyxLQTNISDtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBNEhBO0FBQUEsT0FuSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQW9KQTtBQUVKO0FBQUNULEdBdkt1QkgsaUJBQWU7QUFBQSxLQUFmQTtBQUFlLElBQUErRDtBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJjYWxjdWxhdGVLUElTdGF0dXMiLCJnZXRLUElDb2xvciIsIkMiLCJIZWFsdGhBbmFseXRpY3MiLCJrcGlzIiwib25VcGRhdGVLUEkiLCJfcyIsImVkaXRpbmdJZCIsInNldEVkaXRpbmdJZCIsInVzZVN0YXRlIiwiZWRpdFZhbHVlIiwic2V0RWRpdFZhbHVlIiwic2xlZXAiLCJmaW5kIiwiayIsImlkIiwidmFsdWUiLCJleGVyY2lzZSIsIndhdGVyIiwic3RyZXNzIiwic3VtbWFyeSIsImxhYmVsIiwiY29sb3IiLCJibHVlIiwidGVhbCIsInBpbmsiLCJvcmFuZ2UiLCJwYWRkaW5nIiwib3ZlcmZsb3ciLCJoZWlnaHQiLCJkaXNwbGF5IiwiZ3JpZFRlbXBsYXRlQ29sdW1ucyIsImdhcCIsIm1hcmdpbkJvdHRvbSIsIm1hcCIsIml0ZW0iLCJpZHgiLCJiYWNrZ3JvdW5kIiwiYm9yZGVyUmFkaXVzIiwiYm9yZGVyIiwidGV4dEFsaWduIiwiZm9udFNpemUiLCJmb250V2VpZ2h0Iiwia3BpIiwic3RhdHVzIiwicHJvZ3Jlc3MiLCJ0YXJnZXQiLCJqdXN0aWZ5Q29udGVudCIsImFsaWduSXRlbXMiLCJuYW1lIiwibWFyZ2luVG9wIiwidW5pdCIsInRleHRUcmFuc2Zvcm0iLCJ0b1N0cmluZyIsImN1cnNvciIsImUiLCJwYXJzZUZsb2F0Iiwia2V5Iiwid2lkdGgiLCJvdXRsaW5lIiwidG9GaXhlZCIsIk1hdGgiLCJtaW4iLCJ0cmFuc2l0aW9uIiwidHJlbmQiLCJhYnMiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJIZWFsdGhBbmFseXRpY3MuanN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlIH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IGNhbGN1bGF0ZUtQSVN0YXR1cywgZ2V0S1BJQ29sb3IgfSBmcm9tIFwiQC9saWIva3BpU2VydmljZVwiO1xyXG5pbXBvcnQgeyBDIH0gZnJvbSBcIkAvbGliL2xpZmVvc1VpXCI7XHJcblxyXG5cclxuXHJcbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEhlYWx0aEFuYWx5dGljcyh7IGtwaXMsIG9uVXBkYXRlS1BJIH0pIHtcclxuICBjb25zdCBbZWRpdGluZ0lkLCBzZXRFZGl0aW5nSWRdID0gdXNlU3RhdGUobnVsbCk7XHJcbiAgY29uc3QgW2VkaXRWYWx1ZSwgc2V0RWRpdFZhbHVlXSA9IHVzZVN0YXRlKFwiXCIpO1xyXG5cclxuICBjb25zdCBzbGVlcCA9IGtwaXMuZmluZChrID0+IGsuaWQgPT09IFwic2xlZXBcIik/LnZhbHVlIHx8IDA7XHJcbiAgY29uc3QgZXhlcmNpc2UgPSBrcGlzLmZpbmQoayA9PiBrLmlkID09PSBcImV4ZXJjaXNlXCIpPy52YWx1ZSB8fCAwO1xyXG4gIGNvbnN0IHdhdGVyID0ga3Bpcy5maW5kKGsgPT4gay5pZCA9PT0gXCJ3YXRlclwiKT8udmFsdWUgfHwgMDtcclxuICBjb25zdCBzdHJlc3MgPSBrcGlzLmZpbmQoayA9PiBrLmlkID09PSBcInN0cmVzc1wiKT8udmFsdWUgfHwgMDtcclxuXHJcbiAgY29uc3Qgc3VtbWFyeSA9IFtcclxuICAgIHsgbGFiZWw6IFwiQXZnIFNsZWVwXCIsIHZhbHVlOiBgJHtzbGVlcH1oYCwgY29sb3I6IEMuYmx1ZSB9LFxyXG4gICAgeyBsYWJlbDogXCJXZWVrbHkgRXhlcmNpc2VcIiwgdmFsdWU6IGAke2V4ZXJjaXNlfW1gLCBjb2xvcjogQy50ZWFsIH0sXHJcbiAgICB7IGxhYmVsOiBcIkRhaWx5IFdhdGVyXCIsIHZhbHVlOiBgJHt3YXRlcn0gY3Vwc2AsIGNvbG9yOiBDLnBpbmsgfSxcclxuICAgIHsgbGFiZWw6IFwiU3RyZXNzIExldmVsXCIsIHZhbHVlOiBgJHtzdHJlc3N9LzEwYCwgY29sb3I6IEMub3JhbmdlIH0sXHJcbiAgXTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgc3R5bGU9e3sgcGFkZGluZzogMTYsIG92ZXJmbG93OiBcImF1dG9cIiwgaGVpZ2h0OiBcIjEwMCVcIiB9fT5cclxuICAgICAgey8qIFN1bW1hcnkgQ2FyZHMgKi99XHJcbiAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogXCJncmlkXCIsIGdyaWRUZW1wbGF0ZUNvbHVtbnM6IFwicmVwZWF0KGF1dG8tZml0LCBtaW5tYXgoMTYwcHgsIDFmcikpXCIsIGdhcDogMTIsIG1hcmdpbkJvdHRvbTogMjQgfX0+XHJcbiAgICAgICAge3N1bW1hcnkubWFwKChpdGVtLCBpZHgpID0+IChcclxuICAgICAgICAgIDxkaXZcclxuICAgICAgICAgICAga2V5PXtpZHh9XHJcbiAgICAgICAgICAgIHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgcGFkZGluZzogMTYsXHJcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogXCIjMWExYjJhXCIsXHJcbiAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA4LFxyXG4gICAgICAgICAgICAgIGJvcmRlcjogYDFweCBzb2xpZCAke2l0ZW0uY29sb3J9MzBgLFxyXG4gICAgICAgICAgICAgIHRleHRBbGlnbjogXCJjZW50ZXJcIixcclxuICAgICAgICAgICAgfX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250U2l6ZTogMTEsIGNvbG9yOiBcIiM2YWFlZGRcIiwgbWFyZ2luQm90dG9tOiA4IH19PntpdGVtLmxhYmVsfTwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAxOCwgZm9udFdlaWdodDogNzAwLCBjb2xvcjogaXRlbS5jb2xvciB9fT5cclxuICAgICAgICAgICAgICB7aXRlbS52YWx1ZX1cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICApKX1cclxuICAgICAgPC9kaXY+XHJcblxyXG4gICAgICB7LyogS1BJIENhcmRzICovfVxyXG4gICAgICA8ZGl2IHN0eWxlPXt7IGRpc3BsYXk6IFwiZ3JpZFwiLCBncmlkVGVtcGxhdGVDb2x1bW5zOiBcInJlcGVhdChhdXRvLWZpdCwgbWlubWF4KDI4MHB4LCAxZnIpKVwiLCBnYXA6IDEyIH19PlxyXG4gICAgICAgIHtrcGlzLm1hcChrcGkgPT4ge1xyXG4gICAgICAgICAgY29uc3Qgc3RhdHVzID0gY2FsY3VsYXRlS1BJU3RhdHVzKGtwaSk7XHJcbiAgICAgICAgICBjb25zdCBjb2xvciA9IGdldEtQSUNvbG9yKHN0YXR1cyk7XHJcbiAgICAgICAgICBjb25zdCBwcm9ncmVzcyA9IChrcGkudmFsdWUgLyBrcGkudGFyZ2V0KSAqIDEwMDtcclxuXHJcbiAgICAgICAgICByZXR1cm4gKFxyXG4gICAgICAgICAgICA8ZGl2XHJcbiAgICAgICAgICAgICAga2V5PXtrcGkuaWR9XHJcbiAgICAgICAgICAgICAgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDE2LFxyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZDogXCIjMWExYjJhXCIsXHJcbiAgICAgICAgICAgICAgICBib3JkZXJSYWRpdXM6IDgsXHJcbiAgICAgICAgICAgICAgICBib3JkZXI6IGAxcHggc29saWQgJHtjb2xvcn0zMGAsXHJcbiAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogXCJmbGV4XCIsIGp1c3RpZnlDb250ZW50OiBcInNwYWNlLWJldHdlZW5cIiwgYWxpZ25JdGVtczogXCJzdGFydFwiLCBtYXJnaW5Cb3R0b206IDEyIH19PlxyXG4gICAgICAgICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250U2l6ZTogMTIsIGZvbnRXZWlnaHQ6IDcwMCwgY29sb3I6IFwiI2YwZWRlOFwiIH19PlxyXG4gICAgICAgICAgICAgICAgICAgIHtrcGkubmFtZX1cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDEwLCBjb2xvcjogXCIjNmFhZWRkXCIsIG1hcmdpblRvcDogMiB9fT5cclxuICAgICAgICAgICAgICAgICAgICBUYXJnZXQ6IHtrcGkudGFyZ2V0fSB7a3BpLnVuaXR9XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IFwiNHB4IDhweFwiLFxyXG4gICAgICAgICAgICAgICAgICBib3JkZXJSYWRpdXM6IDQsXHJcbiAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IGAke2NvbG9yfTIwYCxcclxuICAgICAgICAgICAgICAgICAgYm9yZGVyOiBgMXB4IHNvbGlkICR7Y29sb3J9NDBgLFxyXG4gICAgICAgICAgICAgICAgICBmb250U2l6ZTogOSxcclxuICAgICAgICAgICAgICAgICAgZm9udFdlaWdodDogNzAwLFxyXG4gICAgICAgICAgICAgICAgICBjb2xvcjogY29sb3IsXHJcbiAgICAgICAgICAgICAgICAgIHRleHRUcmFuc2Zvcm06IFwidXBwZXJjYXNlXCIsXHJcbiAgICAgICAgICAgICAgICB9fT5cclxuICAgICAgICAgICAgICAgICAge3N0YXR1c31cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICA8ZGl2XHJcbiAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgIHNldEVkaXRpbmdJZChrcGkuaWQpO1xyXG4gICAgICAgICAgICAgICAgICBzZXRFZGl0VmFsdWUoa3BpLnZhbHVlLnRvU3RyaW5nKCkpO1xyXG4gICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgIHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDEyLFxyXG4gICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBcInJnYmEoMjU1LDI1NSwyNTUsMC4wNSlcIixcclxuICAgICAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA2LFxyXG4gICAgICAgICAgICAgICAgICBtYXJnaW5Cb3R0b206IDEyLFxyXG4gICAgICAgICAgICAgICAgICBjdXJzb3I6IFwicG9pbnRlclwiLFxyXG4gICAgICAgICAgICAgICAgICBib3JkZXI6IGVkaXRpbmdJZCA9PT0ga3BpLmlkID8gYDJweCBzb2xpZCAke0MuYmx1ZX1gIDogXCIxcHggc29saWQgcmdiYSgyNTUsMjU1LDI1NSwwLjEpXCIsXHJcbiAgICAgICAgICAgICAgICB9fVxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIHtlZGl0aW5nSWQgPT09IGtwaS5pZCA/IChcclxuICAgICAgICAgICAgICAgICAgPGlucHV0XHJcbiAgICAgICAgICAgICAgICAgICAgdHlwZT1cIm51bWJlclwiXHJcbiAgICAgICAgICAgICAgICAgICAgdmFsdWU9e2VkaXRWYWx1ZX1cclxuICAgICAgICAgICAgICAgICAgICBvbkNoYW5nZT17ZSA9PiBzZXRFZGl0VmFsdWUoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICAgICAgICAgIG9uQmx1cj17KCkgPT4ge1xyXG4gICAgICAgICAgICAgICAgICAgICAgb25VcGRhdGVLUEkoa3BpLmlkLCBwYXJzZUZsb2F0KGVkaXRWYWx1ZSkgfHwgMCk7XHJcbiAgICAgICAgICAgICAgICAgICAgICBzZXRFZGl0aW5nSWQobnVsbCk7XHJcbiAgICAgICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgICAgICBvbktleURvd249e2UgPT4ge1xyXG4gICAgICAgICAgICAgICAgICAgICAgaWYgKGUua2V5ID09PSBcIkVudGVyXCIpIHtcclxuICAgICAgICAgICAgICAgICAgICAgICAgb25VcGRhdGVLUEkoa3BpLmlkLCBwYXJzZUZsb2F0KGVkaXRWYWx1ZSkgfHwgMCk7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHNldEVkaXRpbmdJZChudWxsKTtcclxuICAgICAgICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgICAgICB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGF1dG9Gb2N1c1xyXG4gICAgICAgICAgICAgICAgICAgIHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgICAgICAgICB3aWR0aDogXCIxMDAlXCIsXHJcbiAgICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBcInRyYW5zcGFyZW50XCIsXHJcbiAgICAgICAgICAgICAgICAgICAgICBib3JkZXI6IFwibm9uZVwiLFxyXG4gICAgICAgICAgICAgICAgICAgICAgY29sb3I6IGNvbG9yLFxyXG4gICAgICAgICAgICAgICAgICAgICAgZm9udFNpemU6IDIwLFxyXG4gICAgICAgICAgICAgICAgICAgICAgZm9udFdlaWdodDogNzAwLFxyXG4gICAgICAgICAgICAgICAgICAgICAgb3V0bGluZTogXCJub25lXCIsXHJcbiAgICAgICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICkgOiAoXHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDIwLCBmb250V2VpZ2h0OiA3MDAsIGNvbG9yOiBjb2xvciB9fT5cclxuICAgICAgICAgICAgICAgICAgICB7a3BpLnZhbHVlfSA8c3BhbiBzdHlsZT17eyBmb250U2l6ZTogMTQgfX0+e2twaS51bml0fTwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IG1hcmdpbkJvdHRvbTogMTIgfX0+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGRpc3BsYXk6IFwiZmxleFwiLCBqdXN0aWZ5Q29udGVudDogXCJzcGFjZS1iZXR3ZWVuXCIsIG1hcmdpbkJvdHRvbTogNCB9fT5cclxuICAgICAgICAgICAgICAgICAgPHNwYW4gc3R5bGU9e3sgZm9udFNpemU6IDEwLCBjb2xvcjogXCIjNmFhZWRkXCIgfX0+UHJvZ3Jlc3M8L3NwYW4+XHJcbiAgICAgICAgICAgICAgICAgIDxzcGFuIHN0eWxlPXt7IGZvbnRTaXplOiAxMCwgY29sb3I6IGNvbG9yLCBmb250V2VpZ2h0OiA3MDAgfX0+XHJcbiAgICAgICAgICAgICAgICAgICAge3Byb2dyZXNzLnRvRml4ZWQoMCl9JVxyXG4gICAgICAgICAgICAgICAgICA8L3NwYW4+XHJcbiAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgICAgaGVpZ2h0OiA2LFxyXG4gICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBcInJnYmEoMjU1LDI1NSwyNTUsMC4xKVwiLFxyXG4gICAgICAgICAgICAgICAgICBib3JkZXJSYWRpdXM6IDMsXHJcbiAgICAgICAgICAgICAgICAgIG92ZXJmbG93OiBcImhpZGRlblwiLFxyXG4gICAgICAgICAgICAgICAgfX0+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXZcclxuICAgICAgICAgICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgICAgICAgaGVpZ2h0OiBcIjEwMCVcIixcclxuICAgICAgICAgICAgICAgICAgICAgIHdpZHRoOiBgJHtNYXRoLm1pbihwcm9ncmVzcywgMTAwKX0lYCxcclxuICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IGNvbG9yLFxyXG4gICAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogXCJ3aWR0aCAwLjNzXCIsXHJcbiAgICAgICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgICBwYWRkaW5nOiA4LFxyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZDogYCR7a3BpLnRyZW5kID4gMCA/IFwiIzAwYzg5NlwiIDogXCIjZmY0ZjVlXCJ9MTVgLFxyXG4gICAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA0LFxyXG4gICAgICAgICAgICAgICAgZm9udFNpemU6IDExLFxyXG4gICAgICAgICAgICAgICAgY29sb3I6IGtwaS50cmVuZCA+IDAgPyBcIiMwMGM4OTZcIiA6IFwiI2ZmNGY1ZVwiLFxyXG4gICAgICAgICAgICAgICAgZm9udFdlaWdodDogNjAwLFxyXG4gICAgICAgICAgICAgICAgdGV4dEFsaWduOiBcImNlbnRlclwiLFxyXG4gICAgICAgICAgICAgIH19PlxyXG4gICAgICAgICAgICAgICAge2twaS50cmVuZCA+IDAgPyBcIuKGkVwiIDogXCLihpNcIn0ge01hdGguYWJzKGtwaS50cmVuZCl9JSB2cyBsYXN0IHBlcmlvZFxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICk7XHJcbiAgICAgICAgfSl9XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufVxyXG4iXSwiZmlsZSI6IkM6L2Rldi9MaWZlT1MxL3NyYy9jb21wb25lbnRzL2xpZmVvcy9wYW5lbHMvS1BJTW9kdWxlcy9IZWFsdGhBbmFseXRpY3MuanN4In0=

@@ -1,0 +1,620 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=79653bf1"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.__vite_plugin_react_preamble_installed__) {
+    throw new Error("@vitejs/plugin-react can't detect preamble. Something is wrong. See https://github.com/vitejs/vite-plugin-react/pull/11#discussion_r430879201");
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = (type, id) => {
+    RefreshRuntime.register(type, "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx " + id);
+  };
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=79653bf1"; const useState = __vite__cjsImport3_react["useState"];
+import { createWebSheet, generateGoogleSheetsURL } from "/src/lib/kpiService.js";
+import { C } from "/src/lib/lifeosUi.js";
+export default function WebSheetBuilder({ module, existingSheets, onCreateSheet }) {
+  _s();
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [sheetName, setSheetName] = useState("");
+  const [googleSheetsId, setGoogleSheetsId] = useState("");
+  const [excelUrl, setExcelUrl] = useState("");
+  const [autoSync, setAutoSync] = useState(false);
+  const [syncInterval, setSyncInterval] = useState(3600);
+  const handleCreate = () => {
+    if (!sheetName.trim()) {
+      alert("Please enter a sheet name");
+      return;
+    }
+    const newSheet = createWebSheet(sheetName, module, {
+      googleSheetsId: googleSheetsId || null,
+      excelUrl: excelUrl || null,
+      autoSync,
+      syncInterval: syncInterval * 1e3
+      // Convert to milliseconds
+    });
+    onCreateSheet(newSheet);
+    setSheetName("");
+    setGoogleSheetsId("");
+    setExcelUrl("");
+    setAutoSync(false);
+    setSyncInterval(3600);
+    setShowCreateForm(false);
+  };
+  return /* @__PURE__ */ jsxDEV("div", { children: [
+    /* @__PURE__ */ jsxDEV("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 14, fontWeight: 700, color: "#f0ede8", marginBottom: 4 }, children: "📑 Web Sheets" }, void 0, false, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 43,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 11, color: "#6aaedd" }, children: "Create spreadsheets synced with Google Sheets & Excel" }, void 0, false, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 46,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 42,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "button",
+        {
+          onClick: () => setShowCreateForm(!showCreateForm),
+          style: {
+            padding: "8px 16px",
+            borderRadius: 6,
+            background: `${C.blue}20`,
+            border: `1px solid ${C.blue}40`,
+            color: C.blue,
+            cursor: "pointer",
+            fontSize: 11,
+            fontWeight: 700
+          },
+          children: showCreateForm ? "✕ Cancel" : "+ Create Sheet"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 50,
+          columnNumber: 9
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+      lineNumber: 41,
+      columnNumber: 7
+    }, this),
+    showCreateForm && /* @__PURE__ */ jsxDEV("div", { style: {
+      padding: 16,
+      background: "#1a1b2a",
+      borderRadius: 8,
+      border: `1px solid ${C.blue}40`,
+      marginBottom: 16
+    }, children: [
+      /* @__PURE__ */ jsxDEV("div", { style: { marginBottom: 16 }, children: [
+        /* @__PURE__ */ jsxDEV("label", { style: { fontSize: 11, fontWeight: 700, color: "#f0ede8", display: "block", marginBottom: 6 }, children: "Sheet Name" }, void 0, false, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 77,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "input",
+          {
+            type: "text",
+            value: sheetName,
+            onChange: (e) => setSheetName(e.target.value),
+            placeholder: "e.g., Monthly Revenue Tracking",
+            style: {
+              width: "100%",
+              padding: "8px 12px",
+              borderRadius: 6,
+              background: "#0a0b12",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#f0ede8",
+              fontSize: 11,
+              outline: "none"
+            }
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 80,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 76,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }, children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { style: { fontSize: 11, fontWeight: 700, color: "#f0ede8", display: "block", marginBottom: 6 }, children: "Google Sheets ID (optional)" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 101,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "text",
+              value: googleSheetsId,
+              onChange: (e) => setGoogleSheetsId(e.target.value),
+              placeholder: "Paste your sheet ID",
+              style: {
+                width: "100%",
+                padding: "8px 12px",
+                borderRadius: 6,
+                background: "#0a0b12",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#f0ede8",
+                fontSize: 11,
+                outline: "none"
+              }
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 104,
+              columnNumber: 15
+            },
+            this
+          ),
+          /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 9, color: "#6aaedd", marginTop: 4 }, children: [
+            "Found in docs.google.com/spreadsheets/d/",
+            /* @__PURE__ */ jsxDEV("strong", { children: "ID" }, void 0, false, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 121,
+              columnNumber: 57
+            }, this),
+            "/edit"
+          ] }, void 0, true, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 120,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 100,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { style: { fontSize: 11, fontWeight: 700, color: "#f0ede8", display: "block", marginBottom: 6 }, children: "Excel Cloud URL (optional)" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 127,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "text",
+              value: excelUrl,
+              onChange: (e) => setExcelUrl(e.target.value),
+              placeholder: "OneDrive/SharePoint URL",
+              style: {
+                width: "100%",
+                padding: "8px 12px",
+                borderRadius: 6,
+                background: "#0a0b12",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#f0ede8",
+                fontSize: 11,
+                outline: "none"
+              }
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 130,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 126,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 98,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { marginBottom: 16 }, children: [
+        /* @__PURE__ */ jsxDEV("label", { style: { display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }, children: [
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "checkbox",
+              checked: autoSync,
+              onChange: (e) => setAutoSync(e.target.checked),
+              style: { cursor: "pointer" }
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 152,
+              columnNumber: 15
+            },
+            this
+          ),
+          /* @__PURE__ */ jsxDEV("span", { style: { fontSize: 11, color: "#f0ede8", fontWeight: 700 }, children: "Auto-sync with cloud" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 158,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 151,
+          columnNumber: 13
+        }, this),
+        autoSync && /* @__PURE__ */ jsxDEV("div", { style: { marginTop: 8 }, children: [
+          /* @__PURE__ */ jsxDEV("label", { style: { fontSize: 11, fontWeight: 700, color: "#f0ede8", display: "block", marginBottom: 6 }, children: "Sync Interval (seconds)" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 164,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "number",
+              min: "60",
+              max: "86400",
+              value: syncInterval,
+              onChange: (e) => setSyncInterval(parseInt(e.target.value)),
+              style: {
+                width: "100%",
+                padding: "8px 12px",
+                borderRadius: 6,
+                background: "#0a0b12",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#f0ede8",
+                fontSize: 11,
+                outline: "none"
+              }
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 167,
+              columnNumber: 17
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 163,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 150,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ jsxDEV(
+          "button",
+          {
+            onClick: handleCreate,
+            style: {
+              flex: 1,
+              padding: "10px",
+              borderRadius: 6,
+              background: `linear-gradient(135deg, ${C.teal}, ${C.blue})`,
+              border: "none",
+              color: "#000",
+              cursor: "pointer",
+              fontSize: 11,
+              fontWeight: 700
+            },
+            children: "✅ Create Sheet"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 190,
+            columnNumber: 13
+          },
+          this
+        ),
+        /* @__PURE__ */ jsxDEV(
+          "button",
+          {
+            onClick: () => setShowCreateForm(false),
+            style: {
+              flex: 1,
+              padding: "10px",
+              borderRadius: 6,
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#6aaedd",
+              cursor: "pointer",
+              fontSize: 11,
+              fontWeight: 700
+            },
+            children: "Cancel"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 206,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 189,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+      lineNumber: 69,
+      columnNumber: 7
+    }, this),
+    existingSheets.length > 0 ? /* @__PURE__ */ jsxDEV("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }, children: existingSheets.map(
+      (sheet) => /* @__PURE__ */ jsxDEV(
+        "div",
+        {
+          style: {
+            padding: 16,
+            background: "#1a1b2a",
+            borderRadius: 8,
+            border: "1px solid rgba(255,255,255,0.1)"
+          },
+          children: [
+            /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 12, fontWeight: 700, color: "#f0ede8", marginBottom: 8 }, children: [
+              "📄 ",
+              sheet.name
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 239,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 10, color: "#6aaedd", marginBottom: 12, lineHeight: 1.6 }, children: [
+              sheet.googleSheetsId && /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("strong", { children: "Google Sheets:" }, void 0, false, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                  lineNumber: 246,
+                  columnNumber: 21
+                }, this),
+                " ",
+                /* @__PURE__ */ jsxDEV(
+                  "a",
+                  {
+                    href: generateGoogleSheetsURL(sheet.googleSheetsId),
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    style: { color: C.blue, textDecoration: "underline" },
+                    children: "Open"
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                    lineNumber: 247,
+                    columnNumber: 21
+                  },
+                  this
+                )
+              ] }, void 0, true, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                lineNumber: 245,
+                columnNumber: 13
+              }, this),
+              sheet.excelUrl && /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("strong", { children: "Excel:" }, void 0, false, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                  lineNumber: 259,
+                  columnNumber: 21
+                }, this),
+                " ",
+                /* @__PURE__ */ jsxDEV(
+                  "a",
+                  {
+                    href: sheet.excelUrl,
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    style: { color: C.blue, textDecoration: "underline" },
+                    children: "Open"
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                    lineNumber: 260,
+                    columnNumber: 21
+                  },
+                  this
+                )
+              ] }, void 0, true, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                lineNumber: 258,
+                columnNumber: 13
+              }, this),
+              sheet.autoSync && /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("strong", { children: "Auto-sync:" }, void 0, false, {
+                  fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                  lineNumber: 272,
+                  columnNumber: 21
+                }, this),
+                " Every ",
+                Math.round(sheet.syncInterval / 1e3),
+                "s"
+              ] }, void 0, true, {
+                fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+                lineNumber: 271,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 243,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { style: {
+              padding: 8,
+              background: "rgba(255,255,255,0.05)",
+              borderRadius: 4,
+              fontSize: 9,
+              color: "#6aaedd"
+            }, children: [
+              "Created: ",
+              new Date(sheet.createdAt).toLocaleDateString()
+            ] }, void 0, true, {
+              fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+              lineNumber: 277,
+              columnNumber: 15
+            }, this)
+          ]
+        },
+        sheet.id,
+        true,
+        {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 230,
+          columnNumber: 9
+        },
+        this
+      )
+    ) }, void 0, false, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+      lineNumber: 228,
+      columnNumber: 7
+    }, this) : /* @__PURE__ */ jsxDEV("div", { style: {
+      padding: 24,
+      background: "rgba(255,255,255,0.02)",
+      borderRadius: 8,
+      border: "1px dashed rgba(255,255,255,0.1)",
+      textAlign: "center"
+    }, children: [
+      /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 36, marginBottom: 8 }, children: "📑" }, void 0, false, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 297,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 12, color: "#6aaedd", marginBottom: 4 }, children: "No web sheets yet" }, void 0, false, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 298,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 10, color: "#6aaedd" }, children: "Create your first sheet to integrate Google Sheets or Excel with your KPIs" }, void 0, false, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 301,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+      lineNumber: 290,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { style: {
+      marginTop: 24,
+      padding: 16,
+      background: "rgba(74,179,244,0.1)",
+      borderRadius: 8,
+      border: `1px solid ${C.blue}40`
+    }, children: [
+      /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 11, fontWeight: 700, color: C.blue, marginBottom: 8 }, children: "💡 How to Integrate" }, void 0, false, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 315,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { style: { fontSize: 10, color: "#6aaedd", lineHeight: 1.8 }, children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          "1. ",
+          /* @__PURE__ */ jsxDEV("strong", { children: "Google Sheets:" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 319,
+            columnNumber: 19
+          }, this),
+          " Go to File → Share → Get link → Copy ID from URL"
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 319,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          "2. ",
+          /* @__PURE__ */ jsxDEV("strong", { children: "Excel:" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 320,
+            columnNumber: 19
+          }, this),
+          " Upload to OneDrive/SharePoint and paste the shareable link"
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 320,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          "3. Enable ",
+          /* @__PURE__ */ jsxDEV("strong", { children: "Auto-sync" }, void 0, false, {
+            fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+            lineNumber: 321,
+            columnNumber: 26
+          }, this),
+          " to keep your KPIs updated automatically"
+        ] }, void 0, true, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 321,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: "4. Data syncs with other LifeOS1 panels (Social, Health, CEO GPS)" }, void 0, false, {
+          fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+          lineNumber: 322,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+        lineNumber: 318,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+      lineNumber: 308,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx",
+    lineNumber: 40,
+    columnNumber: 5
+  }, this);
+}
+_s(WebSheetBuilder, "Ewtsa6ywRLelTOw5lxf1v6zJZdM=");
+_c = WebSheetBuilder;
+var _c;
+$RefreshReg$(_c, "WebSheetBuilder");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/dev/LifeOS1/src/components/lifeos/panels/KPIModules/WebSheetBuilder.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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RjtBQUFBLFFBQ3hGLHVCQUFDLFNBQUk7QUFBQTtBQUFBLFVBQUcsdUJBQUMsWUFBTyxzQkFBUjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFjO0FBQUEsVUFBUztBQUFBLGFBQS9CO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBMEY7QUFBQSxRQUMxRix1QkFBQyxTQUFJO0FBQUE7QUFBQSxVQUFVLHVCQUFDLFlBQU8seUJBQVI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBaUI7QUFBQSxVQUFTO0FBQUEsYUFBekM7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUFpRjtBQUFBLFFBQ2pGLHVCQUFDLFNBQUksaUZBQUw7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUFzRTtBQUFBLFdBSnhFO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFLQTtBQUFBLFNBZkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQWdCQTtBQUFBLE9BNVJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0E2UkE7QUFFSjtBQUFDL0MsR0FoVXVCSixpQkFBZTtBQUFBLEtBQWZBO0FBQWUsSUFBQTREO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbImNyZWF0ZVdlYlNoZWV0IiwiZ2VuZXJhdGVHb29nbGVTaGVldHNVUkwiLCJDIiwiV2ViU2hlZXRCdWlsZGVyIiwibW9kdWxlIiwiZXhpc3RpbmdTaGVldHMiLCJvbkNyZWF0ZVNoZWV0IiwiX3MiLCJzaG93Q3JlYXRlRm9ybSIsInNldFNob3dDcmVhdGVGb3JtIiwidXNlU3RhdGUiLCJzaGVldE5hbWUiLCJzZXRTaGVldE5hbWUiLCJnb29nbGVTaGVldHNJZCIsInNldEdvb2dsZVNoZWV0c0lkIiwiZXhjZWxVcmwiLCJzZXRFeGNlbFVybCIsImF1dG9TeW5jIiwic2V0QXV0b1N5bmMiLCJzeW5jSW50ZXJ2YWwiLCJzZXRTeW5jSW50ZXJ2YWwiLCJoYW5kbGVDcmVhdGUiLCJ0cmltIiwiYWxlcnQiLCJuZXdTaGVldCIsImRpc3BsYXkiLCJqdXN0aWZ5Q29udGVudCIsImFsaWduSXRlbXMiLCJtYXJnaW5Cb3R0b20iLCJmb250U2l6ZSIsImZvbnRXZWlnaHQiLCJjb2xvciIsInBhZGRpbmciLCJib3JkZXJSYWRpdXMiLCJiYWNrZ3JvdW5kIiwiYmx1ZSIsImJvcmRlciIsImN1cnNvciIsImUiLCJ0YXJnZXQiLCJ2YWx1ZSIsIndpZHRoIiwib3V0bGluZSIsImdyaWRUZW1wbGF0ZUNvbHVtbnMiLCJnYXAiLCJtYXJnaW5Ub3AiLCJjaGVja2VkIiwicGFyc2VJbnQiLCJmbGV4IiwidGVhbCIsImxlbmd0aCIsIm1hcCIsInNoZWV0IiwibmFtZSIsImxpbmVIZWlnaHQiLCJ0ZXh0RGVjb3JhdGlvbiIsIk1hdGgiLCJyb3VuZCIsIkRhdGUiLCJjcmVhdGVkQXQiLCJ0b0xvY2FsZURhdGVTdHJpbmciLCJpZCIsInRleHRBbGlnbiIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIldlYlNoZWV0QnVpbGRlci5qc3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IHsgY3JlYXRlV2ViU2hlZXQsIGdlbmVyYXRlR29vZ2xlU2hlZXRzVVJMIH0gZnJvbSBcIkAvbGliL2twaVNlcnZpY2VcIjtcclxuaW1wb3J0IHsgQyB9IGZyb20gXCJAL2xpYi9saWZlb3NVaVwiO1xyXG5cclxuXHJcblxyXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBXZWJTaGVldEJ1aWxkZXIoeyBtb2R1bGUsIGV4aXN0aW5nU2hlZXRzLCBvbkNyZWF0ZVNoZWV0IH0pIHtcclxuICBjb25zdCBbc2hvd0NyZWF0ZUZvcm0sIHNldFNob3dDcmVhdGVGb3JtXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCBbc2hlZXROYW1lLCBzZXRTaGVldE5hbWVdID0gdXNlU3RhdGUoXCJcIik7XHJcbiAgY29uc3QgW2dvb2dsZVNoZWV0c0lkLCBzZXRHb29nbGVTaGVldHNJZF0gPSB1c2VTdGF0ZShcIlwiKTtcclxuICBjb25zdCBbZXhjZWxVcmwsIHNldEV4Y2VsVXJsXSA9IHVzZVN0YXRlKFwiXCIpO1xyXG4gIGNvbnN0IFthdXRvU3luYywgc2V0QXV0b1N5bmNdID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFtzeW5jSW50ZXJ2YWwsIHNldFN5bmNJbnRlcnZhbF0gPSB1c2VTdGF0ZSgzNjAwKTtcclxuXHJcbiAgY29uc3QgaGFuZGxlQ3JlYXRlID0gKCkgPT4ge1xyXG4gICAgaWYgKCFzaGVldE5hbWUudHJpbSgpKSB7XHJcbiAgICAgIGFsZXJ0KFwiUGxlYXNlIGVudGVyIGEgc2hlZXQgbmFtZVwiKTtcclxuICAgICAgcmV0dXJuO1xyXG4gICAgfVxyXG5cclxuICAgIGNvbnN0IG5ld1NoZWV0ID0gY3JlYXRlV2ViU2hlZXQoc2hlZXROYW1lLCBtb2R1bGUsIHtcclxuICAgICAgZ29vZ2xlU2hlZXRzSWQ6IGdvb2dsZVNoZWV0c0lkIHx8IG51bGwsXHJcbiAgICAgIGV4Y2VsVXJsOiBleGNlbFVybCB8fCBudWxsLFxyXG4gICAgICBhdXRvU3luYyxcclxuICAgICAgc3luY0ludGVydmFsOiBzeW5jSW50ZXJ2YWwgKiAxMDAwLCAvLyBDb252ZXJ0IHRvIG1pbGxpc2Vjb25kc1xyXG4gICAgfSk7XHJcblxyXG4gICAgb25DcmVhdGVTaGVldChuZXdTaGVldCk7XHJcblxyXG4gICAgLy8gUmVzZXQgZm9ybVxyXG4gICAgc2V0U2hlZXROYW1lKFwiXCIpO1xyXG4gICAgc2V0R29vZ2xlU2hlZXRzSWQoXCJcIik7XHJcbiAgICBzZXRFeGNlbFVybChcIlwiKTtcclxuICAgIHNldEF1dG9TeW5jKGZhbHNlKTtcclxuICAgIHNldFN5bmNJbnRlcnZhbCgzNjAwKTtcclxuICAgIHNldFNob3dDcmVhdGVGb3JtKGZhbHNlKTtcclxuICB9O1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPGRpdj5cclxuICAgICAgPGRpdiBzdHlsZT17eyBkaXNwbGF5OiBcImZsZXhcIiwganVzdGlmeUNvbnRlbnQ6IFwic3BhY2UtYmV0d2VlblwiLCBhbGlnbkl0ZW1zOiBcImNlbnRlclwiLCBtYXJnaW5Cb3R0b206IDE2IH19PlxyXG4gICAgICAgIDxkaXY+XHJcbiAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAxNCwgZm9udFdlaWdodDogNzAwLCBjb2xvcjogXCIjZjBlZGU4XCIsIG1hcmdpbkJvdHRvbTogNCB9fT5cclxuICAgICAgICAgICAg8J+TkSBXZWIgU2hlZXRzXHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDExLCBjb2xvcjogXCIjNmFhZWRkXCIgfX0+XHJcbiAgICAgICAgICAgIENyZWF0ZSBzcHJlYWRzaGVldHMgc3luY2VkIHdpdGggR29vZ2xlIFNoZWV0cyAmIEV4Y2VsXHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRTaG93Q3JlYXRlRm9ybSghc2hvd0NyZWF0ZUZvcm0pfVxyXG4gICAgICAgICAgc3R5bGU9e3tcclxuICAgICAgICAgICAgcGFkZGluZzogXCI4cHggMTZweFwiLFxyXG4gICAgICAgICAgICBib3JkZXJSYWRpdXM6IDYsXHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IGAke0MuYmx1ZX0yMGAsXHJcbiAgICAgICAgICAgIGJvcmRlcjogYDFweCBzb2xpZCAke0MuYmx1ZX00MGAsXHJcbiAgICAgICAgICAgIGNvbG9yOiBDLmJsdWUsXHJcbiAgICAgICAgICAgIGN1cnNvcjogXCJwb2ludGVyXCIsXHJcbiAgICAgICAgICAgIGZvbnRTaXplOiAxMSxcclxuICAgICAgICAgICAgZm9udFdlaWdodDogNzAwLFxyXG4gICAgICAgICAgfX1cclxuICAgICAgICA+XHJcbiAgICAgICAgICB7c2hvd0NyZWF0ZUZvcm0gPyBcIuKclSBDYW5jZWxcIiA6IFwiKyBDcmVhdGUgU2hlZXRcIn1cclxuICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgPC9kaXY+XHJcblxyXG4gICAgICB7LyogQ3JlYXRlIEZvcm0gKi99XHJcbiAgICAgIHtzaG93Q3JlYXRlRm9ybSAmJiAoXHJcbiAgICAgICAgPGRpdiBzdHlsZT17e1xyXG4gICAgICAgICAgcGFkZGluZzogMTYsXHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBcIiMxYTFiMmFcIixcclxuICAgICAgICAgIGJvcmRlclJhZGl1czogOCxcclxuICAgICAgICAgIGJvcmRlcjogYDFweCBzb2xpZCAke0MuYmx1ZX00MGAsXHJcbiAgICAgICAgICBtYXJnaW5Cb3R0b206IDE2LFxyXG4gICAgICAgIH19PlxyXG4gICAgICAgICAgPGRpdiBzdHlsZT17eyBtYXJnaW5Cb3R0b206IDE2IH19PlxyXG4gICAgICAgICAgICA8bGFiZWwgc3R5bGU9e3sgZm9udFNpemU6IDExLCBmb250V2VpZ2h0OiA3MDAsIGNvbG9yOiBcIiNmMGVkZThcIiwgZGlzcGxheTogXCJibG9ja1wiLCBtYXJnaW5Cb3R0b206IDYgfX0+XHJcbiAgICAgICAgICAgICAgU2hlZXQgTmFtZVxyXG4gICAgICAgICAgICA8L2xhYmVsPlxyXG4gICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgdmFsdWU9e3NoZWV0TmFtZX1cclxuICAgICAgICAgICAgICBvbkNoYW5nZT17ZSA9PiBzZXRTaGVldE5hbWUoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiZS5nLiwgTW9udGhseSBSZXZlbnVlIFRyYWNraW5nXCJcclxuICAgICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgd2lkdGg6IFwiMTAwJVwiLFxyXG4gICAgICAgICAgICAgICAgcGFkZGluZzogXCI4cHggMTJweFwiLFxyXG4gICAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA2LFxyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZDogXCIjMGEwYjEyXCIsXHJcbiAgICAgICAgICAgICAgICBib3JkZXI6IFwiMXB4IHNvbGlkIHJnYmEoMjU1LDI1NSwyNTUsMC4xKVwiLFxyXG4gICAgICAgICAgICAgICAgY29sb3I6IFwiI2YwZWRlOFwiLFxyXG4gICAgICAgICAgICAgICAgZm9udFNpemU6IDExLFxyXG4gICAgICAgICAgICAgICAgb3V0bGluZTogXCJub25lXCIsXHJcbiAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgLz5cclxuICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogXCJncmlkXCIsIGdyaWRUZW1wbGF0ZUNvbHVtbnM6IFwiMWZyIDFmclwiLCBnYXA6IDEyLCBtYXJnaW5Cb3R0b206IDE2IH19PlxyXG4gICAgICAgICAgICB7LyogR29vZ2xlIFNoZWV0cyAqL31cclxuICAgICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgICA8bGFiZWwgc3R5bGU9e3sgZm9udFNpemU6IDExLCBmb250V2VpZ2h0OiA3MDAsIGNvbG9yOiBcIiNmMGVkZThcIiwgZGlzcGxheTogXCJibG9ja1wiLCBtYXJnaW5Cb3R0b206IDYgfX0+XHJcbiAgICAgICAgICAgICAgICBHb29nbGUgU2hlZXRzIElEIChvcHRpb25hbClcclxuICAgICAgICAgICAgICA8L2xhYmVsPlxyXG4gICAgICAgICAgICAgIDxpbnB1dFxyXG4gICAgICAgICAgICAgICAgdHlwZT1cInRleHRcIlxyXG4gICAgICAgICAgICAgICAgdmFsdWU9e2dvb2dsZVNoZWV0c0lkfVxyXG4gICAgICAgICAgICAgICAgb25DaGFuZ2U9e2UgPT4gc2V0R29vZ2xlU2hlZXRzSWQoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJQYXN0ZSB5b3VyIHNoZWV0IElEXCJcclxuICAgICAgICAgICAgICAgIHN0eWxlPXt7XHJcbiAgICAgICAgICAgICAgICAgIHdpZHRoOiBcIjEwMCVcIixcclxuICAgICAgICAgICAgICAgICAgcGFkZGluZzogXCI4cHggMTJweFwiLFxyXG4gICAgICAgICAgICAgICAgICBib3JkZXJSYWRpdXM6IDYsXHJcbiAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IFwiIzBhMGIxMlwiLFxyXG4gICAgICAgICAgICAgICAgICBib3JkZXI6IFwiMXB4IHNvbGlkIHJnYmEoMjU1LDI1NSwyNTUsMC4xKVwiLFxyXG4gICAgICAgICAgICAgICAgICBjb2xvcjogXCIjZjBlZGU4XCIsXHJcbiAgICAgICAgICAgICAgICAgIGZvbnRTaXplOiAxMSxcclxuICAgICAgICAgICAgICAgICAgb3V0bGluZTogXCJub25lXCIsXHJcbiAgICAgICAgICAgICAgICB9fVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250U2l6ZTogOSwgY29sb3I6IFwiIzZhYWVkZFwiLCBtYXJnaW5Ub3A6IDQgfX0+XHJcbiAgICAgICAgICAgICAgICBGb3VuZCBpbiBkb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvPHN0cm9uZz5JRDwvc3Ryb25nPi9lZGl0XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgey8qIEV4Y2VsICovfVxyXG4gICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgIDxsYWJlbCBzdHlsZT17eyBmb250U2l6ZTogMTEsIGZvbnRXZWlnaHQ6IDcwMCwgY29sb3I6IFwiI2YwZWRlOFwiLCBkaXNwbGF5OiBcImJsb2NrXCIsIG1hcmdpbkJvdHRvbTogNiB9fT5cclxuICAgICAgICAgICAgICAgIEV4Y2VsIENsb3VkIFVSTCAob3B0aW9uYWwpXHJcbiAgICAgICAgICAgICAgPC9sYWJlbD5cclxuICAgICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICAgIHR5cGU9XCJ0ZXh0XCJcclxuICAgICAgICAgICAgICAgIHZhbHVlPXtleGNlbFVybH1cclxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXtlID0+IHNldEV4Y2VsVXJsKGUudGFyZ2V0LnZhbHVlKX1cclxuICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiT25lRHJpdmUvU2hhcmVQb2ludCBVUkxcIlxyXG4gICAgICAgICAgICAgICAgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgICAgd2lkdGg6IFwiMTAwJVwiLFxyXG4gICAgICAgICAgICAgICAgICBwYWRkaW5nOiBcIjhweCAxMnB4XCIsXHJcbiAgICAgICAgICAgICAgICAgIGJvcmRlclJhZGl1czogNixcclxuICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZDogXCIjMGEwYjEyXCIsXHJcbiAgICAgICAgICAgICAgICAgIGJvcmRlcjogXCIxcHggc29saWQgcmdiYSgyNTUsMjU1LDI1NSwwLjEpXCIsXHJcbiAgICAgICAgICAgICAgICAgIGNvbG9yOiBcIiNmMGVkZThcIixcclxuICAgICAgICAgICAgICAgICAgZm9udFNpemU6IDExLFxyXG4gICAgICAgICAgICAgICAgICBvdXRsaW5lOiBcIm5vbmVcIixcclxuICAgICAgICAgICAgICAgIH19XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICB7LyogQXV0byBTeW5jICovfVxyXG4gICAgICAgICAgPGRpdiBzdHlsZT17eyBtYXJnaW5Cb3R0b206IDE2IH19PlxyXG4gICAgICAgICAgICA8bGFiZWwgc3R5bGU9e3sgZGlzcGxheTogXCJmbGV4XCIsIGFsaWduSXRlbXM6IFwiY2VudGVyXCIsIGdhcDogOCwgY3Vyc29yOiBcInBvaW50ZXJcIiB9fT5cclxuICAgICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICAgIHR5cGU9XCJjaGVja2JveFwiXHJcbiAgICAgICAgICAgICAgICBjaGVja2VkPXthdXRvU3luY31cclxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXtlID0+IHNldEF1dG9TeW5jKGUudGFyZ2V0LmNoZWNrZWQpfVxyXG4gICAgICAgICAgICAgICAgc3R5bGU9e3sgY3Vyc29yOiBcInBvaW50ZXJcIiB9fVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPHNwYW4gc3R5bGU9e3sgZm9udFNpemU6IDExLCBjb2xvcjogXCIjZjBlZGU4XCIsIGZvbnRXZWlnaHQ6IDcwMCB9fT5cclxuICAgICAgICAgICAgICAgIEF1dG8tc3luYyB3aXRoIGNsb3VkXHJcbiAgICAgICAgICAgICAgPC9zcGFuPlxyXG4gICAgICAgICAgICA8L2xhYmVsPlxyXG4gICAgICAgICAgICB7YXV0b1N5bmMgJiYgKFxyXG4gICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgbWFyZ2luVG9wOiA4IH19PlxyXG4gICAgICAgICAgICAgICAgPGxhYmVsIHN0eWxlPXt7IGZvbnRTaXplOiAxMSwgZm9udFdlaWdodDogNzAwLCBjb2xvcjogXCIjZjBlZGU4XCIsIGRpc3BsYXk6IFwiYmxvY2tcIiwgbWFyZ2luQm90dG9tOiA2IH19PlxyXG4gICAgICAgICAgICAgICAgICBTeW5jIEludGVydmFsIChzZWNvbmRzKVxyXG4gICAgICAgICAgICAgICAgPC9sYWJlbD5cclxuICAgICAgICAgICAgICAgIDxpbnB1dFxyXG4gICAgICAgICAgICAgICAgICB0eXBlPVwibnVtYmVyXCJcclxuICAgICAgICAgICAgICAgICAgbWluPVwiNjBcIlxyXG4gICAgICAgICAgICAgICAgICBtYXg9XCI4NjQwMFwiXHJcbiAgICAgICAgICAgICAgICAgIHZhbHVlPXtzeW5jSW50ZXJ2YWx9XHJcbiAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXtlID0+IHNldFN5bmNJbnRlcnZhbChwYXJzZUludChlLnRhcmdldC52YWx1ZSkpfVxyXG4gICAgICAgICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgICAgIHdpZHRoOiBcIjEwMCVcIixcclxuICAgICAgICAgICAgICAgICAgICBwYWRkaW5nOiBcIjhweCAxMnB4XCIsXHJcbiAgICAgICAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA2LFxyXG4gICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IFwiIzBhMGIxMlwiLFxyXG4gICAgICAgICAgICAgICAgICAgIGJvcmRlcjogXCIxcHggc29saWQgcmdiYSgyNTUsMjU1LDI1NSwwLjEpXCIsXHJcbiAgICAgICAgICAgICAgICAgICAgY29sb3I6IFwiI2YwZWRlOFwiLFxyXG4gICAgICAgICAgICAgICAgICAgIGZvbnRTaXplOiAxMSxcclxuICAgICAgICAgICAgICAgICAgICBvdXRsaW5lOiBcIm5vbmVcIixcclxuICAgICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICl9XHJcbiAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICB7LyogQWN0aW9uIEJ1dHRvbnMgKi99XHJcbiAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGRpc3BsYXk6IFwiZmxleFwiLCBnYXA6IDggfX0+XHJcbiAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVDcmVhdGV9XHJcbiAgICAgICAgICAgICAgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgIGZsZXg6IDEsXHJcbiAgICAgICAgICAgICAgICBwYWRkaW5nOiBcIjEwcHhcIixcclxuICAgICAgICAgICAgICAgIGJvcmRlclJhZGl1czogNixcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IGBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCAke0MudGVhbH0sICR7Qy5ibHVlfSlgLFxyXG4gICAgICAgICAgICAgICAgYm9yZGVyOiBcIm5vbmVcIixcclxuICAgICAgICAgICAgICAgIGNvbG9yOiBcIiMwMDBcIixcclxuICAgICAgICAgICAgICAgIGN1cnNvcjogXCJwb2ludGVyXCIsXHJcbiAgICAgICAgICAgICAgICBmb250U2l6ZTogMTEsXHJcbiAgICAgICAgICAgICAgICBmb250V2VpZ2h0OiA3MDAsXHJcbiAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIOKchSBDcmVhdGUgU2hlZXRcclxuICAgICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRTaG93Q3JlYXRlRm9ybShmYWxzZSl9XHJcbiAgICAgICAgICAgICAgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgIGZsZXg6IDEsXHJcbiAgICAgICAgICAgICAgICBwYWRkaW5nOiBcIjEwcHhcIixcclxuICAgICAgICAgICAgICAgIGJvcmRlclJhZGl1czogNixcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IFwicmdiYSgyNTUsMjU1LDI1NSwwLjA1KVwiLFxyXG4gICAgICAgICAgICAgICAgYm9yZGVyOiBcIjFweCBzb2xpZCByZ2JhKDI1NSwyNTUsMjU1LDAuMSlcIixcclxuICAgICAgICAgICAgICAgIGNvbG9yOiBcIiM2YWFlZGRcIixcclxuICAgICAgICAgICAgICAgIGN1cnNvcjogXCJwb2ludGVyXCIsXHJcbiAgICAgICAgICAgICAgICBmb250U2l6ZTogMTEsXHJcbiAgICAgICAgICAgICAgICBmb250V2VpZ2h0OiA3MDAsXHJcbiAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIENhbmNlbFxyXG4gICAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICApfVxyXG5cclxuICAgICAgey8qIEV4aXN0aW5nIFNoZWV0cyAqL31cclxuICAgICAge2V4aXN0aW5nU2hlZXRzLmxlbmd0aCA+IDAgPyAoXHJcbiAgICAgICAgPGRpdiBzdHlsZT17eyBkaXNwbGF5OiBcImdyaWRcIiwgZ3JpZFRlbXBsYXRlQ29sdW1uczogXCJyZXBlYXQoYXV0by1maXQsIG1pbm1heCgyODBweCwgMWZyKSlcIiwgZ2FwOiAxMiB9fT5cclxuICAgICAgICAgIHtleGlzdGluZ1NoZWV0cy5tYXAoc2hlZXQgPT4gKFxyXG4gICAgICAgICAgICA8ZGl2XHJcbiAgICAgICAgICAgICAga2V5PXtzaGVldC5pZH1cclxuICAgICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgcGFkZGluZzogMTYsXHJcbiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBcIiMxYTFiMmFcIixcclxuICAgICAgICAgICAgICAgIGJvcmRlclJhZGl1czogOCxcclxuICAgICAgICAgICAgICAgIGJvcmRlcjogXCIxcHggc29saWQgcmdiYSgyNTUsMjU1LDI1NSwwLjEpXCIsXHJcbiAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDEyLCBmb250V2VpZ2h0OiA3MDAsIGNvbG9yOiBcIiNmMGVkZThcIiwgbWFyZ2luQm90dG9tOiA4IH19PlxyXG4gICAgICAgICAgICAgICAg8J+ThCB7c2hlZXQubmFtZX1cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250U2l6ZTogMTAsIGNvbG9yOiBcIiM2YWFlZGRcIiwgbWFyZ2luQm90dG9tOiAxMiwgbGluZUhlaWdodDogMS42IH19PlxyXG4gICAgICAgICAgICAgICAge3NoZWV0Lmdvb2dsZVNoZWV0c0lkICYmIChcclxuICAgICAgICAgICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgICAgICAgICA8c3Ryb25nPkdvb2dsZSBTaGVldHM6PC9zdHJvbmc+e1wiIFwifVxyXG4gICAgICAgICAgICAgICAgICAgIDxhXHJcbiAgICAgICAgICAgICAgICAgICAgICBocmVmPXtnZW5lcmF0ZUdvb2dsZVNoZWV0c1VSTChzaGVldC5nb29nbGVTaGVldHNJZCl9XHJcbiAgICAgICAgICAgICAgICAgICAgICB0YXJnZXQ9XCJfYmxhbmtcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgcmVsPVwibm9vcGVuZXIgbm9yZWZlcnJlclwiXHJcbiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogQy5ibHVlLCB0ZXh0RGVjb3JhdGlvbjogXCJ1bmRlcmxpbmVcIiB9fVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIE9wZW5cclxuICAgICAgICAgICAgICAgICAgICA8L2E+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAgIHtzaGVldC5leGNlbFVybCAmJiAoXHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+XHJcbiAgICAgICAgICAgICAgICAgICAgPHN0cm9uZz5FeGNlbDo8L3N0cm9uZz57XCIgXCJ9XHJcbiAgICAgICAgICAgICAgICAgICAgPGFcclxuICAgICAgICAgICAgICAgICAgICAgIGhyZWY9e3NoZWV0LmV4Y2VsVXJsfVxyXG4gICAgICAgICAgICAgICAgICAgICAgdGFyZ2V0PVwiX2JsYW5rXCJcclxuICAgICAgICAgICAgICAgICAgICAgIHJlbD1cIm5vb3BlbmVyIG5vcmVmZXJyZXJcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgc3R5bGU9e3sgY29sb3I6IEMuYmx1ZSwgdGV4dERlY29yYXRpb246IFwidW5kZXJsaW5lXCIgfX1cclxuICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICBPcGVuXHJcbiAgICAgICAgICAgICAgICAgICAgPC9hPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICB7c2hlZXQuYXV0b1N5bmMgJiYgKFxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgIDxzdHJvbmc+QXV0by1zeW5jOjwvc3Ryb25nPiBFdmVyeSB7TWF0aC5yb3VuZChzaGVldC5zeW5jSW50ZXJ2YWwgLyAxMDAwKX1zXHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgICAgPGRpdiBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgcGFkZGluZzogOCxcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IFwicmdiYSgyNTUsMjU1LDI1NSwwLjA1KVwiLFxyXG4gICAgICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiA0LFxyXG4gICAgICAgICAgICAgICAgZm9udFNpemU6IDksXHJcbiAgICAgICAgICAgICAgICBjb2xvcjogXCIjNmFhZWRkXCIsXHJcbiAgICAgICAgICAgICAgfX0+XHJcbiAgICAgICAgICAgICAgICBDcmVhdGVkOiB7bmV3IERhdGUoc2hlZXQuY3JlYXRlZEF0KS50b0xvY2FsZURhdGVTdHJpbmcoKX1cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICApKX1cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgKSA6IChcclxuICAgICAgICA8ZGl2IHN0eWxlPXt7XHJcbiAgICAgICAgICBwYWRkaW5nOiAyNCxcclxuICAgICAgICAgIGJhY2tncm91bmQ6IFwicmdiYSgyNTUsMjU1LDI1NSwwLjAyKVwiLFxyXG4gICAgICAgICAgYm9yZGVyUmFkaXVzOiA4LFxyXG4gICAgICAgICAgYm9yZGVyOiBcIjFweCBkYXNoZWQgcmdiYSgyNTUsMjU1LDI1NSwwLjEpXCIsXHJcbiAgICAgICAgICB0ZXh0QWxpZ246IFwiY2VudGVyXCIsXHJcbiAgICAgICAgfX0+XHJcbiAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAzNiwgbWFyZ2luQm90dG9tOiA4IH19PvCfk5E8L2Rpdj5cclxuICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDEyLCBjb2xvcjogXCIjNmFhZWRkXCIsIG1hcmdpbkJvdHRvbTogNCB9fT5cclxuICAgICAgICAgICAgTm8gd2ViIHNoZWV0cyB5ZXRcclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250U2l6ZTogMTAsIGNvbG9yOiBcIiM2YWFlZGRcIiB9fT5cclxuICAgICAgICAgICAgQ3JlYXRlIHlvdXIgZmlyc3Qgc2hlZXQgdG8gaW50ZWdyYXRlIEdvb2dsZSBTaGVldHMgb3IgRXhjZWwgd2l0aCB5b3VyIEtQSXNcclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICApfVxyXG5cclxuICAgICAgey8qIEludGVncmF0aW9uIEd1aWRlICovfVxyXG4gICAgICA8ZGl2IHN0eWxlPXt7XHJcbiAgICAgICAgbWFyZ2luVG9wOiAyNCxcclxuICAgICAgICBwYWRkaW5nOiAxNixcclxuICAgICAgICBiYWNrZ3JvdW5kOiBcInJnYmEoNzQsMTc5LDI0NCwwLjEpXCIsXHJcbiAgICAgICAgYm9yZGVyUmFkaXVzOiA4LFxyXG4gICAgICAgIGJvcmRlcjogYDFweCBzb2xpZCAke0MuYmx1ZX00MGAsXHJcbiAgICAgIH19PlxyXG4gICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDExLCBmb250V2VpZ2h0OiA3MDAsIGNvbG9yOiBDLmJsdWUsIG1hcmdpbkJvdHRvbTogOCB9fT5cclxuICAgICAgICAgIPCfkqEgSG93IHRvIEludGVncmF0ZVxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udFNpemU6IDEwLCBjb2xvcjogXCIjNmFhZWRkXCIsIGxpbmVIZWlnaHQ6IDEuOCB9fT5cclxuICAgICAgICAgIDxkaXY+MS4gPHN0cm9uZz5Hb29nbGUgU2hlZXRzOjwvc3Ryb25nPiBHbyB0byBGaWxlIOKGkiBTaGFyZSDihpIgR2V0IGxpbmsg4oaSIENvcHkgSUQgZnJvbSBVUkw8L2Rpdj5cclxuICAgICAgICAgIDxkaXY+Mi4gPHN0cm9uZz5FeGNlbDo8L3N0cm9uZz4gVXBsb2FkIHRvIE9uZURyaXZlL1NoYXJlUG9pbnQgYW5kIHBhc3RlIHRoZSBzaGFyZWFibGUgbGluazwvZGl2PlxyXG4gICAgICAgICAgPGRpdj4zLiBFbmFibGUgPHN0cm9uZz5BdXRvLXN5bmM8L3N0cm9uZz4gdG8ga2VlcCB5b3VyIEtQSXMgdXBkYXRlZCBhdXRvbWF0aWNhbGx5PC9kaXY+XHJcbiAgICAgICAgICA8ZGl2PjQuIERhdGEgc3luY3Mgd2l0aCBvdGhlciBMaWZlT1MxIHBhbmVscyAoU29jaWFsLCBIZWFsdGgsIENFTyBHUFMpPC9kaXY+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufVxyXG4iXSwiZmlsZSI6IkM6L2Rldi9MaWZlT1MxL3NyYy9jb21wb25lbnRzL2xpZmVvcy9wYW5lbHMvS1BJTW9kdWxlcy9XZWJTaGVldEJ1aWxkZXIuanN4In0=

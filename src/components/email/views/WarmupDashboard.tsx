@@ -1,0 +1,1 @@
+export default function WarmupDashboard() { return <div>Warmup Dashboard Stub</div>; }

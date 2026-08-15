@@ -1,0 +1,35 @@
+{
+   "action": {
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "content-scripts/bridge.js" ],
+      "matches": [ "https://chatgptsheets.app/*" ],
+      "run_at": "document_start"
+   }, {
+      "css": [ "content-scripts/googleSheets.css" ],
+      "js": [ "content-scripts/googleSheets.js" ],
+      "matches": [ "*://docs.google.com/spreadsheets/*" ]
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_shortDesc__",
+   "host_permissions": [ "http://localhost/*", "https://*.sentry.io/*", "https://*.ingest.us.sentry.io/*" ],
+   "icons": {
+      "128": "icon/128.png",
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png",
+      "96": "icon/96.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhmF+isET0s6CF4jplMnAyZxfCXPzltrr7SSscmckO6huNGP2PrtNftkaI+mfsCMo3kV7YdjYb0gaM+Gk3ZDyEkBvpBMKHr2FaJYY56hZM2YBLDHeUPP4t3nTkW84v023YzaO+4qrAUJoaSeWH4MboE9z80bZnQSiI/y7xDmJEnyDRVji43nbcQGnAtDSD5iGkSrmhP+d0Y8Z/vBFYt+trEVbDdElsQpJY6OaG14emGH7qcmaq/Bdt4MA5kTKCWswJTB7pgEh68sR3PokjLVa2n1N20KuMTRl92HZiXzEQvSOt8EciuGCqVfxopLxvRc9UMTLas03w0OVBHFuFTwM4QIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_appName__",
+   "permissions": [ "tabs", "storage", "sidePanel" ],
+   "side_panel": {
+      "default_path": "sidepanel.html"
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.0.3"
+}

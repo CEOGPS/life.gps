@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Preview - SnapCode Pro</title>
+
+    <link rel="stylesheet" href="screenshot-preview.css">
+</head>
+
+<body>
+    <div class="sc-preview-layout">
+        <header class="sc-preview-header">
+            <div class="sc-header-left">
+                <div class="sc-logo">
+                    <svg width="24" height="24" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M42 42 L28 64 L42 86" stroke="white" stroke-width="12" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M86 42 L100 64 L86 86" stroke="white" stroke-width="12" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <circle cx="64" cy="64" r="16" fill="white" />
+                        <circle cx="64" cy="64" r="10" fill="#4f46e5" />
+                    </svg>
+                </div>
+
+                <h1>Screenshot Preview</h1>
+            </div>
+            <div class="sc-header-actions">
+                <button id="sc-copy-btn" class="sc-btn sc-btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy to Clipboard
+                </button>
+                <div class="sc-divider"></div>
+                <button id="sc-download-png" class="sc-btn sc-btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    PNG
+                </button>
+                <button id="sc-download-jpg" class="sc-btn sc-btn-primary">
+                    JPG
+                </button>
+                <button id="sc-download-pdf" class="sc-btn sc-btn-secondary">
+                    PDF
+                </button>
+            </div>
+        </header>
+
+        <main class="sc-preview-content">
+            <div class="sc-image-container">
+                <img id="sc-preview-img" src="" alt="Screenshot">
+            </div>
+        </main>
+
+        <footer class="sc-preview-footer">
+            <p>SnapCode Pro — Made in Pakistan 🇵🇰 with Love ❤️ by <a target="_blank" href="https://kwseverywhere.com">KWS Everywhere</a></p>
+        </footer>
+
+    </div>
+    <script src="screenshot-preview.js"></script>
+</body>
+
+</html>

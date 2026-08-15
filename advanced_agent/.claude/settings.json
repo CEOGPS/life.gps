@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$j = $Input | ConvertFrom-Json; $fp = $j.tool_input.file_path; if ($fp -match \"\\.(jsx?|tsx?|mjs|cjs)$\") { npx eslint --fix $fp 2>$null }; exit 0",
+            "timeout": 30,
+            "statusMessage": "ESLint fixing..."
+          }
+        ]
+      }
+    ]
+  }
+}

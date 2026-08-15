@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapCode Pro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body class="sc-popup-body">
+  <div class="sc-container">
+
+    <!-- Header -->
+    <div class="sc-header">
+      <div class="sc-header-left">
+        <div class="sc-logo-box">
+          <svg width="20" height="20" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="128" height="128" rx="28" fill="white" fill-opacity="0.1" />
+            <path d="M42 42 L28 64 L42 86" stroke="white" stroke-width="12" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M86 42 L100 64 L86 86" stroke="white" stroke-width="12" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <circle cx="64" cy="64" r="16" fill="white" />
+            <circle cx="64" cy="64" r="10" fill="#4f46e5" />
+          </svg>
+        </div>
+
+        <div class="sc-title-group">
+          <h1>SnapCode Pro</h1>
+
+          <span>Select an action</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Menu -->
+  <div class="sc-menu">
+
+    <!-- Extract UI -->
+    <button id="extract-ui" class="sc-menu-item">
+      <div class="sc-icon-wrapper sc-icon-extract">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 18L22 12L16 6" />
+          <path d="M8 6L2 12L8 18" />
+          <path d="M12 2V22" />
+        </svg>
+      </div>
+      <div class="sc-menu-info">
+        <h3>Extract UI</h3>
+        <p>Capture HTML &amp; CSS of any element</p>
+      </div>
+      <span class="sc-arrow">→</span>
+    </button>
+
+    <!-- Full Page Screenshot -->
+    <button id="full-screenshot" class="sc-menu-item">
+      <div class="sc-icon-wrapper sc-icon-full">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9H21" />
+          <path d="M9 21V9" />
+        </svg>
+      </div>
+      <div class="sc-menu-info">
+        <h3>Full Page Screenshot</h3>
+        <p>Capture entire scrollable page</p>
+      </div>
+      <span class="sc-arrow">→</span>
+    </button>
+
+    <!-- Element Screenshot -->
+    <button id="element-screenshot" class="sc-menu-item">
+      <div class="sc-icon-wrapper sc-icon-element">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 8V5" />
+          <path d="M12 19V16" />
+          <path d="M8 12H5" />
+          <path d="M19 12H16" />
+        </svg>
+      </div>
+      <div class="sc-menu-info">
+        <h3>Element Screenshot</h3>
+        <p>Click any element to capture it</p>
+      </div>
+      <span class="sc-arrow">→</span>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="sc-footer">
+    <p style="margin:0; font-size: 11px; font-weight: 500; color: var(--sc-text-muted);">
+      Made in Pakistan 🇵🇰 with Love ❤️ by <a target="_blank" href="https://kwseverywhere.com">KWS Everywhere</a>
+    </p>
+  </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

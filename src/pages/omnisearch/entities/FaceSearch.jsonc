@@ -1,0 +1,77 @@
+{
+  "name": "FaceSearch",
+  "type": "object",
+  "properties": {
+    "photo_url": {
+      "type": "string",
+      "description": "Primary uploaded face photo URL",
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+      },
+      "description": "All uploaded photo URLs (up to 3)",
+    },
+    "status": {
+      "type": "string",
+      "enum": ["processing", "completed", "failed"],
+      "default": "processing",
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional label for the search",
+    },
+    "scan_round": {
+      "type": "number",
+      "default": 1,
+      "description": "Current scan round (1-3)",
+    },
+    "confirmed_clues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+      },
+      "description": "Names, usernames, URLs confirmed to be this person",
+    },
+    "rejected_clues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+      },
+      "description": "Names or URLs confirmed NOT to be this person",
+    },
+    "rounds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "round": {
+            "type": "number",
+          },
+          "confirmed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+          },
+          "rejected": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+          },
+          "notes": {
+            "type": "string",
+          },
+        },
+      },
+      "description": "History of each round's feedback",
+    },
+    "total_results": {
+      "type": "number",
+      "default": 0,
+    },
+  },
+  "required": ["photo_url"],
+}

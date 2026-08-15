@@ -1,0 +1,4233 @@
+/* Optimist Extra Light */
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-extra-light/Optimist_W_XLt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-extra-light/Optimist_W_XLt.woff')
+      format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-extra-light/Optimist_W_XLtIt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-extra-light/Optimist_W_XLtIt.woff')
+      format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+/* Optimist Light */
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-light/Optimist_W_Lt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-light/Optimist_W_Lt.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-light/Optimist_W_LtIt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-light/Optimist_W_LtIt.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+/* Optimist Regular */
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-regular/Optimist_W_Rg.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-regular/Optimist_W_Rg.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-regular/Optimist_W_It.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-regular/Optimist_W_It.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+/* Optimist Semibold */
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-semibold/Optimist_W_SBd.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-semibold/Optimist_W_SBd.woff')
+      format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-semibold/Optimist_W_SBdIt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-semibold/Optimist_W_SBdIt.woff')
+      format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+/* Optimist Bold */
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-bold/Optimist_W_Bd.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-bold/Optimist_W_Bd.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OptimistCDN';
+  src: url('https://cdn.ivaws.com/sp-assets/fonts/optimist-bold/Optimist_W_BdIt.woff2')
+      format('woff2'),
+    url('https://cdn.ivaws.com/sp-assets/fonts/optimist-bold/Optimist_W_BdIt.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+:host {
+  --grv-color-white: 0 0% 100%;
+  --grv-color-black: 0 0% 0%;
+  --grv-color-gray05: 0 0% 96%;
+  --grv-color-gray10: 0 0% 91%;
+  --grv-color-gray15: 0 0% 83%;
+  --grv-color-gray20: 0 0% 75%;
+  --grv-color-gray25: 0 0% 71%;
+  --grv-color-gray35: 0 0% 62%;
+  --grv-color-gray45: 0 0% 51%;
+  --grv-color-gray55: 0 0% 43%;
+  --grv-color-gray65: 0 0% 32%;
+  --grv-color-gray75: 0 0% 24%;
+  --grv-color-gray80: 0 0% 21%;
+  --grv-color-gray85: 0 0% 16%;
+  --grv-color-gray90: 0 0% 12%;
+  --grv-color-gray95: 0 0% 7%;
+  --grv-color-blue05: 201 100% 96%;
+  --grv-color-blue10: 200 100% 90%;
+  --grv-color-blue15: 200 98% 83%;
+  --grv-color-blue20: 200 98% 75%;
+  --grv-color-blue25: 200 97% 66%;
+  --grv-color-blue35: 200 79% 54%;
+  --grv-color-blue45: 200 82% 42%;
+  --grv-color-blue55: 200 100% 33%;
+  --grv-color-blue65: 200 98% 26%;
+  --grv-color-blue75: 200 98% 18%;
+  --grv-color-blue80: 199 88% 16%;
+  --grv-color-blue85: 199 75% 14%;
+  --grv-color-blue90: 201 45% 10%;
+  --grv-color-blue95: 206 23% 6%;
+  --grv-color-red05: 0 100% 97%;
+  --grv-color-red10: 0 100% 94%;
+  --grv-color-red15: 359 100% 89%;
+  --grv-color-red20: 359 100% 86%;
+  --grv-color-red25: 359 100% 80%;
+  --grv-color-red35: 359 100% 71%;
+  --grv-color-red45: 359 75% 59%;
+  --grv-color-red55: 359 70% 47%;
+  --grv-color-red65: 359 65% 37%;
+  --grv-color-red75: 359 57% 29%;
+  --grv-color-red80: 359 51% 25%;
+  --grv-color-red85: 0 39% 18%;
+  --grv-color-red90: 0 30% 14%;
+  --grv-color-red95: 0 22% 8%;
+  --grv-color-green05: 108 80% 94%;
+  --grv-color-green10: 108 77% 85%;
+  --grv-color-green15: 108 73% 74%;
+  --grv-color-green20: 107 63% 63%;
+  --grv-color-green25: 108 60% 55%;
+  --grv-color-green35: 108 61% 44%;
+  --grv-color-green45: 108 76% 33%;
+  --grv-color-green55: 108 88% 26%;
+  --grv-color-green65: 108 81% 21%;
+  --grv-color-green75: 108 79% 15%;
+  --grv-color-green80: 108 73% 13%;
+  --grv-color-green85: 107 54% 12%;
+  --grv-color-green90: 112 26% 11%;
+  --grv-color-green95: 108 33% 6%;
+  --grv-color-yellow05: 46 100% 91%;
+  --grv-color-yellow10: 46 100% 80%;
+  --grv-color-yellow15: 47 95% 67%;
+  --grv-color-yellow20: 47 95% 50%;
+  --grv-color-yellow25: 44 86% 52%;
+  --grv-color-yellow35: 44 96% 41%;
+  --grv-color-yellow45: 44 99% 33%;
+  --grv-color-yellow55: 42 100% 28%;
+  --grv-color-yellow65: 43 100% 21%;
+  --grv-color-yellow75: 44 100% 15%;
+  --grv-color-yellow80: 44 100% 13%;
+  --grv-color-yellow85: 44 100% 10%;
+  --grv-color-yellow90: 44 100% 8%;
+  --grv-color-yellow95: 43 69% 5%;
+  --grv-color-purple35: 270 75% 73%;
+  --grv-color-purple55: 270 61% 54%;
+  --grv-color-backgroundBase0: 0 0% 96%;
+  --grv-color-backgroundBase0OnDark: 0 0% 7%;
+  --grv-color-backgroundBase1: 0 0% 100%;
+  --grv-color-backgroundBase1OnDark: 0 0% 12%;
+  --grv-color-backgroundBase2: 0 0% 96%;
+  --grv-color-backgroundBase2OnDark: 0 0% 16%;
+  --grv-color-backgroundBase3: 0 0% 91%;
+  --grv-color-backgroundBase3OnDark: 0 0% 21%;
+  --grv-color-backgroundBase4: 0 0% 83%;
+  --grv-color-backgroundBase4OnDark: 0 0% 24%;
+  --grv-color-backgroundBrand: 200 98% 18%;
+  --grv-color-backgroundBrandOnDark: 200 98% 18%;
+  --grv-color-backgroundTransparent: 0 0% 0%;
+  --grv-color-backgroundTransparentOnDark: 0 0% 0%;
+  --grv-color-backgroundOverlayEmphasisHigh: 0, 0%, 0%, 0.5;
+  --grv-color-backgroundOverlayEmphasisHighOnDark: 0, 0%, 0%, 0.6;
+  --grv-color-backgroundOverlayEmphasisLow: 0, 0%, 0%, 0.2;
+  --grv-color-backgroundOverlayEmphasisLowOnDark: 0, 0%, 0%, 0.4;
+  --grv-color-backgroundOnAnyImage: 0, 0%, 0%, 0.55;
+  --grv-color-backgroundOnAnyImageOnDark: 0, 0%, 0%, 0.55;
+  --grv-color-objectInteractiveEmphasisHigh: 200 100% 33%;
+  --grv-color-objectInteractiveEmphasisHighOnDark: 200 79% 54%;
+  --grv-color-objectInteractiveEmphasisHighHover: 200 98% 26%;
+  --grv-color-objectInteractiveEmphasisHighHoverOnDark: 200 97% 66%;
+  --grv-color-objectInteractiveEmphasisHighPress: 200 98% 18%;
+  --grv-color-objectInteractiveEmphasisHighPressOnDark: 200 98% 75%;
+  --grv-color-objectInteractiveEmphasisLow: 201 100% 96%;
+  --grv-color-objectInteractiveEmphasisLowOnDark: 199 75% 14%;
+  --grv-color-objectInteractiveEmphasisLowHover: 200 100% 90%;
+  --grv-color-objectInteractiveEmphasisLowHoverOnDark: 199 88% 16%;
+  --grv-color-objectInteractiveEmphasisLowPress: 200 98% 83%;
+  --grv-color-objectInteractiveEmphasisLowPressOnDark: 200 98% 18%;
+  --grv-color-objectInteractiveEmphasisNone: 0, 0%, 0%, 0;
+  --grv-color-objectInteractiveEmphasisNoneOnDark: 0, 0%, 0%, 0;
+  --grv-color-objectInteractiveEmphasisNoneHover: 201 100% 96%;
+  --grv-color-objectInteractiveEmphasisNoneHoverOnDark: 199 75% 14%;
+  --grv-color-objectInteractiveEmphasisNonePress: 200 100% 90%;
+  --grv-color-objectInteractiveEmphasisNonePressOnDark: 199 88% 16%;
+  --grv-color-objectInteractiveEmphasisNoneFocus: 201 100% 96%;
+  --grv-color-objectInteractiveEmphasisNoneFocusOnDark: 199 75% 14%;
+  --grv-color-objectCriticalEmphasisHigh: 359 70% 47%;
+  --grv-color-objectCriticalEmphasisHighOnDark: 359 100% 71%;
+  --grv-color-objectCriticalEmphasisHighHover: 359 65% 37%;
+  --grv-color-objectCriticalEmphasisHighHoverOnDark: 359 100% 80%;
+  --grv-color-objectCriticalEmphasisHighPress: 359 57% 29%;
+  --grv-color-objectCriticalEmphasisHighPressOnDark: 359 100% 86%;
+  --grv-color-objectCriticalEmphasisLow: 0 100% 97%;
+  --grv-color-objectCriticalEmphasisLowOnDark: 0 39% 18%;
+  --grv-color-objectCriticalEmphasisLowHover: 0 100% 94%;
+  --grv-color-objectCriticalEmphasisLowHoverOnDark: 359 51% 25%;
+  --grv-color-objectCriticalEmphasisLowPress: 359 100% 89%;
+  --grv-color-objectCriticalEmphasisLowPressOnDark: 359 57% 29%;
+  --grv-color-objectCriticalEmphasisNone: 0, 0%, 0%, 0;
+  --grv-color-objectCriticalEmphasisNoneOnDark: 0, 0%, 0%, 0;
+  --grv-color-objectCriticalEmphasisNoneHover: 0 100% 97%;
+  --grv-color-objectCriticalEmphasisNoneHoverOnDark: 0 39% 18%;
+  --grv-color-objectCriticalEmphasisNonePress: 0 100% 94%;
+  --grv-color-objectCriticalEmphasisNonePressOnDark: 359 51% 25%;
+  --grv-color-objectCriticalEmphasisNoneFocus: 0 100% 97%;
+  --grv-color-objectCriticalEmphasisNoneFocusOnDark: 0 39% 18%;
+  --grv-color-objectFavorableEmphasisHigh: 108 88% 26%;
+  --grv-color-objectFavorableEmphasisHighOnDark: 108 61% 44%;
+  --grv-color-objectFavorableEmphasisHighHover: 108 81% 21%;
+  --grv-color-objectFavorableEmphasisHighHoverOnDark: 108 60% 55%;
+  --grv-color-objectFavorableEmphasisHighPress: 108 79% 15%;
+  --grv-color-objectFavorableEmphasisHighPressOnDark: 107 63% 63%;
+  --grv-color-objectFavorableEmphasisLow: 108 80% 94%;
+  --grv-color-objectFavorableEmphasisLowOnDark: 107 54% 12%;
+  --grv-color-objectFavorableEmphasisLowHover: 108 77% 85%;
+  --grv-color-objectFavorableEmphasisLowHoverOnDark: 108 73% 13%;
+  --grv-color-objectFavorableEmphasisLowPress: 108 73% 74%;
+  --grv-color-objectFavorableEmphasisLowPressOnDark: 108 79% 15%;
+  --grv-color-objectWarningEmphasisHigh: 47 95% 50%;
+  --grv-color-objectWarningEmphasisHighOnDark: 47 95% 50%;
+  --grv-color-objectWarningEmphasisHighHover: 44 86% 52%;
+  --grv-color-objectWarningEmphasisHighHoverOnDark: 47 95% 67%;
+  --grv-color-objectWarningEmphasisHighPress: 44 96% 41%;
+  --grv-color-objectWarningEmphasisHighPressOnDark: 46 100% 80%;
+  --grv-color-objectWarningEmphasisLow: 46 100% 91%;
+  --grv-color-objectWarningEmphasisLowOnDark: 44 100% 10%;
+  --grv-color-objectWarningEmphasisLowHover: 46 100% 80%;
+  --grv-color-objectWarningEmphasisLowHoverOnDark: 44 100% 13%;
+  --grv-color-objectWarningEmphasisLowPress: 47 95% 67%;
+  --grv-color-objectWarningEmphasisLowPressOnDark: 44 100% 10%;
+  --grv-color-objectInformationalEmphasisHigh: 200 100% 33%;
+  --grv-color-objectInformationalEmphasisHighOnDark: 200 79% 54%;
+  --grv-color-objectInformationalEmphasisHighHover: 200 98% 26%;
+  --grv-color-objectInformationalEmphasisHighHoverOnDark: 200 97% 66%;
+  --grv-color-objectInformationalEmphasisHighPress: 200 98% 18%;
+  --grv-color-objectInformationalEmphasisHighPressOnDark: 200 98% 75%;
+  --grv-color-objectInformationalEmphasisLow: 201 100% 96%;
+  --grv-color-objectInformationalEmphasisLowOnDark: 199 75% 14%;
+  --grv-color-objectInformationalEmphasisLowHover: 200 100% 90%;
+  --grv-color-objectInformationalEmphasisLowHoverOnDark: 199 88% 16%;
+  --grv-color-objectInformationalEmphasisLowPress: 200 98% 83%;
+  --grv-color-objectInformationalEmphasisLowPressOnDark: 200 98% 18%;
+  --grv-color-objectNeutralEmphasisHigh: 0 0% 7%;
+  --grv-color-objectNeutralEmphasisHighOnDark: 0 0% 100%;
+  --grv-color-objectNeutralEmphasisHighHover: 0 0% 16%;
+  --grv-color-objectNeutralEmphasisHighHoverOnDark: 0 0% 91%;
+  --grv-color-objectNeutralEmphasisHighPress: 0 0% 24%;
+  --grv-color-objectNeutralEmphasisHighPressOnDark: 0 0% 83%;
+  --grv-color-objectNeutralEmphasisMedium: 0 0% 43%;
+  --grv-color-objectNeutralEmphasisMediumOnDark: 0 0% 62%;
+  --grv-color-objectNeutralEmphasisMediumHover: 0 0% 32%;
+  --grv-color-objectNeutralEmphasisMediumHoverOnDark: 0 0% 71%;
+  --grv-color-objectNeutralEmphasisMediumPress: 0 0% 24%;
+  --grv-color-objectNeutralEmphasisMediumPressOnDark: 0 0% 75%;
+  --grv-color-objectNeutralEmphasisLow: 0 0% 96%;
+  --grv-color-objectNeutralEmphasisLowOnDark: 0 0% 16%;
+  --grv-color-objectNeutralEmphasisLowHover: 0 0% 83%;
+  --grv-color-objectNeutralEmphasisLowHoverOnDark: 0 0% 24%;
+  --grv-color-objectNeutralEmphasisLowPress: 0 0% 71%;
+  --grv-color-objectNeutralEmphasisLowPressOnDark: 0 0% 32%;
+  --grv-color-objectNeutralEmphasisNone: 0, 0%, 0%, 0;
+  --grv-color-objectNeutralEmphasisNoneOnDark: 0, 0%, 0%, 0;
+  --grv-color-objectNeutralEmphasisNoneHover: 0 0% 96%;
+  --grv-color-objectNeutralEmphasisNoneHoverOnDark: 0 0% 16%;
+  --grv-color-objectNeutralEmphasisNonePress: 0 0% 91%;
+  --grv-color-objectNeutralEmphasisNonePressOnDark: 0 0% 21%;
+  --grv-color-objectInput: 0 0% 100%;
+  --grv-color-objectInputOnDark: 0 0% 12%;
+  --grv-color-objectDotNeutral: 0 0% 51%;
+  --grv-color-objectDotNeutralOnDark: 0 0% 62%;
+  --grv-color-objectDotInformational: 200 82% 42%;
+  --grv-color-objectDotInformationalOnDark: 200 79% 54%;
+  --grv-color-objectDotFavorable: 108 76% 33%;
+  --grv-color-objectDotFavorableOnDark: 108 61% 44%;
+  --grv-color-objectDotWarning: 47 95% 50%;
+  --grv-color-objectDotWarningOnDark: 47 95% 50%;
+  --grv-color-objectDotCritical: 359 75% 59%;
+  --grv-color-objectDotCriticalOnDark: 359 100% 71%;
+  --grv-color-objectInactiveEmphasisMedium: 0 0% 75%;
+  --grv-color-objectInactiveEmphasisMediumOnDark: 0 0% 24%;
+  --grv-color-objectInactiveEmphasisLow: 0 0% 96%;
+  --grv-color-objectInactiveEmphasisLowOnDark: 0 0% 12%;
+  --grv-color-objectOnImage: 0 0% 100%;
+  --grv-color-objectOnImageOnDark: 0 0% 100%;
+  --grv-color-objectOnImageHover: 0, 0%, 100%, 0.9;
+  --grv-color-objectOnImageHoverOnDark: 0, 0%, 100%, 0.9;
+  --grv-color-objectOnImagePress: 0, 0%, 100%, 0.8;
+  --grv-color-objectOnImagePressOnDark: 0, 0%, 100%, 0.8;
+  --grv-color-objectOnImageInactive: 0, 0%, 100%, 0.2;
+  --grv-color-objectOnImageInactiveOnDark: 0, 0%, 100%, 0.2;
+  --grv-color-objectOnImageInverse: 0, 0%, 0%, 0;
+  --grv-color-objectOnImageInverseOnDark: 0, 0%, 0%, 0;
+  --grv-color-objectOnImageInverseHover: 0, 0%, 0%, 0.15;
+  --grv-color-objectOnImageInverseHoverOnDark: 0, 0%, 0%, 0.15;
+  --grv-color-objectOnImageInversePress: 0, 0%, 0%, 0.3;
+  --grv-color-objectOnImageInversePressOnDark: 0, 0%, 0%, 0.3;
+  --grv-color-objectOnAnyImageInverse: 0, 0%, 0%, 0.55;
+  --grv-color-objectOnAnyImageInverseOnDark: 0, 0%, 0%, 0.55;
+  --grv-color-objectOnAnyImageInverseHover: 0, 0%, 0%, 0.65;
+  --grv-color-objectOnAnyImageInverseHoverOnDark: 0, 0%, 0%, 0.65;
+  --grv-color-objectOnAnyImageInversePress: 0, 0%, 0%, 0.75;
+  --grv-color-objectOnAnyImageInversePressOnDark: 0, 0%, 0%, 0.75;
+  --grv-color-objectOnAnyImageInverseInactive: 0, 0%, 0%, 0.2;
+  --grv-color-objectOnAnyImageInverseInactiveOnDark: 0, 0%, 0%, 0.2;
+  --grv-color-borderFavorable: 108 88% 26%;
+  --grv-color-borderFavorableOnDark: 108 61% 44%;
+  --grv-color-borderFavorableHover: 108 81% 21%;
+  --grv-color-borderFavorableHoverOnDark: 108 60% 55%;
+  --grv-color-borderFavorablePress: 108 79% 15%;
+  --grv-color-borderFavorablePressOnDark: 107 63% 63%;
+  --grv-color-borderWarning: 42 100% 28%;
+  --grv-color-borderWarningOnDark: 47 95% 50%;
+  --grv-color-borderWarningHover: 43 100% 21%;
+  --grv-color-borderWarningHoverOnDark: 47 95% 67%;
+  --grv-color-borderWarningPress: 44 100% 15%;
+  --grv-color-borderWarningPressOnDark: 46 100% 80%;
+  --grv-color-borderFocus: 200 100% 33%;
+  --grv-color-borderFocusOnDark: 200 79% 54%;
+  --grv-color-borderInteractive: 200 100% 33%;
+  --grv-color-borderInteractiveOnDark: 200 79% 54%;
+  --grv-color-borderInteractiveHover: 200 98% 26%;
+  --grv-color-borderInteractiveHoverOnDark: 200 97% 66%;
+  --grv-color-borderInteractivePress: 200 98% 18%;
+  --grv-color-borderInteractivePressOnDark: 200 98% 83%;
+  --grv-color-borderCritical: 359 70% 47%;
+  --grv-color-borderCriticalOnDark: 359 100% 71%;
+  --grv-color-borderCriticalHover: 359 65% 37%;
+  --grv-color-borderCriticalHoverOnDark: 359 100% 80%;
+  --grv-color-borderCriticalPress: 359 57% 29%;
+  --grv-color-borderCriticalPressOnDark: 359 100% 86%;
+  --grv-color-borderInactive: 0 0% 75%;
+  --grv-color-borderInactiveOnDark: 0 0% 24%;
+  --grv-color-borderNeutralEmphasisHigh: 0 0% 7%;
+  --grv-color-borderNeutralEmphasisHighOnDark: 0 0% 100%;
+  --grv-color-borderNeutralEmphasisHighHover: 0 0% 16%;
+  --grv-color-borderNeutralEmphasisHighHoverOnDark: 0 0% 91%;
+  --grv-color-borderNeutralEmphasisHighPress: 0 0% 24%;
+  --grv-color-borderNeutralEmphasisHighPressOnDark: 0 0% 75%;
+  --grv-color-borderNeutralEmphasisMedium: 0 0% 43%;
+  --grv-color-borderNeutralEmphasisMediumOnDark: 0 0% 62%;
+  --grv-color-borderNeutralEmphasisMediumHover: 0 0% 32%;
+  --grv-color-borderNeutralEmphasisMediumHoverOnDark: 0 0% 71%;
+  --grv-color-borderNeutralEmphasisMediumPress: 0 0% 24%;
+  --grv-color-borderNeutralEmphasisMediumPressOnDark: 0 0% 83%;
+  --grv-color-borderNeutralEmphasisLow: 0 0% 83%;
+  --grv-color-borderNeutralEmphasisLowOnDark: 0 0% 21%;
+  --grv-color-borderNeutralEmphasisLowHover: 0 0% 71%;
+  --grv-color-borderNeutralEmphasisLowHoverOnDark: 0 0% 24%;
+  --grv-color-borderNeutralEmphasisLowPress: 0 0% 62%;
+  --grv-color-borderNeutralEmphasisLowPressOnDark: 0 0% 32%;
+  --grv-color-borderDotNeutral: 0 0% 32%;
+  --grv-color-borderDotNeutralOnDark: 0 0% 62%;
+  --grv-color-borderDotInformational: 200 98% 26%;
+  --grv-color-borderDotInformationalOnDark: 200 79% 54%;
+  --grv-color-borderDotFavorable: 108 81% 21%;
+  --grv-color-borderDotFavorableOnDark: 108 61% 44%;
+  --grv-color-borderDotWarning: 44 99% 33%;
+  --grv-color-borderDotWarningOnDark: 47 95% 50%;
+  --grv-color-borderDotCritical: 359 65% 37%;
+  --grv-color-borderDotCriticalOnDark: 359 100% 71%;
+  --grv-color-borderOnImageEmphasisHigh: 0 0% 100%;
+  --grv-color-borderOnImageEmphasisHighOnDark: 0 0% 100%;
+  --grv-color-borderOnImageEmphasisHighHover: 0, 0%, 100%, 0.9;
+  --grv-color-borderOnImageEmphasisHighHoverOnDark: 0, 0%, 100%, 0.9;
+  --grv-color-borderOnImageEmphasisHighPress: 0, 0%, 100%, 0.8;
+  --grv-color-borderOnImageEmphasisHighPressOnDark: 0, 0%, 100%, 0.8;
+  --grv-color-borderOnImageEmphasisLow: 0, 0%, 100%, 0.2;
+  --grv-color-borderOnImageEmphasisLowOnDark: 0, 0%, 100%, 0.2;
+  --grv-color-borderOnImageEmphasisLowHover: 0, 0%, 100%, 0.3;
+  --grv-color-borderOnImageEmphasisLowHoverOnDark: 0, 0%, 100%, 0.3;
+  --grv-color-borderOnImageEmphasisLowPress: 0, 0%, 100%, 0.4;
+  --grv-color-borderOnImageEmphasisLowPressOnDark: 0, 0%, 100%, 0.4;
+  --grv-color-borderOnImageInactive: 0, 0%, 100%, 0.2;
+  --grv-color-borderOnImageInactiveOnDark: 0, 0%, 100%, 0.2;
+  --grv-color-textInverse: 0 0% 100%;
+  --grv-color-textInverseOnDark: 0 0% 7%;
+  --grv-color-textFavorable: 108 88% 26%;
+  --grv-color-textFavorableOnDark: 108 61% 44%;
+  --grv-color-textFavorableHover: 108 81% 21%;
+  --grv-color-textFavorableHoverOnDark: 108 60% 55%;
+  --grv-color-textFavorablePress: 108 79% 15%;
+  --grv-color-textFavorablePressOnDark: 107 63% 63%;
+  --grv-color-textWarning: 42 100% 28%;
+  --grv-color-textWarningOnDark: 47 95% 50%;
+  --grv-color-textWarningHover: 43 100% 21%;
+  --grv-color-textWarningHoverOnDark: 47 95% 67%;
+  --grv-color-textWarningPress: 44 100% 15%;
+  --grv-color-textWarningPressOnDark: 46 100% 80%;
+  --grv-color-textInteractive: 200 100% 33%;
+  --grv-color-textInteractiveOnDark: 200 79% 54%;
+  --grv-color-textInteractiveHover: 200 98% 26%;
+  --grv-color-textInteractiveHoverOnDark: 200 97% 66%;
+  --grv-color-textInteractivePress: 200 98% 18%;
+  --grv-color-textInteractivePressOnDark: 200 98% 83%;
+  --grv-color-textInformational: 200 100% 33%;
+  --grv-color-textInformationalOnDark: 200 79% 54%;
+  --grv-color-textInformationalHover: 200 98% 26%;
+  --grv-color-textInformationalHoverOnDark: 200 97% 66%;
+  --grv-color-textInformationalPress: 200 98% 18%;
+  --grv-color-textInformationalPressOnDark: 200 98% 83%;
+  --grv-color-textCritical: 359 70% 47%;
+  --grv-color-textCriticalOnDark: 359 100% 71%;
+  --grv-color-textCriticalHover: 359 65% 37%;
+  --grv-color-textCriticalHoverOnDark: 359 100% 80%;
+  --grv-color-textCriticalPress: 359 57% 29%;
+  --grv-color-textCriticalPressOnDark: 359 100% 89%;
+  --grv-color-textInactive: 0 0% 75%;
+  --grv-color-textInactiveOnDark: 0 0% 24%;
+  --grv-color-textNeutralPrimary: 0 0% 7%;
+  --grv-color-textNeutralPrimaryOnDark: 0 0% 100%;
+  --grv-color-textNeutralPrimaryHover: 0 0% 16%;
+  --grv-color-textNeutralPrimaryHoverOnDark: 0 0% 91%;
+  --grv-color-textNeutralPrimaryPress: 0 0% 24%;
+  --grv-color-textNeutralPrimaryPressOnDark: 0 0% 83%;
+  --grv-color-textNeutralSecondary: 0 0% 43%;
+  --grv-color-textNeutralSecondaryOnDark: 0 0% 62%;
+  --grv-color-textNeutralSecondaryHover: 0 0% 32%;
+  --grv-color-textNeutralSecondaryHoverOnDark: 0 0% 71%;
+  --grv-color-textNeutralSecondaryPress: 0 0% 24%;
+  --grv-color-textNeutralSecondaryPressOnDark: 0 0% 75%;
+  --grv-color-textPlaceholder: 0 0% 43%;
+  --grv-color-textPlaceholderOnDark: 0 0% 62%;
+  --grv-color-textVisited: 270 61% 54%;
+  --grv-color-textVisitedOnDark: 270 75% 73%;
+  --grv-color-textOnImage: 0 0% 100%;
+  --grv-color-textOnImageOnDark: 0 0% 100%;
+  --grv-color-textOnImageHover: 0, 0%, 100%, 0.9;
+  --grv-color-textOnImageHoverOnDark: 0, 0%, 100%, 0.9;
+  --grv-color-textOnImagePress: 0, 0%, 100%, 0.8;
+  --grv-color-textOnImagePressOnDark: 0, 0%, 100%, 0.8;
+  --grv-color-textOnImageInactive: 0, 0%, 100%, 0.2;
+  --grv-color-textOnImageInactiveOnDark: 0, 0%, 100%, 0.2;
+  --grv-color-textOnImageInverse: 0 0% 7%;
+  --grv-color-textOnImageInverseOnDark: 0 0% 7%;
+  --grv-color-textOnImageInverseInactive: 0, 0%, 0%, 0.5;
+  --grv-color-textOnImageInverseInactiveOnDark: 0, 0%, 0%, 0.5;
+
+  --background: var(--grv-color-white);
+  --foreground: var(--grv-color-gray95);
+
+  --muted: var(--grv-color-gray10);
+  --muted-foreground: var(--grv-color-gray55);
+
+  --popover: var(--grv-color-white);
+  --popover-foreground: var(--grv-color-gray95);
+
+  --border: var(--grv-color-borderNeutralEmphasisLow);
+  --input: var(--grv-color-borderNeutralEmphasisHigh);
+
+  --card: var(--grv-color-white);
+  --card-foreground: var(--grv-color-gray95);
+
+  --primary: var(--grv-color-blue55);
+  --primary-foreground: var(--grv-color-white);
+
+  --secondary: var(--grv-color-gray05);
+  --secondary-foreground: var(--grv-color-blue55);
+
+  --accent: var(--grv-color-white);
+  --accent-foreground: var(--grv-color-blue55);
+
+  --interactive: var(--grv-color-objectInteractiveEmphasisHigh);
+  --interactive-foreground: var(--grv-color-white);
+  --interactive-hover: var(--grv-color-objectInteractiveEmphasisHighHover);
+  --interactive-press: var(--grv-color-objectInteractiveEmphasisHighPress);
+
+  --critical: var(--grv-color-objectCriticalEmphasisHigh);
+  --critical-foreground: var(--grv-color-white);
+  --critical-hover: var(--grv-color-objectCriticalEmphasisHighHover);
+  --critical-press: var(--grv-color-objectCriticalEmphasisHighPress);
+
+  --favorable: var(--grv-color-objectFavorableEmphasisHigh);
+  --favorable-foreground: var(--grv-color-white);
+  --favorable-hover: var(--grv-color-objectFavorableEmphasisHighHover);
+  --favorable-press: var(--grv-color-objectFavorableEmphasisHighPress);
+
+  --warning: var(--grv-color-objectWarningEmphasisHigh);
+  --warning-foreground: var(--grv-color-white);
+  --warning-hover: var(--grv-color-objectWarningEmphasisHighHover);
+  --warning-press: var(--grv-color-objectWarningEmphasisHighPress);
+
+  --neutralprimary: var(--grv-color-objectNeutralEmphasisHigh);
+  --neutralprimary-foreground: var(--grv-color-white);
+  --neutralprimary-hover: var(--grv-color-objectNeutralEmphasisHighHover);
+  --neutralprimary-press: var(--grv-color-objectNeutralEmphasisHighPress);
+
+  --neutralsecondary: var(--grv-color-objectNeutralEmphasisMedium);
+  --neutralsecondary-foreground: var(--grv-color-white);
+  --neutralsecondary-hover: var(--grv-color-objectNeutralEmphasisMediumHover);
+  --neutralsecondary-press: var(--grv-color-objectNeutralEmphasisMediumPress);
+
+  --overlay: var(--grv-color-backgroundOverlayEmphasisHigh);
+
+  --ring: var(--grv-color-blue55);
+
+  --radius: 8px;
+
+  --font-sans: 'Optimist';
+}
+:host .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+  
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+  
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+  
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+  
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+  
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+  
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+  
+    --secondary: var(--grv-color-gray95);
+    --secondary-foreground: 210 40% 98%;
+  
+    --interactive: var(--grv-color-objectInteractiveEmphasisHighOnDark);
+    --interactive-foreground: 210 40% 98%;
+    --interactive-hover: var(--grv-color-objectInteractiveEmphasisHighHoverOnDark);
+    --interactive-press: var(--grv-color-objectInteractiveEmphasisHighPressOnDark);
+  
+    --critical: var(--grv-color-objectCriticalEmphasisHighOnDark);
+    --critical-foreground: 210 40% 98%;
+    --critical-hover: var(--grv-color-objectCriticalEmphasisHighHoverOnDark);
+    --critical-press: var(--grv-color-objectCriticalEmphasisHighPressOnDark);
+  
+    --favorable: var(--grv-color-objectFavorableEmphasisHighOnDark);
+    --favorable-foreground: 210 40% 98%;
+    --favorable-hover: var(--grv-color-objectFavorableEmphasisHighHoverOnDark);
+    --favorable-press: var(--grv-color-objectFavorableEmphasisHighPressOnDark);
+  
+    --warning: var(--grv-color-objectWarningEmphasisHighOnDark);
+    --warning-foreground: 210 40% 98%;
+    --warning-hover: var(--grv-color-objectWarningEmphasisHighHoverOnDark);
+    --warning-press: var(--grv-color-objectWarningEmphasisHighPressOnDark);
+  
+    --neutralprimary: var(--grv-color-objectNeutralEmphasisHighOnDark);
+    --neutralprimary-foreground: 222.2 47.4% 1.2%;
+    --neutralprimary-hover: var(--grv-color-objectNeutralEmphasisHighHoverOnDark);
+    --neutralprimary-press: var(--grv-color-objectNeutralEmphasisHighPressOnDark);
+
+    --neutralsecondary: var(--grv-color-objectNeutralEmphasisMediumOnDark);
+    --neutralsecondary-foreground: 222.2 47.4% 1.2%;
+    --neutralsecondary-hover: var(--grv-color-objectNeutralEmphasisMediumHoverOnDark);
+    --neutralsecondary-press: var(--grv-color-objectNeutralEmphasisMediumPressOnDark);
+
+    --overlay: var(--grv-color-backgroundOverlayEmphasisHighOnDark);
+
+    --ring: 216 34% 17%;
+  
+    --radius: 8px;
+  }
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: hsl(200 91% 37% / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: hsl(200 91% 37% / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+/* ! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com */
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: hsl(var(--grv-color-gray20)); /* 2 */
+}
+::before,
+::after {
+  --tw-content: '';
+}
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+/*
+Remove the default font size and weight for headings.
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+/*
+Add the correct font weight in Edge and Safari.
+*/
+b,
+strong {
+  font-weight: bolder;
+}
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+/*
+Add the correct font size in all browsers.
+*/
+small {
+  font-size: 80%;
+}
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+button,
+select {
+  text-transform: none;
+}
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+button,
+input:where([type='button']),
+input:where([type='reset']),
+input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+:-moz-focusring {
+  outline: auto;
+}
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+progress {
+  vertical-align: baseline;
+}
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+/*
+Add the correct display in Chrome and Safari.
+*/
+summary {
+  display: list-item;
+}
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+legend {
+  padding: 0;
+}
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+/*
+Prevent resizing textareas horizontally by default.
+*/
+textarea {
+  resize: vertical;
+}
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: hsl(0 0% 56%); /* 2 */
+}
+/*
+Set the default cursor for buttons.
+*/
+button,
+[role="button"] {
+  cursor: pointer;
+}
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+* {
+  border-color: hsl(var(--border));
+}
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+}
+.\!container {
+  width: 100% !important;
+}
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .\!container {
+    max-width: 640px !important;
+  }
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .\!container {
+    max-width: 768px !important;
+  }
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .\!container {
+    max-width: 1024px !important;
+  }
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .\!container {
+    max-width: 1280px !important;
+  }
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+  .\!container {
+    max-width: 1536px !important;
+  }
+  .container {
+    max-width: 1536px;
+  }
+}
+#__wikibuy__ .__wikibuy .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+#__wikibuy__ .__wikibuy .pointer-events-none {
+  pointer-events: none;
+}
+#__wikibuy__ .__wikibuy .pointer-events-auto {
+  pointer-events: auto;
+}
+#__wikibuy__ .__wikibuy .\!visible {
+  visibility: visible !important;
+}
+#__wikibuy__ .__wikibuy .visible {
+  visibility: visible;
+}
+#__wikibuy__ .__wikibuy .invisible {
+  visibility: hidden;
+}
+#__wikibuy__ .__wikibuy .collapse {
+  visibility: collapse;
+}
+#__wikibuy__ .__wikibuy .static {
+  position: static;
+}
+#__wikibuy__ .__wikibuy .fixed {
+  position: fixed;
+}
+#__wikibuy__ .__wikibuy .absolute {
+  position: absolute;
+}
+#__wikibuy__ .__wikibuy .relative {
+  position: relative;
+}
+#__wikibuy__ .__wikibuy .sticky {
+  position: sticky;
+}
+#__wikibuy__ .__wikibuy .inset-0 {
+  inset: 0px;
+}
+#__wikibuy__ .__wikibuy .inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+#__wikibuy__ .__wikibuy .inset-y-0 {
+  top: 0px;
+  bottom: 0px;
+}
+#__wikibuy__ .__wikibuy .bottom-0 {
+  bottom: 0px;
+}
+#__wikibuy__ .__wikibuy .bottom-4 {
+  bottom: 16px;
+}
+#__wikibuy__ .__wikibuy .left-0 {
+  left: 0px;
+}
+#__wikibuy__ .__wikibuy .left-1 {
+  left: 4px;
+}
+#__wikibuy__ .__wikibuy .left-1\/2 {
+  left: 50%;
+}
+#__wikibuy__ .__wikibuy .left-2 {
+  left: 8px;
+}
+#__wikibuy__ .__wikibuy .left-4 {
+  left: 16px;
+}
+#__wikibuy__ .__wikibuy .left-\[50\%\] {
+  left: 50%;
+}
+#__wikibuy__ .__wikibuy .right-0 {
+  right: 0px;
+}
+#__wikibuy__ .__wikibuy .right-1 {
+  right: 4px;
+}
+#__wikibuy__ .__wikibuy .right-2 {
+  right: 8px;
+}
+#__wikibuy__ .__wikibuy .right-4 {
+  right: 16px;
+}
+#__wikibuy__ .__wikibuy .right-6 {
+  right: 24px;
+}
+#__wikibuy__ .__wikibuy .top-0 {
+  top: 0px;
+}
+#__wikibuy__ .__wikibuy .top-1\/2 {
+  top: 50%;
+}
+#__wikibuy__ .__wikibuy .top-2 {
+  top: 8px;
+}
+#__wikibuy__ .__wikibuy .top-4 {
+  top: 16px;
+}
+#__wikibuy__ .__wikibuy .top-\[1px\] {
+  top: 1px;
+}
+#__wikibuy__ .__wikibuy .top-\[30\%\] {
+  top: 30%;
+}
+#__wikibuy__ .__wikibuy .top-\[50\%\] {
+  top: 50%;
+}
+#__wikibuy__ .__wikibuy .top-\[60\%\] {
+  top: 60%;
+}
+#__wikibuy__ .__wikibuy .top-full {
+  top: 100%;
+}
+#__wikibuy__ .__wikibuy .z-10 {
+  z-index: 10;
+}
+#__wikibuy__ .__wikibuy .z-50 {
+  z-index: 50;
+}
+#__wikibuy__ .__wikibuy .z-\[1000\] {
+  z-index: 1000;
+}
+#__wikibuy__ .__wikibuy .z-\[100\] {
+  z-index: 100;
+}
+#__wikibuy__ .__wikibuy .z-\[1\] {
+  z-index: 1;
+}
+#__wikibuy__ .__wikibuy .z-\[2000\] {
+  z-index: 2000;
+}
+#__wikibuy__ .__wikibuy .z-\[2147483647\] {
+  z-index: 2147483647;
+}
+#__wikibuy__ .__wikibuy .z-\[9999\] {
+  z-index: 9999;
+}
+#__wikibuy__ .__wikibuy .float-left {
+  float: left;
+}
+#__wikibuy__ .__wikibuy .m-0 {
+  margin: 0px;
+}
+#__wikibuy__ .__wikibuy .m-auto {
+  margin: auto;
+}
+#__wikibuy__ .__wikibuy .-mx-1 {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+#__wikibuy__ .__wikibuy .mx-2 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+#__wikibuy__ .__wikibuy .mx-4 {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+#__wikibuy__ .__wikibuy .mx-5 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#__wikibuy__ .__wikibuy .mx-6 {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+#__wikibuy__ .__wikibuy .mx-\[6px\] {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+#__wikibuy__ .__wikibuy .mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+#__wikibuy__ .__wikibuy .my-1 {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+#__wikibuy__ .__wikibuy .my-2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+#__wikibuy__ .__wikibuy .my-3 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+#__wikibuy__ .__wikibuy .my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#__wikibuy__ .__wikibuy .mb-1 {
+  margin-bottom: 4px;
+}
+#__wikibuy__ .__wikibuy .mb-1\.5 {
+  margin-bottom: 6px;
+}
+#__wikibuy__ .__wikibuy .mb-2 {
+  margin-bottom: 8px;
+}
+#__wikibuy__ .__wikibuy .mb-3 {
+  margin-bottom: 12px;
+}
+#__wikibuy__ .__wikibuy .mb-4 {
+  margin-bottom: 16px;
+}
+#__wikibuy__ .__wikibuy .ml-1 {
+  margin-left: 4px;
+}
+#__wikibuy__ .__wikibuy .ml-4 {
+  margin-left: 16px;
+}
+#__wikibuy__ .__wikibuy .ml-\[-20px\] {
+  margin-left: -20px;
+}
+#__wikibuy__ .__wikibuy .ml-auto {
+  margin-left: auto;
+}
+#__wikibuy__ .__wikibuy .mr-0 {
+  margin-right: 0px;
+}
+#__wikibuy__ .__wikibuy .mr-2 {
+  margin-right: 8px;
+}
+#__wikibuy__ .__wikibuy .mr-3 {
+  margin-right: 12px;
+}
+#__wikibuy__ .__wikibuy .mr-4 {
+  margin-right: 16px;
+}
+#__wikibuy__ .__wikibuy .mr-\[7px\] {
+  margin-right: 7px;
+}
+#__wikibuy__ .__wikibuy .mt-1 {
+  margin-top: 4px;
+}
+#__wikibuy__ .__wikibuy .mt-1\.5 {
+  margin-top: 6px;
+}
+#__wikibuy__ .__wikibuy .mt-2 {
+  margin-top: 8px;
+}
+#__wikibuy__ .__wikibuy .mt-3 {
+  margin-top: 12px;
+}
+#__wikibuy__ .__wikibuy .mt-4 {
+  margin-top: 16px;
+}
+#__wikibuy__ .__wikibuy .mt-6 {
+  margin-top: 24px;
+}
+#__wikibuy__ .__wikibuy .mt-8 {
+  margin-top: 32px;
+}
+#__wikibuy__ .__wikibuy .mt-\[10px\] {
+  margin-top: 10px;
+}
+#__wikibuy__ .__wikibuy .line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+#__wikibuy__ .__wikibuy .line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+#__wikibuy__ .__wikibuy .block {
+  display: block;
+}
+#__wikibuy__ .__wikibuy .inline-block {
+  display: inline-block;
+}
+#__wikibuy__ .__wikibuy .inline {
+  display: inline;
+}
+#__wikibuy__ .__wikibuy .flex {
+  display: flex;
+}
+#__wikibuy__ .__wikibuy .inline-flex {
+  display: inline-flex;
+}
+#__wikibuy__ .__wikibuy .table {
+  display: table;
+}
+#__wikibuy__ .__wikibuy .grid {
+  display: grid;
+}
+#__wikibuy__ .__wikibuy .\!hidden {
+  display: none !important;
+}
+#__wikibuy__ .__wikibuy .hidden {
+  display: none;
+}
+#__wikibuy__ .__wikibuy .aspect-square {
+  aspect-ratio: 1 / 1;
+}
+#__wikibuy__ .__wikibuy .h-1\.5 {
+  height: 6px;
+}
+#__wikibuy__ .__wikibuy .h-10 {
+  height: 40px;
+}
+#__wikibuy__ .__wikibuy .h-11 {
+  height: 44px;
+}
+#__wikibuy__ .__wikibuy .h-12 {
+  height: 48px;
+}
+#__wikibuy__ .__wikibuy .h-2 {
+  height: 8px;
+}
+#__wikibuy__ .__wikibuy .h-2\.5 {
+  height: 10px;
+}
+#__wikibuy__ .__wikibuy .h-3 {
+  height: 12px;
+}
+#__wikibuy__ .__wikibuy .h-3\.5 {
+  height: 14px;
+}
+#__wikibuy__ .__wikibuy .h-4 {
+  height: 16px;
+}
+#__wikibuy__ .__wikibuy .h-5 {
+  height: 20px;
+}
+#__wikibuy__ .__wikibuy .h-6 {
+  height: 24px;
+}
+#__wikibuy__ .__wikibuy .h-7 {
+  height: 28px;
+}
+#__wikibuy__ .__wikibuy .h-8 {
+  height: 32px;
+}
+#__wikibuy__ .__wikibuy .h-9 {
+  height: 36px;
+}
+#__wikibuy__ .__wikibuy .h-\[120px\] {
+  height: 120px;
+}
+#__wikibuy__ .__wikibuy .h-\[135px\] {
+  height: 135px;
+}
+#__wikibuy__ .__wikibuy .h-\[142px\] {
+  height: 142px;
+}
+#__wikibuy__ .__wikibuy .h-\[18px\] {
+  height: 18px;
+}
+#__wikibuy__ .__wikibuy .h-\[195px\] {
+  height: 195px;
+}
+#__wikibuy__ .__wikibuy .h-\[1px\] {
+  height: 1px;
+}
+#__wikibuy__ .__wikibuy .h-\[240px\] {
+  height: 240px;
+}
+#__wikibuy__ .__wikibuy .h-\[24px\] {
+  height: 24px;
+}
+#__wikibuy__ .__wikibuy .h-\[32px\] {
+  height: 32px;
+}
+#__wikibuy__ .__wikibuy .h-\[38px\] {
+  height: 38px;
+}
+#__wikibuy__ .__wikibuy .h-\[40px\] {
+  height: 40px;
+}
+#__wikibuy__ .__wikibuy .h-\[48px\] {
+  height: 48px;
+}
+#__wikibuy__ .__wikibuy .h-\[500px\] {
+  height: 500px;
+}
+#__wikibuy__ .__wikibuy .h-\[50px\] {
+  height: 50px;
+}
+#__wikibuy__ .__wikibuy .h-\[52px\] {
+  height: 52px;
+}
+#__wikibuy__ .__wikibuy .h-\[600px\] {
+  height: 600px;
+}
+#__wikibuy__ .__wikibuy .h-\[64px\] {
+  height: 64px;
+}
+#__wikibuy__ .__wikibuy .h-\[72px\] {
+  height: 72px;
+}
+#__wikibuy__ .__wikibuy .h-\[80px\] {
+  height: 80px;
+}
+#__wikibuy__ .__wikibuy .h-\[96px\] {
+  height: 96px;
+}
+#__wikibuy__ .__wikibuy .h-\[calc\(100\%-32px\)\] {
+  height: calc(100% - 32px);
+}
+#__wikibuy__ .__wikibuy .h-\[var\(--radix-navigation-menu-viewport-height\)\] {
+  height: var(--radix-navigation-menu-viewport-height);
+}
+#__wikibuy__ .__wikibuy .h-\[var\(--radix-select-trigger-height\)\] {
+  height: var(--radix-select-trigger-height);
+}
+#__wikibuy__ .__wikibuy .h-full {
+  height: 100%;
+}
+#__wikibuy__ .__wikibuy .h-px {
+  height: 1px;
+}
+#__wikibuy__ .__wikibuy .h-screen {
+  height: 100vh;
+}
+#__wikibuy__ .__wikibuy .max-h-\[120px\] {
+  max-height: 120px;
+}
+#__wikibuy__ .__wikibuy .max-h-\[300px\] {
+  max-height: 300px;
+}
+#__wikibuy__ .__wikibuy .max-h-full {
+  max-height: 100%;
+}
+#__wikibuy__ .__wikibuy .max-h-screen {
+  max-height: 100vh;
+}
+#__wikibuy__ .__wikibuy .min-h-\[120px\] {
+  min-height: 120px;
+}
+#__wikibuy__ .__wikibuy .min-h-\[50px\] {
+  min-height: 50px;
+}
+#__wikibuy__ .__wikibuy .min-h-\[80px\] {
+  min-height: 80px;
+}
+#__wikibuy__ .__wikibuy .w-10 {
+  width: 40px;
+}
+#__wikibuy__ .__wikibuy .w-2 {
+  width: 8px;
+}
+#__wikibuy__ .__wikibuy .w-2\.5 {
+  width: 10px;
+}
+#__wikibuy__ .__wikibuy .w-3 {
+  width: 12px;
+}
+#__wikibuy__ .__wikibuy .w-3\.5 {
+  width: 14px;
+}
+#__wikibuy__ .__wikibuy .w-3\/4 {
+  width: 75%;
+}
+#__wikibuy__ .__wikibuy .w-4 {
+  width: 16px;
+}
+#__wikibuy__ .__wikibuy .w-5 {
+  width: 20px;
+}
+#__wikibuy__ .__wikibuy .w-6 {
+  width: 24px;
+}
+#__wikibuy__ .__wikibuy .w-64 {
+  width: 256px;
+}
+#__wikibuy__ .__wikibuy .w-7 {
+  width: 28px;
+}
+#__wikibuy__ .__wikibuy .w-72 {
+  width: 288px;
+}
+#__wikibuy__ .__wikibuy .w-8 {
+  width: 32px;
+}
+#__wikibuy__ .__wikibuy .w-9 {
+  width: 36px;
+}
+#__wikibuy__ .__wikibuy .w-\[118px\] {
+  width: 118px;
+}
+#__wikibuy__ .__wikibuy .w-\[174px\] {
+  width: 174px;
+}
+#__wikibuy__ .__wikibuy .w-\[180px\] {
+  width: 180px;
+}
+#__wikibuy__ .__wikibuy .w-\[185px\] {
+  width: 185px;
+}
+#__wikibuy__ .__wikibuy .w-\[18px\] {
+  width: 18px;
+}
+#__wikibuy__ .__wikibuy .w-\[195px\] {
+  width: 195px;
+}
+#__wikibuy__ .__wikibuy .w-\[1px\] {
+  width: 1px;
+}
+#__wikibuy__ .__wikibuy .w-\[218px\] {
+  width: 218px;
+}
+#__wikibuy__ .__wikibuy .w-\[305px\] {
+  width: 305px;
+}
+#__wikibuy__ .__wikibuy .w-\[32px\] {
+  width: 32px;
+}
+#__wikibuy__ .__wikibuy .w-\[38px\] {
+  width: 38px;
+}
+#__wikibuy__ .__wikibuy .w-\[400px\] {
+  width: 400px;
+}
+#__wikibuy__ .__wikibuy .w-\[410px\] {
+  width: 410px;
+}
+#__wikibuy__ .__wikibuy .w-\[430px\] {
+  width: 430px;
+}
+#__wikibuy__ .__wikibuy .w-\[44px\] {
+  width: 44px;
+}
+#__wikibuy__ .__wikibuy .w-\[450px\] {
+  width: 450px;
+}
+#__wikibuy__ .__wikibuy .w-\[520px\] {
+  width: 520px;
+}
+#__wikibuy__ .__wikibuy .w-\[52px\] {
+  width: 52px;
+}
+#__wikibuy__ .__wikibuy .w-\[600px\] {
+  width: 600px;
+}
+#__wikibuy__ .__wikibuy .w-\[60px\] {
+  width: 60px;
+}
+#__wikibuy__ .__wikibuy .w-\[72px\] {
+  width: 72px;
+}
+#__wikibuy__ .__wikibuy .w-\[96px\] {
+  width: 96px;
+}
+#__wikibuy__ .__wikibuy .w-\[calc\(100\%-32px\)\] {
+  width: calc(100% - 32px);
+}
+#__wikibuy__ .__wikibuy .w-fit {
+  width: fit-content;
+}
+#__wikibuy__ .__wikibuy .w-full {
+  width: 100%;
+}
+#__wikibuy__ .__wikibuy .w-max {
+  width: max-content;
+}
+#__wikibuy__ .__wikibuy .w-screen {
+  width: 100vw;
+}
+#__wikibuy__ .__wikibuy .min-w-0 {
+  min-width: 0px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[12rem\] {
+  min-width: 12rem;
+}
+#__wikibuy__ .__wikibuy .min-w-\[140px\] {
+  min-width: 140px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[170px\] {
+  min-width: 170px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[190px\] {
+  min-width: 190px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[192px\] {
+  min-width: 192px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[2rem\] {
+  min-width: 2rem;
+}
+#__wikibuy__ .__wikibuy .min-w-\[300px\] {
+  min-width: 300px;
+}
+#__wikibuy__ .__wikibuy .min-w-\[8rem\] {
+  min-width: 8rem;
+}
+#__wikibuy__ .__wikibuy .min-w-\[unset\] {
+  min-width: unset;
+}
+#__wikibuy__ .__wikibuy .min-w-\[var\(--radix-select-trigger-width\)\] {
+  min-width: var(--radix-select-trigger-width);
+}
+#__wikibuy__ .__wikibuy .max-w-96 {
+  max-width: 384px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[142px\] {
+  max-width: 142px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[195px\] {
+  max-width: 195px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[200px\] {
+  max-width: 200px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[250px\] {
+  max-width: 250px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[300px\] {
+  max-width: 300px;
+}
+#__wikibuy__ .__wikibuy .max-w-\[70\%\] {
+  max-width: 70%;
+}
+#__wikibuy__ .__wikibuy .max-w-fit {
+  max-width: fit-content;
+}
+#__wikibuy__ .__wikibuy .max-w-full {
+  max-width: 100%;
+}
+#__wikibuy__ .__wikibuy .max-w-lg {
+  max-width: 512px;
+}
+#__wikibuy__ .__wikibuy .max-w-max {
+  max-width: max-content;
+}
+#__wikibuy__ .__wikibuy .max-w-md {
+  max-width: 448px;
+}
+#__wikibuy__ .__wikibuy .max-w-sm {
+  max-width: 384px;
+}
+#__wikibuy__ .__wikibuy .flex-1 {
+  flex: 1 1 0%;
+}
+#__wikibuy__ .__wikibuy .flex-shrink-0 {
+  flex-shrink: 0;
+}
+#__wikibuy__ .__wikibuy .shrink {
+  flex-shrink: 1;
+}
+#__wikibuy__ .__wikibuy .shrink-0 {
+  flex-shrink: 0;
+}
+#__wikibuy__ .__wikibuy .flex-grow {
+  flex-grow: 1;
+}
+#__wikibuy__ .__wikibuy .grow {
+  flex-grow: 1;
+}
+#__wikibuy__ .__wikibuy .caption-bottom {
+  caption-side: bottom;
+}
+#__wikibuy__ .__wikibuy .border-collapse {
+  border-collapse: collapse;
+}
+#__wikibuy__ .__wikibuy .-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .translate-x-1\/2 {
+  --tw-translate-x: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .translate-x-\[-50\%\] {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .translate-y-\[-50\%\] {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .rotate-180 {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .rotate-45 {
+  --tw-rotate: 45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .animate-\[cos-badge-fade-out_0\.2s_ease-out_forwards\] {
+  animation: cos-badge-fade-out 0.2s ease-out forwards;
+}
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+#__wikibuy__ .__wikibuy .animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+#__wikibuy__ .__wikibuy .animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+#__wikibuy__ .__wikibuy .animate-spin {
+  animation: spin 1s linear infinite;
+}
+#__wikibuy__ .__wikibuy .cursor-default {
+  cursor: default;
+}
+#__wikibuy__ .__wikibuy .cursor-pointer {
+  cursor: pointer;
+}
+#__wikibuy__ .__wikibuy .touch-none {
+  touch-action: none;
+}
+#__wikibuy__ .__wikibuy .select-none {
+  user-select: none;
+}
+#__wikibuy__ .__wikibuy .resize {
+  resize: both;
+}
+#__wikibuy__ .__wikibuy .list-none {
+  list-style-type: none;
+}
+#__wikibuy__ .__wikibuy .flex-row {
+  flex-direction: row;
+}
+#__wikibuy__ .__wikibuy .flex-col {
+  flex-direction: column;
+}
+#__wikibuy__ .__wikibuy .flex-col-reverse {
+  flex-direction: column-reverse;
+}
+#__wikibuy__ .__wikibuy .flex-wrap {
+  flex-wrap: wrap;
+}
+#__wikibuy__ .__wikibuy .flex-nowrap {
+  flex-wrap: nowrap;
+}
+#__wikibuy__ .__wikibuy .content-end {
+  align-content: flex-end;
+}
+#__wikibuy__ .__wikibuy .items-start {
+  align-items: flex-start;
+}
+#__wikibuy__ .__wikibuy .items-end {
+  align-items: flex-end;
+}
+#__wikibuy__ .__wikibuy .items-center {
+  align-items: center;
+}
+#__wikibuy__ .__wikibuy .justify-start {
+  justify-content: flex-start;
+}
+#__wikibuy__ .__wikibuy .justify-end {
+  justify-content: flex-end;
+}
+#__wikibuy__ .__wikibuy .justify-center {
+  justify-content: center;
+}
+#__wikibuy__ .__wikibuy .justify-between {
+  justify-content: space-between;
+}
+#__wikibuy__ .__wikibuy .gap-1 {
+  gap: 4px;
+}
+#__wikibuy__ .__wikibuy .gap-2 {
+  gap: 8px;
+}
+#__wikibuy__ .__wikibuy .gap-3 {
+  gap: 12px;
+}
+#__wikibuy__ .__wikibuy .gap-4 {
+  gap: 16px;
+}
+#__wikibuy__ .__wikibuy :is(.space-x-1 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(4px * var(--tw-space-x-reverse));
+  margin-left: calc(4px * calc(1 - var(--tw-space-x-reverse)));
+}
+#__wikibuy__ .__wikibuy :is(.space-x-4 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(16px * var(--tw-space-x-reverse));
+  margin-left: calc(16px * calc(1 - var(--tw-space-x-reverse)));
+}
+#__wikibuy__ .__wikibuy :is(.space-y-0 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0px * var(--tw-space-y-reverse));
+}
+#__wikibuy__ .__wikibuy :is(.space-y-1 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(4px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(4px * var(--tw-space-y-reverse));
+}
+#__wikibuy__ .__wikibuy :is(.space-y-1\.5 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(6px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(6px * var(--tw-space-y-reverse));
+}
+#__wikibuy__ .__wikibuy :is(.space-y-2 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(8px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(8px * var(--tw-space-y-reverse));
+}
+#__wikibuy__ .__wikibuy :is(.space-y-4 > :not([hidden]) ~ :not([hidden])) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(16px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(16px * var(--tw-space-y-reverse));
+}
+#__wikibuy__ .__wikibuy .self-start {
+  align-self: flex-start;
+}
+#__wikibuy__ .__wikibuy .self-stretch {
+  align-self: stretch;
+}
+#__wikibuy__ .__wikibuy .overflow-auto {
+  overflow: auto;
+}
+#__wikibuy__ .__wikibuy .overflow-hidden {
+  overflow: hidden;
+}
+#__wikibuy__ .__wikibuy .overflow-x-auto {
+  overflow-x: auto;
+}
+#__wikibuy__ .__wikibuy .overflow-y-auto {
+  overflow-y: auto;
+}
+#__wikibuy__ .__wikibuy .overflow-x-hidden {
+  overflow-x: hidden;
+}
+#__wikibuy__ .__wikibuy .overflow-x-scroll {
+  overflow-x: scroll;
+}
+#__wikibuy__ .__wikibuy .scroll-smooth {
+  scroll-behavior: smooth;
+}
+#__wikibuy__ .__wikibuy .whitespace-normal {
+  white-space: normal;
+}
+#__wikibuy__ .__wikibuy .whitespace-nowrap {
+  white-space: nowrap;
+}
+#__wikibuy__ .__wikibuy .rounded {
+  border-radius: calc(var(--radius) - 2px);
+}
+#__wikibuy__ .__wikibuy .rounded-2xl {
+  border-radius: calc(var(--radius) + 8px);
+}
+#__wikibuy__ .__wikibuy .rounded-\[10px\] {
+  border-radius: 10px;
+}
+#__wikibuy__ .__wikibuy .rounded-\[999px_0_0_999px\] {
+  border-radius: 999px 0 0 999px;
+}
+#__wikibuy__ .__wikibuy .rounded-\[inherit\] {
+  border-radius: inherit;
+}
+#__wikibuy__ .__wikibuy .rounded-full {
+  border-radius: 9999px;
+}
+#__wikibuy__ .__wikibuy .rounded-lg {
+  border-radius: var(--radius);
+}
+#__wikibuy__ .__wikibuy .rounded-md {
+  border-radius: calc(var(--radius) - 2px);
+}
+#__wikibuy__ .__wikibuy .rounded-sm {
+  border-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .rounded-tl-sm {
+  border-top-left-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .border {
+  border-width: 1px;
+}
+#__wikibuy__ .__wikibuy .border-0 {
+  border-width: 0px;
+}
+#__wikibuy__ .__wikibuy .border-2 {
+  border-width: 2px;
+}
+#__wikibuy__ .__wikibuy .border-b {
+  border-bottom-width: 1px;
+}
+#__wikibuy__ .__wikibuy .border-l {
+  border-left-width: 1px;
+}
+#__wikibuy__ .__wikibuy .border-r {
+  border-right-width: 1px;
+}
+#__wikibuy__ .__wikibuy .border-r-0 {
+  border-right-width: 0px;
+}
+#__wikibuy__ .__wikibuy .border-t {
+  border-top-width: 1px;
+}
+#__wikibuy__ .__wikibuy .border-solid {
+  border-style: solid;
+}
+#__wikibuy__ .__wikibuy .border-none {
+  border-style: none;
+}
+#__wikibuy__ .__wikibuy .border-black\/\[\.08\] {
+  border-color: rgb(0 0 0 / .08);
+}
+#__wikibuy__ .__wikibuy .border-blue-550 {
+  border-color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .border-border {
+  border-color: hsl(var(--border));
+}
+#__wikibuy__ .__wikibuy .border-critical {
+  border-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy .border-critical\/50 {
+  border-color: hsl(var(--critical) / 0.5);
+}
+#__wikibuy__ .__wikibuy .border-gray-150 {
+  border-color: hsl(var(--grv-color-gray15));
+}
+#__wikibuy__ .__wikibuy .border-gray-200 {
+  border-color: hsl(var(--grv-color-gray20));
+}
+#__wikibuy__ .__wikibuy .border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: hsl(0 0% 67% / var(--tw-border-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .border-input {
+  border-color: hsl(var(--input));
+}
+#__wikibuy__ .__wikibuy .border-primary {
+  border-color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .border-transparent {
+  border-color: transparent;
+}
+#__wikibuy__ .__wikibuy .border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .border-l-transparent {
+  border-left-color: transparent;
+}
+#__wikibuy__ .__wikibuy .border-t-transparent {
+  border-top-color: transparent;
+}
+#__wikibuy__ .__wikibuy .bg-\[\#005ea6\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 94 166 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-\[\#013D5B\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(1 61 91 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-\[\#2B8611\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(43 134 17 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-\[\#EEEEEE\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 238 238 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-\[\#F0F0F0\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 240 240 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-accent {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .bg-accent\/50 {
+  background-color: hsl(var(--accent) / 0.5);
+}
+#__wikibuy__ .__wikibuy .bg-background {
+  background-color: hsl(var(--background));
+}
+#__wikibuy__ .__wikibuy .bg-background\/80 {
+  background-color: hsl(var(--background) / 0.8);
+}
+#__wikibuy__ .__wikibuy .bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-black\/60 {
+  background-color: rgb(0 0 0 / 0.6);
+}
+#__wikibuy__ .__wikibuy .bg-black\/\[\.06\] {
+  background-color: rgb(0 0 0 / .06);
+}
+#__wikibuy__ .__wikibuy .bg-blue-100 {
+  background-color: hsl(var(--grv-color-blue10));
+}
+#__wikibuy__ .__wikibuy .bg-blue-150 {
+  background-color: hsl(var(--grv-color-blue15));
+}
+#__wikibuy__ .__wikibuy .bg-blue-200 {
+  background-color: hsl(var(--grv-color-blue20));
+}
+#__wikibuy__ .__wikibuy .bg-blue-250 {
+  background-color: hsl(var(--grv-color-blue25));
+}
+#__wikibuy__ .__wikibuy .bg-blue-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(200 88% 60% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-blue-350 {
+  background-color: hsl(var(--grv-color-blue35));
+}
+#__wikibuy__ .__wikibuy .bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(200 81% 47% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-blue-450 {
+  background-color: hsl(var(--grv-color-blue45));
+}
+#__wikibuy__ .__wikibuy .bg-blue-50 {
+  background-color: hsl(var(--grv-color-blue05));
+}
+#__wikibuy__ .__wikibuy .bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(200 91% 37% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-blue-550 {
+  background-color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(200 99% 30% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-blue-650 {
+  background-color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .bg-blue-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(200 98% 22% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-blue-750 {
+  background-color: hsl(var(--grv-color-blue75));
+}
+#__wikibuy__ .__wikibuy .bg-blue-800 {
+  background-color: hsl(var(--grv-color-blue80));
+}
+#__wikibuy__ .__wikibuy .bg-blue-850 {
+  background-color: hsl(var(--grv-color-blue85));
+}
+#__wikibuy__ .__wikibuy .bg-blue-900 {
+  background-color: hsl(var(--grv-color-blue90));
+}
+#__wikibuy__ .__wikibuy .bg-blue-950 {
+  background-color: hsl(var(--grv-color-blue95));
+}
+#__wikibuy__ .__wikibuy .bg-border {
+  background-color: hsl(var(--border));
+}
+#__wikibuy__ .__wikibuy .bg-card {
+  background-color: hsl(var(--card));
+}
+#__wikibuy__ .__wikibuy .bg-critical {
+  background-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy .bg-favorable {
+  background-color: hsl(var(--favorable));
+}
+#__wikibuy__ .__wikibuy .bg-gray-100 {
+  background-color: hsl(var(--grv-color-gray10));
+}
+#__wikibuy__ .__wikibuy .bg-gray-150 {
+  background-color: hsl(var(--grv-color-gray15));
+}
+#__wikibuy__ .__wikibuy .bg-gray-200 {
+  background-color: hsl(var(--grv-color-gray20));
+}
+#__wikibuy__ .__wikibuy .bg-gray-250 {
+  background-color: hsl(var(--grv-color-gray25));
+}
+#__wikibuy__ .__wikibuy .bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 67% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-gray-350 {
+  background-color: hsl(var(--grv-color-gray35));
+}
+#__wikibuy__ .__wikibuy .bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 56% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-gray-450 {
+  background-color: hsl(var(--grv-color-gray45));
+}
+#__wikibuy__ .__wikibuy .bg-gray-50 {
+  background-color: hsl(var(--grv-color-gray05));
+}
+#__wikibuy__ .__wikibuy .bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 47% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-gray-550 {
+  background-color: hsl(var(--grv-color-gray55));
+}
+#__wikibuy__ .__wikibuy .bg-gray-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 38% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-gray-650 {
+  background-color: hsl(var(--grv-color-gray65));
+}
+#__wikibuy__ .__wikibuy .bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 28% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-gray-750 {
+  background-color: hsl(var(--grv-color-gray75));
+}
+#__wikibuy__ .__wikibuy .bg-gray-800 {
+  background-color: hsl(var(--grv-color-gray80));
+}
+#__wikibuy__ .__wikibuy .bg-gray-850 {
+  background-color: hsl(var(--grv-color-gray85));
+}
+#__wikibuy__ .__wikibuy .bg-gray-900 {
+  background-color: hsl(var(--grv-color-gray90));
+}
+#__wikibuy__ .__wikibuy .bg-gray-950 {
+  background-color: hsl(var(--grv-color-gray95));
+}
+#__wikibuy__ .__wikibuy .bg-green-100 {
+  background-color: hsl(var(--grv-color-green10));
+}
+#__wikibuy__ .__wikibuy .bg-green-150 {
+  background-color: hsl(var(--grv-color-green15));
+}
+#__wikibuy__ .__wikibuy .bg-green-200 {
+  background-color: hsl(var(--grv-color-green20));
+}
+#__wikibuy__ .__wikibuy .bg-green-250 {
+  background-color: hsl(var(--grv-color-green25));
+}
+#__wikibuy__ .__wikibuy .bg-green-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 61% 48% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-green-350 {
+  background-color: hsl(var(--grv-color-green35));
+}
+#__wikibuy__ .__wikibuy .bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 68% 38% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-green-450 {
+  background-color: hsl(var(--grv-color-green45));
+}
+#__wikibuy__ .__wikibuy .bg-green-50 {
+  background-color: hsl(var(--grv-color-green05));
+}
+#__wikibuy__ .__wikibuy .bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 83% 29% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-green-550 {
+  background-color: hsl(var(--grv-color-green55));
+}
+#__wikibuy__ .__wikibuy .bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 85% 24% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-green-650 {
+  background-color: hsl(var(--grv-color-green65));
+}
+#__wikibuy__ .__wikibuy .bg-green-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 80% 18% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-green-750 {
+  background-color: hsl(var(--grv-color-green75));
+}
+#__wikibuy__ .__wikibuy .bg-green-800 {
+  background-color: hsl(var(--grv-color-green80));
+}
+#__wikibuy__ .__wikibuy .bg-green-850 {
+  background-color: hsl(var(--grv-color-green85));
+}
+#__wikibuy__ .__wikibuy .bg-green-900 {
+  background-color: hsl(var(--grv-color-green90));
+}
+#__wikibuy__ .__wikibuy .bg-green-950 {
+  background-color: hsl(var(--grv-color-green95));
+}
+#__wikibuy__ .__wikibuy .bg-muted {
+  background-color: hsl(var(--muted));
+}
+#__wikibuy__ .__wikibuy .bg-overlay {
+  background-color: hsla(var(--overlay));
+}
+#__wikibuy__ .__wikibuy .bg-popover {
+  background-color: hsl(var(--popover));
+}
+#__wikibuy__ .__wikibuy .bg-primary {
+  background-color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .bg-purple-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 232 255 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-150 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(269 100% 94% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(233 213 255 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-250 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(269 100% 90% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(269 87% 82% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-350 {
+  background-color: hsl(var(--grv-color-purple35));
+}
+#__wikibuy__ .__wikibuy .bg-purple-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(270 71% 68% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-450 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(270 68% 64% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 245 255 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(270 65% 59% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-550 {
+  background-color: hsl(var(--grv-color-purple55));
+}
+#__wikibuy__ .__wikibuy .bg-purple-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(270 62% 51% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-650 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(271 63% 47% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(272 64% 44% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-750 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(272 64% 41% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-800 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(273 65% 38% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-850 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(274 65% 35% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(88 28 135 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-purple-950 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 7 100 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-100 {
+  background-color: hsl(var(--grv-color-red10));
+}
+#__wikibuy__ .__wikibuy .bg-red-150 {
+  background-color: hsl(var(--grv-color-red15));
+}
+#__wikibuy__ .__wikibuy .bg-red-200 {
+  background-color: hsl(var(--grv-color-red20));
+}
+#__wikibuy__ .__wikibuy .bg-red-250 {
+  background-color: hsl(var(--grv-color-red25));
+}
+#__wikibuy__ .__wikibuy .bg-red-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 100% 76% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-350 {
+  background-color: hsl(var(--grv-color-red35));
+}
+#__wikibuy__ .__wikibuy .bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 88% 65% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-450 {
+  background-color: hsl(var(--grv-color-red45));
+}
+#__wikibuy__ .__wikibuy .bg-red-50 {
+  background-color: hsl(var(--grv-color-red05));
+}
+#__wikibuy__ .__wikibuy .bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 73% 53% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-550 {
+  background-color: hsl(var(--grv-color-red55));
+}
+#__wikibuy__ .__wikibuy .bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 67% 42% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-650 {
+  background-color: hsl(var(--grv-color-red65));
+}
+#__wikibuy__ .__wikibuy .bg-red-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 61% 33% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-red-750 {
+  background-color: hsl(var(--grv-color-red75));
+}
+#__wikibuy__ .__wikibuy .bg-red-800 {
+  background-color: hsl(var(--grv-color-red80));
+}
+#__wikibuy__ .__wikibuy .bg-red-850 {
+  background-color: hsl(var(--grv-color-red85));
+}
+#__wikibuy__ .__wikibuy .bg-red-900 {
+  background-color: hsl(var(--grv-color-red90));
+}
+#__wikibuy__ .__wikibuy .bg-red-950 {
+  background-color: hsl(var(--grv-color-red95));
+}
+#__wikibuy__ .__wikibuy .bg-secondary {
+  background-color: hsl(var(--secondary));
+}
+#__wikibuy__ .__wikibuy .bg-transparent {
+  background-color: transparent;
+}
+#__wikibuy__ .__wikibuy .bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-100 {
+  background-color: hsl(var(--grv-color-yellow10));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-150 {
+  background-color: hsl(var(--grv-color-yellow15));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-200 {
+  background-color: hsl(var(--grv-color-yellow20));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-250 {
+  background-color: hsl(var(--grv-color-yellow25));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(44 91% 46% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-350 {
+  background-color: hsl(var(--grv-color-yellow35));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-400 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(44 98% 37% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-450 {
+  background-color: hsl(var(--grv-color-yellow45));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-50 {
+  background-color: hsl(var(--grv-color-yellow05));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(43 100% 30% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-550 {
+  background-color: hsl(var(--grv-color-yellow55));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-600 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(42 100% 25% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-650 {
+  background-color: hsl(var(--grv-color-yellow65));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-700 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(43 100% 18% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-750 {
+  background-color: hsl(var(--grv-color-yellow75));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-800 {
+  background-color: hsl(var(--grv-color-yellow80));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-850 {
+  background-color: hsl(var(--grv-color-yellow85));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-900 {
+  background-color: hsl(var(--grv-color-yellow90));
+}
+#__wikibuy__ .__wikibuy .bg-yellow-950 {
+  background-color: hsl(var(--grv-color-yellow95));
+}
+#__wikibuy__ .__wikibuy .bg-opacity-30 {
+  --tw-bg-opacity: 0.3;
+}
+#__wikibuy__ .__wikibuy .bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
+}
+#__wikibuy__ .__wikibuy .fill-current {
+  fill: currentColor;
+}
+#__wikibuy__ .__wikibuy .object-contain {
+  object-fit: contain;
+}
+#__wikibuy__ .__wikibuy .object-cover {
+  object-fit: cover;
+}
+#__wikibuy__ .__wikibuy .object-center {
+  object-position: center;
+}
+#__wikibuy__ .__wikibuy .p-0 {
+  padding: 0px;
+}
+#__wikibuy__ .__wikibuy .p-1 {
+  padding: 4px;
+}
+#__wikibuy__ .__wikibuy .p-2 {
+  padding: 8px;
+}
+#__wikibuy__ .__wikibuy .p-3 {
+  padding: 12px;
+}
+#__wikibuy__ .__wikibuy .p-4 {
+  padding: 16px;
+}
+#__wikibuy__ .__wikibuy .p-6 {
+  padding: 24px;
+}
+#__wikibuy__ .__wikibuy .p-\[1px\] {
+  padding: 1px;
+}
+#__wikibuy__ .__wikibuy .px-1 {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+#__wikibuy__ .__wikibuy .px-2 {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+#__wikibuy__ .__wikibuy .px-2\.5 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#__wikibuy__ .__wikibuy .px-3 {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+#__wikibuy__ .__wikibuy .px-4 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+#__wikibuy__ .__wikibuy .px-5 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#__wikibuy__ .__wikibuy .px-6 {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+#__wikibuy__ .__wikibuy .px-8 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+#__wikibuy__ .__wikibuy .py-0\.5 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+#__wikibuy__ .__wikibuy .py-1 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#__wikibuy__ .__wikibuy .py-1\.5 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+#__wikibuy__ .__wikibuy .py-2 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#__wikibuy__ .__wikibuy .py-3 {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#__wikibuy__ .__wikibuy .py-4 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+#__wikibuy__ .__wikibuy .py-6 {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+#__wikibuy__ .__wikibuy .pb-1 {
+  padding-bottom: 4px;
+}
+#__wikibuy__ .__wikibuy .pb-2 {
+  padding-bottom: 8px;
+}
+#__wikibuy__ .__wikibuy .pb-3 {
+  padding-bottom: 12px;
+}
+#__wikibuy__ .__wikibuy .pb-4 {
+  padding-bottom: 16px;
+}
+#__wikibuy__ .__wikibuy .pb-5 {
+  padding-bottom: 20px;
+}
+#__wikibuy__ .__wikibuy .pb-6 {
+  padding-bottom: 24px;
+}
+#__wikibuy__ .__wikibuy .pl-1 {
+  padding-left: 4px;
+}
+#__wikibuy__ .__wikibuy .pl-2 {
+  padding-left: 8px;
+}
+#__wikibuy__ .__wikibuy .pl-2\.5 {
+  padding-left: 10px;
+}
+#__wikibuy__ .__wikibuy .pl-4 {
+  padding-left: 16px;
+}
+#__wikibuy__ .__wikibuy .pl-6 {
+  padding-left: 24px;
+}
+#__wikibuy__ .__wikibuy .pl-8 {
+  padding-left: 32px;
+}
+#__wikibuy__ .__wikibuy .pl-\[4px\] {
+  padding-left: 4px;
+}
+#__wikibuy__ .__wikibuy .pr-2 {
+  padding-right: 8px;
+}
+#__wikibuy__ .__wikibuy .pr-2\.5 {
+  padding-right: 10px;
+}
+#__wikibuy__ .__wikibuy .pr-3 {
+  padding-right: 12px;
+}
+#__wikibuy__ .__wikibuy .pr-8 {
+  padding-right: 32px;
+}
+#__wikibuy__ .__wikibuy .pr-\[14px\] {
+  padding-right: 14px;
+}
+#__wikibuy__ .__wikibuy .pt-0 {
+  padding-top: 0px;
+}
+#__wikibuy__ .__wikibuy .pt-1 {
+  padding-top: 4px;
+}
+#__wikibuy__ .__wikibuy .pt-16 {
+  padding-top: 64px;
+}
+#__wikibuy__ .__wikibuy .pt-2 {
+  padding-top: 8px;
+}
+#__wikibuy__ .__wikibuy .pt-3 {
+  padding-top: 12px;
+}
+#__wikibuy__ .__wikibuy .pt-4 {
+  padding-top: 16px;
+}
+#__wikibuy__ .__wikibuy .pt-5 {
+  padding-top: 20px;
+}
+#__wikibuy__ .__wikibuy .text-left {
+  text-align: left;
+}
+#__wikibuy__ .__wikibuy .text-center {
+  text-align: center;
+}
+#__wikibuy__ .__wikibuy .text-start {
+  text-align: start;
+}
+#__wikibuy__ .__wikibuy .align-middle {
+  vertical-align: middle;
+}
+#__wikibuy__ .__wikibuy .font-sans {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+#__wikibuy__ .__wikibuy .text-2xl {
+  font-size: 24px;
+  line-height: 32px;
+}
+#__wikibuy__ .__wikibuy .text-3xl {
+  font-size: 32px;
+  line-height: 40px;
+}
+#__wikibuy__ .__wikibuy .text-\[0\.8rem\] {
+  font-size: 0.8rem;
+}
+#__wikibuy__ .__wikibuy .text-\[11px\] {
+  font-size: 11px;
+}
+#__wikibuy__ .__wikibuy .text-\[14px\] {
+  font-size: 14px;
+}
+#__wikibuy__ .__wikibuy .text-\[15px\] {
+  font-size: 15px;
+}
+#__wikibuy__ .__wikibuy .text-\[8px\] {
+  font-size: 8px;
+}
+#__wikibuy__ .__wikibuy .text-base {
+  font-size: 16px;
+  line-height: 24px;
+}
+#__wikibuy__ .__wikibuy .text-lg {
+  font-size: 18px;
+  line-height: 28px;
+}
+#__wikibuy__ .__wikibuy .text-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+#__wikibuy__ .__wikibuy .text-xl {
+  font-size: 20px;
+  line-height: 28px;
+}
+#__wikibuy__ .__wikibuy .text-xs {
+  font-size: 12px;
+  line-height: 16px;
+}
+#__wikibuy__ .__wikibuy .font-\[Optimist\2c Helvetica_Neue\2c Helvetica\2c Arial\2c sans-serif\] {
+  font-weight: Optimist,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+#__wikibuy__ .__wikibuy .font-black {
+  font-weight: 900;
+}
+#__wikibuy__ .__wikibuy .font-bold {
+  font-weight: 700;
+}
+#__wikibuy__ .__wikibuy .font-light {
+  font-weight: 300;
+}
+#__wikibuy__ .__wikibuy .font-medium {
+  font-weight: 500;
+}
+#__wikibuy__ .__wikibuy .font-normal {
+  font-weight: 400;
+}
+#__wikibuy__ .__wikibuy .font-semibold {
+  font-weight: 600;
+}
+#__wikibuy__ .__wikibuy .uppercase {
+  text-transform: uppercase;
+}
+#__wikibuy__ .__wikibuy .lowercase {
+  text-transform: lowercase;
+}
+#__wikibuy__ .__wikibuy .capitalize {
+  text-transform: capitalize;
+}
+#__wikibuy__ .__wikibuy .italic {
+  font-style: italic;
+}
+#__wikibuy__ .__wikibuy .leading-4 {
+  line-height: 16px;
+}
+#__wikibuy__ .__wikibuy .leading-6 {
+  line-height: 24px;
+}
+#__wikibuy__ .__wikibuy .leading-9 {
+  line-height: 36px;
+}
+#__wikibuy__ .__wikibuy .leading-\[12px\] {
+  line-height: 12px;
+}
+#__wikibuy__ .__wikibuy .leading-none {
+  line-height: 1;
+}
+#__wikibuy__ .__wikibuy .leading-snug {
+  line-height: 1.375;
+}
+#__wikibuy__ .__wikibuy .tracking-\[\.5px\] {
+  letter-spacing: .5px;
+}
+#__wikibuy__ .__wikibuy .tracking-tight {
+  letter-spacing: -0.025em;
+}
+#__wikibuy__ .__wikibuy .tracking-widest {
+  letter-spacing: 0.1em;
+}
+#__wikibuy__ .__wikibuy .text-\[\#0276b1\] {
+  --tw-text-opacity: 1;
+  color: rgb(2 118 177 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-\[\#18181b\] {
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-accent-foreground {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-black\/30 {
+  color: rgb(0 0 0 / 0.3);
+}
+#__wikibuy__ .__wikibuy .text-black\/50 {
+  color: rgb(0 0 0 / 0.5);
+}
+#__wikibuy__ .__wikibuy .text-black\/55 {
+  color: rgb(0 0 0 / 0.55);
+}
+#__wikibuy__ .__wikibuy .text-blue-100 {
+  color: hsl(var(--grv-color-blue10));
+}
+#__wikibuy__ .__wikibuy .text-blue-150 {
+  color: hsl(var(--grv-color-blue15));
+}
+#__wikibuy__ .__wikibuy .text-blue-200 {
+  color: hsl(var(--grv-color-blue20));
+}
+#__wikibuy__ .__wikibuy .text-blue-250 {
+  color: hsl(var(--grv-color-blue25));
+}
+#__wikibuy__ .__wikibuy .text-blue-300 {
+  --tw-text-opacity: 1;
+  color: hsl(200 88% 60% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-blue-350 {
+  color: hsl(var(--grv-color-blue35));
+}
+#__wikibuy__ .__wikibuy .text-blue-400 {
+  --tw-text-opacity: 1;
+  color: hsl(200 81% 47% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-blue-450 {
+  color: hsl(var(--grv-color-blue45));
+}
+#__wikibuy__ .__wikibuy .text-blue-50 {
+  color: hsl(var(--grv-color-blue05));
+}
+#__wikibuy__ .__wikibuy .text-blue-500 {
+  --tw-text-opacity: 1;
+  color: hsl(200 91% 37% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-blue-550 {
+  color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .text-blue-600 {
+  --tw-text-opacity: 1;
+  color: hsl(200 99% 30% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-blue-650 {
+  color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .text-blue-700 {
+  --tw-text-opacity: 1;
+  color: hsl(200 98% 22% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-blue-750 {
+  color: hsl(var(--grv-color-blue75));
+}
+#__wikibuy__ .__wikibuy .text-blue-800 {
+  color: hsl(var(--grv-color-blue80));
+}
+#__wikibuy__ .__wikibuy .text-blue-850 {
+  color: hsl(var(--grv-color-blue85));
+}
+#__wikibuy__ .__wikibuy .text-blue-900 {
+  color: hsl(var(--grv-color-blue90));
+}
+#__wikibuy__ .__wikibuy .text-blue-950 {
+  color: hsl(var(--grv-color-blue95));
+}
+#__wikibuy__ .__wikibuy .text-card-foreground {
+  color: hsl(var(--card-foreground));
+}
+#__wikibuy__ .__wikibuy .text-critical {
+  color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy .text-critical-foreground {
+  color: hsl(var(--critical-foreground));
+}
+#__wikibuy__ .__wikibuy .text-current {
+  color: currentColor;
+}
+#__wikibuy__ .__wikibuy .text-favorable {
+  color: hsl(var(--favorable));
+}
+#__wikibuy__ .__wikibuy .text-favorable-foreground {
+  color: hsl(var(--favorable-foreground));
+}
+#__wikibuy__ .__wikibuy .text-foreground {
+  color: hsl(var(--foreground));
+}
+#__wikibuy__ .__wikibuy .text-foreground\/50 {
+  color: hsl(var(--foreground) / 0.5);
+}
+#__wikibuy__ .__wikibuy .text-gray-100 {
+  color: hsl(var(--grv-color-gray10));
+}
+#__wikibuy__ .__wikibuy .text-gray-150 {
+  color: hsl(var(--grv-color-gray15));
+}
+#__wikibuy__ .__wikibuy .text-gray-200 {
+  color: hsl(var(--grv-color-gray20));
+}
+#__wikibuy__ .__wikibuy .text-gray-250 {
+  color: hsl(var(--grv-color-gray25));
+}
+#__wikibuy__ .__wikibuy .text-gray-300 {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 67% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-gray-350 {
+  color: hsl(var(--grv-color-gray35));
+}
+#__wikibuy__ .__wikibuy .text-gray-400 {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 56% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-gray-450 {
+  color: hsl(var(--grv-color-gray45));
+}
+#__wikibuy__ .__wikibuy .text-gray-50 {
+  color: hsl(var(--grv-color-gray05));
+}
+#__wikibuy__ .__wikibuy .text-gray-500 {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 47% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-gray-550 {
+  color: hsl(var(--grv-color-gray55));
+}
+#__wikibuy__ .__wikibuy .text-gray-600 {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 38% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-gray-650 {
+  color: hsl(var(--grv-color-gray65));
+}
+#__wikibuy__ .__wikibuy .text-gray-700 {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 28% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-gray-750 {
+  color: hsl(var(--grv-color-gray75));
+}
+#__wikibuy__ .__wikibuy .text-gray-800 {
+  color: hsl(var(--grv-color-gray80));
+}
+#__wikibuy__ .__wikibuy .text-gray-850 {
+  color: hsl(var(--grv-color-gray85));
+}
+#__wikibuy__ .__wikibuy .text-gray-900 {
+  color: hsl(var(--grv-color-gray90));
+}
+#__wikibuy__ .__wikibuy .text-gray-950 {
+  color: hsl(var(--grv-color-gray95));
+}
+#__wikibuy__ .__wikibuy .text-green-100 {
+  color: hsl(var(--grv-color-green10));
+}
+#__wikibuy__ .__wikibuy .text-green-150 {
+  color: hsl(var(--grv-color-green15));
+}
+#__wikibuy__ .__wikibuy .text-green-200 {
+  color: hsl(var(--grv-color-green20));
+}
+#__wikibuy__ .__wikibuy .text-green-250 {
+  color: hsl(var(--grv-color-green25));
+}
+#__wikibuy__ .__wikibuy .text-green-300 {
+  --tw-text-opacity: 1;
+  color: hsl(108 61% 48% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-green-350 {
+  color: hsl(var(--grv-color-green35));
+}
+#__wikibuy__ .__wikibuy .text-green-400 {
+  --tw-text-opacity: 1;
+  color: hsl(108 68% 38% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-green-450 {
+  color: hsl(var(--grv-color-green45));
+}
+#__wikibuy__ .__wikibuy .text-green-50 {
+  color: hsl(var(--grv-color-green05));
+}
+#__wikibuy__ .__wikibuy .text-green-500 {
+  --tw-text-opacity: 1;
+  color: hsl(108 83% 29% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-green-550 {
+  color: hsl(var(--grv-color-green55));
+}
+#__wikibuy__ .__wikibuy .text-green-600 {
+  --tw-text-opacity: 1;
+  color: hsl(108 85% 24% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-green-650 {
+  color: hsl(var(--grv-color-green65));
+}
+#__wikibuy__ .__wikibuy .text-green-700 {
+  --tw-text-opacity: 1;
+  color: hsl(108 80% 18% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-green-750 {
+  color: hsl(var(--grv-color-green75));
+}
+#__wikibuy__ .__wikibuy .text-green-800 {
+  color: hsl(var(--grv-color-green80));
+}
+#__wikibuy__ .__wikibuy .text-green-850 {
+  color: hsl(var(--grv-color-green85));
+}
+#__wikibuy__ .__wikibuy .text-green-900 {
+  color: hsl(var(--grv-color-green90));
+}
+#__wikibuy__ .__wikibuy .text-green-950 {
+  color: hsl(var(--grv-color-green95));
+}
+#__wikibuy__ .__wikibuy .text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy .text-neutralprimary {
+  color: hsl(var(--neutralprimary));
+}
+#__wikibuy__ .__wikibuy .text-neutralsecondary {
+  color: hsl(var(--neutralsecondary));
+}
+#__wikibuy__ .__wikibuy .text-popover-foreground {
+  color: hsl(var(--popover-foreground));
+}
+#__wikibuy__ .__wikibuy .text-primary {
+  color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .text-primary-foreground {
+  color: hsl(var(--primary-foreground));
+}
+#__wikibuy__ .__wikibuy .text-purple-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 232 255 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-150 {
+  --tw-text-opacity: 1;
+  color: hsl(269 100% 94% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-200 {
+  --tw-text-opacity: 1;
+  color: rgb(233 213 255 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-250 {
+  --tw-text-opacity: 1;
+  color: hsl(269 100% 90% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-300 {
+  --tw-text-opacity: 1;
+  color: hsl(269 87% 82% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-350 {
+  color: hsl(var(--grv-color-purple35));
+}
+#__wikibuy__ .__wikibuy .text-purple-400 {
+  --tw-text-opacity: 1;
+  color: hsl(270 71% 68% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-450 {
+  --tw-text-opacity: 1;
+  color: hsl(270 68% 64% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-50 {
+  --tw-text-opacity: 1;
+  color: rgb(250 245 255 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-500 {
+  --tw-text-opacity: 1;
+  color: hsl(270 65% 59% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-550 {
+  color: hsl(var(--grv-color-purple55));
+}
+#__wikibuy__ .__wikibuy .text-purple-600 {
+  --tw-text-opacity: 1;
+  color: hsl(270 62% 51% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-650 {
+  --tw-text-opacity: 1;
+  color: hsl(271 63% 47% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-700 {
+  --tw-text-opacity: 1;
+  color: hsl(272 64% 44% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-750 {
+  --tw-text-opacity: 1;
+  color: hsl(272 64% 41% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-800 {
+  --tw-text-opacity: 1;
+  color: hsl(273 65% 38% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-850 {
+  --tw-text-opacity: 1;
+  color: hsl(274 65% 35% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-900 {
+  --tw-text-opacity: 1;
+  color: rgb(88 28 135 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-purple-950 {
+  --tw-text-opacity: 1;
+  color: rgb(59 7 100 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-100 {
+  color: hsl(var(--grv-color-red10));
+}
+#__wikibuy__ .__wikibuy .text-red-150 {
+  color: hsl(var(--grv-color-red15));
+}
+#__wikibuy__ .__wikibuy .text-red-200 {
+  color: hsl(var(--grv-color-red20));
+}
+#__wikibuy__ .__wikibuy .text-red-250 {
+  color: hsl(var(--grv-color-red25));
+}
+#__wikibuy__ .__wikibuy .text-red-300 {
+  --tw-text-opacity: 1;
+  color: hsl(359 100% 76% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-350 {
+  color: hsl(var(--grv-color-red35));
+}
+#__wikibuy__ .__wikibuy .text-red-400 {
+  --tw-text-opacity: 1;
+  color: hsl(359 88% 65% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-450 {
+  color: hsl(var(--grv-color-red45));
+}
+#__wikibuy__ .__wikibuy .text-red-50 {
+  color: hsl(var(--grv-color-red05));
+}
+#__wikibuy__ .__wikibuy .text-red-500 {
+  --tw-text-opacity: 1;
+  color: hsl(359 73% 53% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-550 {
+  color: hsl(var(--grv-color-red55));
+}
+#__wikibuy__ .__wikibuy .text-red-600 {
+  --tw-text-opacity: 1;
+  color: hsl(359 67% 42% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-650 {
+  color: hsl(var(--grv-color-red65));
+}
+#__wikibuy__ .__wikibuy .text-red-700 {
+  --tw-text-opacity: 1;
+  color: hsl(359 61% 33% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-red-750 {
+  color: hsl(var(--grv-color-red75));
+}
+#__wikibuy__ .__wikibuy .text-red-800 {
+  color: hsl(var(--grv-color-red80));
+}
+#__wikibuy__ .__wikibuy .text-red-850 {
+  color: hsl(var(--grv-color-red85));
+}
+#__wikibuy__ .__wikibuy .text-red-900 {
+  color: hsl(var(--grv-color-red90));
+}
+#__wikibuy__ .__wikibuy .text-red-950 {
+  color: hsl(var(--grv-color-red95));
+}
+#__wikibuy__ .__wikibuy .text-secondary-foreground {
+  color: hsl(var(--secondary-foreground));
+}
+#__wikibuy__ .__wikibuy .text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-100 {
+  color: hsl(var(--grv-color-yellow10));
+}
+#__wikibuy__ .__wikibuy .text-yellow-150 {
+  color: hsl(var(--grv-color-yellow15));
+}
+#__wikibuy__ .__wikibuy .text-yellow-200 {
+  color: hsl(var(--grv-color-yellow20));
+}
+#__wikibuy__ .__wikibuy .text-yellow-250 {
+  color: hsl(var(--grv-color-yellow25));
+}
+#__wikibuy__ .__wikibuy .text-yellow-300 {
+  --tw-text-opacity: 1;
+  color: hsl(44 91% 46% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-350 {
+  color: hsl(var(--grv-color-yellow35));
+}
+#__wikibuy__ .__wikibuy .text-yellow-400 {
+  --tw-text-opacity: 1;
+  color: hsl(44 98% 37% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-450 {
+  color: hsl(var(--grv-color-yellow45));
+}
+#__wikibuy__ .__wikibuy .text-yellow-50 {
+  color: hsl(var(--grv-color-yellow05));
+}
+#__wikibuy__ .__wikibuy .text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: hsl(43 100% 30% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-550 {
+  color: hsl(var(--grv-color-yellow55));
+}
+#__wikibuy__ .__wikibuy .text-yellow-600 {
+  --tw-text-opacity: 1;
+  color: hsl(42 100% 25% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-650 {
+  color: hsl(var(--grv-color-yellow65));
+}
+#__wikibuy__ .__wikibuy .text-yellow-700 {
+  --tw-text-opacity: 1;
+  color: hsl(43 100% 18% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .text-yellow-750 {
+  color: hsl(var(--grv-color-yellow75));
+}
+#__wikibuy__ .__wikibuy .text-yellow-800 {
+  color: hsl(var(--grv-color-yellow80));
+}
+#__wikibuy__ .__wikibuy .text-yellow-850 {
+  color: hsl(var(--grv-color-yellow85));
+}
+#__wikibuy__ .__wikibuy .text-yellow-900 {
+  color: hsl(var(--grv-color-yellow90));
+}
+#__wikibuy__ .__wikibuy .text-yellow-950 {
+  color: hsl(var(--grv-color-yellow95));
+}
+#__wikibuy__ .__wikibuy .underline {
+  text-decoration-line: underline;
+}
+#__wikibuy__ .__wikibuy .line-through {
+  text-decoration-line: line-through;
+}
+#__wikibuy__ .__wikibuy .underline-offset-1 {
+  text-underline-offset: 1px;
+}
+#__wikibuy__ .__wikibuy .antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#__wikibuy__ .__wikibuy .opacity-0 {
+  opacity: 0;
+}
+#__wikibuy__ .__wikibuy .opacity-100 {
+  opacity: 1;
+}
+#__wikibuy__ .__wikibuy .opacity-50 {
+  opacity: 0.5;
+}
+#__wikibuy__ .__wikibuy .opacity-60 {
+  opacity: 0.6;
+}
+#__wikibuy__ .__wikibuy .opacity-70 {
+  opacity: 0.7;
+}
+#__wikibuy__ .__wikibuy .opacity-90 {
+  opacity: 0.9;
+}
+#__wikibuy__ .__wikibuy .shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .shadow-\[-4px_6px_20px_rgba\(0\2c 0\2c 0\2c 0\.12\)\] {
+  --tw-shadow: -4px 6px 20px rgba(0,0,0,0.12);
+  --tw-shadow-colored: -4px 6px 20px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .shadow-lg {
+  --tw-shadow: 0 2px 8px 0 rgba(0,0,0,.2);
+  --tw-shadow-colored: 0 2px 8px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .shadow-md {
+  --tw-shadow: 0 1px 4px 0 rgba(0,0,0,.2);
+  --tw-shadow-colored: 0 1px 4px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .shadow-none {
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .shadow-sm {
+  --tw-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+  --tw-shadow-colored: 0 1px 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+#__wikibuy__ .__wikibuy .outline {
+  outline-style: solid;
+}
+#__wikibuy__ .__wikibuy .ring-0 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+#__wikibuy__ .__wikibuy .ring-offset-2 {
+  --tw-ring-offset-width: 2px;
+}
+#__wikibuy__ .__wikibuy .ring-offset-background {
+  --tw-ring-offset-color: hsl(var(--background));
+}
+#__wikibuy__ .__wikibuy .ring-offset-red-600 {
+  --tw-ring-offset-color: hsl(359 67% 42%);
+}
+#__wikibuy__ .__wikibuy .blur-md {
+  --tw-blur: blur(12px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+#__wikibuy__ .__wikibuy .brightness-125 {
+  --tw-brightness: brightness(1.25);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+#__wikibuy__ .__wikibuy .filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+#__wikibuy__ .__wikibuy .backdrop-blur-sm {
+  --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+#__wikibuy__ .__wikibuy .transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-\[background\2c color\] {
+  transition-property: background,color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-\[width\2c padding\] {
+  transition-property: width,padding;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .delay-\[120ms\] {
+  transition-delay: 120ms;
+}
+#__wikibuy__ .__wikibuy .duration-150 {
+  transition-duration: 150ms;
+}
+#__wikibuy__ .__wikibuy .duration-200 {
+  transition-duration: 200ms;
+}
+#__wikibuy__ .__wikibuy .duration-300 {
+  transition-duration: 300ms;
+}
+#__wikibuy__ .__wikibuy .duration-500 {
+  transition-duration: 500ms;
+}
+#__wikibuy__ .__wikibuy .ease-\[cubic-bezier\(\.4\2c 0\2c \.2\2c 1\)\] {
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+#__wikibuy__ .__wikibuy .ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+#__wikibuy__ .__wikibuy .\[-ms-overflow-style\:\'none\'\] {
+  -ms-overflow-style: 'none';
+}
+#__wikibuy__ .__wikibuy .\[scrollbar-width\:\'none\'\] {
+  scrollbar-width: 'none';
+}
+#__wikibuy__ .__wikibuy .file\:border-0::file-selector-button {
+  border-width: 0px;
+}
+#__wikibuy__ .__wikibuy .file\:bg-transparent::file-selector-button {
+  background-color: transparent;
+}
+#__wikibuy__ .__wikibuy .file\:text-sm::file-selector-button {
+  font-size: 14px;
+  line-height: 20px;
+}
+#__wikibuy__ .__wikibuy .file\:font-medium::file-selector-button {
+  font-weight: 500;
+}
+#__wikibuy__ .__wikibuy .placeholder\:text-muted-foreground::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy .focus-within\:relative:focus-within {
+  position: relative;
+}
+#__wikibuy__ .__wikibuy .focus-within\:z-20:focus-within {
+  z-index: 20;
+}
+#__wikibuy__ .__wikibuy .hover\:border-blue-650:hover {
+  border-color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-\[\#004a82\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 74 130 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-\[\#27790f\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(39 121 15 / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-accent:hover {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-black\/\[\.12\]:hover {
+  background-color: rgb(0 0 0 / .12);
+}
+#__wikibuy__ .__wikibuy .hover\:bg-blue-50:hover {
+  background-color: hsl(var(--grv-color-blue05));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-blue-650:hover {
+  background-color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-gray-150:hover {
+  background-color: hsl(var(--grv-color-gray15));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-gray-50:hover {
+  background-color: hsl(var(--grv-color-gray05));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-green-650:hover {
+  background-color: hsl(var(--grv-color-green65));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: hsl(108 80% 18% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-muted:hover {
+  background-color: hsl(var(--muted));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-muted\/50:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+#__wikibuy__ .__wikibuy .hover\:bg-primary:hover {
+  background-color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-red-650:hover {
+  background-color: hsl(var(--grv-color-red65));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-red-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: hsl(359 61% 33% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .hover\:bg-secondary:hover {
+  background-color: hsl(var(--secondary));
+}
+#__wikibuy__ .__wikibuy .hover\:text-accent-foreground:hover {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .hover\:text-black\/85:hover {
+  color: rgb(0 0 0 / 0.85);
+}
+#__wikibuy__ .__wikibuy .hover\:text-blue-650:hover {
+  color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .hover\:text-foreground:hover {
+  color: hsl(var(--foreground));
+}
+#__wikibuy__ .__wikibuy .hover\:text-gray-900:hover {
+  color: hsl(var(--grv-color-gray90));
+}
+#__wikibuy__ .__wikibuy .hover\:text-muted-foreground:hover {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy .hover\:text-primary-foreground:hover {
+  color: hsl(var(--primary-foreground));
+}
+#__wikibuy__ .__wikibuy .hover\:underline:hover {
+  text-decoration-line: underline;
+}
+#__wikibuy__ .__wikibuy .hover\:opacity-100:hover {
+  opacity: 1;
+}
+#__wikibuy__ .__wikibuy .hover\:shadow-md:hover {
+  --tw-shadow: 0 1px 4px 0 rgba(0,0,0,.2);
+  --tw-shadow-colored: 0 1px 4px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .hover\:outline:hover {
+  outline-style: solid;
+}
+#__wikibuy__ .__wikibuy .hover\:outline-\[3px\]:hover {
+  outline-width: 3px;
+}
+#__wikibuy__ .__wikibuy .hover\:outline-blue-500:hover {
+  outline-color: hsl(200 91% 37%);
+}
+#__wikibuy__ .__wikibuy .hover\:after\:absolute:hover::after {
+  content: var(--tw-content);
+  position: absolute;
+}
+#__wikibuy__ .__wikibuy .hover\:after\:bg-blue-550:hover::after {
+  content: var(--tw-content);
+  background-color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .focus\:bg-accent:focus {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .focus\:bg-primary:focus {
+  background-color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .focus\:text-accent-foreground:focus {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .focus\:text-primary-foreground:focus {
+  color: hsl(var(--primary-foreground));
+}
+#__wikibuy__ .__wikibuy .focus\:opacity-100:focus {
+  opacity: 1;
+}
+#__wikibuy__ .__wikibuy .focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+#__wikibuy__ .__wikibuy .focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+#__wikibuy__ .__wikibuy .focus\:ring-blue-550:focus {
+  --tw-ring-color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .focus\:ring-ring:focus {
+  --tw-ring-color: hsl(var(--ring));
+}
+#__wikibuy__ .__wikibuy .focus\:ring-offset-1:focus {
+  --tw-ring-offset-width: 1px;
+}
+#__wikibuy__ .__wikibuy .focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}
+#__wikibuy__ .__wikibuy .focus-visible\:outline-none:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+#__wikibuy__ .__wikibuy .focus-visible\:ring-2:focus-visible {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+#__wikibuy__ .__wikibuy .focus-visible\:ring-ring:focus-visible {
+  --tw-ring-color: hsl(var(--ring));
+}
+#__wikibuy__ .__wikibuy .focus-visible\:ring-offset-2:focus-visible {
+  --tw-ring-offset-width: 2px;
+}
+#__wikibuy__ .__wikibuy .focus-visible\:ring-offset-background:focus-visible {
+  --tw-ring-offset-color: hsl(var(--background));
+}
+#__wikibuy__ .__wikibuy .active\:border-blue-650:active {
+  border-color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .active\:bg-blue-100:active {
+  background-color: hsl(var(--grv-color-blue10));
+}
+#__wikibuy__ .__wikibuy .active\:bg-blue-750:active {
+  background-color: hsl(var(--grv-color-blue75));
+}
+#__wikibuy__ .__wikibuy .active\:bg-green-750:active {
+  background-color: hsl(var(--grv-color-green75));
+}
+#__wikibuy__ .__wikibuy .active\:bg-red-750:active {
+  background-color: hsl(var(--grv-color-red75));
+}
+#__wikibuy__ .__wikibuy .active\:text-blue-650:active {
+  color: hsl(var(--grv-color-blue65));
+}
+#__wikibuy__ .__wikibuy .disabled\:pointer-events-none:disabled {
+  pointer-events: none;
+}
+#__wikibuy__ .__wikibuy .disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+#__wikibuy__ .__wikibuy .disabled\:border-gray-100:disabled {
+  border-color: hsl(var(--grv-color-gray10));
+}
+#__wikibuy__ .__wikibuy .disabled\:border-muted-foreground:disabled {
+  border-color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy .disabled\:bg-gray-100:disabled {
+  background-color: hsl(var(--grv-color-gray10));
+}
+#__wikibuy__ .__wikibuy .disabled\:bg-muted:disabled {
+  background-color: hsl(var(--muted));
+}
+#__wikibuy__ .__wikibuy .disabled\:text-gray-200:disabled {
+  color: hsl(var(--grv-color-gray20));
+}
+#__wikibuy__ .__wikibuy .disabled\:opacity-0:disabled {
+  opacity: 0;
+}
+#__wikibuy__ .__wikibuy .disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+#__wikibuy__ .__wikibuy :is(.group:hover .group-hover\:opacity-100) {
+  opacity: 1;
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:border-muted\/40) {
+  border-color: hsl(var(--muted) / 0.4);
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:text-red-300) {
+  --tw-text-opacity: 1;
+  color: hsl(359 100% 76% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:hover\:border-critical\/30:hover) {
+  border-color: hsl(var(--critical) / 0.3);
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:hover\:bg-critical:hover) {
+  background-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:hover\:text-critical-foreground:hover) {
+  color: hsl(var(--critical-foreground));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:hover\:text-red-50:hover) {
+  color: hsl(var(--grv-color-red05));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:focus\:ring-critical:focus) {
+  --tw-ring-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:focus\:ring-red-400:focus) {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: hsl(359 88% 65% / var(--tw-ring-opacity, 1));
+}
+#__wikibuy__ .__wikibuy :is(.group.critical .group-\[\.critical\]\:focus\:ring-offset-red-600:focus) {
+  --tw-ring-offset-color: hsl(359 67% 42%);
+}
+#__wikibuy__ .__wikibuy :is(.peer:disabled ~ .peer-disabled\:cursor-not-allowed) {
+  cursor: not-allowed;
+}
+#__wikibuy__ .__wikibuy :is(.peer:disabled ~ .peer-disabled\:text-muted-foreground) {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy :is(.peer:disabled ~ .peer-disabled\:opacity-50) {
+  opacity: 0.5;
+}
+#__wikibuy__ .__wikibuy .aria-selected\:bg-accent[aria-selected="true"] {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .aria-selected\:text-accent-foreground[aria-selected="true"] {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .aria-selected\:opacity-100[aria-selected="true"] {
+  opacity: 1;
+}
+#__wikibuy__ .__wikibuy .data-\[disabled\]\:pointer-events-none[data-disabled] {
+  pointer-events: none;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:ml-4[data-orientation="vertical"] {
+  margin-left: 16px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:flex[data-orientation="horizontal"] {
+  display: flex;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:flex[data-orientation="vertical"] {
+  display: flex;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:h-auto[data-orientation="vertical"] {
+  height: auto;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:w-full[data-orientation="vertical"] {
+  width: 100%;
+}
+#__wikibuy__ .__wikibuy .data-\[side\=bottom\]\:translate-y-1[data-side="bottom"] {
+  --tw-translate-y: 4px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[side\=left\]\:-translate-x-1[data-side="left"] {
+  --tw-translate-x: -4px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[side\=right\]\:translate-x-1[data-side="right"] {
+  --tw-translate-x: 4px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[side\=top\]\:-translate-y-1[data-side="top"] {
+  --tw-translate-y: -4px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=checked\]\:translate-x-5[data-state="checked"] {
+  --tw-translate-x: 20px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=unchecked\]\:translate-x-0[data-state="unchecked"] {
+  --tw-translate-x: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[swipe\=cancel\]\:translate-x-0[data-swipe="cancel"] {
+  --tw-translate-x: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[swipe\=end\]\:translate-x-\[var\(--radix-toast-swipe-end-x\)\][data-swipe="end"] {
+  --tw-translate-x: var(--radix-toast-swipe-end-x);
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy .data-\[swipe\=move\]\:translate-x-\[var\(--radix-toast-swipe-move-x\)\][data-swipe="move"] {
+  --tw-translate-x: var(--radix-toast-swipe-move-x);
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+#__wikibuy__ .__wikibuy .data-\[state\=closed\]\:animate-accordion-up[data-state="closed"] {
+  animation: accordion-up 0.2s ease-out;
+}
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:animate-accordion-down[data-state="open"] {
+  animation: accordion-down 0.2s ease-out;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:flex-col[data-orientation="vertical"] {
+  flex-direction: column;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:justify-start[data-orientation="vertical"] {
+  justify-content: flex-start;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:justify-center[data-orientation="vertical"] {
+  justify-content: center;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:gap-6[data-orientation="horizontal"] {
+  gap: 24px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:border-b[data-orientation="horizontal"] {
+  border-bottom-width: 1px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:border-r[data-orientation="vertical"] {
+  border-right-width: 1px;
+}
+#__wikibuy__ .__wikibuy .data-\[error\]\:border-critical[data-error] {
+  border-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:border-b-border[data-orientation="horizontal"] {
+  border-bottom-color: hsl(var(--border));
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:border-r-border[data-orientation="vertical"] {
+  border-right-color: hsl(var(--border));
+}
+#__wikibuy__ .__wikibuy .data-\[active\]\:bg-accent\/50[data-active] {
+  background-color: hsl(var(--accent) / 0.5);
+}
+#__wikibuy__ .__wikibuy .data-\[state\=active\]\:bg-background[data-state="active"] {
+  background-color: hsl(var(--background));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=checked\]\:bg-primary[data-state="checked"] {
+  background-color: hsl(var(--primary));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=on\]\:bg-accent[data-state="on"] {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:bg-accent[data-state="open"] {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:bg-accent\/50[data-state="open"] {
+  background-color: hsl(var(--accent) / 0.5);
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:bg-secondary[data-state="open"] {
+  background-color: hsl(var(--secondary));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=selected\]\:bg-muted[data-state="selected"] {
+  background-color: hsl(var(--muted));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=unchecked\]\:bg-gray-300[data-state="unchecked"] {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 67% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=active\]\:text-foreground[data-state="active"] {
+  color: hsl(var(--foreground));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=checked\]\:text-primary-foreground[data-state="checked"] {
+  color: hsl(var(--primary-foreground));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=on\]\:text-accent-foreground[data-state="on"] {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:text-accent-foreground[data-state="open"] {
+  color: hsl(var(--accent-foreground));
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:text-muted-foreground[data-state="open"] {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy .data-\[disabled\]\:opacity-50[data-disabled] {
+  opacity: 0.5;
+}
+#__wikibuy__ .__wikibuy .data-\[swipe\=move\]\:transition-none[data-swipe="move"] {
+  transition-property: none;
+}
+#__wikibuy__ .__wikibuy .data-\[state\=closed\]\:duration-300[data-state="closed"] {
+  transition-duration: 300ms;
+}
+#__wikibuy__ .__wikibuy .data-\[state\=open\]\:duration-500[data-state="open"] {
+  transition-duration: 500ms;
+}
+#__wikibuy__ .__wikibuy .data-\[state\=active\]\:after\:absolute[data-state="active"]::after {
+  content: var(--tw-content);
+  position: absolute;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:data-\[state\=active\]\:after\:bottom-0[data-state="active"][data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  bottom: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:data-\[state\=active\]\:after\:left-0[data-state="active"][data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  left: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:data-\[state\=active\]\:after\:right-0[data-state="active"][data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  right: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:data-\[state\=active\]\:after\:h-1[data-state="active"][data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  height: 4px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:data-\[state\=active\]\:after\:h-full[data-state="active"][data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  height: 100%;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:data-\[state\=active\]\:after\:w-full[data-state="active"][data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  width: 100%;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:data-\[state\=active\]\:after\:w-1[data-state="active"][data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  width: 4px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:data-\[state\=active\]\:after\:rounded-t-sm[data-state="active"][data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  border-top-left-radius: calc(var(--radius) - 4px);
+  border-top-right-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:data-\[state\=active\]\:after\:rounded-l-sm[data-state="active"][data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  border-top-left-radius: calc(var(--radius) - 4px);
+  border-bottom-left-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .data-\[state\=active\]\:after\:bg-blue-550[data-state="active"]::after {
+  content: var(--tw-content);
+  background-color: hsl(var(--grv-color-blue55));
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:hover\:after\:bottom-0:hover[data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  bottom: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:hover\:after\:left-0:hover[data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  left: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:hover\:after\:right-0:hover[data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  right: 0px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:hover\:after\:h-1:hover[data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  height: 4px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:hover\:after\:h-full:hover[data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  height: 100%;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:hover\:after\:w-full:hover[data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  width: 100%;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:hover\:after\:w-1:hover[data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  width: 4px;
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=horizontal\]\:hover\:after\:rounded-t-sm:hover[data-orientation="horizontal"]::after {
+  content: var(--tw-content);
+  border-top-left-radius: calc(var(--radius) - 4px);
+  border-top-right-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .data-\[orientation\=vertical\]\:hover\:after\:rounded-l-sm:hover[data-orientation="vertical"]::after {
+  content: var(--tw-content);
+  border-top-left-radius: calc(var(--radius) - 4px);
+  border-bottom-left-radius: calc(var(--radius) - 4px);
+}
+#__wikibuy__ .__wikibuy .disabled\:data-\[state\=checked\]\:bg-muted[data-state="checked"]:disabled {
+  background-color: hsl(var(--muted));
+}
+#__wikibuy__ .__wikibuy .disabled\:data-\[state\=checked\]\:text-muted-foreground[data-state="checked"]:disabled {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy :is(.group[data-state="open"] .group-data-\[state\=open\]\:rotate-180) {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+@media (min-width: 640px) {
+  #__wikibuy__ .__wikibuy .sm\:mt-0 {
+    margin-top: 0px;
+  }
+  #__wikibuy__ .__wikibuy .sm\:max-w-sm {
+    max-width: 384px;
+  }
+  #__wikibuy__ .__wikibuy .sm\:flex-row {
+    flex-direction: row;
+  }
+  #__wikibuy__ .__wikibuy .sm\:justify-end {
+    justify-content: flex-end;
+  }
+  #__wikibuy__ .__wikibuy :is(.sm\:space-x-2 > :not([hidden]) ~ :not([hidden])) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(8px * var(--tw-space-x-reverse));
+    margin-left: calc(8px * calc(1 - var(--tw-space-x-reverse)));
+  }
+  #__wikibuy__ .__wikibuy :is(.sm\:space-x-4 > :not([hidden]) ~ :not([hidden])) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(16px * var(--tw-space-x-reverse));
+    margin-left: calc(16px * calc(1 - var(--tw-space-x-reverse)));
+  }
+  #__wikibuy__ .__wikibuy :is(.sm\:space-y-0 > :not([hidden]) ~ :not([hidden])) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+  #__wikibuy__ .__wikibuy .sm\:rounded-lg {
+    border-radius: var(--radius);
+  }
+  #__wikibuy__ .__wikibuy .sm\:text-left {
+    text-align: left;
+  }
+  @media not all and (min-width: 768px) {
+    #__wikibuy__ .__wikibuy .sm\:max-md\:bottom-0 {
+      bottom: 0px;
+    }
+    #__wikibuy__ .__wikibuy .sm\:max-md\:top-auto {
+      top: auto;
+    }
+    #__wikibuy__ .__wikibuy .sm\:max-md\:flex-col {
+      flex-direction: column;
+    }
+  }
+}
+@media (min-width: 768px) {
+  #__wikibuy__ .__wikibuy .md\:absolute {
+    position: absolute;
+  }
+  #__wikibuy__ .__wikibuy .md\:top-0 {
+    top: 0px;
+  }
+  #__wikibuy__ .__wikibuy .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
+    width: var(--radix-navigation-menu-viewport-width);
+  }
+  #__wikibuy__ .__wikibuy .md\:w-auto {
+    width: auto;
+  }
+  #__wikibuy__ .__wikibuy .md\:w-full {
+    width: 100%;
+  }
+  #__wikibuy__ .__wikibuy .md\:max-w-\[420px\] {
+    max-width: 420px;
+  }
+}
+@media (min-width: 1024px) {
+  #__wikibuy__ .__wikibuy .lg\:max-w-\[400px\] {
+    max-width: 400px;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  #__wikibuy__ .__wikibuy .dark\:border-critical:not([data-mode="light"] *):not([data-mode="light"]) {
+    border-color: hsl(var(--critical));
+  }
+  #__wikibuy__ .__wikibuy .dark\:bg-gray-700:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-bg-opacity: 1;
+    background-color: hsl(0 0% 28% / var(--tw-bg-opacity, 1));
+  }
+  #__wikibuy__ .__wikibuy .dark\:bg-gray-800:not([data-mode="light"] *):not([data-mode="light"]) {
+    background-color: hsl(var(--grv-color-gray80));
+  }
+  #__wikibuy__ .__wikibuy .dark\:bg-gray-950:not([data-mode="light"] *):not([data-mode="light"]) {
+    background-color: hsl(var(--grv-color-gray95));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-blue-300:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-text-opacity: 1;
+    color: hsl(200 88% 60% / var(--tw-text-opacity, 1));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-gray-100:not([data-mode="light"] *):not([data-mode="light"]) {
+    color: hsl(var(--grv-color-gray10));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-gray-300:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-text-opacity: 1;
+    color: hsl(0 0% 67% / var(--tw-text-opacity, 1));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-gray-400:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-text-opacity: 1;
+    color: hsl(0 0% 56% / var(--tw-text-opacity, 1));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-gray-50:not([data-mode="light"] *):not([data-mode="light"]) {
+    color: hsl(var(--grv-color-gray05));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-green-350:not([data-mode="light"] *):not([data-mode="light"]) {
+    color: hsl(var(--grv-color-green35));
+  }
+  #__wikibuy__ .__wikibuy .dark\:text-green-400:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-text-opacity: 1;
+    color: hsl(108 68% 38% / var(--tw-text-opacity, 1));
+  }
+  #__wikibuy__ .__wikibuy .dark\:shadow-none:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+  #__wikibuy__ .__wikibuy .dark\:hover\:text-white:hover:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+  }
+}
+#__wikibuy__ .__wikibuy .dark\:border-critical:is([data-mode="dark"] *, [data-mode="dark"]) {
+  border-color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy .dark\:bg-gray-700:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 28% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .dark\:bg-gray-800:is([data-mode="dark"] *, [data-mode="dark"]) {
+  background-color: hsl(var(--grv-color-gray80));
+}
+#__wikibuy__ .__wikibuy .dark\:bg-gray-950:is([data-mode="dark"] *, [data-mode="dark"]) {
+  background-color: hsl(var(--grv-color-gray95));
+}
+#__wikibuy__ .__wikibuy .dark\:text-blue-300:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-text-opacity: 1;
+  color: hsl(200 88% 60% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .dark\:text-gray-100:is([data-mode="dark"] *, [data-mode="dark"]) {
+  color: hsl(var(--grv-color-gray10));
+}
+#__wikibuy__ .__wikibuy .dark\:text-gray-300:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 67% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .dark\:text-gray-400:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-text-opacity: 1;
+  color: hsl(0 0% 56% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .dark\:text-gray-50:is([data-mode="dark"] *, [data-mode="dark"]) {
+  color: hsl(var(--grv-color-gray05));
+}
+#__wikibuy__ .__wikibuy .dark\:text-green-350:is([data-mode="dark"] *, [data-mode="dark"]) {
+  color: hsl(var(--grv-color-green35));
+}
+#__wikibuy__ .__wikibuy .dark\:text-green-400:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-text-opacity: 1;
+  color: hsl(108 68% 38% / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .dark\:shadow-none:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+#__wikibuy__ .__wikibuy .dark\:hover\:text-white:hover:is([data-mode="dark"] *, [data-mode="dark"]) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .\[\&\:\:-webkit-scrollbar-thumb\]\:rounded-full::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+}
+#__wikibuy__ .__wikibuy .\[\&\:\:-webkit-scrollbar-thumb\]\:bg-gray-300::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 67% / var(--tw-bg-opacity, 1));
+}
+@media (prefers-color-scheme: dark) {
+  #__wikibuy__ .__wikibuy .dark\:\[\&\:\:-webkit-scrollbar-thumb\]\:bg-gray-400::-webkit-scrollbar-thumb:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-bg-opacity: 1;
+    background-color: hsl(0 0% 56% / var(--tw-bg-opacity, 1));
+  }
+}
+#__wikibuy__ .__wikibuy .dark\:\[\&\:\:-webkit-scrollbar-thumb\]\:bg-gray-400:is([data-mode="dark"] *, [data-mode="dark"])::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 56% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .\[\&\:\:-webkit-scrollbar-track\]\:bg-gray-100::-webkit-scrollbar-track {
+  background-color: hsl(var(--grv-color-gray10));
+}
+@media (prefers-color-scheme: dark) {
+  #__wikibuy__ .__wikibuy .dark\:\[\&\:\:-webkit-scrollbar-track\]\:bg-gray-600::-webkit-scrollbar-track:not([data-mode="light"] *):not([data-mode="light"]) {
+    --tw-bg-opacity: 1;
+    background-color: hsl(0 0% 38% / var(--tw-bg-opacity, 1));
+  }
+}
+#__wikibuy__ .__wikibuy .dark\:\[\&\:\:-webkit-scrollbar-track\]\:bg-gray-600:is([data-mode="dark"] *, [data-mode="dark"])::-webkit-scrollbar-track {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 38% / var(--tw-bg-opacity, 1));
+}
+#__wikibuy__ .__wikibuy .\[\&\:\:-webkit-scrollbar\]\:hidden::-webkit-scrollbar {
+  display: none;
+}
+#__wikibuy__ .__wikibuy .\[\&\:\:-webkit-scrollbar\]\:h-\[8px\]::-webkit-scrollbar {
+  height: 8px;
+}
+#__wikibuy__ .__wikibuy .\[\&\:has\(\[aria-selected\]\)\]\:bg-accent:has([aria-selected]) {
+  background-color: hsl(var(--accent));
+}
+#__wikibuy__ .__wikibuy .first\:\[\&\:has\(\[aria-selected\]\)\]\:rounded-l-md:has([aria-selected]):first-child {
+  border-top-left-radius: calc(var(--radius) - 2px);
+  border-bottom-left-radius: calc(var(--radius) - 2px);
+}
+#__wikibuy__ .__wikibuy .last\:\[\&\:has\(\[aria-selected\]\)\]\:rounded-r-md:has([aria-selected]):last-child {
+  border-top-right-radius: calc(var(--radius) - 2px);
+  border-bottom-right-radius: calc(var(--radius) - 2px);
+}
+#__wikibuy__ .__wikibuy .\[\&\:has\(\[role\=checkbox\]\)\]\:pr-0:has([role=checkbox]) {
+  padding-right: 0px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\+div\]\:translate-y-\[-3px\]>svg+div) {
+  --tw-translate-y: -3px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\]\:absolute>svg) {
+  position: absolute;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\]\:left-4>svg) {
+  left: 16px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\]\:top-4>svg) {
+  top: 16px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\]\:text-critical>svg) {
+  color: hsl(var(--critical));
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\]\:text-foreground>svg) {
+  color: hsl(var(--foreground));
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\>svg\~\*\]\:pl-7>svg~*) {
+  padding-left: 28px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&\[data-state\=open\]\>svg\]\:rotate-180[data-state=open]>svg) {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group-heading\]\]\:px-2 [cmdk-group-heading]) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group-heading\]\]\:py-1\.5 [cmdk-group-heading]) {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group-heading\]\]\:text-xs [cmdk-group-heading]) {
+  font-size: 12px;
+  line-height: 16px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group-heading\]\]\:font-medium [cmdk-group-heading]) {
+  font-weight: 500;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group-heading\]\]\:text-muted-foreground [cmdk-group-heading]) {
+  color: hsl(var(--muted-foreground));
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group\]\:not\(\[hidden\]\)_\~\[cmdk-group\]\]\:pt-0 [cmdk-group]:not([hidden]) ~[cmdk-group]) {
+  padding-top: 0px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-group\]\]\:px-2 [cmdk-group]) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-input-wrapper\]_svg\]\:h-5 [cmdk-input-wrapper] svg) {
+  height: 20px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-input-wrapper\]_svg\]\:w-5 [cmdk-input-wrapper] svg) {
+  width: 20px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-input\]\]\:h-12 [cmdk-input]) {
+  height: 48px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-item\]\]\:px-2 [cmdk-item]) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-item\]\]\:py-3 [cmdk-item]) {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-item\]_svg\]\:h-5 [cmdk-item] svg) {
+  height: 20px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_\[cmdk-item\]_svg\]\:w-5 [cmdk-item] svg) {
+  width: 20px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_p\]\:leading-relaxed p) {
+  line-height: 1.625;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_tr\:last-child\]\:border-0 tr:last-child) {
+  border-width: 0px;
+}
+#__wikibuy__ .__wikibuy :is(.\[\&_tr\]\:border-b tr) {
+  border-bottom-width: 1px;
+}

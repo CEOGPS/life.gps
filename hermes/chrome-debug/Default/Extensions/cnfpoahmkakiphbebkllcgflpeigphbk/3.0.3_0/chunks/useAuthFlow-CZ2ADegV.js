@@ -1,0 +1,1 @@
+import{R as r,a6 as c,w as l,x as h,S as g}from"./sidepanel-DRMP5oPj.js";function m(a){const e=h(),n=g(),t=r(),i=c(),u=["/login"];return l(()=>t.isAuthenticated,(o,s)=>{o&&!s&&u.includes(n.path)?(t.shouldTrackAuthenticated=!0,e.push(a)):!o&&s&&e.push(u[0])},{immediate:!0}),{initiateGoogleAuth:()=>t.initiateGoogleAuth(),logout:async()=>{await t.logout(),i.clear()}}}export{m as u};

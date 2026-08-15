@@ -1,0 +1,316 @@
+body {
+  font-family: Inter, Arial, 'Times New Roman', Times, serif;
+}
+
+.hello {
+  margin-top: 0px;
+  background: #4D83EF;
+  background: linear-gradient(to right, #4D83EF 0%, #D46677 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gray_box {
+  position: relative;
+  /* This makes sure that the absolute positioning of .credits is relative to .gray_box */
+}
+
+.credits {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  /* Align to the right */
+  margin-right: 10px;
+  font-weight: 400;
+  top: 50%;
+  /* Start at 50% from the top */
+  transform: translateY(-50%);
+  /* This shifts the .credits up by half its own height to center it vertically */
+}
+
+.body_section {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 99%;
+
+  resize: none;
+  /* Optional: Prevents resizing */
+  font-family: inherit;
+  /* To match the font with other inputs/buttons */
+  max-height: calc(1.2em * 8);
+  line-height: 1.2;
+  min-height: calc(1.2em * 1);
+  font-size: 16px;
+  /* To match the font size with other inputs/buttons */
+  padding: 15px;
+  /* Adjust padding to ensure text starts from the top-left corner */
+  background-color: #f0f4f9;
+  border: none;
+  border-radius: 20px;
+  box-sizing: border-box;
+  /* Ensures that padding and border are included in the width and height */
+  margin-top: 0px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  justify-content: center;
+  cursor: text;
+
+}
+
+.input:empty:before {
+  content: 'Enter a prompt here';
+  color: rgb(150, 150, 150);
+}
+
+
+.input:focus {
+  background-color: #e9eef6;
+  border: none;
+  outline: none;
+}
+
+#response {
+  font-size: 16px;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  margin-top: 5px;
+}
+
+#outer_output {
+
+  display: none;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+#output {
+  width: 82%;
+  border: solid 1px rgb(207, 207, 207);
+  border-radius: 24px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  /* Ensures that padding and border are included in the width and height */
+
+}
+
+
+
+#copy_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: 10%;
+  border: solid 1px #cfcfcf;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#copy_container:hover {
+  background-color: rgba(128, 128, 128, 0.13);
+}
+
+#copy_container p {
+  padding: 15px;
+}
+
+#copy_container i {
+  font-size: 16px;
+
+}
+
+#clipboardIcon {
+  fill: #838383;
+  width: 30%;
+}
+
+#checkIcon {
+  color: green;
+}
+
+#ai_response {
+  font-size: 16px;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#submitBtn {
+  border: solid, gray, 1px;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  height: 45px;
+  color: #252525;
+  font-size: 16px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+#submitBtn:hover {
+  background: rgb(199, 199, 199);
+  text-decoration: none;
+}
+
+#pills {
+  position: absolute;
+  right: 0;
+  /* Align to the right */
+  margin-right: 20px;
+}
+
+
+#history_btn {
+  text-align: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 25px;
+  border: none;
+  font-size: 10px;
+
+}
+
+#history_btn:hover {
+  background: rgb(199, 199, 199);
+  text-decoration: none;
+}
+
+#history_container {
+  display: none;
+  flex-direction: column;
+
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid gray 1px;
+  border-radius: 25px;
+  width: fit-content;
+  padding: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.history-item:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+
+
+.history-copy-btn {
+  height: 100%;
+  color: blue;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.type_container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.option {
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#loginSection {
+  align-items: center;
+}
+
+#loginSection h1 {
+  color: rgb(57, 57, 57);
+  margin-bottom: 5px;
+
+}
+
+#SheetsGPT {
+  background: #2AA555;
+  background: linear-gradient(to right, #2AA555 0%, #09BB65 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#loginSection p {
+  margin-top: 0px;
+}
+
+#loginBtn {
+  padding: 10px;
+  align-self: center;
+  justify-self: center;
+  background-color: #27AE60;
+  border: none;
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+  padding-left: 30%;
+  padding-right: 30%;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#loginBtn:hover {
+  background-color: #1c7d44;
+}
+
+#loginHeader {
+  width: 400px;
+}
+
+#signOut{
+  color: #999999;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+#upgradeBtn{
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-top: 8px;
+  font-weight: 500;
+  color: #4D83EF;
+  transition: 0.4s ease-in-out;
+}
+
+#upgradeBtn:hover{
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+#logo{
+  height: 40px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+}

@@ -1,0 +1,18 @@
+2026/07/14-16:45:27.631 3ffc Creating DB C:\Users\chris\AppData\Local\hermes\chrome-debug\Default\IndexedDB\https_console.firebase.google.com_0.indexeddb.leveldb since it was missing.
+2026/07/14-16:45:27.705 3ffc Reusing MANIFEST C:\Users\chris\AppData\Local\hermes\chrome-debug\Default\IndexedDB\https_console.firebase.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/14-16:45:27.783 5d88 Level-0 table #5: started
+2026/07/14-16:45:27.807 5d88 Level-0 table #5: 759 bytes OK
+2026/07/14-16:45:27.840 5d88 Delete type=0 #3
+2026/07/14-16:45:27.841 5d88 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/07/14-16:45:44.317 3ffc Level-0 table #7: started
+2026/07/14-16:45:44.339 3ffc Level-0 table #7: 4885 bytes OK
+2026/07/14-16:45:44.354 3ffc Delete type=0 #4
+2026/07/14-16:45:44.355 3ffc Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2026/07/14-16:45:44.355 3ffc Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x03\x01\x02\x013\x00[\x00D\x00E\x00F\x00A\x00U\x00L\x00T\x00]\x00!\x001\x00:\x007\x000\x003\x005\x000\x006\x006\x001\x008\x007\x009\x009\x00:\x00w\x00e\x00b\x00:\x00b\x007\x008\x00d\x003\x001\x00c\x001\x00a\x00e\x005\x007\x000\x00d\x003\x00b\x005\x00c\x003\x007\x005\x00a' @ 108 : 1
+2026/07/14-16:45:44.355 3ffc Compacting 1@1 + 1@2 files
+2026/07/14-16:45:44.361 3ffc Generated table #8@1: 35 keys, 1562 bytes
+2026/07/14-16:45:44.361 3ffc Compacted 1@1 + 1@2 files => 1562 bytes
+2026/07/14-16:45:44.367 3ffc compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/14-16:45:44.368 3ffc Delete type=2 #5
+2026/07/14-16:45:44.368 3ffc Delete type=2 #7
+2026/07/14-16:45:44.369 3ffc Manual compaction at level-1 from '\x00\x03\x01\x02\x013\x00[\x00D\x00E\x00F\x00A\x00U\x00L\x00T\x00]\x00!\x001\x00:\x007\x000\x003\x005\x000\x006\x006\x001\x008\x007\x009\x009\x00:\x00w\x00e\x00b\x00:\x00b\x007\x008\x00d\x003\x001\x00c\x001\x00a\x00e\x005\x007\x000\x00d\x003\x00b\x005\x00c\x003\x007\x005\x00a' @ 108 : 1 .. (end); will stop at (end)

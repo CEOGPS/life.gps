@@ -1,0 +1,1 @@
+import{b as i}from"./chunk-URSXUSW2.js";import{b as c,e as r}from"./chunk-DXB73IDG.js";function d(){let e=(0,t.v4)();return{clickId:e.replace(/-/g,""),redirectId:e}}var t,n=c(()=>{"use strict";t=r(i())});export{d as a,n as b};

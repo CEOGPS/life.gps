@@ -1,0 +1,1 @@
+export default function BrandIcon() { return <div>Logo</div>; }

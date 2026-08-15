@@ -1,0 +1,2 @@
+import"./_virtual_wxt-html-plugins-CUMPttkV.js";(function(){try{var e=typeof window<"u"?window:typeof global<"u"?global:typeof globalThis<"u"?globalThis:typeof self<"u"?self:{},d=new e.Error().stack;d&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[d]="4b09d7af-f07b-464f-8438-bed9c9e57a46",e._sentryDebugIdIdentifier="sentry-dbid-4b09d7af-f07b-464f-8438-bed9c9e57a46")}catch{}})();
+//# sourceMappingURL=popup-OlChbiCh.js.map

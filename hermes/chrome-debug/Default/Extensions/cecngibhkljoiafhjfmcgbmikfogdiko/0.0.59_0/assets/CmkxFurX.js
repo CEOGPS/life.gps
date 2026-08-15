@@ -1,0 +1,1 @@
+import{e as t}from"./Bt8tJzZk.js";function n(n){const{webAppDomain:r}=t.getEnvParams();if(n===r)return!0;if(t.isDev())try{const t=new URL(n),r="localhost"===t.hostname||"127.0.0.1"===t.hostname||"::1"===t.hostname;if("http:"===t.protocol&&r)return!0}catch{return!1}return!1}function r(){return t.getEnvParams().webAppUrlPatterns}export{r as g,n as i};
