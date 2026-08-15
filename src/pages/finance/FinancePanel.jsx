@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   DollarSign, TrendingUp, TrendingDown, BarChart3, Plus, FileText,
   PieChart, CreditCard, Briefcase, AlertTriangle, Lightbulb,
@@ -16,10 +16,9 @@ const ACCOUNTS = [
   { name: "Credit Karma", type: "Credit Monitoring", balance: "0.00", icon: "📊", trend: "up" },
 ];
 
-function TabOverview() {
+const TabOverview = () => {
   return (
     <div className="flex gap-4 flex-1 min-h-0">
-      {/* Left — accounts */}
       <div className="w-64 shrink-0 space-y-2 overflow-y-auto">
         <div className="text-[9px] font-display tracking-widest mb-1 text-teal uppercase">Connected Accounts</div>
         {ACCOUNTS.map((acc) => (
@@ -40,7 +39,6 @@ function TabOverview() {
         ))}
       </div>
 
-      {/* Right */
       <div className="flex-1 flex flex-col gap-3 min-w-0">
         <div className="grid grid-cols-3 gap-3">
           {[
@@ -81,28 +79,26 @@ function TabOverview() {
       </div>
     </div>
   );
-}
+};
 
-function TabPerProductRevenue() {
-  return (
-    <div className="flex flex-col gap-3 flex-1">
-      <div className="flex items-center gap-2">
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-crimson text-primary text-xs font-display hover:glow-crimson-sm transition-all uppercase tracking-wider">
-          <Plus size={11} /> Add Product / Service
-        </button>
-      </div>
-      <div className="flex-1 glass rounded-xl border border-white/10 flex items-center justify-center">
-        <div className="text-center">
-          <CreditCard size={28} className="mx-auto text-white/20 mb-3" />
-          <div className="text-sm text-white/40">No product revenue data</div>
-          <div className="text-[10px] text-white/20 mt-1">Connect Stripe / PayPal to sync product revenue</div>
-        </div>
+const TabPerProductRevenue = () => (
+  <div className="flex flex-col gap-3 flex-1">
+    <div className="flex items-center gap-2">
+      <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-crimson text-primary text-xs font-display hover:glow-crimson-sm transition-all uppercase tracking-wider">
+        <Plus size={11} /> Add Product / Service
+      </button>
+    </div>
+    <div className="flex-1 glass rounded-xl border border-white/10 flex items-center justify-center">
+      <div className="text-center">
+        <CreditCard size={28} className="mx-auto text-white/20 mb-3" />
+        <div className="text-sm text-white/40">No product revenue data</div>
+        <div className="text-[10px] text-white/20 mt-1">Connect Stripe / PayPal to sync product revenue</div>
       </div>
     </div>
-  );
-}
+  </div>
+);
 
-function TabCreditRepair() {
+const TabCreditRepair = () => {
   const bureaus = [
     { name: "Experian", score: "0/850" },
     { name: "Equifax", score: "0/850" },
@@ -147,51 +143,47 @@ function TabCreditRepair() {
       </div>
     </div>
   );
-}
+};
 
-function TabInvestments() {
-  return (
-    <div className="flex flex-col gap-4 flex-1">
-      <div className="glass rounded-xl border border-white/10 p-4">
-        <div className="text-[9px] font-display tracking-widest mb-3 text-teal uppercase">Portfolio Overview</div>
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { label: "Total Value", val: "$0.00" },
-            { label: "Total Gain", val: "$0.00" },
-            { label: "Total Loss", val: "$0.00" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="text-xs text-white/30 mb-0.5">{s.label}</div>
-              <div className="text-xl font-display text-white/80">{s.val}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex-1 glass rounded-xl border border-white/10 p-4 flex flex-col gap-2">
-        <div className="text-[9px] font-display tracking-widest text-teal uppercase">Holdings</div>
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <Briefcase size={24} className="mx-auto text-white/10 mb-2" />
-            <div className="text-xs text-white/40">No holdings found</div>
-            <div className="text-[10px] text-white/20 mt-1">Connect brokerage to see insights</div>
+const TabInvestments = () => (
+  <div className="flex flex-col gap-4 flex-1">
+    <div className="glass rounded-xl border border-white/10 p-4">
+      <div className="text-[9px] font-display tracking-widest mb-3 text-teal uppercase">Portfolio Overview</div>
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label: "Total Value", val: "$0.00" },
+          { label: "Total Gain", val: "$0.00" },
+          { label: "Total Loss", val: "$0.00" },
+        ].map((s) => (
+          <div key={s.label}>
+            <div className="text-xs text-white/30 mb-0.5">{s.label}</div>
+            <div className="text-xl font-display text-white/80">{s.val}</div>
           </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="flex-1 glass rounded-xl border border-white/10 p-4 flex flex-col gap-2">
+      <div className="text-[9px] font-display tracking-widest text-teal uppercase">Holdings</div>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <Briefcase size={24} className="mx-auto text-white/10 mb-2" />
+          <div className="text-xs text-white/40">No holdings found</div>
+          <div className="text-[10px] text-white/20 mt-1">Connect brokerage to see insights</div>
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+);
 
-function TabPlaceholder({ label }) {
-  return (
-    <div className="flex-1 glass rounded-xl border border-white/10 flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-sm text-white/30">{label}</div>
-        <div className="text-[10px] text-white/20 mt-1 uppercase tracking-widest">Coming soon</div>
-      </div>
+const TabPlaceholder = ({ label }) => (
+  <div className="flex-1 glass rounded-xl border border-white/10 flex items-center justify-center">
+    <div className="text-center">
+      <div className="text-sm text-white/30">{label}</div>
+      <div className="text-[10px] text-white/20 mt-1 uppercase tracking-widest">Coming soon</div>
     </div>
-  );
-}
+  </div>
+);
 
 export default function FinancePanel() {
   const [activeTab, setActiveTab] = useState(0);
