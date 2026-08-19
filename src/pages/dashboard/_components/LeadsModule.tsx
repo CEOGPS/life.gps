@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UserPlus, Filter, MoreVertical, X } from "lucide-react";
 import { usePersistentState } from "@/lib/usePersistentState.ts";
+import { supabase } from "@/lib/supabaseClient.ts";
 
 type Lead = { id: string; name: string; source: string; addedAt: string };
 
@@ -13,30 +14,81 @@ export default function LeadsModule() {
   const [name, setName] = useState("");
   const [source, setSource] = useState("Manual");
 
-  const visible = leads.filter((l) =>
-    l.name.toLowerCase().includes(filter.toLowerCase()),
-  );
+  // Sync local state with Supabase CRM contacts table
+  const syncLeads = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("id, full_name, company, created_at")
+        .order("created_at", { ascending: false });
 
-  const addLead = () => {
-    if (!name.trim()) return;
-    setLeads([
-      {
-        id: crypto.randomUUID(),
-        name: name.trim(),
-        source,
-        addedAt: new Date().toISOString(),
-      },
-      ...leads,
-    ]);
-    setName("");
-    setAdding(false);
+      if (error) throw error;
+
+      if (data) {
+        const normalized = data.map(c => ({
+          id: c.id,
+          name: c.full_name,
+          source: c.company || "Unknown",
+          addedAt: c.created_at,
+        }));
+        setLeads(normalized);
+      }
+    } catch (e) {
+      console.error("[LeadsModule] sync failed:", e);
+    }
   };
 
-  const removeLead = (id: string) => setLeads(leads.filter((l) => l.id !== id));
+  // Initial load
+  useState(() => {
+    syncLeads();
+  });
+
+  const visible = leads.filter((l) =>
+    l.name?.toLowerCase().includes(filter.toLowerCase()),
+  );
+
+  const addLead = async () => {
+    if (!name.trim()) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .insert({
+          full_name: name.trim(),
+          company: source,
+        })
+        .select();
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        const newLead = {
+          id: data[0].id,
+          name: data[0].full_name,
+          source: data[0].company,
+          addedAt: data[0].created_at,
+        };
+        setLeads([newLead, ...leads]);
+      }
+      setName("");
+      setAdding(false);
+    } catch (e) {
+      console.error("[LeadsModule] add lead failed:", e);
+    }
+  };
+
+  const removeLead = async (id: string) => {
+    try {
+      const { error } = await supabase.from("contacts").delete().eq("id", id);
+      if (error) throw error;
+      setLeads(leads.filter((l) => l.id !== id));
+    } catch (e) {
+      console.error("[LeadsModule] remove lead failed:", e);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      {/* Filters */}
       <div className="flex items-center gap-2">
         <div className="flex-1 h-6 px-2 rounded bg-white/4 border border-white/6 flex items-center gap-1.5">
           <Filter size={9} className="text-white/20" />
@@ -85,7 +137,6 @@ export default function LeadsModule() {
         </div>
       )}
 
-      {/* Leads list / empty state */}
       <div className="flex-1 overflow-y-auto">
         {visible.length === 0 ? (
           <div className="h-full flex items-center justify-center">
@@ -106,7 +157,7 @@ export default function LeadsModule() {
                 key={l.id}
                 className="flex items-center justify-between px-2 py-1.5 rounded bg-white/4 border border-white/6"
               >
-                <div>
+                <div >
                   <div className="text-[11px] text-white/70">{l.name}</div>
                   <div className="text-[9px] text-white/25">{l.source}</div>
                 </div>
@@ -122,7 +173,6 @@ export default function LeadsModule() {
         )}
       </div>
 
-      {/* Source labels */}
       <div className="flex gap-1.5 flex-wrap border-t border-white/5 pt-2">
         {SOURCES.map((s) => (
           <button

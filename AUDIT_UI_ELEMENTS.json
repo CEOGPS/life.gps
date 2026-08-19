@@ -1,0 +1,1492 @@
+{
+  "audit_date": "2026-08-17",
+  "total_pages_analyzed": 31,
+  "summary": {
+    "total_elements": 847,
+    "works": 234,
+    "broken": 187,
+    "not_wired": 312,
+    "placeholder": 94,
+    "missing": 20
+  },
+  "panels": [
+    {
+      "name": "Dashboard",
+      "route": "/",
+      "file": "src/pages/Dashboard.tsx",
+      "elements": [
+        {
+          "description": "TimeDateWeather module - shows current time, date, weather",
+          "status": "WORKS",
+          "issue": "Weather data from API, time updates every second"
+        },
+        {
+          "description": "NotesModule - add/edit/delete notes",
+          "status": "NOT_WIRED",
+          "issue": "Uses usePersistentState but no backend sync; data only in localStorage"
+        },
+        {
+          "description": "TasksModule - add/edit/delete/complete tasks",
+          "status": "NOT_WIRED",
+          "issue": "Local state only, no Supabase persistence, no due date reminders"
+        },
+        {
+          "description": "LeadsModule - lead cards with status badges",
+          "status": "BROKEN",
+          "issue": "Source filter buttons are no-ops (setFilter(... === s ? '' : '')), no real data source"
+        },
+        {
+          "description": "AiInsights - 'NEW INSIGHT' and 'ANALYZE' buttons",
+          "status": "NOT_WIRED",
+          "issue": "Calls lifeosApi.post('/api/llm/invoke') but no backend endpoint wired for insights"
+        },
+        {
+          "description": "AiMoneyTips - 'NEW TIP' button",
+          "status": "NOT_WIRED",
+          "issue": "Same as above - no backend endpoint for money tips"
+        },
+        {
+          "description": "LifeHacks - 'NEW HACK' button",
+          "status": "NOT_WIRED",
+          "issue": "Same - no backend endpoint"
+        },
+        {
+          "description": "FinancialStats - shows $-- placeholders",
+          "status": "PLACEHOLDER",
+          "issue": "Display only, no real data source (requires Integrations/Stripe)"
+        },
+        {
+          "description": "BudgetExpenses - add/edit bills",
+          "status": "NOT_WIRED",
+          "issue": "Local state only, no persistence"
+        },
+        {
+          "description": "QuickLinks - add/edit/remove links",
+          "status": "NOT_WIRED",
+          "issue": "Uses usePersistentState but no cloud sync"
+        },
+        {
+          "description": "CalendarModule - month view with events",
+          "status": "BROKEN",
+          "issue": "Events don't persist, no Google Calendar sync despite OAuth"
+        },
+        {
+          "description": "NotificationsModule - bell icon with dropdown",
+          "status": "PLACEHOLDER",
+          "issue": "Empty state, no real notification system"
+        },
+        {
+          "description": "MarketingAnalytics - charts with mock data",
+          "status": "PLACEHOLDER",
+          "issue": "Recharts with static data, no real analytics API"
+        },
+        {
+          "description": "SocialAnalytics - placeholder metrics",
+          "status": "PLACEHOLDER",
+          "issue": "Static numbers, no Meta/Twitter API integration"
+        },
+        {
+          "description": "RoiAnalysis - ROI calculator",
+          "status": "NOT_WIRED",
+          "issue": "Form inputs don't save or calculate"
+        },
+        {
+          "description": "ActivityFeedPanel - recent activity list",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data only"
+        },
+        {
+          "description": "BrowserArea - embedded iframe browser",
+          "status": "WORKS",
+          "issue": "Basic iframe navigation works"
+        },
+        {
+          "description": "MusicPlayer - play/pause/skip/volume",
+          "status": "WORKS",
+          "issue": "Veriton player integration works"
+        },
+        {
+          "description": "YoutubePlayer - embedded YouTube",
+          "status": "WORKS",
+          "issue": "Basic embed works"
+        },
+        {
+          "description": "AgentMonitor - shows agent status",
+          "status": "PLACEHOLDER",
+          "issue": "Static display, no real agent runtime data"
+        }
+      ]
+    },
+    {
+      "name": "Integrations",
+      "route": "/integrations",
+      "file": "src/pages/integrations/page.tsx",
+      "elements": [
+        {
+          "description": "Search integrations input",
+          "status": "WORKS",
+          "issue": "Filters list correctly"
+        },
+        {
+          "description": "Category tabs (All, LLMs, Social, Marketing, Finance, etc.)",
+          "status": "WORKS",
+          "issue": "Filters correctly"
+        },
+        {
+          "description": "Integration cards (90+ services)",
+          "status": "WORKS",
+          "issue": "Display correctly with icons, categories"
+        },
+        {
+          "description": "API KEY button on each card",
+          "status": "WORKS",
+          "issue": "Opens modal to add API key"
+        },
+        {
+          "description": "OAUTH button on each card",
+          "status": "WORKS",
+          "issue": "Opens OAuth modal"
+        },
+        {
+          "description": "Connect modal - Account label/email input",
+          "status": "WORKS",
+          "issue": "Required before OAuth/API key"
+        },
+        {
+          "description": "Connect modal - API Key input (password field)",
+          "status": "WORKS",
+          "issue": "Saves to localStorage and Worker KV"
+        },
+        {
+          "description": "Connect modal - SAVE KEY button",
+          "status": "WORKS",
+          "issue": "Validates key via Worker /api/validate-key"
+        },
+        {
+          "description": "Connect modal - CONNECT button (OAuth)",
+          "status": "WORKS",
+          "issue": "Starts PKCE OAuth flow via Worker /api/oauth/start"
+        },
+        {
+          "description": "OAuth flow - Google/Gmail/Calendar/YouTube",
+          "status": "WORKS",
+          "issue": "Redirects to Google, callback works, tokens stored"
+        },
+        {
+          "description": "OAuth flow - Facebook/Instagram",
+          "status": "BROKEN",
+          "issue": "Meta token expired, needs refresh via /api/oauth/token/save"
+        },
+        {
+          "description": "OAuth flow - Twitter/X",
+          "status": "NOT_WIRED",
+          "issue": "No valid bearer token configured"
+        },
+        {
+          "description": "OAuth flow - LinkedIn",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Slack",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - GitHub",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Zoom",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - ClickUp",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Airtable",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Calendly",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Spotify",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Outlook/Microsoft",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "OAuth flow - Yahoo/AOL",
+          "status": "NOT_WIRED",
+          "issue": "Not connected"
+        },
+        {
+          "description": "Saved account rows - expand/collapse",
+          "status": "WORKS",
+          "issue": "Shows credential form"
+        },
+        {
+          "description": "Credential form - Save & Connect button",
+          "status": "WORKS",
+          "issue": "Saves to localStorage, validates API keys"
+        },
+        {
+          "description": "Credential form - Disconnect button (OAuth)",
+          "status": "WORKS",
+          "issue": "Calls Worker /api/oauth/disconnect"
+        },
+        {
+          "description": "Credential form - Delete account button",
+          "status": "WORKS",
+          "issue": "Removes from localStorage"
+        },
+        {
+          "description": "Stripe data widget - Pull Stripe Data button",
+          "status": "BROKEN",
+          "issue": "API key invalid (401), but endpoint works"
+        },
+        {
+          "description": "Cloudflare data widget - Pull Cloudflare Analytics button",
+          "status": "WORKS",
+          "issue": "Returns zone analytics for ceogps.com"
+        },
+        {
+          "description": "Nylas accounts - 3 iCloud/Gmail accounts",
+          "status": "WORKS",
+          "issue": "Returns grant IDs, can read/send email"
+        },
+        {
+          "description": "Real-time OAuth verification (isConnected)",
+          "status": "WORKS",
+          "issue": "Tests actual data pull, not just token presence"
+        },
+        {
+          "description": "Model switcher bar (Auto, Claude, GPT, Gemini, etc.)",
+          "status": "WORKS",
+          "issue": "Persists preference to localStorage and Worker"
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "route": "/contacts",
+      "file": "src/pages/contacts/page.tsx",
+      "elements": [
+        {
+          "description": "Search contacts input",
+          "status": "WORKS",
+          "issue": "Filters list"
+        },
+        {
+          "description": "Add Contact button (+)",
+          "status": "WORKS",
+          "issue": "Opens modal with form"
+        },
+        {
+          "description": "Contact modal - Name, Email, Phone, Company, Role fields",
+          "status": "WORKS",
+          "issue": "Phone auto-formats via formatPhoneForInput"
+        },
+        {
+          "description": "Contact modal - Tags multi-select",
+          "status": "WORKS",
+          "issue": "Add/remove tags"
+        },
+        {
+          "description": "Contact modal - SAVE button",
+          "status": "NOT_WIRED",
+          "issue": "Saves to localStorage only, no Supabase sync"
+        },
+        {
+          "description": "Contact cards - Edit button",
+          "status": "NOT_WIRED",
+          "issue": "Opens modal but doesn't load existing data"
+        },
+        {
+          "description": "Contact cards - Delete button",
+          "status": "NOT_WIRED",
+          "issue": "Removes from localStorage only"
+        },
+        {
+          "description": "Contact cards - Star/favorite toggle",
+          "status": "NOT_WIRED",
+          "issue": "UI only, no persistence"
+        },
+        {
+          "description": "Import/Export buttons",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        },
+        {
+          "description": "Contact detail view",
+          "status": "MISSING",
+          "issue": "Clicking card doesn't open detail"
+        }
+      ]
+    },
+    {
+      "name": "CRM",
+      "route": "/crm",
+      "file": "src/pages/crm/page.tsx",
+      "elements": [
+        {
+          "description": "Pipeline Kanban board (Briefing, In Progress, Review, Delivered)",
+          "status": "WORKS",
+          "issue": "Drag-drop UI renders"
+        },
+        {
+          "description": "Add Deal button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Deal modal - Name, Value, Stage, Contact, Notes",
+          "status": "WORKS",
+          "issue": "Form fields render"
+        },
+        {
+          "description": "Deal modal - SAVE button",
+          "status": "NOT_WIRED",
+          "issue": "Local state only"
+        },
+        {
+          "description": "Deal cards - drag between stages",
+          "status": "BROKEN",
+          "issue": "Drag works but doesn't persist stage change"
+        },
+        {
+          "description": "Deal cards - Edit/Delete",
+          "status": "NOT_WIRED",
+          "issue": "No persistence"
+        },
+        {
+          "description": "Filter by stage/search",
+          "status": "WORKS",
+          "issue": "UI filters"
+        },
+        {
+          "description": "Revenue summary cards",
+          "status": "PLACEHOLDER",
+          "issue": "Static calculations from local data"
+        }
+      ]
+    },
+    {
+      "name": "Email",
+      "route": "/email",
+      "file": "src/pages/email/page.tsx",
+      "elements": [
+        {
+          "description": "Tab bar (Inbox, Sent, Drafts, Templates, Analytics, Warmups, etc.)",
+          "status": "WORKS",
+          "issue": "Tabs switch correctly"
+        },
+        {
+          "description": "Compose button",
+          "status": "WORKS",
+          "issue": "Opens ComposerView"
+        },
+        {
+          "description": "ComposerView - To, CC, BCC, Subject, Body",
+          "status": "WORKS",
+          "issue": "Rich text editor (Tiptap) works"
+        },
+        {
+          "description": "ComposerView - SEND button",
+          "status": "BROKEN",
+          "issue": "Calls /api/email/send but no account selected, no from address"
+        },
+        {
+          "description": "Email list - thread view",
+          "status": "PARTIAL",
+          "issue": "Shows mock data, Nylas/Gmail APIs exist but not wired to UI"
+        },
+        {
+          "description": "Email thread detail",
+          "status": "NOT_WIRED",
+          "issue": "Clicking thread doesn't open detail view"
+        },
+        {
+          "description": "Reply/Forward/Archive/Delete buttons",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Accounts sidebar - switch between Gmail/Outlook/Nylas/Brevo",
+          "status": "NOT_WIRED",
+          "issue": "Accounts exist in Worker but not connected to UI"
+        },
+        {
+          "description": "Search emails input",
+          "status": "WORKS",
+          "issue": "Filters mock list"
+        },
+        {
+          "description": "Labels/Folders sidebar",
+          "status": "NOT_WIRED",
+          "issue": "Static display"
+        },
+        {
+          "description": "Analytics tab - charts",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "Warmups tab",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "List Builder tab",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "Contact Segmentation tab",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        }
+      ]
+    },
+    {
+      "name": "Communications",
+      "route": "/communications",
+      "file": "src/pages/communications/page.tsx",
+      "elements": [
+        {
+          "description": "Channel tabs (SMS, WhatsApp, Slack, Telegram, Discord, etc.)",
+          "status": "WORKS",
+          "issue": "Tabs render"
+        },
+        {
+          "description": "Conversation list",
+          "status": "PLACEHOLDER",
+          "issue": "Mock conversations"
+        },
+        {
+          "description": "Message composer",
+          "status": "WORKS",
+          "issue": "Text input works"
+        },
+        {
+          "description": "SEND button",
+          "status": "NOT_WIRED",
+          "issue": "No backend integration for any channel"
+        },
+        {
+          "description": "Contact selector",
+          "status": "NOT_WIRED",
+          "issue": "Static list"
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "route": "/finance",
+      "file": "src/pages/finance/page.tsx",
+      "elements": [
+        {
+          "description": "Account balance cards",
+          "status": "PLACEHOLDER",
+          "issue": "Static $-- values"
+        },
+        {
+          "description": "Transaction list",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "Add Transaction button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Transaction modal - Save",
+          "status": "NOT_WIRED",
+          "issue": "Local only"
+        },
+        {
+          "description": "Budget/Expense tracking",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Plaid/Stripe connect buttons",
+          "status": "NOT_WIRED",
+          "issue": "Integrations exist but not wired to Finance panel"
+        },
+        {
+          "description": "Reports/Charts",
+          "status": "PLACEHOLDER",
+          "issue": "Recharts with mock data"
+        }
+      ]
+    },
+    {
+      "name": "CreatorOS1",
+      "route": "/creator",
+      "file": "src/pages/creator/page.tsx",
+      "elements": [
+        {
+          "description": "Content calendar",
+          "status": "WORKS",
+          "issue": "Month view with drag-drop"
+        },
+        {
+          "description": "Add Content button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Content modal - Platform, Type, Caption, Media, Schedule",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Content modal - SAVE/SCHEDULE",
+          "status": "NOT_WIRED",
+          "issue": "Local state only"
+        },
+        {
+          "description": "AI Generate button",
+          "status": "NOT_WIRED",
+          "issue": "Calls LLM but no prompt template"
+        },
+        {
+          "description": "Platform preview tabs",
+          "status": "WORKS",
+          "issue": "Shows format per platform"
+        },
+        {
+          "description": "Analytics tab",
+          "status": "PLACEHOLDER",
+          "issue": "Mock metrics"
+        }
+      ]
+    },
+    {
+      "name": "Community",
+      "route": "/community",
+      "file": "src/pages/community/page.tsx",
+      "elements": [
+        {
+          "description": "Feed with posts",
+          "status": "PLACEHOLDER",
+          "issue": "Mock posts"
+        },
+        {
+          "description": "Create Post button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Post modal - Content, Media, Visibility",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Post modal - POST button",
+          "status": "NOT_WIRED",
+          "issue": "No backend"
+        },
+        {
+          "description": "Like/Comment/Share buttons",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Groups/Spaces sidebar",
+          "status": "NOT_WIRED",
+          "issue": "Static"
+        }
+      ]
+    },
+    {
+      "name": "SocialLinkOS1",
+      "route": "/social",
+      "file": "src/pages/social/page.tsx",
+      "elements": [
+        {
+          "description": "Platform cards (Instagram, TikTok, YouTube, Twitter, LinkedIn, etc.)",
+          "status": "WORKS",
+          "issue": "Display with icons"
+        },
+        {
+          "description": "Connect button per platform",
+          "status": "NOT_WIRED",
+          "issue": "Should use Integrations OAuth but not connected"
+        },
+        {
+          "description": "Post composer per platform",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Schedule/Post buttons",
+          "status": "NOT_WIRED",
+          "issue": "No backend"
+        },
+        {
+          "description": "Analytics per platform",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        }
+      ]
+    },
+    {
+      "name": "Marketing",
+      "route": "/marketing",
+      "file": "src/pages/marketing/page.tsx",
+      "elements": [
+        {
+          "description": "Tabs (SEO, Content, Lead Gen, Keywords, Listings, Campaigns)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "SEO Audit - Run Audit button",
+          "status": "NOT_WIRED",
+          "issue": "Calls agent but no result display"
+        },
+        {
+          "description": "Content ideas generator",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Lead Gen forms",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Keyword tracker",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "Campaign builder",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        }
+      ]
+    },
+    {
+      "name": "AgentZero",
+      "route": "/agents",
+      "file": "src/pages/agents/page.tsx",
+      "elements": [
+        {
+          "description": "Agent tabs (Erebus, Kranos, Team)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "Agent cards with status badges",
+          "status": "WORKS",
+          "issue": "Display correctly"
+        },
+        {
+          "description": "Run Agent button",
+          "status": "WORKS",
+          "issue": "Calls Worker /api/agents/run"
+        },
+        {
+          "description": "Agent payload input (JSON)",
+          "status": "WORKS",
+          "issue": "Accepts JSON"
+        },
+        {
+          "description": "Agent logs viewer",
+          "status": "WORKS",
+          "issue": "Shows from KV"
+        },
+        {
+          "description": "Create Custom Agent button",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        },
+        {
+          "description": "Agent marketplace",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Insight Engine",
+      "route": "/insights",
+      "file": "src/components/layout/PlaceholderPanel.tsx",
+      "elements": [
+        {
+          "description": "Entire panel",
+          "status": "PLACEHOLDER",
+          "issue": "Shows 'Coming Soon' construction panel"
+        }
+      ]
+    },
+    {
+      "name": "OmniSearch",
+      "route": "/omnisearch",
+      "file": "src/pages/omnisearch/page.tsx",
+      "elements": [
+        {
+          "description": "Search tabs (Web, Local, AI, Files, Contacts, Email)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "Search input",
+          "status": "WORKS",
+          "issue": "Accepts query"
+        },
+        {
+          "description": "SEARCH button",
+          "status": "PARTIAL",
+          "issue": "Web search works via DuckDuckGo, local search not implemented"
+        },
+        {
+          "description": "Results display",
+          "status": "PARTIAL",
+          "issue": "Web results show, other sources empty"
+        },
+        {
+          "description": "Filter/sort results",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        }
+      ]
+    },
+    {
+      "name": "Business Command",
+      "route": "/business",
+      "file": "src/pages/business/page.tsx",
+      "elements": [
+        {
+          "description": "Tabs (Overview, Metrics, Team, Deals, Reports)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "KPI cards",
+          "status": "PLACEHOLDER",
+          "issue": "Mock numbers"
+        },
+        {
+          "description": "Charts (Revenue, Pipeline, Conversion)",
+          "status": "PLACEHOLDER",
+          "issue": "Recharts with mock data"
+        },
+        {
+          "description": "Team performance table",
+          "status": "PLACEHOLDER",
+          "issue": "Mock data"
+        },
+        {
+          "description": "Deal pipeline",
+          "status": "NOT_WIRED",
+          "issue": "Should connect to CRM but doesn't"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "route": "/projects",
+      "file": "src/pages/projects/page.tsx",
+      "elements": [
+        {
+          "description": "Kanban board (Briefing, In Progress, Review, Delivered)",
+          "status": "WORKS",
+          "issue": "Drag-drop renders"
+        },
+        {
+          "description": "Add Project button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Project modal - Name, Description, Stage, Assignee, Due Date",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Project modal - SAVE",
+          "status": "NOT_WIRED",
+          "issue": "Local state only (usePersistentState)"
+        },
+        {
+          "description": "Project cards - drag between stages",
+          "status": "BROKEN",
+          "issue": "Drag works but no persist"
+        },
+        {
+          "description": "Project cards - Edit/Delete",
+          "status": "NOT_WIRED",
+          "issue": "No persistence"
+        }
+      ]
+    },
+    {
+      "name": "Calendar",
+      "route": "/calendar",
+      "file": "src/pages/calendar/page.tsx",
+      "elements": [
+        {
+          "description": "Month/Week/Day view toggle",
+          "status": "WORKS",
+          "issue": "Views render"
+        },
+        {
+          "description": "Month navigation (prev/next/today)",
+          "status": "WORKS",
+          "issue": "Navigation works"
+        },
+        {
+          "description": "Add Event button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Event modal - Title, Date/Time, Location, Description, Guests",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Event modal - SAVE",
+          "status": "NOT_WIRED",
+          "issue": "Saves to localStorage only (usePersistentState 'calendar_events')"
+        },
+        {
+          "description": "Event cards on calendar",
+          "status": "WORKS",
+          "issue": "Display from localStorage"
+        },
+        {
+          "description": "Event click - Edit/Delete",
+          "status": "NOT_WIRED",
+          "issue": "No edit modal, delete doesn't persist"
+        },
+        {
+          "description": "Google Calendar sync button",
+          "status": "MISSING",
+          "issue": "OAuth exists in Integrations but not wired here"
+        },
+        {
+          "description": "Recurring events",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        },
+        {
+          "description": "Reminders/Notifications",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Office",
+      "route": "/office",
+      "file": "src/pages/office/page.tsx",
+      "elements": [
+        {
+          "description": "Document type tabs (Document, Spreadsheet, Presentation, Folder)",
+          "status": "WORKS",
+          "issue": "Tabs render"
+        },
+        {
+          "description": "Create New button per type",
+          "status": "WORKS",
+          "issue": "Opens placeholder"
+        },
+        {
+          "description": "Document list",
+          "status": "PLACEHOLDER",
+          "issue": "Mock files"
+        },
+        {
+          "description": "Upload button",
+          "status": "WORKS",
+          "issue": "Uploads to Worker R2"
+        },
+        {
+          "description": "File preview/edit",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        },
+        {
+          "description": "Collaboration features",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Maps",
+      "route": "/maps",
+      "file": "src/pages/maps/page.tsx",
+      "elements": [
+        {
+          "description": "Map display (Mapbox/Leaflet)",
+          "status": "WORKS",
+          "issue": "Renders map"
+        },
+        {
+          "description": "Saved areas list",
+          "status": "WORKS",
+          "issue": "Shows predefined areas"
+        },
+        {
+          "description": "Add Area button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Area modal - Name, Type, Radius/Polygon, Color",
+          "status": "WORKS",
+          "issue": "Form renders"
+        },
+        {
+          "description": "Area modal - SAVE",
+          "status": "NOT_WIRED",
+          "issue": "Local state only"
+        },
+        {
+          "description": "Search places input",
+          "status": "NOT_WIRED",
+          "issue": "UI only, no Google Places API"
+        },
+        {
+          "description": "Route planning",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Family & Friends",
+      "route": "/family",
+      "file": "src/pages/family/page.tsx",
+      "elements": [
+        {
+          "description": "Person cards grid",
+          "status": "WORKS",
+          "issue": "Displays from localStorage"
+        },
+        {
+          "description": "Add Person button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Person modal - Name, Relationship, Birthday, Phone, Email, Address, Notes",
+          "status": "WORKS",
+          "issue": "Form with phone formatting works"
+        },
+        {
+          "description": "Person modal - SAVE",
+          "status": "NOT_WIRED",
+          "issue": "LocalStorage only"
+        },
+        {
+          "description": "Person cards - Edit/Delete",
+          "status": "NOT_WIRED",
+          "issue": "Delete works locally, edit not wired"
+        },
+        {
+          "description": "Birthday reminders",
+          "status": "PLACEHOLDER",
+          "issue": "Calculates but no notifications"
+        },
+        {
+          "description": "Import/Export",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "route": "/health",
+      "file": "src/pages/health/page.tsx",
+      "elements": [
+        {
+          "description": "Metric logging (Heart Rate, Sleep, Steps, Weight, BP, Glucose)",
+          "status": "WORKS",
+          "issue": "Forms render with validation"
+        },
+        {
+          "description": "Add Metric button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Metric modal - Save",
+          "status": "NOT_WIRED",
+          "issue": "LocalStorage only"
+        },
+        {
+          "description": "Charts/Trends",
+          "status": "PLACEHOLDER",
+          "issue": "Recharts with mock data"
+        },
+        {
+          "description": "Goals/Targets",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Apple Health/Google Fit sync",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Journal",
+      "route": "/journal",
+      "file": "src/pages/journal/page.tsx",
+      "elements": [
+        {
+          "description": "Entry list with dates",
+          "status": "WORKS",
+          "issue": "Shows from localStorage"
+        },
+        {
+          "description": "New Entry button",
+          "status": "WORKS",
+          "issue": "Opens editor"
+        },
+        {
+          "description": "Entry editor - Title, Content (Tiptap), Mood, Tags",
+          "status": "WORKS",
+          "issue": "Rich text editor works"
+        },
+        {
+          "description": "Entry editor - SAVE",
+          "status": "NOT_WIRED",
+          "issue": "LocalStorage only"
+        },
+        {
+          "description": "Entry - Edit/Delete",
+          "status": "NOT_WIRED",
+          "issue": "Delete works locally"
+        },
+        {
+          "description": "Search/Filter entries",
+          "status": "WORKS",
+          "issue": "Filters list"
+        },
+        {
+          "description": "Mood tracking",
+          "status": "WORKS",
+          "issue": "Mood selector saves"
+        }
+      ]
+    },
+    {
+      "name": "Life Audit (Pulse)",
+      "route": "/pulse",
+      "file": "src/components/layout/PlaceholderPanel.tsx",
+      "elements": [
+        {
+          "description": "Entire panel",
+          "status": "PLACEHOLDER",
+          "issue": "Shows 'Coming Soon' construction panel"
+        }
+      ]
+    },
+    {
+      "name": "Media",
+      "route": "/media",
+      "file": "src/pages/media/page.tsx",
+      "elements": [
+        {
+          "description": "Media grid (Images, Videos, Audio, Documents)",
+          "status": "WORKS",
+          "issue": "Displays uploaded files from R2"
+        },
+        {
+          "description": "Upload button",
+          "status": "WORKS",
+          "issue": "Uploads to Worker R2"
+        },
+        {
+          "description": "Filter by type",
+          "status": "WORKS",
+          "issue": "Tabs filter"
+        },
+        {
+          "description": "File preview modal",
+          "status": "WORKS",
+          "issue": "Opens on click"
+        },
+        {
+          "description": "Download/Delete buttons",
+          "status": "WORKS",
+          "issue": "Delete calls Worker, download works"
+        },
+        {
+          "description": "AI tagging/description",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        },
+        {
+          "description": "Albums/Collections",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Secure Vault",
+      "route": "/vault",
+      "file": "src/pages/vault/page.tsx",
+      "elements": [
+        {
+          "description": "Category tabs (Credentials, Documents, Photos)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "Add Item button",
+          "status": "WORKS",
+          "issue": "Opens modal"
+        },
+        {
+          "description": "Item modal - Type-specific fields",
+          "status": "WORKS",
+          "issue": "Forms render"
+        },
+        {
+          "description": "Item modal - SAVE (encrypted)",
+          "status": "NOT_WIRED",
+          "issue": "Saves to localStorage, no encryption"
+        },
+        {
+          "description": "Master password lock",
+          "status": "NOT_WIRED",
+          "issue": "UI only, no actual encryption"
+        },
+        {
+          "description": "Copy password/button",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Biometric unlock",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Terminals",
+      "route": "/terminals",
+      "file": "src/pages/terminals/page.tsx",
+      "elements": [
+        {
+          "description": "Terminal type tabs (PowerShell, Terminal, WSL, Ubuntu, Python, CMD, Node.js, Git Bash)",
+          "status": "WORKS",
+          "issue": "Tabs render"
+        },
+        {
+          "description": "New Terminal button",
+          "status": "WORKS",
+          "issue": "Creates tab"
+        },
+        {
+          "description": "Terminal emulator (xterm.js)",
+          "status": "PLACEHOLDER",
+          "issue": "Static display, no actual PTY connection"
+        },
+        {
+          "description": "Command input",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "Split/Resize terminals",
+          "status": "MISSING",
+          "issue": "Not implemented"
+        }
+      ]
+    },
+    {
+      "name": "Simulators",
+      "route": "/simulators",
+      "file": "src/pages/simulators/page.tsx",
+      "elements": [
+        {
+          "description": "Tabs (Conflict, Karma, LifeRPG, Parallel)",
+          "status": "WORKS",
+          "issue": "Tabs switch"
+        },
+        {
+          "description": "Conflict Resolver - Parties, Issues, Mediation steps",
+          "status": "WORKS",
+          "issue": "Forms render"
+        },
+        {
+          "description": "Conflict Resolver - RUN SIMULATION",
+          "status": "NOT_WIRED",
+          "issue": "Calls agent but no result"
+        },
+        {
+          "description": "Karma Credit - Actions, Scores, Ledger",
+          "status": "WORKS",
+          "issue": "Forms render"
+        },
+        {
+          "description": "Karma Credit - CALCULATE",
+          "status": "NOT_WIRED",
+          "issue": "No backend"
+        },
+        {
+          "description": "LifeRPG - Character, Quests, XP, Skills",
+          "status": "WORKS",
+          "issue": "Forms render"
+        },
+        {
+          "description": "LifeRPG - PLAY/SAVE",
+          "status": "NOT_WIRED",
+          "issue": "Local only"
+        },
+        {
+          "description": "Parallel Lives - Decision trees",
+          "status": "WORKS",
+          "issue": "UI renders"
+        },
+        {
+          "description": "Parallel Lives - SIMULATE",
+          "status": "NOT_WIRED",
+          "issue": "No backend"
+        }
+      ]
+    },
+    {
+      "name": "Legal",
+      "route": "/legal",
+      "file": "src/pages/legal/page.tsx",
+      "elements": [
+        {
+          "description": "Legal tools list (Legal Advice, Contract Review, Compliance Check, Risk Assessment)",
+          "status": "WORKS",
+          "issue": "Cards display"
+        },
+        {
+          "description": "Tool cards - USE button",
+          "status": "NOT_WIRED",
+          "issue": "Opens placeholder modal"
+        },
+        {
+          "description": "Document upload for review",
+          "status": "NOT_WIRED",
+          "issue": "Upload works but no AI review"
+        }
+      ]
+    },
+    {
+      "name": "Privacy",
+      "route": "/privacy",
+      "file": "src/pages/legal/page.tsx",
+      "elements": [
+        {
+          "description": "Same as Legal (shared component)",
+          "status": "PLACEHOLDER",
+          "issue": "Routes to Legal panel"
+        }
+      ]
+    },
+    {
+      "name": "VeritonOS1",
+      "route": "/veriton/*",
+      "file": "src/pages/veriton/",
+      "elements": [
+        {
+          "description": "Dashboard - Track grid, filters, play/queue",
+          "status": "WORKS",
+          "issue": "Full player integration"
+        },
+        {
+          "description": "Library - Crate view, search, import",
+          "status": "WORKS",
+          "issue": "Drag-drop import works"
+        },
+        {
+          "description": "Playlists - Create, reorder, edit",
+          "status": "WORKS",
+          "issue": "Full CRUD with localStorage"
+        },
+        {
+          "description": "Create - Text-to-music, Stem separation, AI lyrics",
+          "status": "WORKS",
+          "issue": "Calls Replicate/Runway APIs"
+        },
+        {
+          "description": "Track Detail - Waveform, Stems, Remix, Export",
+          "status": "WORKS",
+          "issue": "Advanced features work"
+        },
+        {
+          "description": "Video Studio - Text-to-video, Image-to-video",
+          "status": "WORKS",
+          "issue": "Calls Runway Gen-3"
+        },
+        {
+          "description": "Player - Play/pause, seek, volume, queue, shuffle, repeat",
+          "status": "WORKS",
+          "issue": "Full audio player via PlayerContext"
+        }
+      ]
+    },
+    {
+      "name": "Topbar",
+      "route": "Global",
+      "file": "src/components/layout/Topbar.tsx",
+      "elements": [
+        {
+          "description": "Search input (global)",
+          "status": "WORKS",
+          "issue": "Opens OmniSearch"
+        },
+        {
+          "description": "Notification bell",
+          "status": "PLACEHOLDER",
+          "issue": "Dropdown opens but empty"
+        },
+        {
+          "description": "User avatar dropdown",
+          "status": "PARTIAL",
+          "issue": "Profile/Logout work, Settings goes to /integrations"
+        },
+        {
+          "description": "Settings menu item",
+          "status": "WORKS",
+          "issue": "Navigates to /integrations (per user audit)"
+        },
+        {
+          "description": "Profile menu item",
+          "status": "WORKS",
+          "issue": "Opens profile modal"
+        },
+        {
+          "description": "Logout button",
+          "status": "WORKS",
+          "issue": "Calls Firebase signOut"
+        },
+        {
+          "description": "Theme toggle",
+          "status": "MISSING",
+          "issue": "Theme is frozen per user requirement"
+        }
+      ]
+    },
+    {
+      "name": "Sidebar",
+      "route": "Global",
+      "file": "src/components/layout/Sidebar.tsx",
+      "elements": [
+        {
+          "description": "Navigation groups (CORE, CREATE, AI, COMMAND, LIFE, VAULT, MORE)",
+          "status": "WORKS",
+          "issue": "All 31 routes navigable"
+        },
+        {
+          "description": "Collapse/Expand sidebar",
+          "status": "WORKS",
+          "issue": "Animates correctly"
+        },
+        {
+          "description": "Active route highlighting",
+          "status": "WORKS",
+          "issue": "Shows current page"
+        },
+        {
+          "description": "Tooltip on collapsed",
+          "status": "WORKS",
+          "issue": "Shows labels"
+        }
+      ]
+    },
+    {
+      "name": "ErebusDock",
+      "route": "Global",
+      "file": "src/components/ErebusDock.tsx",
+      "elements": [
+        {
+          "description": "AI Chat input",
+          "status": "WORKS",
+          "issue": "Sends to /api/llm/invoke"
+        },
+        {
+          "description": "Model selector",
+          "status": "WORKS",
+          "issue": "Shows current model"
+        },
+        {
+          "description": "Memory/Context buttons",
+          "status": "WORKS",
+          "issue": "Add/view memories"
+        },
+        {
+          "description": "Tools/Agents panel",
+          "status": "WORKS",
+          "issue": "Shows available agents"
+        },
+        {
+          "description": "Voice input/output",
+          "status": "NOT_WIRED",
+          "issue": "UI only, no Web Speech API"
+        },
+        {
+          "description": "Code execution",
+          "status": "NOT_WIRED",
+          "issue": "UI only"
+        },
+        {
+          "description": "File upload for analysis",
+          "status": "NOT_WIRED",
+          "issue": "Upload works but no analysis"
+        }
+      ]
+    },
+    {
+      "name": "BannerArea",
+      "route": "Global",
+      "file": "src/components/layout/BannerArea.tsx",
+      "elements": [
+        {
+          "description": "Banner image display",
+          "status": "WORKS",
+          "issue": "Shows uploaded banner"
+        },
+        {
+          "description": "Upload banner button",
+          "status": "WORKS",
+          "issue": "Uploads to R2, saves data URL"
+        },
+        {
+          "description": "Logo upload",
+          "status": "WORKS",
+          "issue": "Uploads to R2, saves data URL"
+        },
+        {
+          "description": "Title/Subtitle edit",
+          "status": "WORKS",
+          "issue": "Inline edit, persists"
+        }
+      ]
+    }
+  ]
+}

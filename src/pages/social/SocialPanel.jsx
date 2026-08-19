@@ -2421,15 +2421,13 @@ export default function SocialPanel() {
       setConnecting(id);
       (async () => {
         try {
-          const { verifier, challenge, method } = await generatePKCE();
+          // Worker generates PKCE and stores verifier in KV
+          // Client provides state for continuity tracking
           const state = `social:${id}:${Date.now()}`;
-          sessionStorage.setItem(`pkce_verifier_${state}`, verifier);
           const u = new URL(`${WORKER}/api/oauth/start`);
           u.searchParams.set("provider", id);
           u.searchParams.set("user_id", "social");
           u.searchParams.set("force", "1");
-          u.searchParams.set("code_challenge", challenge);
-          u.searchParams.set("code_challenge_method", method);
           u.searchParams.set("state", state);
           const popup = window.open(
             u.toString(),

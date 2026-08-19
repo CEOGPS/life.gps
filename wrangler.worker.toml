@@ -1,15 +1,15 @@
-name = "lifeos1"
+name = "lifeos1-api"
+main = "worker/index.js"
 compatibility_date = "2026-07-01"
-pages_build_output_dir = "dist"
 
 # KV Namespace for app state persistence
 kv_namespaces = [
-  { binding = "LIFEOS_KV", id = "lifeos_kv_id_placeholder" }
+  { binding = "LIFEOS_KV", id = "c7e7fb2195cc4397af43f41a06be7efb" }
 ]
 
 # R2 Bucket for file storage
 r2_buckets = [
-  { binding = "LIFEOS_R2", bucket_name = "lifeos-storage" }
+  { binding = "lifeos_uploads", bucket_name = "lifeos-uploads" }
 ]
 
 # Workers AI binding

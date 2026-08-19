@@ -392,19 +392,15 @@ async function startOAuthFlow(name, firebaseUser) {
   const left = window.screenX + (window.outerWidth - width) / 2;
   const top = window.screenY + (window.outerHeight - height) / 2;
 
-  // Use PKCE for secure OAuth2 in public client (SPA) - no client secret or manual API keys needed
-  const { verifier, challenge, method } = await generatePKCE();
+  // Worker generates PKCE and stores verifier in KV
+  // Client provides state for continuity tracking
   const state = `${uid}:${Date.now()}`;
-  sessionStorage.setItem(`pkce_verifier_${state}`, verifier);
-  sessionStorage.setItem(`pkce_state`, state);
 
   const u = new URL(`${WORKER_URL}/api/oauth/start`);
   u.searchParams.set("provider", cfg.provider);
   if (cfg.scope) u.searchParams.set("scope", cfg.scope);
   u.searchParams.set("user_id", uid);
   u.searchParams.set("force", "1");
-  u.searchParams.set("code_challenge", challenge);
-  u.searchParams.set("code_challenge_method", method);
   u.searchParams.set("state", state);
   window.open(
     u.toString(),
@@ -2518,6 +2514,8 @@ export default function IntegrationsPanel() {
         clickup: ["ClickUp"],
         airtable: ["Airtable"],
         calendly: ["Calendly"],
+        yahoo: ["Yahoo Mail"],
+        aol: ["AOL Mail"],
       };
 
       const names = providerMap[provider] || [];

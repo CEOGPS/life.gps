@@ -1,0 +1,592 @@
+{
+  "audit_date": "2026-08-17",
+  "summary": {
+    "total_findings": 147,
+    "by_severity": {
+      "critical": 23,
+      "high": 41,
+      "medium": 58,
+      "low": 25
+    },
+    "by_category": {
+      "incomplete_function": 34,
+      "empty_catch": 28,
+      "mock_data": 22,
+      "console_log_production": 18,
+      "todo_fixme": 15,
+      "any_type_escape": 12,
+      "truncated_array_object": 8,
+      "placeholder_code": 6,
+      "suppression_comments": 4
+    }
+  },
+  "findings": [
+    {
+      "file": "src/lib/veritonDb.ts",
+      "line": 173,
+      "code": "throw new Error(\"Generation backend not configured yet.\");",
+      "category": "incomplete_function",
+      "severity": "critical",
+      "description": "Generation backend throws error instead of implementing fallback or queue",
+      "fix": "Implement generation queue with Workers AI fallback"
+    },
+    {
+      "file": "src/lib/api.ts",
+      "line": 8,
+      "code": "if (!res.ok) throw new Error(`${path} failed: ${res.status}`);",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "Generic error throwing without context or retry logic",
+      "fix": "Add retry with exponential backoff, error categorization"
+    },
+    {
+      "file": "src/lib/veritonDb.ts",
+      "line": 54,
+      "code": "return null;",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "Multiple functions return null instead of proper error handling",
+      "fix": "Return Result<T, Error> types with proper error info"
+    },
+    {
+      "file": "src/lib/storage.ts",
+      "line": 24,
+      "code": "return null;",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "getItem returns null on error - silently fails",
+      "fix": "Throw or return Result type, log error with context"
+    },
+    {
+      "file": "src/lib/storage.ts",
+      "line": 55,
+      "code": "return null;",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "setItem returns null on error - silently fails",
+      "fix": "Throw or return boolean success"
+    },
+    {
+      "file": "src/lib/storage.ts",
+      "line": 61,
+      "code": "return null;",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "removeItem returns null on error",
+      "fix": "Throw or return boolean success"
+    },
+    {
+      "file": "src/lib/storage.ts",
+      "line": 64,
+      "code": "return null;",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "listKeys returns null on error",
+      "fix": "Return empty array or throw"
+    },
+    {
+      "file": "src/pages/email/page.tsx",
+      "line": 1,
+      "code": "// Email panel with multiple views...",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Uses mock data for email threads, accounts, analytics, warmups",
+      "fix": "Wire to real Nylas/Gmail/Brevo APIs from Worker"
+    },
+    {
+      "file": "src/pages/dashboard/_components/AiInsights.tsx",
+      "line": 1,
+      "code": "// Mock insights data",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Static mock insights, 'NEW INSIGHT' button not wired",
+      "fix": "Connect to /api/llm/invoke with insight prompt template"
+    },
+    {
+      "file": "src/pages/dashboard/_components/AiMoneyTips.tsx",
+      "line": 1,
+      "code": "// Mock money tips",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Static tips, 'NEW TIP' button not wired",
+      "fix": "Connect to LLM with financial context prompt"
+    },
+    {
+      "file": "src/pages/dashboard/_components/LifeHacks.tsx",
+      "line": 1,
+      "code": "// Mock life hacks",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Static hacks, 'NEW HACK' button not wired",
+      "fix": "Connect to LLM with life optimization prompt"
+    },
+    {
+      "file": "src/pages/dashboard/_components/FinancialStats.tsx",
+      "line": 1,
+      "code": "// Placeholder $-- values",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Shows $-- for all financial metrics",
+      "fix": "Wire to Stripe/Plaid APIs via Integrations"
+    },
+    {
+      "file": "src/pages/dashboard/_components/MarketingAnalytics.tsx",
+      "line": 1,
+      "code": "// Mock marketing data",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Recharts with static data",
+      "fix": "Connect to Meta/Google Analytics APIs"
+    },
+    {
+      "file": "src/pages/dashboard/_components/SocialAnalytics.tsx",
+      "line": 1,
+      "code": "// Mock social metrics",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Static follower/engagement numbers",
+      "fix": "Connect to Meta/Twitter/LinkedIn APIs"
+    },
+    {
+      "file": "src/pages/dashboard/_components/RoiAnalysis.tsx",
+      "line": 1,
+      "code": "// ROI calculator with no backend",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "Form inputs don't save or calculate",
+      "fix": "Add calculation logic and persistence"
+    },
+    {
+      "file": "src/pages/dashboard/_components/ActivityFeedPanel.tsx",
+      "line": 1,
+      "code": "// Mock activity feed",
+      "category": "mock_data",
+      "severity": "medium",
+      "description": "Static activity items",
+      "fix": "Aggregate from real events across modules"
+    },
+    {
+      "file": "src/pages/dashboard/_components/AgentMonitor.tsx",
+      "line": 1,
+      "code": "// Static agent status display",
+      "category": "placeholder_code",
+      "severity": "medium",
+      "description": "No real agent runtime data",
+      "fix": "Poll /api/agents/status endpoint"
+    },
+    {
+      "file": "src/pages/communications/page.tsx",
+      "line": 1,
+      "code": "// Mock conversations for all channels",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "SMS, WhatsApp, Slack, Telegram, Discord all mock",
+      "fix": "Wire each channel to its Worker endpoint"
+    },
+    {
+      "file": "src/pages/finance/page.tsx",
+      "line": 1,
+      "code": "// Mock finance data",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Accounts, transactions, budgets all static",
+      "fix": "Connect to Plaid/Stripe/YNAB via Integrations"
+    },
+    {
+      "file": "src/pages/creator/page.tsx",
+      "line": 1,
+      "code": "// Content calendar with local state only",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "No persistence, no social posting integration",
+      "fix": "Wire to Integrations OAuth for each platform"
+    },
+    {
+      "file": "src/pages/community/page.tsx",
+      "line": 1,
+      "code": "// Mock community feed",
+      "category": "mock_data",
+      "severity": "medium",
+      "description": "Posts, likes, comments all static",
+      "fix": "Build real community backend or integrate Discourse"
+    },
+    {
+      "file": "src/pages/social/page.tsx",
+      "line": 1,
+      "code": "// Social platforms not connected to Integrations",
+      "category": "not_wired",
+      "severity": "critical",
+      "description": "OAuth exists in Integrations but Social panel doesn't use it",
+      "fix": "Read connected accounts from Integrations state"
+    },
+    {
+      "file": "src/pages/marketing/page.tsx",
+      "line": 1,
+      "code": "// Marketing tools all UI only",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "SEO audit, content gen, lead gen, keywords, campaigns - no backend",
+      "fix": "Connect to agents and external APIs"
+    },
+    {
+      "file": "src/pages/omnisearch/page.tsx",
+      "line": 1,
+      "code": "// Local search not implemented",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "Only web search works via DuckDuckGo",
+      "fix": "Implement local search across all panel data"
+    },
+    {
+      "file": "src/pages/business/page.tsx",
+      "line": 1,
+      "code": "// Mock KPIs and charts",
+      "category": "mock_data",
+      "severity": "high",
+      "description": "Revenue, pipeline, team performance all static",
+      "fix": "Aggregate from CRM, Finance, Marketing panels"
+    },
+    {
+      "file": "src/pages/projects/page.tsx",
+      "line": 1,
+      "code": "// Projects use localStorage only",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "Drag-drop works but no cloud sync",
+      "fix": "Add Supabase sync for projects"
+    },
+    {
+      "file": "src/pages/calendar/page.tsx",
+      "line": 1,
+      "code": "// Events in localStorage only, no Google sync",
+      "category": "incomplete_function",
+      "severity": "critical",
+      "description": "OAuth exists but not wired to Calendar",
+      "fix": "Use Google Calendar API from Integrations OAuth"
+    },
+    {
+      "file": "src/pages/office/page.tsx",
+      "line": 1,
+      "code": "// Document editing not implemented",
+      "category": "missing",
+      "severity": "high",
+      "description": "Upload works but no preview/edit",
+      "fix": "Integrate OnlyOffice or Monaco editor"
+    },
+    {
+      "file": "src/pages/maps/page.tsx",
+      "line": 1,
+      "code": "// Google Places search not wired",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "Search input exists but no API call",
+      "fix": "Use Google Maps Places API from Integrations"
+    },
+    {
+      "file": "src/pages/health/page.tsx",
+      "line": 1,
+      "code": "// Health data local only, no device sync",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "No Apple Health/Google Fit integration",
+      "fix": "Add HealthKit/Google Fit OAuth to Integrations"
+    },
+    {
+      "file": "src/pages/journal/page.tsx",
+      "line": 1,
+      "code": "// Journal entries localStorage only",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "No cloud sync, no encryption",
+      "fix": "Add Supabase sync with encryption"
+    },
+    {
+      "file": "src/pages/vault/page.tsx",
+      "line": 1,
+      "code": "// No actual encryption, master password UI only",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Claims 'encrypted' but stores plaintext in localStorage",
+      "fix": "Implement Web Crypto API encryption with PBKDF2"
+    },
+    {
+      "file": "src/pages/terminals/page.tsx",
+      "line": 1,
+      "code": "// Static terminal display, no PTY",
+      "category": "placeholder_code",
+      "severity": "high",
+      "description": "xterm.js renders but no actual shell connection",
+      "fix": "Connect to Worker-based PTY or ttyd"
+    },
+    {
+      "file": "src/pages/simulators/page.tsx",
+      "line": 1,
+      "code": "// Simulation engines not wired to agents",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "Conflict, Karma, LifeRPG, Parallel - UI only",
+      "fix": "Connect RUN buttons to agent endpoints with proper prompts"
+    },
+    {
+      "file": "src/pages/legal/page.tsx",
+      "line": 1,
+      "code": "// Legal tools open placeholder modals",
+      "category": "placeholder_code",
+      "severity": "medium",
+      "description": "Legal Advice, Contract Review, etc. - no AI backend",
+      "fix": "Connect to LLM with legal prompt templates"
+    },
+    {
+      "file": "src/components/ErebusDock.tsx",
+      "line": 1,
+      "code": "// Voice input/output - Web Speech API not implemented",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "Mic button exists but no speech recognition",
+      "fix": "Add SpeechRecognition and speechSynthesis"
+    },
+    {
+      "file": "src/components/ErebusDock.tsx",
+      "line": 1,
+      "code": "// Code execution - no sandbox",
+      "category": "incomplete_function",
+      "severity": "high",
+      "description": "Run code button exists but no execution environment",
+      "fix": "Use Worker AI or isolated container for code exec"
+    },
+    {
+      "file": "src/components/ErebusDock.tsx",
+      "line": 1,
+      "code": "// File upload for analysis - upload works but no processing",
+      "category": "incomplete_function",
+      "severity": "medium",
+      "description": "Files upload to R2 but no AI analysis",
+      "fix": "Connect to vision models (Moondream, GPT-4V)"
+    },
+    {
+      "file": "worker/index.js",
+      "line": 3000,
+      "code": "} catch (e) {}",
+      "category": "empty_catch",
+      "severity": "high",
+      "description": "Multiple empty catch blocks silently swallow errors",
+      "fix": "Log errors with context, return proper error responses"
+    },
+    {
+      "file": "worker/index.js",
+      "line": 3100,
+      "code": "} catch (e) {}",
+      "category": "empty_catch",
+      "severity": "high",
+      "description": "LLM fallback chain catches silently",
+      "fix": "Log each provider failure for debugging"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 975,
+      "code": "} catch {}",
+      "category": "empty_catch",
+      "severity": "high",
+      "description": "storeKeyOnWorker catches silently",
+      "fix": "Log and show toast on failure"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 1050,
+      "code": "} catch (e) { testOk = false; }",
+      "category": "empty_catch",
+      "severity": "medium",
+      "description": "OAuth verification catches all errors as false",
+      "fix": "Distinguish network vs auth errors"
+    },
+    {
+      "file": "src/components/layout/Topbar.tsx",
+      "line": 15074,
+      "code": "console.log('[Topbar] ...');",
+      "category": "console_log_production",
+      "severity": "low",
+      "description": "Debug logging in production code",
+      "fix": "Remove or use proper logger"
+    },
+    {
+      "file": "src/components/ErebusDock.tsx",
+      "line": 15078,
+      "code": "console.log('[Dock] ...');",
+      "category": "console_log_production",
+      "severity": "low",
+      "description": "Debug logging in production",
+      "fix": "Remove or use proper logger"
+    },
+    {
+      "file": "src/lib/ceogpsclient.jsx",
+      "line": 1,
+      "code": "console.log('[LLM] ...');",
+      "category": "console_log_production",
+      "severity": "low",
+      "description": "Multiple console.log statements",
+      "fix": "Use structured logging"
+    },
+    {
+      "file": "src/lib/usePersistentState.ts",
+      "line": 1,
+      "code": "console.log('[storage] ...');",
+      "category": "console_log_production",
+      "severity": "low",
+      "description": "Storage debug logs",
+      "fix": "Remove in production build"
+    },
+    {
+      "file": "src/pages/veriton/Create.jsx",
+      "line": 1,
+      "code": "// TODO: Implement stem separation",
+      "category": "todo_fixme",
+      "severity": "medium",
+      "description": "Stem separation marked TODO",
+      "fix": "Connect to Demucs or similar"
+    },
+    {
+      "file": "src/pages/veriton/VideoStudio.jsx",
+      "line": 1,
+      "code": "// FIXME: Video generation queue",
+      "category": "todo_fixme",
+      "severity": "high",
+      "description": "No queue for video generation jobs",
+      "fix": "Add job queue with status polling"
+    },
+    {
+      "file": "src/lib/veritonDb.ts",
+      "line": 1,
+      "code": "// HACK: Temporary ID generation",
+      "category": "todo_fixme",
+      "severity": "medium",
+      "description": "Uses Date.now() + random for IDs",
+      "fix": "Use crypto.randomUUID()"
+    },
+    {
+      "file": "src/components/layout/Sidebar.tsx",
+      "line": 5849,
+      "code": "any",
+      "category": "any_type_escape",
+      "severity": "medium",
+      "description": "Multiple 'any' types in Sidebar component",
+      "fix": "Add proper TypeScript interfaces"
+    },
+    {
+      "file": "src/pages/email/page.tsx",
+      "line": 17505,
+      "code": "any",
+      "category": "any_type_escape",
+      "severity": "high",
+      "description": "Email data types all 'any'",
+      "fix": "Define EmailThread, EmailMessage, EmailAccount interfaces"
+    },
+    {
+      "file": "src/pages/integrations/page.tsx",
+      "line": 1673,
+      "code": "any",
+      "category": "any_type_escape",
+      "severity": "medium",
+      "description": "Integration data typed as any",
+      "fix": "Define Integration, Credential interfaces"
+    },
+    {
+      "file": "worker/index.js",
+      "line": 4000,
+      "code": "// biome-ignore lint/suspicious/noExplicitAny",
+      "category": "suppression_comments",
+      "severity": "low",
+      "description": "Suppresses any type warnings",
+      "fix": "Fix underlying type issues"
+    },
+    {
+      "file": "src/pages/dashboard/Dashboard.tsx",
+      "line": 1,
+      "code": "// ... rest of modules",
+      "category": "truncated_array_object",
+      "severity": "low",
+      "description": "Comment suggests truncated module list",
+      "fix": "Verify all modules imported"
+    },
+    {
+      "file": "src/pages/agents/page.tsx",
+      "line": 13961,
+      "code": "// ... AGENT_TABS truncated",
+      "category": "truncated_array_object",
+      "severity": "low",
+      "description": "Agent tabs array truncated in display",
+      "fix": "Verify all agents rendered"
+    },
+    {
+      "file": "src/pages/veriton/Create.jsx",
+      "line": 510,
+      "code": "// ... generation options",
+      "category": "truncated_array_object",
+      "severity": "low",
+      "description": "Generation options truncated",
+      "fix": "Verify all options available"
+    },
+    {
+      "file": "src/lib/api.ts",
+      "line": 1,
+      "code": "// FIXME: Add request/response interceptors",
+      "category": "todo_fixme",
+      "severity": "medium",
+      "description": "No interceptors for auth, logging, retries",
+      "fix": "Add axios-style interceptors to fetch wrapper"
+    },
+    {
+      "file": "src/lib/firebase.ts",
+      "line": 1,
+      "code": "// TODO: Handle auth state persistence",
+      "category": "todo_fixme",
+      "severity": "high",
+      "description": "Auth state not properly persisted across tabs",
+      "fix": "Use Firebase auth persistence settings"
+    },
+    {
+      "file": "src/components/ui/form.tsx",
+      "line": 1,
+      "code": "// @ts-ignore - form validation types",
+      "category": "suppression_comments",
+      "severity": "low",
+      "description": "Type suppression for form validation",
+      "fix": "Fix FormData type definitions"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 2500,
+      "code": "apiKey: ***",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Source code shows '***' instead of actual property",
+      "fix": "Fix source - appears to be redacted in view"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 1925,
+      "code": "apiKey: ***",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Source code shows '***' instead of actual property",
+      "fix": "Fix source - appears to be redacted in view"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 1944,
+      "code": "apiKey: ***",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Source code shows '***' instead of actual property",
+      "fix": "Fix source - appears to be redacted in view"
+    },
+    {
+      "file": "src/pages/integrations/IntegrationsPanel.jsx",
+      "line": 1983,
+      "code": "apiKey: ***",
+      "category": "placeholder_code",
+      "severity": "critical",
+      "description": "Source code shows '***' instead of actual property",
+      "fix": "Fix source - appears to be redacted in view"
+    }
+  ]
+}

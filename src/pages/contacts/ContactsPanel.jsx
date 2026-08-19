@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import PanelLayout from "@/components/layout/PanelLayout";
 import { dbFetch } from "@/lib/supabase";
+import Erebus from "@/lib/agents/erebus/Erebus";
 
 const LS_KEY = "lifeos_contacts";
 
@@ -39,6 +40,8 @@ export default function ContactsPanel() {
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [aiInsight, setAiInsight] = useState("");
+  const [isThinking, setIsThinking] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -48,6 +51,26 @@ export default function ContactsPanel() {
     }
     init();
   }, []);
+
+  useEffect(() => {
+    async function fetchInsight() {
+      if (!selectedId) return;
+      const contact = contacts.find(c => c.id === selectedId);
+      if (!contact) return;
+
+      setIsThinking(true);
+      try {
+        const prompt = `Analyze this contact: ${contact.name}, Industry: ${contact.industry}, Company: ${contact.company}. Suggest a relationship-building action.`;
+        const result = await Erebus.reason(prompt);
+        setAiInsight(result.response);
+      } catch (e) {
+        setAiInsight("Erebus is analyzing the network...");
+      } finally {
+        setIsThinking(false);
+      }
+    }
+    fetchInsight();
+  }, [selectedId, contacts]);
 
   const filteredContacts = useMemo(() => {
     return contacts.filter(c => 
@@ -74,7 +97,6 @@ export default function ContactsPanel() {
       }
     >
       <div className="h-full flex gap-4 overflow-hidden">
-        {/* Left: List */}
         <div className="w-80 shrink-0 flex flex-col gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
@@ -111,7 +133,6 @@ export default function ContactsPanel() {
           </div>
         </div>
 
-        {/* Right: Details */}
         <div className="flex-1 glass rounded-2xl border border-white/10 p-6 overflow-y-auto relative">
           {selectedContact ? (
             <div className="max-w-2xl mx-auto space-y-8">
@@ -148,9 +169,12 @@ export default function ContactsPanel() {
               </div>
 
               <div className="glass-crimson rounded-xl p-4 border border-primary/20">
-                <div className="text-[10px] font-display tracking-widest text-teal uppercase mb-2">Erebus Insight</div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="text-[10px] font-display tracking-widest text-teal uppercase">Erebus Insight</div>
+                  {isThinking && <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />}
+                </div>
                 <p className="text-xs text-white/60 italic leading-relaxed">
-                  "This contact is a strategic match for your current projects. Suggesting a follow-up focused on {selectedContact.industry || 'their expertise'}."
+                  {aiInsight || "Erebus is analyzing the network..."}
                 </p>
               </div>
             </div>

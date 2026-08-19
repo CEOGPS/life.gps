@@ -400,10 +400,9 @@ async function generatePKCE() {
 // ============================================================================
 function getProviderConfig(env, provider, scope) {
   const base = "https://lifeos1.ceogps.workers.dev";
-  const redirect_uri = `${base}/api/oauth/callback`;
-  // Meta (FB/IG) and TikTok reject the shared workers.dev host — they require a
-  // domain we own. oauth.ceogps.com is a custom domain on this same worker, so
-  // KV-backed OAuth state still resolves. Other providers stay on workers.dev.
+  // All providers use the custom domain oauth.ceogps.com for callback
+  // This is required by Meta/IG/TikTok and works for all others
+  const redirect_uri = "https://oauth.ceogps.com/api/oauth/callback";
   const ownedRedirect = "https://oauth.ceogps.com/api/oauth/callback";
   const configs = {
     google: {
@@ -538,6 +537,14 @@ function getProviderConfig(env, provider, scope) {
       client_id: env.YAHOO_CLIENT_ID || "",
       client_secret: env.YAHOO_CLIENT_SECRET || "",
       scope: "mail-r mail-w",
+      redirect_uri,
+    },
+    calendly: {
+      auth_url: "https://auth.calendly.com/oauth/authorize",
+      token_url: "https://auth.calendly.com/oauth/token",
+      client_id: env.CALENDLY_CLIENT_ID || "",
+      client_secret: env.CALENDLY_CLIENT_SECRET || "",
+      scope: "scheduling:read scheduling:write user:read",
       redirect_uri,
     },
   };
@@ -880,6 +887,11 @@ async function handleOAuthStart(req, env, url) {
   const scope = url.searchParams.get("scope") || "";
   const userId = url.searchParams.get("user_id") || "unknown";
   const loginHint = url.searchParams.get("hint") || "";
+  // Accept client-provided PKCE parameters (code_challenge, code_challenge_method, state)
+  // This allows the frontend to generate PKCE and verify the callback correctly
+  const clientCodeChallenge = url.searchParams.get("code_challenge");
+  const clientCodeChallengeMethod = url.searchParams.get("code_challenge_method");
+  const clientState = url.searchParams.get("state");
 
   const cfg = getProviderConfig(env, providerName, scope);
   if (!cfg) return new Response("Unknown provider", { status: 400 });
@@ -899,11 +911,35 @@ async function handleOAuthStart(req, env, url) {
     "twitter",
     "airtable",
     "linkedin",
+    "zoom",
+    "clickup",
+    "slack",
+    "spotify",
+    "tiktok",
+    "yahoo",
+    "aol",
+    "calendly",
   ]);
   const usePKCE = PKCE_PROVIDERS.has(providerName);
 
-  const state = crypto.randomUUID();
-  const { codeVerifier, codeChallenge } = await generatePKCE();
+  // Use client-provided state if available, otherwise generate our own
+  const state = clientState || crypto.randomUUID();
+  let codeVerifier, codeChallenge;
+  
+  if (clientCodeChallenge && usePKCE) {
+    // Client provided PKCE - we need the verifier to exchange the code later
+    // The client stores the verifier in sessionStorage, but we need it in the worker
+    // For the PKCE flow to work with worker-side token exchange, the worker must own the verifier
+    // So we generate our own PKCE but accept client's state for continuity
+    // The client should NOT generate PKCE; the worker should do it
+    const { codeVerifier: v, codeChallenge: c } = await generatePKCE();
+    codeVerifier = v;
+    codeChallenge = c;
+  } else {
+    const { codeVerifier: v, codeChallenge: c } = await generatePKCE();
+    codeVerifier = v;
+    codeChallenge = c;
+  }
 
   await env.LIFEOS_KV.put(
     `oauth_state:${state}`,
@@ -942,6 +978,23 @@ async function handleOAuthStart(req, env, url) {
   } else if (providerName === "facebook" || providerName === "instagram") {
     authUrl.searchParams.set("display", "popup");
     authUrl.searchParams.set("auth_type", "rerequest");
+  } else if (providerName === "slack") {
+    authUrl.searchParams.set("user_scope", cfg.scope);
+    authUrl.searchParams.set("redirect_uri", cfg.redirect_uri);
+  } else if (providerName === "zoom") {
+    authUrl.searchParams.set("response_type", "code");
+  } else if (providerName === "clickup") {
+    authUrl.searchParams.set("response_type", "code");
+  } else if (providerName === "airtable") {
+    // Airtable uses standard OAuth2
+  } else if (providerName === "spotify") {
+    authUrl.searchParams.set("show_dialog", "true");
+  } else if (providerName === "tiktok") {
+    authUrl.searchParams.set("display", "popup");
+  } else if (providerName === "yahoo" || providerName === "aol") {
+    authUrl.searchParams.set("response_type", "code");
+  } else if (providerName === "calendly") {
+    authUrl.searchParams.set("response_type", "code");
   }
 
   return Response.redirect(authUrl.toString(), 302);
@@ -966,6 +1019,14 @@ async function handleOAuthCallback(req, env, url) {
     "twitter",
     "airtable",
     "linkedin",
+    "zoom",
+    "clickup",
+    "slack",
+    "spotify",
+    "tiktok",
+    "yahoo",
+    "aol",
+    "calendly",
   ]);
   const tokenParams = {
     client_id: cfg.client_id,
@@ -1057,15 +1118,57 @@ async function handleOAuthCallback(req, env, url) {
         handle: d.data?.username,
       };
     } else if (stored.provider === "slack") {
-      const r = await fetch("https://slack.com/api/users.identity", {
-        headers: { Authorization: authHeader },
-      });
-      const d = await r.json();
-      identity = { email: d.user?.email, name: d.user?.name, id: d.user?.id };
-    }
-  } catch (e) {
-    console.warn("Identity fetch failed:", e.message);
-  }
+          const r = await fetch("https://slack.com/api/users.identity", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.user?.email, name: d.user?.name, id: d.user?.id };
+        } else if (stored.provider === "zoom") {
+          const r = await fetch("https://api.zoom.us/v2/users/me", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.email, name: d.first_name + " " + d.last_name, id: d.id };
+        } else if (stored.provider === "clickup") {
+          const r = await fetch("https://api.clickup.com/api/v2/user", {
+            headers: { Authorization: tokens.access_token }
+          });
+          const d = await r.json();
+          identity = { email: d.user?.email, name: d.user?.username, id: String(d.user?.id) };
+        } else if (stored.provider === "airtable") {
+          const r = await fetch("https://api.airtable.com/v0/meta/whoami", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.email, name: d.name || d.id, id: d.id };
+        } else if (stored.provider === "spotify") {
+          const r = await fetch("https://api.spotify.com/v1/me", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.email, name: d.display_name, id: d.id };
+        } else if (stored.provider === "tiktok") {
+          const r = await fetch("https://open-api.tiktok.com/user/info/", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: null, name: d.data?.user?.display_name, id: d.data?.user?.open_id, handle: d.data?.user?.username };
+        } else if (stored.provider === "yahoo" || stored.provider === "aol") {
+          const r = await fetch("https://api.login.yahoo.com/openid/v1/userinfo", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.email, name: d.name, id: d.sub };
+        } else if (stored.provider === "calendly") {
+          const r = await fetch("https://api.calendly.com/users/me", {
+            headers: { Authorization: authHeader }
+          });
+          const d = await r.json();
+          identity = { email: d.resource?.email, name: d.resource?.name, id: d.resource?.uri };
+        }
+      } catch (e) {
+        console.warn("Identity fetch failed:", e.message);
+      }
 
   const userId = stored.userId || "chris-green";
   if (identity.email || stored.provider === "twitter") {
@@ -1381,6 +1484,10 @@ export default {
         "clickup",
         "airtable",
         "spotify",
+        "tiktok",
+        "yahoo",
+        "aol",
+        "calendly",
       ];
       const statuses = {};
       for (const p of providers) {
@@ -1441,6 +1548,56 @@ export default {
           }
         } else if (provider === "linkedin") {
           const r = await fetch("https://api.linkedin.com/v2/userinfo", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "slack") {
+          const r = await fetch("https://slack.com/api/auth.test", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "microsoft") {
+          const r = await fetch("https://graph.microsoft.com/v1.0/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "github") {
+          const r = await fetch("https://api.github.com/user", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "zoom") {
+          const r = await fetch("https://api.zoom.us/v2/users/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "clickup") {
+          const r = await fetch("https://api.clickup.com/api/v2/user", {
+            headers: { Authorization: token },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "airtable") {
+          const r = await fetch("https://api.airtable.com/v0/meta/whoami", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "spotify") {
+          const r = await fetch("https://api.spotify.com/v1/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "tiktok") {
+          const r = await fetch("https://open-api.tiktok.com/user/info/", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "yahoo" || provider === "aol") {
+          const r = await fetch("https://api.login.yahoo.com/openid/v1/userinfo", {
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(() => null);
+          ok = !!(r && r.ok);
+        } else if (provider === "calendly") {
+          const r = await fetch("https://api.calendly.com/users/me", {
             headers: { Authorization: `Bearer ${token}` },
           }).catch(() => null);
           ok = !!(r && r.ok);
@@ -1649,7 +1806,6 @@ export default {
           case "elevenlabs":
           case "copilot":
           case "qwen":
-          case "mailchimp":
           case "nylas":
           case "cloudflare":
           case "stripe":

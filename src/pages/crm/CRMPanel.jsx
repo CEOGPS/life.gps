@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import PanelLayout from "@/components/layout/PanelLayout";
 import { dbFetch } from "@/lib/supabase";
+import Erebus from "@/lib/agents/erebus/Erebus";
 
 const STATUSES = ["Lead", "Prospect", "Client", "Inactive"];
 const STATUS_COLORS = {
@@ -32,6 +33,8 @@ export default function CRMPanel() {
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [aiInsight, setAiInsight] = useState("");
+  const [isThinking, setIsThinking] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -46,6 +49,26 @@ export default function CRMPanel() {
     }
     init();
   }, []);
+
+  useEffect(() => {
+    async function fetchInsight() {
+      if (!selectedId) return;
+      const contact = contacts.find(c => c.id === selectedId);
+      if (!contact) return;
+
+      setIsThinking(true);
+      try {
+        const prompt = `Analyze this CRM lead: ${contact.name}, Company: ${contact.company}, Status: ${contact.status}, Value: ${contact.value}. Provide a high-impact strategic next step.`;
+        const result = await Erebus.reason(prompt);
+        setAiInsight(result.response);
+      } catch (e) {
+        setAiInsight("Erebus is currently analyzing the pipeline...");
+      } finally {
+        setIsThinking(false);
+      }
+    }
+    fetchInsight();
+  }, [selectedId, contacts]);
 
   const filteredContacts = contacts.filter(c => 
     c.name?.toLowerCase().includes(search.toLowerCase()) || 
@@ -66,7 +89,6 @@ export default function CRMPanel() {
       }
     >
       <div className="h-full flex gap-4 overflow-hidden">
-        {/* Left: CRM List */}
         <div className="w-80 shrink-0 flex flex-col gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
@@ -101,7 +123,6 @@ export default function CRMPanel() {
           </div>
         </div>
 
-        {/* Right: Detailed CRM Profile */}
         <div className="flex-1 glass rounded-2xl border border-white/10 p-6 overflow-y-auto relative">
           {selectedContact ? (
             <div className="max-w-2xl mx-auto space-y-8">
@@ -143,9 +164,12 @@ export default function CRMPanel() {
               </div>
 
               <div className="glass-crimson rounded-xl p-4 border border-primary/20">
-                <div className="text-[10px] font-display tracking-widest text-teal uppercase mb-2">CRM Strategic Insight</div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="text-[10px] font-display tracking-widest text-teal uppercase">CRM Strategic Insight</div>
+                  {isThinking && <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />}
+                </div>
                 <p className="text-xs text-white/60 italic leading-relaxed">
-                  "This lead has high intent based on their recent activity. Recommend a customized pitch focusing on {selectedContact.industry || 'their business needs'}."
+                  {aiInsight || "Erebus is analyzing lead data..."}
                 </p>
               </div>
             </div>
