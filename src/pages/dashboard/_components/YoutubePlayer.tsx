@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { PlayCircle, Search, X, Pip, Volume2, VolumeX, SkipBack, SkipForward, RotateCcw } from "lucide-react";
+import { PlayCircle, Search, X, Monitor, Volume2, VolumeX, SkipBack, SkipForward, RotateCcw } from "lucide-react";
 
 interface YouTubeContextValue {
   embedSrc: string;
@@ -55,14 +55,7 @@ export default function YoutubePlayer() {
     }
     
     try {
-      // Using YouTube's search via RSS/JSONP alternative or embed search
-      // For now, we'll use a simple search approach via YouTube's oEmbed or search suggestions
-      // In production, you'd use YouTube Data API v3 with an API key
-      const response = await fetch(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&pbj=1`);
-      // This is a simplified approach - in reality you'd parse the initial data from YouTube's ytInitialData
-      // For now, we'll show a mock search or use a different approach
-      
-      // Alternative: Use YouTube's search suggestions
+      // Using YouTube's search suggestions
       const suggestResponse = await fetch(`https://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q=${encodeURIComponent(query)}`);
       const suggestData = await suggestResponse.json();
       const suggestions = suggestData[1] || [];
@@ -71,7 +64,7 @@ export default function YoutubePlayer() {
       const results = suggestions.slice(0, 8).map((suggestion: string, i: number) => ({
         id: `search-${i}-${Date.now()}`,
         title: suggestion,
-        thumbnail: `https://i.ytimg.com/vi/${suggestion.split(" ")[0]}/mqdefault.jpg`, // placeholder
+        thumbnail: `https://i.ytimg.com/vi/${suggestion.split(" ")[0]}/mqdefault.jpg`,
         channel: "YouTube"
       }));
       
@@ -102,11 +95,11 @@ export default function YoutubePlayer() {
     try {
       if (!isPiP) {
         // Request Picture-in-Picture
-        await iframeRef.current.requestPictureInPicture();
+        await (iframeRef.current as HTMLIFrameElement & { requestPictureInPicture?: () => Promise<void> }).requestPictureInPicture?.();
         setIsPiP(true);
       } else {
         // Exit Picture-in-Picture
-        await document.exitPictureInPicture();
+        await (document as Document & { exitPictureInPicture?: () => Promise<void> }).exitPictureInPicture?.();
         setIsPiP(false);
       }
     } catch (error) {
@@ -116,11 +109,6 @@ export default function YoutubePlayer() {
 
   const toggleMute = () => {
     setMuted(m => !m);
-  };
-
-  const toggleVolume = () => {
-    setMuted(false);
-    setVolume(v => v === 0 ? 1 : 0);
   };
 
   return (
@@ -140,12 +128,12 @@ export default function YoutubePlayer() {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter") handleSearch(e.target.value);
               }}
               placeholder="Search YouTube..."
-              className="w-full h-7 pl-8 pr-8 text-xs bg-white/4 border border-white/6 rounded text-white/70 placeholder:text-white/20 focus:outline-none focus:border-primary/40"
+              className="w-full h-7 pl-8 pr-8 text-xs bg-white/4 border border-white/6 rounded text-white/70 placeholder:text-white/20 focus:outline-none focus:border-primary/40""" 
             />
             {searchQuery && (
               <button
@@ -188,42 +176,50 @@ export default function YoutubePlayer() {
           </div>
         )}
 
-      {/* Player area */}
-      <div className="flex-1 rounded-lg overflow-hidden bg-black/60 border border-white/6 flex items-center justify-center min-h-[300px] relative">
-        {embedSrc ? (
-          <iframe
-            ref={iframeRef}
-            key={embedSrc}
-            src={embedSrc}
-            className="w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            onLoad={() => setIsLoading(false)}
-          />
-        ) : (
-          <div className="text-center px-3">
-            <div style={{fontSize: '24px'}}>▶️</div>
-            <div className="text-[11px] text-white/20">Loading YouTube channel...</div>
-          </div>
-        )}
+        {/* Player area */}
+        <div className="flex-1 rounded-lg overflow-hidden bg-black/60 border border-white/6 flex items-center justify-center min-h-[300px] relative">
+          {embedSrc ? (
+            <iframe
+              ref={iframeRef}
+              key={embedSrc}
+              src={embedSrc}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              onLoad={() => setIsLoading(false)}
+            />
+          ) : (
+            <div className="text-center px-3">
+              <div style={{fontSize: '24px'}}>▶️</div>
+              <div className="text-[11px] text-white/20">Loading YouTube channel...</div>
+            </div>
+          )}
 
-        {/* PiP & Controls overlay */}
-        <div className="absolute bottom-2 right-2 flex items-center gap-1">
-          <button
-            onClick={toggleMute}
-            className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
-            title={muted ? "Unmute" : "Mute"}
-          >
-            {muted ? <VolumeX size={12} /> : <Volume2 size={12} />}
-          </button>
-          <button
-            onClick={handlePiP}
-            className={`p-1.5 rounded bg-white/10 hover:bg-white/20 transition-colors ${isPiP ? "text-primary" : "text-white/70"}`}
-            title={isPiP ? "Exit Picture-in-Picture" : "Picture-in-Picture"}
-            disabled={!iframeRef.current}
-          >
-            <Pip size={12} />
-          </button>
+          {/* PiP & Controls overlay */}
+          <div className="absolute bottom-2 right-2 flex items-center gap-1">
+            <button
+              onClick={() => setMuted(m => !m)}
+              className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+              title={muted ? "Unmute" : "Mute"}
+            >
+              {muted ? <VolumeX size={12} /> : <Volume2 size={12} />}
+            </button>
+            <button
+              onClick={() => {
+                if (!iframeRef.current) return;
+                if (!isPiP) {
+                  iframeRef.current.requestPictureInPicture().then(() => setIsPiP(true)).catch(console.error);
+                } else {
+                  document.exitPictureInPicture().then(() => setIsPiP(false)).catch(console.error);
+                }
+              }}
+              className={`p-1.5 rounded bg-white/10 hover:bg-white/20 transition-colors ${isPiP ? "text-primary" : "text-white/70"}`}
+              title={isPiP ? "Exit Picture-in-Picture" : "Picture-in-Picture"}
+              disabled={!iframeRef.current}
+            >
+              <Monitor size={12} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
