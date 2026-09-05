@@ -1,74 +1,62 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { DefaultProviders } from "./components/providers/default.tsx";
+import { LifeOSDataProvider } from "./lib/LifeOSDataContext.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ErrorBoundary from "./components/ErrorBoundary.tsx";
 import AppLayout from "./components/layout/AppLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import PlaceholderPanel from "./components/layout/PlaceholderPanel.tsx";
-import MusicPanel from "./pages/music/page.tsx";
-import ContactsPanel from "./pages/contacts/page.tsx";
-import CrmPanel from "./pages/crm/page.tsx";
-import EmailPanel from "./pages/email/page.tsx";
-import CommunicationsPanel from "./pages/communications/page.tsx";
-import FinancePanel from "./pages/finance/page.tsx";
-import CreatorPanel from "./pages/creator/page.tsx";
-import AgentsPanel from "./pages/agents/page.tsx";
-import CommunityPanel from "./pages/community/page.tsx";
-import SocialPanel from "./pages/social/page.tsx";
-import MarketingPanel from "./pages/marketing/page.tsx";
-import CalendarPanel from "./pages/calendar/page.tsx";
-import FamilyPanel from "./pages/family/page.tsx";
-import HealthPanel from "./pages/health/page.tsx";
-import JournalPanel from "./pages/journal/page.tsx";
-import IntegrationsPanel from "./pages/integrations/page.tsx";
-import SimulatorsPanel from "./pages/simulators/page.tsx";
-import MediaPanel from "./pages/media/page.tsx";
-import TerminalsPanel from "./pages/terminals/page.tsx";
-import ProjectsPanel from "./pages/projects/page.tsx";
-import OfficePanel from "./pages/office/page.tsx";
-import MapsPanel from "./pages/maps/page.tsx";
-import BusinessCommandPanel from "./pages/business/page.tsx";
-import OmniSearchPanel from "./pages/omnisearch/page.tsx";
-import LegalPanel from "./pages/legal/page.tsx";
-import VaultPanel from "./pages/vault/page.tsx";
-import { PlayerProvider } from "./pages/veriton/lib/PlayerContext.jsx";
-import VeritonDashboard from "./pages/veriton/VeritonDashboard.jsx";
-import VeritonLibrary from "./pages/veriton/Library.jsx";
-import VeritonPlaylists from "./pages/veriton/Playlists.jsx";
-import VeritonCreate from "./pages/veriton/Create.jsx";
-import VeritonTrackDetail from "./pages/veriton/TrackDetail.jsx";
-import VeritonVideoStudio from "./pages/veriton/VideoStudio.jsx";
 
-function VeritonPanel() {
-  return (
-    <PlayerProvider>
-      <Routes>
-        <Route index element={<VeritonDashboard />} />
-        <Route path="library" element={<VeritonLibrary />} />
-        <Route path="playlists" element={<VeritonPlaylists />} />
-        <Route path="create" element={<VeritonCreate />} />
-        <Route path="track/:id" element={<VeritonTrackDetail />} />
-        <Route path="video-studio" element={<VeritonVideoStudio />} />
-      </Routes>
-    </PlayerProvider>
-  );
-}
+// ─── PANELS (flat structure) ───
+import MusicPanel from "./pages/music_MusicHub.jsx";
+import CreatorPanel from "./pages/creator/page.tsx";
+import ContactsPanel from "./pages/contacts_ContactsPanel.jsx";
+import CrmPanel from "./pages/crm_CRMPanel.jsx";
+import EmailPanel from "./pages/email_EmailPanel.jsx";
+import CommunicationsPanel from "./pages/communications_MessagesPanel.jsx";
+import FinancePanel from "./pages/finance_FinancePanel.jsx";
+import AgentsPanel from "./pages/agents_AgentsPanel.jsx";
+import CommunityPanel from "./pages/community_CommunityPanel.jsx";
+import SocialPanel from "./pages/social_SocialPanel.jsx";
+import SocialLinkOS1 from "./pages/social_SocialLinkOS1.jsx";
+import MarketingPanel from "./pages/marketing_MarketingPanel.jsx";
+import CalendarPanel from "./pages/calendar_CalendarPanel.jsx";
+import FamilyPanel from "./pages/family_FamilyPanel.jsx";
+import HealthPanel from "./pages/health_HealthPanel.jsx";
+import JournalPanel from "./pages/journal_JournalPanel.jsx";
+import IntegrationsPanel from "./pages/integrations_IntegrationsPanel.jsx";
+import SimulatorsPanel from "./pages/simulators.tsx";
+import MediaPanel from "./pages/media_MediaPanel.jsx";
+import TerminalsPanel from "./pages/terminals_TerminalPanel.jsx";
+import ProjectsPanel from "./pages/projects_ProjectsPanel.jsx";
+import OfficePanel from "./pages/office_KPIPanelUI.jsx";
+import MapsPanel from "./pages/maps_MapsPage.jsx";
+import BusinessCommandPanel from "./pages/business.tsx";
+import OmniSearchPanel from "./pages/omnisearch.tsx";
+import LegalPanel from "./pages/legal_LegalPage.jsx";
+import VaultPanel from "./pages/vault.tsx";
+
+
 
 export default function App() {
   return (
     <DefaultProviders>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Dashboard />} />
+      <LifeOSDataProvider>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <Routes>
+              <Route element={<AppLayout />}>
+              <Route path="/" element={<Dashboard />} />
             <Route path="/music" element={<MusicPanel />} />
             <Route path="/contacts" element={<ContactsPanel />} />
             <Route path="/crm" element={<CrmPanel />} />
             <Route path="/email" element={<EmailPanel />} />
             <Route path="/communications" element={<CommunicationsPanel />} />
             <Route path="/finance" element={<FinancePanel />} />
+                        <Route path="/community" element={<CommunityPanel />} />
             <Route path="/creator" element={<CreatorPanel />} />
-            <Route path="/community" element={<CommunityPanel />} />
             <Route path="/social" element={<SocialPanel />} />
+            <Route path="/sociallink" element={<SocialLinkOS1 />} />
             <Route path="/marketing" element={<MarketingPanel />} />
             {/* Events moved into the Calendar panel */}
             <Route path="/events" element={<CalendarPanel />} />
@@ -76,16 +64,7 @@ export default function App() {
             {/* Opportunity Engine folded into Community */}
             <Route path="/opportunity" element={<CommunityPanel />} />
             {/* AI Academy removed */}
-            <Route
-              path="/insights"
-              element={
-                <PlaceholderPanel
-                  name="Insight Engine"
-                  description="AI correlates data across all domains to reveal non-obvious insights and life hacks."
-                />
-              }
-            />
-            <Route path="/omnisearch" element={<OmniSearchPanel />} />
+                        <Route path="/omnisearch" element={<OmniSearchPanel />} />
             <Route path="/ceogps" element={<BusinessCommandPanel />} />
             <Route path="/business" element={<BusinessCommandPanel />} />
             <Route path="/projects" element={<ProjectsPanel />} />
@@ -108,8 +87,7 @@ export default function App() {
             />
             <Route path="/media" element={<MediaPanel />} />
             <Route path="/vault" element={<VaultPanel />} />
-            <Route path="/veriton/*" element={<VeritonPanel />} />
-            <Route path="/privacy" element={<LegalPanel />} />
+                                    <Route path="/privacy" element={<LegalPanel />} />
             <Route path="/legal" element={<LegalPanel />} />
             <Route path="/terminals" element={<TerminalsPanel />} />
             <Route path="/simulators" element={<SimulatorsPanel />} />
@@ -120,7 +98,9 @@ export default function App() {
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+        </ErrorBoundary>
+        </BrowserRouter>
+      </LifeOSDataProvider>
     </DefaultProviders>
   );
 }

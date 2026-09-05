@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import Icon from "@/components/lifeos/icons/Icon";
+import Icon from "@/components/lifeos/icons/BrandIcon";
 import VideoGeneratorUI from "./VideoGeneratorUI";
 import ImageStudioUI from "./ImageStudioUI";
 import WritingHubUI from "./WritingHubUI";

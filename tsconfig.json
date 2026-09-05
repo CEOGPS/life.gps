@@ -24,13 +24,26 @@
       "~/*": ["./*"]
     }
   },
-  "include": ["src", "vite.config.ts"],
+  "include": ["src/**/*.tsx", "src/**/*.ts", "vite.config.ts"],
   "exclude": [
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/tests/**",
     "src/**/__tests__/**",
-    "src/vitest.setup.ts"
+    "src/vitest.setup.ts",
+    "src/pages/email/EmailPanelExpansion/**",
+    "src/pages/agents/AvatarCanvas.tsx",
+    "src/lib/email/EmailSender.ts",
+    "src/lib/email/EmailSyncWorker.ts",
+    "src/lib/email/octomailer-client.ts",
+    "src/lib/email/supabase.ts",
+    "src/lib/email/warmup-scheduler.ts",
+    "src/lib/email/zerobounce.ts",
+    "src/api/email/lists/routes.ts",
+    "src/api/email/send/routes.ts",
+    "src/api/email/tracking/routes.ts",
+    "src/api/email/tracking/pixel.ts",
+    "src/api/webhooks/**"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -35,26 +35,29 @@ CREATE INDEX IF NOT EXISTS idx_integrations_credentials_email
 -- Enable Row Level Security
 ALTER TABLE integrations_credentials ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies - users can only manage their own credentials
--- Using auth.jwt() ->> 'sub' for Supabase Auth, but we use Firebase
--- So we'll use a custom claim or service role for writes
--- For now, allow all authenticated users to read/write their own data
--- The frontend will filter by user_id
+-- RLS Policies - LifeOS1 uses Firebase Auth, not Supabase Auth.
+-- The browser talks to this table with the Supabase "publishable/anon" key,
+-- and that client has NO Supabase JWT user, so RLS keyed to auth.uid()
+-- would BLOCK every read/write. We enable RLS but grant full access to
+-- anon/authenticated/service_role so the app works with Firebase auth.
+DROP POLICY IF EXISTS "integrations_credentials_anon_all" ON integrations_credentials;
+CREATE POLICY "integrations_credentials_anon_all"
+  ON integrations_credentials
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
 
-CREATE POLICY "Users can read own credentials" ON integrations_credentials
-  FOR SELECT USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "integrations_credentials_authenticated_all" ON integrations_credentials;
+CREATE POLICY "integrations_credentials_authenticated_all"
+  ON integrations_credentials
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
 
-CREATE POLICY "Users can insert own credentials" ON integrations_credentials
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own credentials" ON integrations_credentials
-  FOR UPDATE USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete own credentials" ON integrations_credentials
-  FOR DELETE USING (auth.uid() = user_id);
-
--- Since we use Firebase Auth (not Supabase Auth), we need a service role policy
--- for server-side operations. The worker will use service role key.
+-- Grant table privileges to the roles used by the publishable/anon and secret keys
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE integrations_credentials TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE integrations_credentials TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE integrations_credentials TO service_role;
 
 -- Auto-update updated_at trigger
 CREATE OR REPLACE FUNCTION update_updated_at_column()

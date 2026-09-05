@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap");
-@plugin "@tailwindcss/typography";
+/* Tailwind CSS v4 directives are processed by Tailwind and are not standard CSS. */
+/* stylelint-disable at-rule-no-unknown */
 
-@custom-variant dark (&:is(.dark *));
-
+/* Tailwind CSS v4 custom at-rule; keep this local suppression for CSS tooling. */
+/* stylelint-disable-next-line at-rule-no-unknown */
+/* css-languageserver-disable-next-line unknownAtRules */
 @theme inline {
   --font-sans: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Share Tech Mono", ui-monospace, monospace;
@@ -46,6 +48,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+/* css-languageserver-enable unknownAtRules */
 
 :root {
   --radius: 0.75rem;
@@ -131,13 +134,14 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   html,
   body {
     background: #000000;
-    @apply text-foreground;
+    color: var(--foreground);
     font-family: "Rajdhani", sans-serif;
     overflow: hidden;
   }
@@ -360,6 +364,9 @@
     oklch(0.55 0.22 20 / 0%) 360deg
   );
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

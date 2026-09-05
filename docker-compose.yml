@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # Local Ollama (Priority 1: Fastest, no API costs)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: lifeos-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - lifeos-net
+
+  # LifeOS AI Fallback Server
+  ai-fallback:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lifeos-ai-fallback
+    ports:
+      - "8000:8000"
+    environment:
+      # Ollama
+      - OLLAMA_BASE_URL=http://ollama:11434
+      
+      # NVIDIA NIM (if available)
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+      
+      # OpenRouter
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      
+      # Groq (Hermes)
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      
+      # Logging
+      - LOG_LEVEL=INFO
+    depends_on:
+      ollama:
+        condition: service_healthy
+    volumes:
+      - ./ai_fallback.py:/app/ai_fallback.py:ro
+      - ./main.py:/app/main.py:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - lifeos-net
+    restart: unless-stopped
+
+  # LifeOS Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: lifeos-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_WORKER_URL=${VITE_WORKER_URL}
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - VITE_SUPABASE_PUBLISHABLE_KEY=${VITE_SUPABASE_PUBLISHABLE_KEY}
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+    depends_on:
+      - ai-fallback
+    networks:
+      - lifeos-net
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+    driver: local
+
+networks:
+  lifeos-net:
+    driver: bridge

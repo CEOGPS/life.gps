@@ -1,17 +1,14 @@
+# Worker configuration for lifeos1-api
 name = "lifeos1-api"
-main = "worker/index.js"
-compatibility_date = "2026-07-01"
+main = "worker.js"
+compatibility_date = "2026-08-22"
 
-# KV Namespace for app state persistence
-kv_namespaces = [
-  { binding = "LIFEOS_KV", id = "c7e7fb2195cc4397af43f41a06be7efb" }
-]
+[vars]
+VITE_WEATHER_API_KEY = "cde590f3d8aec444758cac2189371886"
+SUPABASE_URL = "https://mhvcdstgkyplhzjptgfr.supabase.co"
+OAUTH_REDIRECT_URI = "https://oauth.ceogps.com/api/oauth/callback"
 
-# R2 Bucket for file storage
-r2_buckets = [
-  { binding = "lifeos_uploads", bucket_name = "lifeos-uploads" }
-]
-
-# Workers AI binding
-[ai]
-binding = "AI"
+# KV namespace - comment out until real namespace created
+# [[kv_namespaces]]
+# binding = "LIFEOS_KV"
+# id = "c7e7fb2195cc4397af43f41a06be7efb"

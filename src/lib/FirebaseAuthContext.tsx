@@ -21,6 +21,7 @@ import {
 } from "firebase/auth";
 import type { User as FirebaseUser } from "firebase/auth";
 import { auth } from "./firebase";
+import { persistUserEmail } from "./usePersistentState.ts";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -370,6 +371,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
           setUser(convertFirebaseUser(firebaseUserObj));
           setIsAuthenticated(true);
           setAuthChecked(true);
+          // Cache user email for persistence layer
+          persistUserEmail(firebaseUserObj.email);
         }
       } catch (error: any) {
         console.error("Google sign in failed:", error);
@@ -450,6 +453,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         setUser(convertFirebaseUser(firebaseUserObj));
         setIsAuthenticated(true);
         setAuthChecked(true);
+        // Cache user email for persistence layer
+        persistUserEmail(firebaseUserObj.email);
       } catch (error: any) {
         console.error("Specific email sign in failed:", error);
         setError(
@@ -509,6 +514,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         setUser(convertFirebaseUser(firebaseUserObj));
         setIsAuthenticated(true);
         setAuthChecked(true);
+        // Cache user email for persistence layer
+        persistUserEmail(firebaseUserObj.email);
       } catch (error: any) {
         console.error("Email sign in failed:", error);
 
@@ -586,6 +593,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         setUser(convertFirebaseUser(firebaseUserObj));
         setIsAuthenticated(true);
         setAuthChecked(true);
+        // Cache user email for persistence layer
+        persistUserEmail(firebaseUserObj.email);
       } catch (error: any) {
         console.error("Sign up failed:", error);
 
@@ -719,6 +728,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       setAuthChecked(false);
       setAuthTokensState(null);
       clearError();
+      // Clear user email from persistence layer
+      persistUserEmail(null);
     } catch (error: any) {
       console.error("Logout failed:", error);
       setError("firebase", error.message || "Logout failed", error.code, error);
@@ -755,6 +766,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
           setUser(convertFirebaseUser(firebaseUserObj));
           setIsAuthenticated(true);
           setAuthChecked(true);
+          // Cache user email for persistence layer
+          persistUserEmail(firebaseUserObj.email);
         }
       } catch (error: any) {
         console.error("Redirect result error:", error);
@@ -780,6 +793,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUserObj) => {
       if (firebaseUserObj) {
         setFirebaseUser(firebaseUserObj);
+
+        // Cache user email for persistence layer
+        persistUserEmail(firebaseUserObj.email);
 
         // Check if user is registered
         const isRegistered = await isUserRegistered(firebaseUserObj);

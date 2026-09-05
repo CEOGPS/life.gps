@@ -1,0 +1,20 @@
+{
+  "jsx": [
+    "components/login-form.jsx",
+    "components/logout-button.jsx",
+    "lib/pagenotfound.jsx",
+    "pages/communications/MessagesPanel_v2.jsx",
+    "pages/legal/LegalPage.jsx",
+    "pages/maps/MapsPage.jsx",
+    "pages/music/music-main.jsx",
+    "pages/omnisearch/components/ui/accordian.jsx",
+    "pages/omnisearch/components/ui/alert-dialogue.jsx",
+    "pages/omnisearch/components/ui/alertview.jsx",
+    "pages/task/TaskPanel.jsx"
+  ],
+  "js": [
+    "_core/hooks/use-supabase-upload.js",
+    "api/workers/cloudflare-worker-v2.js",
+    "pages/omnisearch/api/ceogpsClient.js"
+  ]
+}

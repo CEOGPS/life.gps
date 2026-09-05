@@ -1,0 +1,16 @@
+node_modules
+dist
+build
+.git
+.env
+.env.local
+.DS_Store
+*.log
+.next
+venv
+__pycache__
+.pytest_cache
+.vscode
+.idea
+*.pyc
+coverage

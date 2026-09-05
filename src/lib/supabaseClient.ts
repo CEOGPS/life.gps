@@ -80,6 +80,11 @@ function createNoOpSupabase() {
       signInWithOAuth: async () => ({ data: null, error: null }),
       signOut: async () => ({ error: null }),
       getSession: async () => ({ data: { session: null }, error: null }),
+      onAuthStateChange: (callback: (event: string, session: any) => void) => {
+        // No-op: immediately call callback with no session
+        setTimeout(() => callback("INITIAL_SESSION", null), 0);
+        return { data: { subscription: { unsubscribe: () => {} } } };
+      },
     },
   };
   return noOp as any;
