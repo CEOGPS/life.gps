@@ -34,6 +34,7 @@ export const SIDEBAR_GROUPS = [
     items: [
       { id: "creator", label: "CreatorOS1", icon: "Wand2", path: "/creator" },
       { id: "veriton", label: "VeritonOS1", icon: "Music4", path: "/veriton" },
+      { id: "lucidsystems", label: "Lucid Systems", icon: "Brain", path: "/lucidsystems" },
       {
         id: "community",
         label: "Community",
@@ -143,3 +144,23 @@ export const SIDEBAR_GROUPS = [
     ],
   },
 ];
+
+// Sub-navigation map for panels with internal tabs
+// Used by panel components to show their own tab navigation
+export const PANEL_SUB_NAV = {
+  community: [
+    { id: "scan", label: "Lead Scanner", icon: "Search" },
+    { id: "opportunity", label: "Opportunity Engine", icon: "Zap" },
+  ],
+  simulators: [
+    { id: "conflict", label: "Conflict Resolver", icon: "Swords" },
+    { id: "karma", label: "Karma Credit", icon: "Star" },
+    { id: "liferpg", label: "Life RPG", icon: "Gamepad2" },
+    { id: "parallel", label: "Parallel Life", icon: "UserRound" },
+  ],
+  calendar: [
+    { id: "month", label: "Month", icon: "Calendar" },
+    { id: "week", label: "Week", icon: "CalendarDays" },
+    { id: "agenda", label: "Agenda", icon: "List" },
+  ],
+} as const;

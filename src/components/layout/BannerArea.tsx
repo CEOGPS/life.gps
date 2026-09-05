@@ -3,10 +3,9 @@ import { Upload, ImageIcon } from "lucide-react";
 import { usePersistentState } from "@/lib/usePersistentState.ts";
 
 export default function BannerArea() {
-  const [bannerSrc, setBannerSrc] = usePersistentState<string | null>(
-    "banner_src",
-    null,
-  );
+  const bannerState = usePersistentState<string | null>("banner_src", null);
+  const bannerSrc = bannerState.value;
+  const setBannerSrc = bannerState.setValue;
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../lib/FirebaseAuthContext";
+import { useAuth } from "@/lib/SupabaseAuthContext.tsx";
 
 interface AuthCallbackProps {
   workerUrl: string;

@@ -1,3 +1,4 @@
+// @ts-nocheck -- converted from .jsx; typing deferred
 // Icon.jsx — universal icon renderer for LifeOS1.
 //
 // Three kinds of glyphs in one component:

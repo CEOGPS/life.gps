@@ -1,1 +1,1 @@
-export default function BrandIcon() { return <div>Logo</div>; }
+export default function BrandIcon() { return <div>CEO GPS</div>; }

@@ -1,3 +1,4 @@
+// @ts-nocheck -- converted from .jsx; typing deferred
 // BrandIcon — renders a branded SVG glyph by slug.
 //
 // Sources:

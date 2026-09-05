@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 const DefaultFallback = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-slate-950">
