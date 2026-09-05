@@ -2,7 +2,6 @@ import { motion } from "motion/react";
 import Module from "./dashboard/_components/Module.tsx";
 import TimeDateWeather from "./dashboard/_components/TimeDateWeather.tsx";
 import NotesModule from "./dashboard/_components/NotesModule.tsx";
-import TasksModule from "./dashboard/_components/TasksModule.tsx";
 import LeadsModule from "./dashboard/_components/LeadsModule.tsx";
 import NotificationsModule from "./dashboard/_components/NotificationsModule.tsx";
 import AgentMonitor from "./dashboard/_components/AgentMonitor.tsx";
@@ -25,7 +24,6 @@ import ActivityFeedPanel from "./dashboard/_components/ActivityFeedPanel.jsx";
 import {
   Clock,
   FileText,
-  CheckSquare,
   UserPlus,
   Bell,
   Bot,
@@ -132,9 +130,9 @@ export default function Dashboard() {
           <BrowserArea />
         </Module>
 
-        {/* Tasks */}
-        <Module title="Tasks" icon={<CheckSquare size={13} />}>
-          <TasksModule />
+        {/* Calendar (moved to where Tasks was) */}
+        <Module title="Calendar" icon={<Calendar size={13} />}>
+          <CalendarModule />
         </Module>
 
         {/* Notes */}
@@ -152,13 +150,12 @@ export default function Dashboard() {
           <LeadsModule />
         </Module>
 
-        {/* 7-Day Calendar */}
-        <Module title="Calendar" icon={<Calendar size={13} />}>
-          <CalendarModule />
-        </Module>
-
-        {/* YouTube Player */}
-        <Module title="YouTube Player" icon={<PlayCircle size={13} />}>
+        {/* YouTube Player — expanded to take Calendar's spot too */}
+        <Module
+          title="YouTube Player"
+          icon={<PlayCircle size={13} />}
+          className="col-span-2 row-span-2"
+        >
           <YoutubePlayer />
         </Module>
 
