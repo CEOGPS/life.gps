@@ -45,19 +45,17 @@ type ProfileData = Record<string, string>;
 
 export default function Topbar() {
   const navigate = useNavigate();
-  const [logoSrc, setLogoSrc] = usePersistentState<string | null>(
-    "logo_src",
-    null,
-  );
+  const logoState = usePersistentState<string | null>("logo_src", null);
+  const logoSrc = logoState.value;
+  const setLogoSrc = logoState.setValue;
   const logoInputRef = useRef<HTMLInputElement>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [profile, setProfile] = usePersistentState<ProfileData>(
-    "profile",
-    {},
-  );
+  const profileState = usePersistentState<ProfileData>("profile", {});
+  const profile = profileState.value;
+  const setProfile = profileState.setValue;
 
   // Read a file and persist it as a downscaled data URL.
   const readImageAsDataUrl = (
@@ -143,7 +141,7 @@ export default function Topbar() {
                 boxShadow: "0 0 14px oklch(0.55 0.22 20 / 40%)",
               }}
             >
-              AgentZero
+              CEO GPS
             </div>
           )}
         </div>
@@ -159,7 +157,7 @@ export default function Topbar() {
             />
             <input
               type="text"
-              placeholder="Search LifeOS..."
+              placeholder="Search CEO GPS..."
               className="w-full h-8 pl-8 pr-4 text-xs rounded-lg text-white/80 placeholder:text-white/25 focus:outline-none transition-all"
               style={{
                 background: "oklch(1 0 0 / 4%)",
