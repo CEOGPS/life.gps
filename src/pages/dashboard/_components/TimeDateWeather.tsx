@@ -123,22 +123,28 @@ export default function TimeDateWeather() {
   }, []);
 
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  const hours = time.getHours().toString().padStart(2, "0");
-  const mins = time.getMinutes().toString().padStart(2, "0");
-  const secs = time.getSeconds().toString().padStart(2, "0");
-  const dayName = days[time.getDay()];
-  const dateStr = `${months[time.getMonth()]} ${time.getDate()}, ${time.getFullYear()}`;
+    const hours24 = time.getHours();
+    const mins = time.getMinutes().toString().padStart(2, "0");
+    const secs = time.getSeconds().toString().padStart(2, "0");
+    const dayName = days[time.getDay()];
+    const dateStr = `${months[time.getMonth()]} ${time.getDate()}, ${time.getFullYear()}`;
+
+    // Convert to 12-hour format
+    const ampm = hours24 >= 12 ? "PM" : "AM";
+    const hours12 = hours24 % 12 || 12;
+    const hours = hours12.toString().padStart(2, "0");
 
   return (
     <div className="flex flex-col gap-4 h-full">
       {/* Time - Large digital signage style */}
-      <div className="text-center">
-        <div className="font-display text-6xl text-white/95 tracking-widest text-glow">
-          {hours}:{mins}
-          <span className="text-3xl text-primary/90 ml-1">{secs}</span>
-        </div>
+            <div className="text-center">
+              <div className="font-display text-6xl text-white/95 tracking-widest text-glow">
+                {hours}:{mins}
+                <span className="text-3xl text-primary/90 ml-1">{secs}</span>
+                <span className="text-xl text-primary/70 ml-2">{ampm}</span>
+              </div>
         <div className="text-sm text-white/40 tracking-[0.2em] font-display mt-1">
           {dayName}
         </div>

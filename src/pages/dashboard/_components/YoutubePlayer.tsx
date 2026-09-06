@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import { PlayCircle, Search, X, Monitor, Volume2, VolumeX, SkipBack, SkipForward, RotateCcw } from "lucide-react";
+import { PlayCircle, Search, X, Monitor, Volume2, VolumeX } from "lucide-react";
 
 interface YouTubeContextValue {
   embedSrc: string;
@@ -128,12 +127,12 @@ export default function YoutubePlayer() {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.currentTarget.value)}
               onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === "Enter") handleSearch(e.target.value);
+                if (e.key === "Enter") handleSearch(e.currentTarget.value);
               }}
               placeholder="Search YouTube..."
-              className="w-full h-7 pl-8 pr-8 text-xs bg-white/4 border border-white/6 rounded text-white/70 placeholder:text-white/20 focus:outline-none focus:border-primary/40""" 
+              className="w-full h-7 pl-8 pr-8 text-xs bg-white/4 border border-white/6 rounded text-white/70 placeholder:text-white/20 focus:outline-none focus:border-primary/40"
             />
             {searchQuery && (
               <button
@@ -208,9 +207,9 @@ export default function YoutubePlayer() {
               onClick={() => {
                 if (!iframeRef.current) return;
                 if (!isPiP) {
-                  iframeRef.current.requestPictureInPicture().then(() => setIsPiP(true)).catch(console.error);
+                  (iframeRef.current as HTMLIFrameElement & { requestPictureInPicture?: () => Promise<void> }).requestPictureInPicture?.().then(() => setIsPiP(true)).catch(console.error);
                 } else {
-                  document.exitPictureInPicture().then(() => setIsPiP(false)).catch(console.error);
+                  (document as Document & { exitPictureInPicture?: () => Promise<void> }).exitPictureInPicture?.().then(() => setIsPiP(false)).catch(console.error);
                 }
               }}
               className={`p-1.5 rounded bg-white/10 hover:bg-white/20 transition-colors ${isPiP ? "text-primary" : "text-white/70"}`}

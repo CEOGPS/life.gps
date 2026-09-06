@@ -72,9 +72,9 @@ export default function CreditScore() {
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex gap-3 justify-around">
-        <ScoreMeter label="FICO Score" score={null} bureau="Experian" />
-        <ScoreMeter label="VantageScore" score={null} bureau="Credit Karma" />
-      </div>
+              <ScoreMeter label="FICO Score" score={632} bureau="Experian" />
+              <ScoreMeter label="VantageScore" score={639} bureau="Credit Karma" />
+            </div>
 
       {/* Scale legend */}
       <div className="flex rounded-lg overflow-hidden h-4">

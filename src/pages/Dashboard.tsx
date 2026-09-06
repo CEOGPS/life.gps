@@ -5,7 +5,7 @@ import NotesModule from "./dashboard/_components/NotesModule.tsx";
 import LeadsModule from "./dashboard/_components/LeadsModule.tsx";
 import NotificationsModule from "./dashboard/_components/NotificationsModule.tsx";
 import AgentMonitor from "./dashboard/_components/AgentMonitor.tsx";
-import YoutubePlayer from "./dashboard/_components/YoutubePlayer.tsx";
+import { YoutubePlayerWithPersistence as YoutubePlayer } from "./dashboard/_components/YoutubePlayer.tsx";
 import MusicPlayer from "./dashboard/_components/MusicPlayer.tsx";
 import FinancialStats from "./dashboard/_components/FinancialStats.tsx";
 import RoiAnalysis from "./dashboard/_components/RoiAnalysis.tsx";
@@ -55,22 +55,15 @@ export default function Dashboard() {
       >
         <div>
           <h1 className="font-display text-base tracking-[0.12em]">
-            <span className="text-white/70">WELCOME BACK, </span>
             <span
               style={{
                 color: "oklch(0.65 0.22 20)",
                 textShadow: "0 0 14px oklch(0.55 0.22 20 / 80%)",
               }}
             >
-              COMMANDER
+              Cagednreality
             </span>
           </h1>
-          <p
-            className="text-[11px] mt-0.5"
-            style={{ color: "oklch(0.75 0.15 175)" }}
-          >
-            Your systems are standing by.
-          </p>
         </div>
         <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 glass-crimson rounded-full">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-green" />

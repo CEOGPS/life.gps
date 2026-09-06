@@ -13,6 +13,7 @@ import {
   Check,
 } from "lucide-react";
 import { db } from "@/lib/veritonDb.ts";
+import { useAudio } from "@/lib/AudioProvider.tsx";
 
 type Track = {
   id: string;
@@ -39,17 +40,28 @@ function formatTime(sec: number) {
 
 export default function MusicPlayer() {
   const navigate = useNavigate();
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const {
+    audioRef,
+    currentTrack,
+    setCurrentTrack,
+    playing,
+    setPlaying,
+    progress,
+    setProgress,
+    duration,
+    setDuration,
+    muted,
+    setMuted,
+    volume,
+    setVolume,
+  } = useAudio();
+
   const [tracks, setTracks] = useState<Track[]>([]);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [activePlaylist, setActivePlaylist] = useState<string | null>(null);
   const [showPlaylists, setShowPlaylists] = useState(false);
   const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
   const [shuffled, setShuffled] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     db.entities.Track.list("-created_date", 50).then((t: Track[]) =>
@@ -86,21 +98,45 @@ export default function MusicPlayer() {
     setShowPlaylists(false);
   };
 
+  // Sync local state with AudioProvider when track changes
   useEffect(() => {
-    if (!audioRef.current || !track?.audioFileUrl) return;
-    audioRef.current.src = track.audioFileUrl;
-    if (playing) audioRef.current.play().catch(() => setPlaying(false));
-  }, [track?.audioFileUrl]);
+    if (track?.audioFileUrl) {
+      setCurrentTrack({ title: track.title, audioFileUrl: track.audioFileUrl });
+    }
+  }, [track?.audioFileUrl, setCurrentTrack]);
+
+  // Sync audio element events with AudioProvider state
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleTimeUpdate = () => setProgress(audio.currentTime);
+    const handleLoadedMetadata = () => setDuration(audio.duration);
+    const handleEnded = () => {
+      // Play next track
+      if (!tracks.length) return;
+      setIndex(
+        shuffled
+          ? Math.floor(Math.random() * tracks.length)
+          : (index + 1) % tracks.length,
+      );
+    };
+
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audioRef, setProgress, setDuration, tracks.length, index, shuffled]);
 
   const togglePlay = () => {
-    if (!track) return;
-    if (playing) {
-      audioRef.current?.pause();
-    } else {
-      audioRef.current?.play().catch(() => {});
-    }
-    setPlaying((p) => !p);
-  };
+      if (!track) return;
+      setPlaying(!playing);
+    };
 
   const pickNext = () => {
     if (!tracks.length) return;
@@ -110,6 +146,7 @@ export default function MusicPlayer() {
         : (index + 1) % tracks.length,
     );
   };
+
   const pickPrev = () => {
     if (!tracks.length) return;
     setIndex((index - 1 + tracks.length) % tracks.length);
@@ -117,13 +154,6 @@ export default function MusicPlayer() {
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      <audio
-        ref={audioRef}
-        onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
-        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
-        onEnded={pickNext}
-      />
-
       {/* Track info */}
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-lg glass-crimson flex items-center justify-center shrink-0 glow-crimson-sm">
@@ -161,7 +191,9 @@ export default function MusicPlayer() {
       <div className="flex items-center justify-between px-2">
         <button
           onClick={() => setShuffled((s) => !s)}
-          className={`transition-colors ${shuffled ? "text-primary" : "text-white/20 hover:text-white/50"}`}
+          className={`transition-colors ${
+            shuffled ? "text-primary" : "text-white/20 hover:text-white/50"
+          }`}
         >
           <Shuffle size={13} />
         </button>
@@ -187,12 +219,11 @@ export default function MusicPlayer() {
           <SkipForward size={16} />
         </button>
         <button
-          onClick={() => {
-            setMuted((m) => !m);
-            if (audioRef.current) audioRef.current.muted = !muted;
-          }}
-          className="text-white/20 hover:text-white/50 transition-colors"
-        >
+                  onClick={() => {
+                    setMuted(!muted);
+                  }}
+                  className="text-white/20 hover:text-white/50 transition-colors"
+                >
           {muted ? <VolumeX size={13} /> : <Volume2 size={13} />}
         </button>
       </div>
