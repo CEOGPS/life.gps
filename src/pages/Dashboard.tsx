@@ -143,16 +143,29 @@ export default function Dashboard() {
           <LeadsModule />
         </Module>
 
-        {/* YouTube Player — expanded to take Calendar's spot too */}
-        <Module
-          title="YouTube Player"
-          icon={<PlayCircle size={13} />}
-          className="col-span-2 row-span-2"
-        >
-          <YoutubePlayer />
-        </Module>
+        {/* YouTube Player — full width (2 columns) */}
+                <Module
+                  title="YouTube Player"
+                  icon={<PlayCircle size={13} />}
+                  className="col-span-2"
+                >
+                  <YoutubePlayer />
+                </Module>
 
-        {/* Music Player */}
+                {/* Social Media Analytics - underneath YouTube */}
+                <Module title="Social Analytics" icon={<Share2 size={13} />}>
+                  <SocialAnalytics />
+                </Module>
+
+                {/* Marketing & Website Analytics - underneath YouTube */}
+                <Module
+                  title="Marketing & Web Analytics"
+                  icon={<Megaphone size={13} />}
+                >
+                  <MarketingAnalytics />
+                </Module>
+
+                {/* Music Player */}
         <Module title="Music Player" icon={<Music2 size={13} />} accent>
           <MusicPlayer />
         </Module>
@@ -188,23 +201,10 @@ export default function Dashboard() {
         </Module>
 
         {/* Life Hacks */}
-        <Module title="Life Hacks" icon={<Lightbulb size={13} />}>
-          <LifeHacks />
-        </Module>
-
-        {/* Social Media Analytics */}
-        <Module title="Social Analytics" icon={<Share2 size={13} />}>
-          <SocialAnalytics />
-        </Module>
-
-        {/* Marketing & Website Analytics */}
-        <Module
-          title="Marketing & Web Analytics"
-          icon={<Megaphone size={13} />}
-        >
-          <MarketingAnalytics />
-        </Module>
-      </div>
+                <Module title="Life Hacks" icon={<Lightbulb size={13} />}>
+                  <LifeHacks />
+                </Module>
+              </div>
 
       {/* Full-width activity feed — shows all actions across the dashboard */}
       <div className="mt-4 w-full">

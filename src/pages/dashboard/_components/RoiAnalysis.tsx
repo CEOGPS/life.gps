@@ -69,32 +69,36 @@ export default function RoiAnalysis() {
       {/* Chart area */}
       <div className="flex-1 rounded-lg bg-white/2 border border-white/5 flex flex-col items-center justify-center gap-2 min-h-[80px]">
         {totalRevenue > 0 || totalCost > 0 ? (
-          <div className="w-full h-full flex items-end justify-around gap-1 p-4">
-            {products.map((p) => (
-              <div key={p.id} className="flex flex-col items-center gap-1 flex-1">
-                <div className="w-full flex-1 flex items-end">
-                  <div
-                    className="w-full bg-emerald-400/50 rounded-t"
-                    style={{
-                      height: totalRevenue > 0 ? `${(p.revenue / Math.max(totalRevenue, 1)) * 100}%`,
-                      minHeight: p.revenue > 0 ? "4px" : "0",
-                    }}
-                  />
-                </div>
-                <div className="w-full flex-1 flex items-end mt-1">
-                  <div
-                    className="w-full bg-red-400/50 rounded-t"
-                    style={{
-                      height: totalCost > 0 ? `${(p.cost / Math.max(totalCost, 1)) * 100}%`,
-                      minHeight: p.cost > 0 ? "4px" : "0",
-                    }}
-                  />
-                </div>
-                <span className="text-[8px] text-white/40 text-center truncate w-full">{p.name}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
+                  <div className="w-full h-full flex items-end justify-around gap-1 p-4">
+                    {products.map((p) => {
+                      const revPct = totalRevenue > 0 ? ((p.revenue / Math.max(totalRevenue, 1)) * 100) : 0;
+                      const costPct = totalCost > 0 ? ((p.cost / Math.max(totalCost, 1)) * 100) : 0;
+                      return (
+                        <div key={p.id} className="flex flex-col items-center gap-1 flex-1">
+                          <div className="w-full flex-1 flex items-end">
+                            <div
+                              className="w-full bg-emerald-400/50 rounded-t"
+                              style={{
+                                height: `${revPct}%`,
+                                minHeight: p.revenue > 0 ? "4px" : "0",
+                              }}
+                            />
+                          </div>
+                          <div className="w-full flex-1 flex items-end mt-1">
+                            <div
+                              className="w-full bg-red-400/50 rounded-t"
+                              style={{
+                                height: `${costPct}%`,
+                                minHeight: p.cost > 0 ? "4px" : "0",
+                              }}
+                            />
+                          </div>
+                          <span className="text-[8px] text-white/40 text-center truncate w-full">{p.name}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
           <>
             <BarChart3 size={22} className="text-white/10" />
             <div className="text-[10px] text-white/20 text-center">Add products to generate ROI charts</div>
