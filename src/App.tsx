@@ -12,7 +12,7 @@ import PlaceholderPanel from "./components/layout/PlaceholderPanel.tsx";
 import MusicPanel from "./pages/music_MusicHub.jsx";
 import CreatorPanel from "./pages/creator/page.tsx";
 import ContactsPanel from "./pages/contacts_ContactsPanel.jsx";
-import CrmPanel from "./pages/crm_CRMPanel.jsx";
+import CRMPanel from "./pages/crm_CRMPanel.jsx";
 import EmailPanel from "./pages/email_EmailPanel.jsx";
 import CommunicationsPanel from "./pages/communications_MessagesPanel.jsx";
 import FinancePanel from "./pages/finance_FinancePanel.jsx";
@@ -37,7 +37,6 @@ import OmniSearchPanel from "./pages/omnisearch.tsx";
 import LegalPanel from "./pages/legal_LegalPage.jsx";
 import VaultPanel from "./pages/vault.tsx";
 
-
 export default function App() {
   return (
     <DefaultProviders>
@@ -50,7 +49,7 @@ export default function App() {
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/music" element={<MusicPanel />} />
                   <Route path="/contacts" element={<ContactsPanel />} />
-                  <Route path="/crm" element={<CrmPanel />} />
+                  <Route path="/crm" element={<CRMPanel />} />
                   <Route path="/email" element={<EmailPanel />} />
                   <Route path="/communications" element={<CommunicationsPanel />} />
                   <Route path="/finance" element={<FinancePanel />} />

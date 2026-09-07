@@ -1,2756 +1,368 @@
-import { useState, useEffect, useRef } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  getPreferredModel,
-  setPreferredModel,
-  MODEL_OPTIONS,
-  generatePKCE,
-} from "@/api/ceogpsclient";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+import { useState, useMemo } from "react";
+import { Plug, Search, Key, RefreshCw, Circle, CheckCircle2 } from "lucide-react";
+import PanelLayout from "@/components/layout/PanelLayout.jsx";
 
-const C = {
-  blue: "#4ab3f4",
-  orange: "#ff8c42",
-  teal: "#00c896",
-  purple: "#8b7fff",
-  pink: "#ff6b9d",
-  red: "#ff4f5e",
-};
+const TEAL_LABEL = "oklch(0.75 0.15 175)";
 
-const card = {
-  background: "#13141f",
-  border: "0.5px solid rgba(255,255,255,0.07)",
-  borderRadius: 12,
-};
+// Demo: track which integrations are "connected"
+const CONNECTED_DEFAULTS = new Set(["OpenAI", "GitHub", "Google Analytics", "Stripe", "Gmail (OAuth)"]);
 
-const WORKER_URL =
-  import.meta.env.VITE_WORKER_URL || "https://oauth.ceogps.com";
-const SLOT_COLORS = [
-  "#4ab3f4",
-  "#00c896",
-  "#ff8c42",
-  "#8b7fff",
-  "#ff6b9d",
-  "#f7b731",
-  "#1da1f2",
-  "#ef5350",
-  "#26c6da",
-  "#39d353",
-];
+export default function IntegrationsPage() {
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [connected, setConnected] = useState(CONNECTED_DEFAULTS);
 
-// ── Storage ───────────────────────────────────────────────────────────────────
-// lifeos1_accounts_v3: { [integrationName]: { [email]: { username, password, apiKey, status, label, color, icon } } }
-const AK = "lifeos1_accounts_v3";
+  const INTEGRATIONS = [
+    // LLMs
+    { name: "OpenAI", category: "LLMs", icon: "🤖", desc: "GPT-4o, o1, and DALL·E via the OpenAI API." },
+    { name: "Anthropic", category: "LLMs", icon: "🧠", desc: "Claude 3.5 Sonnet and Haiku models." },
+    { name: "Google AI (Gemini)", category: "LLMs", icon: "✨", desc: "Gemini 1.5 Pro and Flash via Google AI Studio." },
+    { name: "Hugging Face", category: "LLMs", icon: "🤗", desc: "Access thousands of open-source models." },
+    { name: "Ollama (local)", category: "LLMs", icon: "🦙", desc: "Run LLMs locally on your own machine." },
+    { name: "Groq", category: "LLMs", icon: "⚡", desc: "Ultra-fast inference with LPU hardware." },
+    { name: "OpenRouter", category: "LLMs", icon: "🔀", desc: "Unified API gateway to 100+ models." },
+    { name: "Grok (xAI)", category: "LLMs", icon: "𝕏", desc: "Grok-2 from xAI with real-time web access." },
+    { name: "DeepSeek", category: "LLMs", icon: "🔍", desc: "DeepSeek-V3 and R1 reasoning models." },
+    { name: "Mistral", category: "LLMs", icon: "🌬️", desc: "Mistral Large 2 and Mixtral series models." },
+    { name: "Cohere", category: "LLMs", icon: "🌀", desc: "Command R+ for RAG and enterprise tasks." },
+    { name: "Meta LLaMA", category: "LLMs", icon: "🦾", desc: "Llama 3.3 70B and 405B open models." },
+    { name: "Gemma", category: "LLMs", icon: "💎", desc: "Google's lightweight open Gemma models." },
+    { name: "Qwen", category: "LLMs", icon: "🐉", desc: "Alibaba's Qwen 2.5 multilingual models." },
+    { name: "Hermes", category: "LLMs", icon: "🏛️", desc: "Nous Research Hermes fine-tuned models." },
+    { name: "Anyscale", category: "LLMs", icon: "📡", desc: "Scalable OSS model endpoints via Anyscale." },
+    { name: "NVIDIA NIM", category: "LLMs", icon: "🖥️", desc: "Deploy optimized models on NVIDIA NIM." },
+    { name: "Copilot (Microsoft)", category: "LLMs", icon: "🪟", desc: "Microsoft Copilot Studio and Azure OpenAI." },
+    { name: "Azure AI", category: "LLMs", icon: "☁️", desc: "Azure AI Foundry model deployments." },
 
-function loadAccounts() {
-  try {
-    return JSON.parse(localStorage.getItem(AK) || "{}");
-  } catch {
-    return {};
-  }
-}
+    // Social
+    { name: "Instagram", category: "Social", icon: "📸", desc: "Read/post to Instagram via Graph API." },
+    { name: "Facebook", category: "Social", icon: "👥", desc: "Pages, groups, and feed management." },
+    { name: "Twitter/X", category: "Social", icon: "🐦", desc: "Post tweets, read timelines, and analytics." },
+    { name: "LinkedIn", category: "Social", icon: "💼", desc: "Profile data, posts, and company pages." },
+    { name: "TikTok", category: "Social", icon: "🎵", desc: "Upload videos and pull TikTok analytics." },
+    { name: "YouTube", category: "Social", icon: "▶️", desc: "Upload videos, manage playlists, analytics." },
+    { name: "Reddit", category: "Social", icon: "🤖", desc: "Read subreddits, post, and track karma." },
+    { name: "Snapchat", category: "Social", icon: "👻", desc: "Snap Kit login and story integrations." },
+    { name: "Pinterest", category: "Social", icon: "📌", desc: "Create pins, boards, and track analytics." },
+    { name: "Discord", category: "Social", icon: "🎮", desc: "Bot messages, webhooks, and server data." },
+    { name: "Threads", category: "Social", icon: "🧵", desc: "Post and read Threads via Meta API." },
+    { name: "CEO GPS", category: "Social", icon: "🗺️", desc: "Executive social presence tracking." },
+    { name: "WhatsApp", category: "Social", icon: "💬", desc: "Business messaging via WhatsApp Cloud API." },
+    { name: "Telegram", category: "Social", icon: "✈️", desc: "Bots, channels, and message automation." },
+    { name: "Signal", category: "Social", icon: "🔒", desc: "Encrypted messaging via Signal Protocol." },
+    { name: "Nextdoor", category: "Social", icon: "🏘️", desc: "Local community posts and business pages." },
 
-function saveAccounts(a) {
-  try {
-    localStorage.setItem(AK, JSON.stringify(a));
-  } catch {}
-}
+    // Marketing
+    { name: "Google Analytics", category: "Marketing", icon: "📊", desc: "GA4 events, audiences, and funnels." },
+    { name: "Ahrefs", category: "Marketing", icon: "🔗", desc: "Backlinks, keywords, and SEO audits." },
+    { name: "MOZ", category: "Marketing", icon: "🟣", desc: "Domain authority and keyword explorer." },
+    { name: "Mailchimp", category: "Marketing", icon: "🐒", desc: "Email campaigns, audiences, and automations." },
+    { name: "SendGrid", category: "Marketing", icon: "📧", desc: "Transactional email and marketing campaigns." },
+    { name: "Brevo", category: "Marketing", icon: "💌", desc: "CRM, email, and SMS marketing platform." },
+    { name: "Klaviyo", category: "Marketing", icon: "📣", desc: "E-commerce email & SMS automation." },
+    { name: "HubSpot", category: "Marketing", icon: "🟠", desc: "CRM, marketing hub, and sales pipeline." },
+    { name: "Monday.com", category: "Marketing", icon: "📅", desc: "Work OS for campaign and project tracking." },
+    { name: "ClickUp", category: "Marketing", icon: "✅", desc: "Tasks, docs, goals, and time tracking." },
+    { name: "Jotform", category: "Marketing", icon: "📋", desc: "Forms, surveys, and lead capture." },
+    { name: "Postman", category: "Marketing", icon: "📮", desc: "API testing and team collaboration." },
+    { name: "Canva", category: "Marketing", icon: "🎨", desc: "Design assets and brand templates." },
 
-// ── Account helpers ───────────────────────────────────────────────────────────
-function getAccountEntries(accounts, name) {
-  const main = Object.entries(accounts[name] || {})
-    .filter(([k]) => k !== "_extras")
-    .map(([email, slot]) => ({ email, slot }));
+    // Finance
+    { name: "Stripe", category: "Finance", icon: "💳", desc: "Payments, subscriptions, and billing." },
+    { name: "Plaid", category: "Finance", icon: "🏦", desc: "Bank account linking and transaction data." },
+    { name: "PayPal", category: "Finance", icon: "🅿️", desc: "Payments, invoices, and dispute management." },
+    { name: "Venmo", category: "Finance", icon: "💸", desc: "Peer-to-peer payment tracking." },
+    { name: "Cash App", category: "Finance", icon: "💵", desc: "Cash App business payments and payouts." },
+    { name: "SoFi", category: "Finance", icon: "🏛️", desc: "SoFi banking and investment accounts." },
+    { name: "Chase", category: "Finance", icon: "🔵", desc: "Chase bank data via Plaid integration." },
+    { name: "Brex", category: "Finance", icon: "💼", desc: "Corporate cards, expenses, and budgets." },
+    { name: "Digits", category: "Finance", icon: "🔢", desc: "Real-time financial analytics and AI CFO." },
+    { name: "Crypto.com", category: "Finance", icon: "🪙", desc: "Crypto portfolio and exchange data." },
+    { name: "Kraken", category: "Finance", icon: "🦑", desc: "Crypto trading and staking via Kraken API." },
+    { name: "DraftKings", category: "Finance", icon: "🏆", desc: "Fantasy sports and betting account data." },
+    { name: "Credit Karma", category: "Finance", icon: "📈", desc: "Credit score and financial health tracking." },
+    { name: "Experian", category: "Finance", icon: "📉", desc: "Credit reports and identity monitoring." },
+    { name: "MorningStar", category: "Finance", icon: "⭐", desc: "Investment research and portfolio ratings." },
+    { name: "Mercury", category: "Finance", icon: "🪐", desc: "Mercury business bank accounts and cards." },
 
-  // Migrate legacy _extras into view (without modifying storage)
-  const extras = (accounts[name] || {})._extras || [];
-  extras.forEach(({ email, key }) => {
-    if (!main.find((e) => e.email === email)) {
-      main.push({
-        email,
-        slot: {
-          username: email,
-          password: "",
-          apiKey: key || "",
-          status: key ? "on" : "off",
-          label: email.split("@")[0],
-          icon: "📧",
-          color: "#6aaedd",
-        },
-      });
-    }
-  });
-  return main;
-}
+    // Communications
+    { name: "Twilio", category: "Communications", icon: "📱", desc: "SMS, voice, and video programmable APIs." },
+    { name: "Google Voice", category: "Communications", icon: "📞", desc: "Google Voice calls and SMS management." },
+    { name: "Nylas", category: "Communications", icon: "✉️", desc: "Email, calendar, and contacts API layer." },
+    { name: "Gmail (OAuth)", category: "Communications", icon: "📬", desc: "Read and send Gmail via Google OAuth." },
+    { name: "Outlook", category: "Communications", icon: "📫", desc: "Microsoft Outlook email and contacts." },
+    { name: "Apple iCloud", category: "Communications", icon: "🍎", desc: "iCloud Mail, contacts, and reminders." },
+    { name: "Proton Mail", category: "Communications", icon: "🛡️", desc: "End-to-end encrypted email via Proton API." },
+    { name: "Otter.ai", category: "Communications", icon: "🦦", desc: "Meeting transcription and AI summaries." },
 
-function nextColor(accountsForItem) {
-  const used = new Set(
-    Object.values(accountsForItem || {})
-      .map((s) => s && s.color)
-      .filter(Boolean),
-  );
-  return SLOT_COLORS.find((c) => !used.has(c)) || SLOT_COLORS[0];
-}
+    // Dev Tools
+    { name: "Cloudflare", category: "Dev Tools", icon: "🌩️", desc: "DNS, CDN, Workers, and R2 storage." },
+    { name: "AWS S3", category: "Dev Tools", icon: "🪣", desc: "Object storage and file management." },
+    { name: "Azure Storage", category: "Dev Tools", icon: "🔷", desc: "Azure Blob, Queue, and Table storage." },
+    { name: "GitHub", category: "Dev Tools", icon: "🐙", desc: "Repos, issues, PRs, and Actions." },
+    { name: "GitLab", category: "Dev Tools", icon: "🦊", desc: "CI/CD pipelines and self-hosted repos." },
+    { name: "Vercel", category: "Dev Tools", icon: "▲", desc: "Deploy and manage Vercel projects." },
+    { name: "Supabase", category: "Dev Tools", icon: "⚡", desc: "Postgres, Auth, and Realtime backend." },
+    { name: "Firebase", category: "Dev Tools", icon: "🔥", desc: "Firestore, Auth, and Cloud Functions." },
+    { name: "PocketBase", category: "Dev Tools", icon: "🧳", desc: "Lightweight self-hosted backend and DB." },
+    { name: "Prisma", category: "Dev Tools", icon: "🔺", desc: "Type-safe ORM and database migrations." },
+    { name: "Docker", category: "Dev Tools", icon: "🐳", desc: "Container management and image builds." },
+    { name: "VS Code", category: "Dev Tools", icon: "💻", desc: "VS Code settings sync and extensions." },
+    { name: "Dropbox", category: "Dev Tools", icon: "📦", desc: "File sync, sharing, and Paper docs." },
+    { name: "Browserbase", category: "Dev Tools", icon: "🌐", desc: "Headless browser automation in the cloud." },
+    { name: "Replicate", category: "Dev Tools", icon: "🔁", desc: "Run and fine-tune ML models via API." },
 
-// ── Worker helpers ────────────────────────────────────────────────────────────
-const VALIDATOR_PROVIDER = {
-  "Claude API": "claude",
-  "OpenAI GPT": "openai",
-  Gemini: "gemini",
-  "Grok (xAI)": "grok",
-  Groq: "groq",
-  DeepSeek: "deepseek",
-  Perplexity: "perplexity",
-  CoPilot: "copilot",
-  "Qwen (Ali.)": "qwen",
-  Mistral: "mistral",
-  Cohere: "cohere",
-  "Together AI": "together",
-  "Fireworks AI": "fireworks",
-  Replicate: "replicate",
-  Runway: "runway",
-  ElevenLabs: "elevenlabs",
-  "Hugging Face": "huggingface",
-  OpenRouter: "openrouter",
-  Anyscale: "anyscale",
-  "Lepton AI": "lepton",
-  NovitaAI: "novita",
-  "AI21 Labs": "ai21",
-  Brevo: "brevo",
-  SendGrid: "sendgrid",
-  Mailchimp: "mailchimp",
-  Nylas: "nylas",
-  Stripe: "stripe",
-  Cloudflare: "cloudflare",
-};
+    // Business
+    { name: "Brilliant Directories", category: "Business", icon: "🗂️", desc: "Member directory and listing management." },
+    { name: "WordPress", category: "Business", icon: "📝", desc: "Content management via WP REST API." },
+    { name: "GoDaddy", category: "Business", icon: "🌍", desc: "Domain and website management." },
+    { name: "Yelp", category: "Business", icon: "⭐", desc: "Business listings and review management." },
+    { name: "YP.com", category: "Business", icon: "📖", desc: "Yellow Pages directory listing sync." },
+    { name: "ShowMeLocal", category: "Business", icon: "📍", desc: "Local citation and listing management." },
+    { name: "Alignable", category: "Business", icon: "🤝", desc: "Small business community networking." },
+    { name: "Yahoo", category: "Business", icon: "🟣", desc: "Yahoo Finance and search integrations." },
+    { name: "Airtable", category: "Business", icon: "🗃️", desc: "Databases, automations, and views." },
+    { name: "Notion", category: "Business", icon: "📒", desc: "Docs, databases, and wikis via Notion API." },
+    { name: "Zoominfo", category: "Business", icon: "🔭", desc: "B2B contact and company intelligence." },
+    { name: "Linear", category: "Business", icon: "📐", desc: "Issue tracking and engineering workflows." },
+    { name: "Plain", category: "Business", icon: "🎫", desc: "Customer support and ticketing platform." },
+    { name: "Google Calendar", category: "Business", icon: "🗓️", desc: "Events, reminders, and scheduling." },
+    { name: "Outlook Calendar", category: "Business", icon: "📆", desc: "Microsoft calendar events and meetings." },
+    { name: "iCloud Calendar", category: "Business", icon: "🍏", desc: "Apple iCloud calendar sync." },
 
-async function storeKeyOnWorker(name, email, key, firebaseUserOrToken) {
-  const provider =
-    VALIDATOR_PROVIDER[name] || name.toLowerCase().replace(/\W+/g, "_");
-  const perAccount = provider + "_" + email.split("@")[0].replace(/\W+/g, "_");
+    // AI Media
+    { name: "D-ID (avatar)", category: "AI Media", icon: "🧑‍💻", desc: "Realistic AI avatar video generation." },
+    { name: "Suno (music)", category: "AI Media", icon: "🎸", desc: "AI-generated songs from text prompts." },
+    { name: "ElevenLabs (voice)", category: "AI Media", icon: "🎙️", desc: "Ultra-realistic AI voice synthesis." },
+    { name: "Stability AI", category: "AI Media", icon: "🖼️", desc: "Stable Diffusion image and video models." },
+    { name: "Fish.Audio", category: "AI Media", icon: "🐟", desc: "Voice cloning and TTS synthesis." },
+    { name: "Moondream2", category: "AI Media", icon: "🌙", desc: "Tiny vision-language model for edge." },
+    { name: "Wan-AI", category: "AI Media", icon: "🌊", desc: "AI video generation via Wan 2.1." },
+    { name: "Krea", category: "AI Media", icon: "🌈", desc: "Real-time AI image and video creation." },
+    { name: "Blackforest Labs", category: "AI Media", icon: "🌲", desc: "FLUX image generation models." },
+    { name: "Runwav", category: "AI Media", icon: "🎧", desc: "AI audio generation and sound effects." },
+    { name: "Kling", category: "AI Media", icon: "🎬", desc: "Kling AI video generation from images." },
+    { name: "Tenstrip", category: "AI Media", icon: "🎞️", desc: "AI-powered comic strip and storyboards." },
 
-  let idToken = "";
-  if (typeof firebaseUserOrToken === "string") {
-    idToken = firebaseUserOrToken;
-  } else if (firebaseUserOrToken) {
-    try {
-      idToken = await firebaseUserOrToken.getIdToken();
-    } catch {}
-  }
+    // Browsers
+    { name: "Opera", category: "Browsers", icon: "🔴", desc: "Opera browser automation and data sync." },
+    { name: "Firefox", category: "Browsers", icon: "🦊", desc: "Firefox extension and bookmarks API." },
+    { name: "Exa", category: "Browsers", icon: "🔎", desc: "Neural web search and content extraction." },
+    { name: "Google Maps", category: "Browsers", icon: "🗺️", desc: "Places, geocoding, and directions API." },
+    { name: "Apple Maps", category: "Browsers", icon: "🍎", desc: "MapKit JS and location services." },
 
-  const store = async (svc) => {
-    try {
-      await fetch(`${WORKER_URL}/api/keys/store`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(idToken && { Authorization: `Bearer ${idToken}` }),
-        },
-        body: JSON.stringify({ service: svc, key }),
-      });
-    } catch {}
-  };
+    // More
+    { name: "Spotify", category: "More", icon: "🎵", desc: "Playback, playlists, and listening history." },
+    { name: "Pandora", category: "More", icon: "📻", desc: "Pandora streaming and station data." },
+    { name: "Vimeo", category: "More", icon: "🎥", desc: "Video hosting, analytics, and embedding." },
+    { name: "Shutterstock", category: "More", icon: "📷", desc: "Stock photo and footage library search." },
+    { name: "Genies", category: "More", icon: "🧞", desc: "Avatar and digital identity platform." },
+    { name: "Ring", category: "More", icon: "🔔", desc: "Doorbell, camera, and alarm device API." },
+    { name: "Temu", category: "More", icon: "🛍️", desc: "Temu marketplace product data and orders." },
+    { name: "TikTok Shop", category: "More", icon: "🛒", desc: "TikTok Shop product listings and orders." },
+    { name: "LunarCrush", category: "More", icon: "🌕", desc: "Social intelligence for crypto assets." },
+    { name: "Malwarebytes", category: "More", icon: "🛡️", desc: "Threat detection and device security." },
+    { name: "Trivago", category: "More", icon: "🏨", desc: "Hotel and travel price comparison." },
+    { name: "Cron", category: "More", icon: "⏱️", desc: "Calendar and scheduling productivity app." },
+    { name: "Alibaba", category: "More", icon: "🏪", desc: "Alibaba.com wholesale marketplace API." },
+    { name: "Make (Integromat)", category: "More", icon: "⚙️", desc: "Visual automation workflows and scenarios." },
+    { name: "Gumloop", category: "More", icon: "🔄", desc: "No-code AI workflow automation." },
+    { name: "Antigravity", category: "More", icon: "🚀", desc: "AI-powered business growth platform." },
+    { name: "Lumin", category: "More", icon: "💡", desc: "Document collaboration and PDF editing." },
+    { name: "Luma", category: "More", icon: "🌟", desc: "NeRF and 3D scene capture platform." },
+    { name: "Slack", category: "More", icon: "💬", desc: "Team messaging, bots, and workflows." },
+    { name: "Hercules", category: "More", icon: "⚡", desc: "Hercules platform API and app services." },
+    { name: "Base44", category: "More", icon: "🔧", desc: "No-code app builder and data platform." },
+    { name: "QuarkAI", category: "More", icon: "⚛️", desc: "AI-native productivity and knowledge hub." }
+  ];
 
-  await store(provider);
-  await store(perAccount);
+  const CATEGORIES = [
+    "All", "LLMs", "Social", "Marketing", "Finance",
+    "Communications", "Dev Tools", "Business", "AI Media",
+    "Productivity", "Browsers", "More",
+  ];
 
-  try {
-    const local = JSON.parse(
-      localStorage?.getItem?.("lifeos1_keys_v2") || "{}",
-    );
-    local[name] = key;
-    localStorage?.setItem?.("lifeos1_keys_v2", JSON.stringify(local));
-  } catch {}
-}
-
-async function validateKeyOnWorker(name, key, firebaseUserOrToken) {
-  const provider = VALIDATOR_PROVIDER[name];
-  if (!provider) return { valid: true };
-
-  let idToken = "";
-  if (typeof firebaseUserOrToken === "string") {
-    idToken = firebaseUserOrToken;
-  } else if (firebaseUserOrToken) {
-    try {
-      idToken = await firebaseUserOrToken.getIdToken();
-    } catch {}
-  }
-
-  try {
-    const r = await fetch(`${WORKER_URL}/api/validate-key`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(idToken && { Authorization: `Bearer ${idToken}` }),
-      },
-      body: JSON.stringify({ provider, key }),
+  const filtered = useMemo(() => {
+    return INTEGRATIONS.filter((item) => {
+      const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+      const q = search.toLowerCase();
+      const matchesSearch =
+        !q ||
+        item.name.toLowerCase().includes(q) ||
+        item.desc.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
     });
-    if (!r.ok) return { valid: false, detail: `Worker ${r.status}` };
-    return await r.json();
-  } catch (e) {
-    return { valid: false, detail: e.message };
-  }
-}
+  }, [search, activeCategory]);
 
-// ── OAuth ─────────────────────────────────────────────────────────────────────
-const OAUTH_PROVIDER = {
-  Gmail: { provider: "google", scope: "gmail" },
-  "Google Cal.": { provider: "google", scope: "calendar" },
-  YouTube: { provider: "google", scope: "youtube" },
-  Outlook: { provider: "microsoft", scope: "mail" },
-  GitHub: { provider: "github" },
-  Slack: { provider: "slack" },
-  LinkedIn: { provider: "linkedin" },
-  Facebook: { provider: "facebook" },
-  Instagram: { provider: "instagram" },
-  TikTok: { provider: "tiktok" },
-  "X (Twitter)": { provider: "twitter" },
-  Zoom: { provider: "zoom" },
-  ClickUp: { provider: "clickup" },
-  Airtable: { provider: "airtable" },
-  Calendly: { provider: "calendly" },
-  "Yahoo Mail": { provider: "yahoo" },
-  "AOL Mail": { provider: "aol" },
-};
-
-const PROVIDER_MAP = {
-  Gmail: "google",
-  "Google Cal.": "google",
-  YouTube: "google",
-  Outlook: "microsoft",
-  GitHub: "github",
-  Slack: "slack",
-  LinkedIn: "linkedin",
-  Facebook: "facebook",
-  Instagram: "instagram",
-  TikTok: "tiktok",
-  "X (Twitter)": "twitter",
-  Zoom: "zoom",
-  ClickUp: "clickup",
-  Airtable: "airtable",
-  Calendly: "calendly",
-};
-
-function useOAuthStatus(firebaseUser) {
-  const queryClient = useQueryClient();
-
-  const { data = { accounts: [], kv: {} } } = useQuery({
-    queryKey: ["oauth-status"],
-    queryFn: async () => {
-      let idToken = "";
-      if (firebaseUser) {
-        try {
-          idToken = await firebaseUser.getIdToken();
-        } catch {}
-      }
-
-      const headers = idToken ? { Authorization: `Bearer ${idToken}` } : {};
-
-      const [sRes, kRes] = await Promise.all([
-        fetch(`${WORKER_URL}/api/oauth/status`, { headers }).catch(() => null),
-        fetch(`${WORKER_URL}/api/oauth/status/all`, { headers }).catch(
-          () => null,
-        ),
-      ]);
-      const accounts =
-        sRes && sRes.ok
-          ? (await sRes.json().catch(() => ({}))).connected || []
-          : [];
-      const kv = kRes && kRes.ok ? await kRes.json().catch(() => ({})) : {};
-      return { accounts, kv };
-    },
-    refetchInterval: 30000,
-    refetchOnWindowFocus: false,
-    retry: 1,
-    staleTime: 15000,
-  });
-
-  const connectedAccounts = data.accounts || [];
-  const [verified, setVerified] = useState({});
-
-  // Verify live status for connected accounts by attempting a real data pull.
-  // This prevents "says connected/active but not actually working" (stale tokens, expired, no data).
-  // Only mark as truly connected if test data fetch succeeds.
-  // For all OAuth, we require explicit testOk === true (no optimism on hard refresh).
-  useEffect(() => {
-    if (!connectedAccounts.length) return;
-    const toVerify = connectedAccounts.filter((a) => a.platform);
-    toVerify.forEach(async (acc) => {
-      const prov = acc.platform;
-      let testOk = false;
-      try {
-        let headers = {};
-        if (firebaseUser) {
-          try {
-            const idToken = await firebaseUser.getIdToken();
-            if (idToken) headers = { Authorization: `Bearer ${idToken}` };
-          } catch {}
-        }
-        const SOCIAL_PROVS = [
-          "facebook",
-          "instagram",
-          "linkedin",
-          "x",
-          "twitter",
-          "google",
-          "youtube",
-        ];
-        if (SOCIAL_PROVS.includes(prov)) {
-          // Use per-user verify endpoint that exercises the *user's specific OAuth token* server-side.
-          // This is the key to saying "Inactive" if the actual OAuth for this user is not live/valid.
-          const vRes = await fetch(
-            `${WORKER_URL}/api/oauth/verify?provider=${prov}`,
-            { headers },
-          ).catch(() => null);
-          if (vRes && vRes.ok) {
-            const vd = await vRes.json().catch(() => ({}));
-            testOk = !!vd.ok;
-          }
-        } else {
-          let testUrl = "";
-          if (prov === "google" || prov === "youtube") {
-            testUrl = `${WORKER_URL}/api/youtube/videos?max=1`;
-          } else if (prov === "x" || prov === "twitter") {
-            testUrl = `${WORKER_URL}/api/x/timeline?max=1`;
-          } else if (prov === "facebook" || prov === "instagram") {
-            testUrl = `${WORKER_URL}/api/meta/feed?limit=1`;
-          } else if (prov === "linkedin") {
-            testUrl = `${WORKER_URL}/api/linkedin/status`;
-          } else {
-            testOk = false;
-          }
-          if (testUrl) {
-            const r = await fetch(testUrl, { headers }).catch(() => null);
-            if (r && r.ok) {
-              const d = await r.json().catch(() => ({}));
-              testOk = !!(
-                d.items?.length ||
-                d.tweets?.length ||
-                d.data?.length ||
-                d.connected
-              );
-            }
-          }
-        }
-      } catch (e) {
-        testOk = false;
-      }
-      setVerified((prev) => {
-        const next = { ...prev, [prov]: testOk };
-        // Normalize common aliases so isConnected lookups by google/youtube or x/twitter succeed
-        if (prov === "google" || prov === "youtube") {
-          next.google = testOk;
-          next.youtube = testOk;
-        }
-        if (prov === "x" || prov === "twitter") {
-          next.x = testOk;
-          next.twitter = testOk;
-        }
-        return next;
-      });
+  const toggleConnected = (name) => {
+    setConnected((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
     });
-  }, [connectedAccounts, firebaseUser]);
-
-  const isConnected = (name) => {
-    const provider = PROVIDER_MAP[name];
-    if (!provider) return false;
-    const serverConnected =
-      connectedAccounts.some((a) => a.platform === provider) ||
-      !!(data.kv && data.kv[provider] && data.kv[provider].connected);
-    if (!serverConnected) return false;
-    // For *all* OAuth providers we now require an explicit successful live verification (testOk === true)
-    // before claiming "connected". This ensures hard refresh starts as Inactive and only becomes
-    // Active when the data test actually succeeds. No optimistic "while checking".
-    const v =
-      verified[provider] ??
-      verified[
-        provider === "google"
-          ? "youtube"
-          : provider === "youtube"
-            ? "google"
-            : provider
-      ] ??
-      verified[
-        provider === "x" ? "twitter" : provider === "twitter" ? "x" : provider
-      ];
-    return !!v; // must be explicitly true from a passing data test
-  };
-  const refreshStatus = () => {
-    setVerified({});
-    queryClient.invalidateQueries({ queryKey: ["oauth-status"] });
-  };
-
-  return { isConnected, connectedAccounts, refreshStatus };
-}
-
-async function startOAuthFlow(name, firebaseUser) {
-  const cfg = OAUTH_PROVIDER[name];
-  if (!cfg) return;
-  const uid = firebaseUser?.id || firebaseUser?.uid || "unknown";
-  const width = 600,
-    height = 700;
-  const left = window.screenX + (window.outerWidth - width) / 2;
-  const top = window.screenY + (window.outerHeight - height) / 2;
-
-  // Worker generates PKCE and stores verifier in KV
-  // Client provides state for continuity tracking
-  const state = `${uid}:${Date.now()}`;
-
-  const u = new URL(`${WORKER_URL}/api/oauth/start`);
-  u.searchParams.set("provider", cfg.provider);
-  if (cfg.scope) u.searchParams.set("scope", cfg.scope);
-  u.searchParams.set("user_id", uid);
-  u.searchParams.set("force", "1");
-  u.searchParams.set("state", state);
-  window.open(
-    u.toString(),
-    `oauth-${cfg.provider}`,
-    `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`,
-  );
-}
-
-async function disconnectOAuth(
-  provider,
-  accountEmail,
-  refreshStatus,
-  firebaseUser,
-) {
-  if (!firebaseUser) return;
-  const uid = firebaseUser.id || firebaseUser.uid || "unknown";
-
-  let idToken = "";
-  try {
-    idToken = await firebaseUser.getIdToken();
-  } catch {}
-
-  const u = new URL(`${WORKER_URL}/api/oauth/disconnect`);
-  u.searchParams.set("provider", provider);
-  u.searchParams.set("user_id", uid);
-  u.searchParams.set("account_email", accountEmail || "");
-
-  await fetch(u.toString(), {
-    method: "POST",
-    headers: idToken ? { Authorization: `Bearer ${idToken}` } : {},
-  });
-  if (refreshStatus) refreshStatus();
-}
-
-const API_KEY_SERVICES = new Set([
-  "Claude API",
-  "OpenAI GPT",
-  "Grok (xAI)",
-  "Gemini",
-  "DeepSeek",
-  "Groq",
-  "Perplexity",
-  "Qwen (Ali.)",
-  "Mistral",
-  "Cohere",
-  "Together AI",
-  "Fireworks AI",
-  "Replicate",
-  "Hugging Face",
-  "OpenRouter",
-  "Anyscale",
-  "Lepton AI",
-  "NovitaAI",
-  "AI21 Labs",
-  "CoPilot",
-  "Runway",
-  "ElevenLabs",
-  "Nylas",
-  "Brevo",
-  "SendGrid",
-  "Twilio SMS",
-  "WhatsApp",
-  "Mailchimp",
-  "Brilliant Dir.",
-  "AWS",
-  "Supabase",
-  "ClickUp API",
-  "Stripe",
-  "Cloudflare",
-]);
-
-const EMAIL_PROVIDERS = new Set([
-  "Gmail",
-  "Outlook",
-  "Brevo",
-  "SendGrid",
-  "Mailchimp",
-  "Twilio SMS",
-  "WhatsApp",
-]);
-
-const FREE_INTEGRATIONS = new Set(["Workers AI"]);
-
-const INTEGRATIONS = {
-  "AI Models": [
-    {
-      icon: "🤍",
-      name: "Claude API",
-      sub: "Sonnet 4 · Opus 4 · Haiku",
-      color: C.teal,
-    },
-    { icon: "🔷", name: "OpenAI GPT", sub: "GPT-4o · o1 · o3", color: C.blue },
-    {
-      icon: "✦",
-      name: "Grok (xAI)",
-      sub: "Grok-3 · web search",
-      color: "#1DA1F2",
-    },
-    { icon: "💎", name: "Gemini", sub: "2.0 Flash · 1.5 Pro", color: C.orange },
-    {
-      icon: "⚡",
-      name: "Groq",
-      sub: "Llama-3.3-70B · ultra-fast",
-      color: C.purple,
-    },
-    {
-      icon: "🌊",
-      name: "DeepSeek",
-      sub: "R1 · V3 · reasoning",
-      color: "#4fc3f7",
-    },
-    {
-      icon: "🔍",
-      name: "Perplexity",
-      sub: "Sonar · web-grounded AI",
-      color: "#6aaedd",
-    },
-    {
-      icon: "🌬",
-      name: "Mistral",
-      sub: "Mistral-Small · Mixtral",
-      color: "#f7b731",
-    },
-    {
-      icon: "🎯",
-      name: "Cohere",
-      sub: "Command R+ · RAG specialist",
-      color: "#39d353",
-    },
-    {
-      icon: "🔗",
-      name: "Together AI",
-      sub: "80+ open models",
-      color: "#7c4dff",
-    },
-    {
-      icon: "🔥",
-      name: "Fireworks AI",
-      sub: "Fast inference",
-      color: "#ff5722",
-    },
-    {
-      icon: "🔄",
-      name: "Replicate",
-      sub: "SDXL · LLaMA · thousands",
-      color: "#1565c0",
-    },
-    {
-      icon: "🎬",
-      name: "Runway",
-      sub: "Gen-3 · video generation",
-      color: "#00c2ff",
-    },
-    {
-      icon: "🔊",
-      name: "ElevenLabs",
-      sub: "TTS · voice cloning · audio",
-      color: "#f5a623",
-    },
-    {
-      icon: "🤗",
-      name: "Hugging Face",
-      sub: "Inference API · any model",
-      color: "#ffca28",
-    },
-    {
-      icon: "🛣",
-      name: "OpenRouter",
-      sub: "200+ models · single key",
-      color: "#00897b",
-    },
-    {
-      icon: "🌐",
-      name: "Anyscale",
-      sub: "Llama · Mistral · fast",
-      color: "#5c6bc0",
-    },
-    {
-      icon: "⚛",
-      name: "Lepton AI",
-      sub: "Open source · fast",
-      color: "#26c6da",
-    },
-    {
-      icon: "✨",
-      name: "NovitaAI",
-      sub: "80+ models · image + text",
-      color: "#ab47bc",
-    },
-    {
-      icon: "📝",
-      name: "AI21 Labs",
-      sub: "Jamba · Jurassic",
-      color: "#ef5350",
-    },
-    {
-      icon: "🪟",
-      name: "CoPilot",
-      sub: "GitHub Copilot · GPT-4o",
-      color: "#0078d4",
-    },
-    {
-      icon: "☁",
-      name: "Workers AI",
-      sub: "Llama 3.3-70B · FREE always",
-      color: "#ff6633",
-    },
-  ],
-  "Social Media": [
-    { icon: "📘", name: "Facebook", sub: "Pages & ads", color: "#1877f2" },
-    {
-      icon: "📸",
-      name: "Instagram",
-      sub: "Creator accounts",
-      color: "#e1306c",
-    },
-    {
-      icon: "💼",
-      name: "LinkedIn",
-      sub: "Company + Personal",
-      color: "#0a66c2",
-    },
-    { icon: "🎵", name: "TikTok", sub: "Multi-account", color: "#69c9d0" },
-    { icon: "🐦", name: "X (Twitter)", sub: "Multi-account", color: "#1da1f2" },
-    { icon: "▶", name: "YouTube", sub: "Channel management", color: "#ff0000" },
-  ],
-  "Email & Comms": [
-    { icon: "📬", name: "Gmail", sub: "Google OAuth", color: "#ea4335" },
-    { icon: "📮", name: "Outlook", sub: "Microsoft OAuth", color: "#0078d4" },
-    { icon: "💜", name: "Yahoo Mail", sub: "Yahoo OAuth", color: "#6001d2" },
-    { icon: "🔴", name: "AOL Mail", sub: "AOL OAuth", color: "#ff0b00" },
-    {
-      icon: "🔐",
-      name: "Proton Mail",
-      sub: "IMAP via Bridge",
-      color: "#6d4aff",
-    },
-    {
-      icon: "🟠",
-      name: "Hostinger",
-      sub: "IMAP / app password",
-      color: "#ff6a00",
-    },
-    {
-      icon: "🍎",
-      name: "Nylas",
-      sub: "iCloud · IMAP · any inbox",
-      color: "#6c47ff",
-    },
-    { icon: "📧", name: "Brevo", sub: "Transactional email", color: C.orange },
-    { icon: "📨", name: "SendGrid", sub: "Bulk email", color: C.blue },
-    { icon: "📅", name: "Mailchimp", sub: "Email campaigns", color: C.orange },
-    { icon: "💬", name: "Slack", sub: "Team workspace", color: "#4a154b" },
-    { icon: "📞", name: "Zoom", sub: "Video meetings", color: C.blue },
-    { icon: "📱", name: "Twilio SMS", sub: "SMS automation", color: C.red },
-    { icon: "💬", name: "WhatsApp", sub: "Business API", color: "#25d366" },
-  ],
-  "Business Tools": [
-    {
-      icon: "📋",
-      name: "ClickUp",
-      sub: "Project management",
-      color: "#7b68ee",
-    },
-    { icon: "🗓", name: "Google Cal.", sub: "Calendar sync", color: "#4285f4" },
-    { icon: "📅", name: "Calendly", sub: "Scheduling", color: C.blue },
-    {
-      icon: "💳",
-      name: "Stripe",
-      sub: "Payments · live data",
-      color: "#635bff",
-    },
-    { icon: "📊", name: "Airtable", sub: "Database & CRM", color: "#f82b60" },
-    { icon: "💰", name: "QuickBooks", sub: "Accounting", color: "#2ca01c" },
-    { icon: "🔄", name: "Make.com", sub: "Automation flows", color: C.purple },
-    {
-      icon: "📁",
-      name: "Brilliant Dir.",
-      sub: "Member directory",
-      color: C.orange,
-    },
-    { icon: "📂", name: "GitHub", sub: "Code repos", color: "#f0ede8" },
-  ],
-  Infrastructure: [
-    {
-      icon: "☁",
-      name: "Cloudflare",
-      sub: "Workers · Pages · Analytics",
-      color: "#ff6633",
-    },
-    {
-      icon: "🗄",
-      name: "Supabase",
-      sub: "DB · Auth · Realtime",
-      color: "#3ecf8e",
-    },
-    { icon: "🟠", name: "AWS", sub: "S3 · Lambda", color: C.orange },
-    { icon: "🟢", name: "Google Cloud", sub: "gcloud CLI", color: C.teal },
-  ],
-};
-
-// ── Model Switcher ────────────────────────────────────────────────────────────
-function ModelSwitcherBar() {
-  const [preferred, setPreferred] = useState(() => getPreferredModel());
-
-  function pick(id) {
-    setPreferred(id);
-    setPreferredModel(id);
-  }
-
-  return (
-    <div
-      style={{
-        marginBottom: 16,
-        padding: 14,
-        borderRadius: 10,
-        background: "rgba(0,200,150,0.05)",
-        border: "0.5px solid rgba(0,200,150,0.2)",
-      }}
-    >
-      <div
-        style={{
-          fontSize: 10,
-          fontWeight: 700,
-          color: "#00c896",
-          letterSpacing: ".08em",
-          marginBottom: 10,
-        }}
-      >
-        ✦ ACTIVE AI MODEL — auto-switches when credits run out
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-        {MODEL_OPTIONS.map((opt) => {
-          const active = preferred === opt.id;
-          return (
-            <button
-              key={opt.id}
-              onClick={() => pick(opt.id)}
-              style={{
-                padding: "5px 12px",
-                borderRadius: 20,
-                fontSize: 11,
-                fontWeight: 600,
-                cursor: "pointer",
-                background: active
-                  ? "rgba(0,200,150,0.2)"
-                  : "rgba(255,255,255,0.04)",
-                border: active
-                  ? "0.5px solid rgba(0,200,150,0.5)"
-                  : "0.5px solid rgba(255,255,255,0.1)",
-                color: active ? "#00c896" : "#6aaedd",
-                transition: "all .15s",
-              }}
-            >
-              {opt.icon} {opt.label}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ── Add Account Form ──────────────────────────────────────────────────────────
-function AddAccountForm({ itemName, existingAccounts, onAdd, onCancel }) {
-  const [identifier, setIdentifier] = useState("");
-  const [label, setLabel] = useState("");
-  const isOAuth = !!OAUTH_PROVIDER[itemName];
-
-  function handleAdd() {
-    const id = identifier.trim();
-    if (!id) return;
-    const lbl = label.trim() || id.split("@")[0] || id;
-    const color = nextColor(existingAccounts);
-    onAdd({ email: id, label: lbl, color, icon: "👤" });
-  }
-
-  const inp = {
-    width: "100%",
-    padding: "7px 10px",
-    borderRadius: 6,
-    border: "0.5px solid rgba(255,255,255,0.12)",
-    background: "#0d0e17",
-    color: "#f0ede8",
-    fontSize: 11,
-    outline: "none",
-    boxSizing: "border-box",
   };
 
   return (
-    <div
-      style={{
-        padding: "10px 14px 12px",
-        borderTop: "0.5px solid rgba(255,255,255,0.06)",
-        background: "rgba(0,0,0,0.22)",
-      }}
+    <PanelLayout
+      title="Integrations"
+      subtitle={`${INTEGRATIONS.length} integrations available · ${connected.size} connected`}
+      icon={<Plug size={16} />}
     >
-      <div
-        style={{
-          fontSize: 9,
-          fontWeight: 700,
-          color: "#6aaedd",
-          letterSpacing: ".1em",
-          marginBottom: 8,
-        }}
-      >
-        ADD ACCOUNT
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-        <input
-          value={identifier}
-          onChange={(e) => setIdentifier(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-          placeholder={
-            isOAuth
-              ? "email@example.com (used as OAuth hint)"
-              : "email, username, or any identifier"
-          }
-          style={inp}
-          autoFocus
-        />
-        <input
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-          placeholder="Label — e.g. Work, Personal, Business (optional)"
-          style={inp}
-        />
-        <div style={{ display: "flex", gap: 6 }}>
-          <button
-            onClick={handleAdd}
-            style={{
-              flex: 1,
-              padding: "7px",
-              borderRadius: 6,
-              background: "rgba(0,200,150,0.15)",
-              border: "0.5px solid #00c896",
-              color: "#00c896",
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
-            + Add Account
-          </button>
-          <button
-            onClick={onCancel}
-            style={{
-              padding: "7px 12px",
-              borderRadius: 6,
-              background: "transparent",
-              border: "0.5px solid rgba(255,255,255,0.1)",
-              color: "#6aaedd",
-              fontSize: 11,
-              cursor: "pointer",
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Credential Form ───────────────────────────────────────────────────────────
-function RowWithDelete({ children, onDelete }) {
-  const [confirm, setConfirm] = useState(false);
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "stretch",
-        position: "relative",
-        borderBottom: "0.5px solid rgba(255,255,255,0.03)",
-      }}
-    >
-      {children}
-      {confirm ? (
+      {/* Toolbar */}
+      <div className="shrink-0 flex flex-col gap-2">
+        {/* Search */}
         <div
+          className="flex items-center gap-2 px-3 py-2 rounded-lg"
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-            padding: "0 8px",
-            flexShrink: 0,
-            background: "rgba(255,79,94,0.08)",
+            background: "oklch(0.12 0.04 20 / 60%)",
+            border: "1px solid oklch(0.55 0.22 20 / 25%)",
           }}
         >
-          <button
-            onClick={() => {
-              onDelete();
-              setConfirm(false);
-            }}
-            style={{
-              padding: "3px 8px",
-              borderRadius: 5,
-              background: "rgba(255,79,94,0.25)",
-              border: "0.5px solid rgba(255,79,94,0.6)",
-              color: "#ff4f5e",
-              fontSize: 9,
-              fontWeight: 700,
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
-          >
-            ✕ Delete
-          </button>
-          <button
-            onClick={() => setConfirm(false)}
-            style={{
-              padding: "3px 6px",
-              borderRadius: 5,
-              background: "transparent",
-              border: "0.5px solid rgba(255,255,255,0.1)",
-              color: "#555",
-              fontSize: 9,
-              cursor: "pointer",
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setConfirm(true);
-          }}
-          title="Delete entry"
-          style={{
-            padding: "0 10px",
-            background: "transparent",
-            border: "none",
-            borderLeft: "0.5px solid rgba(255,255,255,0.04)",
-            color: "#333",
-            fontSize: 12,
-            cursor: "pointer",
-            flexShrink: 0,
-          }}
-        >
-          🗑
-        </button>
-      )}
-    </div>
-  );
-}
-
-function CredentialForm({
-  name,
-  email,
-  label,
-  icon,
-  color,
-  slot,
-  onSave,
-  onRemove,
-  onDelete,
-  onClose,
-  isOAuth,
-  globalIsConnected,
-  itemName,
-  firebaseIdToken,
-}) {
-  const [username, setUsername] = useState(slot.username || "");
-  const [password, setPassword] = useState(slot.password || "");
-  const [apiKey, setApiKey] = useState(slot.apiKey || "");
-  const [editLabel, setEditLabel] = useState(slot.label || label || "");
-  const [editEmail, setEditEmail] = useState(email || "");
-  const [saving, setSaving] = useState(false);
-  const [validMsg, setValidMsg] = useState(null);
-  const [showPass, setShowPass] = useState(false);
-  const [confirmDel, setConfirmDel] = useState(false);
-  const { user } = useAuth(); // Gather target firebase profiles
-  const isNylas = name === "Nylas";
-  const isStripe = name === "Stripe";
-  const isCF = name === "Cloudflare";
-  const isApiOnly = API_KEY_SERVICES.has(name) && !isNylas;
-
-  async function handleSave() {
-    setSaving(true);
-    setValidMsg(null);
-    if (apiKey && VALIDATOR_PROVIDER[name] && !isStripe && !isCF) {
-      const r = await validateKeyOnWorker(name, apiKey, firebaseIdToken);
-      if (!r.valid) {
-        setValidMsg({ ok: false, msg: r.detail || "Key validation failed" });
-        setSaving(false);
-        return;
-      }
-      setValidMsg({ ok: true, msg: "Key validated ✓" });
-    }
-    await onSave({
-      username,
-      password,
-      apiKey,
-      label: editLabel,
-      email: editEmail,
-    });
-    setSaving(false);
-  }
-
-  const inp = {
-    width: "100%",
-    padding: "8px 10px",
-    borderRadius: 7,
-    border: "0.5px solid rgba(255,255,255,0.12)",
-    background: "#0d0e17",
-    color: "#f0ede8",
-    fontSize: 12,
-    outline: "none",
-    boxSizing: "border-box",
-    fontFamily: "monospace",
-  };
-  const lbl = {
-    display: "block",
-    fontSize: 9,
-    fontWeight: 700,
-    color: "#6aaedd",
-    letterSpacing: ".09em",
-    marginBottom: 5,
-  };
-
-  return (
-    <div
-      style={{
-        padding: "12px 14px 14px",
-        borderTop: "0.5px solid rgba(255,255,255,0.06)",
-        background: "rgba(0,0,0,0.18)",
-      }}
-    >
-      {/* Account badge */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          marginBottom: 12,
-        }}
-      >
-        <span style={{ fontSize: 13 }}>{icon || "👤"}</span>
-        <div>
-          <div
-            style={{ fontSize: 11, fontWeight: 700, color: color || "#6aaedd" }}
-          >
-            {label || email}
-          </div>
-          <div style={{ fontSize: 9, color: "#555" }}>{email}</div>
-        </div>
-        {(() => {
-          const oauthActive =
-            !isOAuth ||
-            (globalIsConnected && itemName && globalIsConnected(itemName));
-          return (
-            <>
-              {slot.status === "on" && oauthActive && (
-                <span
-                  style={{
-                    marginLeft: "auto",
-                    fontSize: 9,
-                    color: C.teal,
-                    fontWeight: 700,
-                    background: "rgba(0,200,150,0.1)",
-                    padding: "2px 8px",
-                    borderRadius: 10,
-                  }}
-                >
-                  ● Connected
-                </span>
-              )}
-              {isOAuth &&
-                globalIsConnected &&
-                itemName &&
-                !globalIsConnected(itemName) &&
-                slot.status === "on" && (
-                  <span
-                    style={{
-                      marginLeft: "auto",
-                      fontSize: 9,
-                      color: "#888",
-                      fontWeight: 700,
-                      background: "rgba(255,255,255,0.06)",
-                      padding: "2px 8px",
-                      borderRadius: 10,
-                    }}
-                  >
-                    ● Inactive
-                  </span>
-                )}
-            </>
-          );
-        })()}
-      </div>
-
-      {/* Hints */}
-      {isNylas && (
-        <div
-          style={{
-            fontSize: 10,
-            color: "#6aaedd",
-            background: "rgba(108,71,255,0.08)",
-            border: "0.5px solid rgba(108,71,255,0.25)",
-            borderRadius: 7,
-            padding: "8px 10px",
-            marginBottom: 10,
-            lineHeight: 1.5,
-          }}
-        >
-          1. Sign up at <b style={{ color: "#a78bfa" }}>nylas.com</b>
-          <br />
-          2. Create an app → copy the{" "}
-          <b style={{ color: "#a78bfa" }}>API Key</b>
-          <br />
-          3. Connect your iCloud/Gmail → copy the{" "}
-          <b style={{ color: "#a78bfa" }}>Grant ID</b>
-        </div>
-      )}
-      {isStripe && (
-        <div
-          style={{
-            fontSize: 10,
-            color: "#6aaedd",
-            background: "rgba(99,91,255,0.08)",
-            border: "0.5px solid rgba(99,91,255,0.25)",
-            borderRadius: 7,
-            padding: "8px 10px",
-            marginBottom: 10,
-            lineHeight: 1.5,
-          }}
-        >
-          Enter your <b style={{ color: "#a78bfa" }}>Secret Key</b> (sk_live_...
-          or sk_test_...) to pull live balance & charges.
-        </div>
-      )}
-      {isCF && (
-        <div
-          style={{
-            fontSize: 10,
-            color: "#6aaedd",
-            background: "rgba(255,102,51,0.08)",
-            border: "0.5px solid rgba(255,102,51,0.25)",
-            borderRadius: 7,
-            padding: "8px 10px",
-            marginBottom: 10,
-            lineHeight: 1.5,
-          }}
-        >
-          Enter a Cloudflare <b style={{ color: "#ff8c42" }}>API Token</b> with
-          Zone Analytics Read permission to pull data.
-        </div>
-      )}
-
-      {/* Label editor */}
-      <div style={{ marginBottom: 10 }}>
-        <label
-          style={{
-            display: "block",
-            fontSize: 9,
-            fontWeight: 700,
-            color: "#6aaedd",
-            letterSpacing: ".09em",
-            marginBottom: 5,
-          }}
-        >
-          ACCOUNT LABEL
-        </label>
-        <input
-          value={editLabel}
-          onChange={(e) => setEditLabel(e.target.value)}
-          placeholder="My label..."
-          style={{
-            width: "100%",
-            padding: "7px 10px",
-            borderRadius: 7,
-            border: "0.5px solid rgba(255,255,255,0.12)",
-            background: "#0d0e17",
-            color: "#f0ede8",
-            fontSize: 12,
-            outline: "none",
-            boxSizing: "border-box",
-          }}
-        />
-      </div>
-      <div style={{ marginBottom: 10 }}>
-        <label
-          style={{
-            display: "block",
-            fontSize: 9,
-            fontWeight: 700,
-            color: "#6aaedd",
-            letterSpacing: ".09em",
-            marginBottom: 5,
-          }}
-        >
-          ACCOUNT EMAIL / ID
-        </label>
-        <input
-          value={editEmail}
-          onChange={(e) => setEditEmail(e.target.value)}
-          placeholder="email@example.com"
-          style={{
-            width: "100%",
-            padding: "7px 10px",
-            borderRadius: 7,
-            border: "0.5px solid rgba(255,255,255,0.12)",
-            background: "#0d0e17",
-            color: "#f0ede8",
-            fontSize: 12,
-            outline: "none",
-            boxSizing: "border-box",
-          }}
-        />
-      </div>
-
-      {/* Fields */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {isNylas ? (
-          <>
-            <div>
-              <label style={lbl}>NYLAS API KEY</label>
-              <input
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="nyk_v0_..."
-                style={inp}
-                autoComplete="off"
-                spellCheck={false}
-              />
-            </div>
-            <div>
-              <label style={lbl}>GRANT ID (from connected inbox)</label>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSave()}
-                placeholder="grant_... or UUID"
-                style={inp}
-                autoComplete="off"
-                spellCheck={false}
-              />
-            </div>
-          </>
-        ) : isApiOnly ? (
-          <div>
-            <label style={lbl}>
-              {isStripe
-                ? "STRIPE SECRET KEY"
-                : isCF
-                  ? "CLOUDFLARE API TOKEN"
-                  : "API KEY / TOKEN"}
-            </label>
-            <input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSave()}
-              placeholder={
-                isStripe
-                  ? "sk_live_..."
-                  : isCF
-                    ? "CF token..."
-                    : `${name} API key...`
-              }
-              style={inp}
-              autoComplete="off"
-              spellCheck={false}
-            />
-          </div>
-        ) : (
-          <>
-            {isOAuth && (
-              <div>
-                <label style={lbl}>USERNAME / EMAIL (prefill OAuth hint)</label>
-                <input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder={email}
-                  style={inp}
-                  autoComplete="off"
-                />
-              </div>
-            )}
-            {!isOAuth && (
-              <>
-                <div>
-                  <label style={lbl}>USERNAME / EMAIL</label>
-                  <input
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder={email}
-                    style={inp}
-                    autoComplete="off"
-                  />
-                </div>
-                <div>
-                  <label style={lbl}>PASSWORD</label>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      type={showPass ? "text" : "password"}
-                      style={{ ...inp, paddingRight: 32 }}
-                      autoComplete="new-password"
-                    />
-                    <button
-                      onClick={() => setShowPass((v) => !v)}
-                      style={{
-                        position: "absolute",
-                        right: 8,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        background: "none",
-                        border: "none",
-                        color: "#555",
-                        cursor: "pointer",
-                        fontSize: 11,
-                      }}
-                    >
-                      {showPass ? "🙈" : "👁"}
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-            <div>
-              <label style={lbl}>API KEY / TOKEN (optional)</label>
-              <input
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSave()}
-                placeholder={`${name} API key or token...`}
-                style={inp}
-                autoComplete="off"
-                spellCheck={false}
-              />
-            </div>
-          </>
-        )}
-      </div>
-
-      {validMsg && (
-        <div
-          style={{
-            marginTop: 8,
-            fontSize: 10,
-            color: validMsg.ok ? C.teal : C.red,
-            fontWeight: 600,
-          }}
-        >
-          {validMsg.msg}
-        </div>
-      )}
-
-      <div style={{ display: "flex", gap: 6, marginTop: 12 }}>
-        {isOAuth && slot.status !== "on" && (
-          <button
-            onClick={() => startOAuthFlow(name, user)}
-            style={{
-              flex: 1,
-              padding: "8px",
-              borderRadius: 7,
-              background: "rgba(74,179,244,0.12)",
-              border: "0.5px solid rgba(74,179,244,0.35)",
-              color: C.blue,
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
-            🔗 Connect
-          </button>
-        )}
-        {isOAuth && slot.status === "on" && (
-          <button
-            onClick={() =>
-              disconnectOAuth(OAUTH_PROVIDER[name]?.provider, email, onRemove)
-            }
-            style={{
-              padding: "8px 10px",
-              borderRadius: 7,
-              background: "rgba(255,79,94,0.08)",
-              border: "0.5px solid rgba(255,79,94,0.4)",
-              color: C.red,
-              fontSize: 11,
-              cursor: "pointer",
-            }}
-          >
-            Disconnect
-          </button>
-        )}
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          style={{
-            flex: 2,
-            padding: "8px",
-            borderRadius: 7,
-            background: "rgba(0,200,150,0.15)",
-            border: `0.5px solid ${C.teal}`,
-            color: C.teal,
-            fontSize: 11,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          {saving ? "Saving..." : "✓ Save & Connect"}
-        </button>
-        {slot.status === "on" && (
-          <button
-            onClick={onRemove}
-            title="Disconnect"
-            style={{
-              padding: "8px 10px",
-              borderRadius: 7,
-              background: "rgba(255,79,94,0.08)",
-              border: "0.5px solid rgba(255,79,94,0.3)",
-              color: C.red,
-              fontSize: 11,
-              cursor: "pointer",
-            }}
-          >
-            ✕
-          </button>
-        )}
-        {confirmDel ? (
-          <>
-            <button
-              onClick={() => {
-                onDelete();
-                setConfirmDel(false);
-              }}
-              style={{
-                padding: "8px 10px",
-                borderRadius: 7,
-                background: "rgba(255,79,94,0.2)",
-                border: "0.5px solid rgba(255,79,94,0.6)",
-                color: C.red,
-                fontSize: 11,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              Confirm Delete
-            </button>
-            <button
-              onClick={() => setConfirmDel(false)}
-              style={{
-                padding: "8px 8px",
-                borderRadius: 7,
-                background: "transparent",
-                border: "0.5px solid rgba(255,255,255,0.1)",
-                color: "#666",
-                fontSize: 11,
-                cursor: "pointer",
-              }}
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={() => setConfirmDel(true)}
-            title="Delete account"
-            style={{
-              padding: "8px 10px",
-              borderRadius: 7,
-              background: "rgba(255,79,94,0.05)",
-              border: "0.5px solid rgba(255,79,94,0.2)",
-              color: "#ff4f5e88",
-              fontSize: 11,
-              cursor: "pointer",
-            }}
-          >
-            🗑
-          </button>
-        )}
-        <button
-          onClick={onClose}
-          style={{
-            padding: "8px 10px",
-            borderRadius: 7,
-            background: "transparent",
-            border: "0.5px solid rgba(255,255,255,0.1)",
-            color: "#6aaedd",
-            fontSize: 11,
-            cursor: "pointer",
-          }}
-        >
-          ↑
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ── Stripe Data Widget ────────────────────────────────────────────────────────
-function StripeDataWidget({ accounts }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoad] = useState(false);
-  const [err, setErr] = useState(null);
-  const connected = getAccountEntries(accounts, "Stripe").find(
-    ({ slot }) => slot.status === "on" && slot.apiKey,
-  );
-
-  if (!connected) return null;
-
-  function fetchData() {
-    setLoad(true);
-    setErr(null);
-    fetch(`${WORKER_URL}/api/stripe/summary`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`)))
-      .then((d) => {
-        setData(d);
-        setLoad(false);
-      })
-      .catch((e) => {
-        setErr(String(e));
-        setLoad(false);
-      });
-  }
-
-  return (
-    <div
-      style={{
-        padding: "10px 14px 12px",
-        borderTop: "0.5px solid rgba(255,255,255,0.05)",
-      }}
-    >
-      {!data && !loading && (
-        <button
-          onClick={fetchData}
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 7,
-            background: "rgba(99,91,255,0.1)",
-            border: "0.5px solid rgba(99,91,255,0.3)",
-            color: "#635bff",
-            fontSize: 11,
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-        >
-          📊 Pull Stripe Data
-        </button>
-      )}
-      {loading && (
-        <div
-          style={{
-            fontSize: 10,
-            color: "#555",
-            textAlign: "center",
-            padding: 6,
-          }}
-        >
-          Loading Stripe data...
-        </div>
-      )}
-      {err && (
-        <div style={{ fontSize: 10, color: C.red }}>
-          {err} —{" "}
-          <button
-            onClick={fetchData}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#635bff",
-              cursor: "pointer",
-              fontSize: 10,
-            }}
-          >
-            retry
-          </button>
-        </div>
-      )}
-      {data && (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 8,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 9,
-                fontWeight: 700,
-                color: "#555",
-                letterSpacing: ".1em",
-              }}
-            >
-              STRIPE SUMMARY
-            </span>
-            <button
-              onClick={() => {
-                setData(null);
-                fetchData();
-              }}
-              style={{
-                fontSize: 9,
-                color: "#635bff",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              ↻ Refresh
-            </button>
-          </div>
-          {data.balance && (
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ fontSize: 10, color: "#555", marginBottom: 2 }}>
-                Available Balance
-              </div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: "#635bff" }}>
-                ${((data.balance.available?.[0]?.amount || 0) / 100).toFixed(2)}{" "}
-                <span style={{ fontSize: 11, color: "#555" }}>
-                  {(
-                    data.balance.available?.[0]?.currency || "usd"
-                  ).toUpperCase()}
-                </span>
-              </div>
-              {data.balance.pending?.[0]?.amount > 0 && (
-                <div style={{ fontSize: 10, color: "#555" }}>
-                  Pending: ${(data.balance.pending[0].amount / 100).toFixed(2)}
-                </div>
-              )}
-            </div>
-          )}
-          {data.charges && data.charges.length > 0 && (
-            <div>
-              <div
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: "#555",
-                  letterSpacing: ".1em",
-                  marginBottom: 5,
-                }}
-              >
-                RECENT CHARGES
-              </div>
-              {data.charges.slice(0, 5).map((ch) => (
-                <div
-                  key={ch.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "4px 0",
-                    borderBottom: "0.5px solid rgba(255,255,255,0.04)",
-                    fontSize: 10,
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#888",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      maxWidth: "65%",
-                    }}
-                  >
-                    {ch.description || ch.customer_email || ch.id}
-                  </span>
-                  <span
-                    style={{
-                      color: ch.status === "succeeded" ? C.teal : C.red,
-                      fontWeight: 700,
-                      flexShrink: 0,
-                    }}
-                  >
-                    ${(ch.amount / 100).toFixed(2)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Cloudflare Data Widget ────────────────────────────────────────────────────
-function CloudflareDataWidget({ accounts }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoad] = useState(false);
-  const [err, setErr] = useState(null);
-  const connected = getAccountEntries(accounts, "Cloudflare").find(
-    ({ slot }) => slot.status === "on" && slot.apiKey,
-  );
-
-  if (!connected) return null;
-
-  function fetchData() {
-    setLoad(true);
-    setErr(null);
-    fetch(`${WORKER_URL}/api/cloudflare/summary`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`)))
-      .then((d) => {
-        setData(d);
-        setLoad(false);
-      })
-      .catch((e) => {
-        setErr(String(e));
-        setLoad(false);
-      });
-  }
-
-  return (
-    <div
-      style={{
-        padding: "10px 14px 12px",
-        borderTop: "0.5px solid rgba(255,255,255,0.05)",
-      }}
-    >
-      {!data && !loading && (
-        <button
-          onClick={fetchData}
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 7,
-            background: "rgba(255,102,51,0.1)",
-            border: "0.5px solid rgba(255,102,51,0.3)",
-            color: "#ff6633",
-            fontSize: 11,
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-        >
-          📊 Pull Cloudflare Analytics
-        </button>
-      )}
-      {loading && (
-        <div
-          style={{
-            fontSize: 10,
-            color: "#555",
-            textAlign: "center",
-            padding: 6,
-          }}
-        >
-          Loading Cloudflare data...
-        </div>
-      )}
-      {err && (
-        <div style={{ fontSize: 10, color: C.red }}>
-          {err} —{" "}
-          <button
-            onClick={fetchData}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#ff6633",
-              cursor: "pointer",
-              fontSize: 10,
-            }}
-          >
-            retry
-          </button>
-        </div>
-      )}
-      {data && (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 8,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 9,
-                fontWeight: 700,
-                color: "#555",
-                letterSpacing: ".1em",
-              }}
-            >
-              CLOUDFLARE ZONES
-            </span>
-            <button
-              onClick={() => {
-                setData(null);
-                fetchData();
-              }}
-              style={{
-                fontSize: 9,
-                color: "#ff6633",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              ↻ Refresh
-            </button>
-          </div>
-          {(data.zones || []).map((z) => (
-            <div
-              key={z.id}
-              style={{
-                marginBottom: 8,
-                padding: "8px 10px",
-                borderRadius: 7,
-                background: "rgba(255,102,51,0.06)",
-                border: "0.5px solid rgba(255,102,51,0.15)",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 4,
-                }}
-              >
-                <span
-                  style={{ fontSize: 11, fontWeight: 700, color: "#ff6633" }}
-                >
-                  {z.name}
-                </span>
-                <span
-                  style={{
-                    fontSize: 9,
-                    color: z.status === "active" ? C.teal : "#555",
-                    fontWeight: 700,
-                  }}
-                >
-                  {z.status}
-                </span>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 4,
-                  fontSize: 10,
-                }}
-              >
-                <span style={{ color: "#555" }}>
-                  Requests:{" "}
-                  <span style={{ color: "#f0ede8", fontWeight: 600 }}>
-                    {(z.requests || 0).toLocaleString()}
-                  </span>
-                </span>
-                <span style={{ color: "#555" }}>
-                  Threats:{" "}
-                  <span
-                    style={{
-                      color: (z.threats || 0) > 0 ? C.red : "#888",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {(z.threats || 0).toLocaleString()}
-                  </span>
-                </span>
-                <span style={{ color: "#555" }}>
-                  Bandwidth:{" "}
-                  <span style={{ color: "#f0ede8", fontWeight: 600 }}>
-                    {z.bandwidth || "—"}
-                  </span>
-                </span>
-                <span style={{ color: "#555" }}>
-                  Uniques:{" "}
-                  <span style={{ color: "#f0ede8", fontWeight: 600 }}>
-                    {(z.uniques || 0).toLocaleString()}
-                  </span>
-                </span>
-              </div>
-            </div>
-          ))}
-          {(!data.zones || data.zones.length === 0) && (
-            <div style={{ fontSize: 10, color: "#555" }}>
-              No zones found. Check your API token permissions.
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Integration Card ──────────────────────────────────────────────────────────
-function IntegrationCard({
-  item,
-  accounts,
-  onAccountsChange,
-  showToast,
-  isFree,
-  firebaseIdToken,
-  isConnected: globalIsConnected,
-}) {
-  const [expanded, setExpanded] = useState(null);
-  const [addingAcct, setAdding] = useState(false);
-  const isOAuth = !!OAUTH_PROVIDER[item.name];
-  const isApiKey = API_KEY_SERVICES.has(item.name);
-  const accountEntries = getAccountEntries(accounts, item.name);
-  // For OAuth items (socials etc.), the true "connected" comes from the oauth status + live verification, not the local accounts "on".
-  // If globalIsConnected provided and it's an OAuth item, use that to determine active/inactive. Force Inactive otherwise.
-  const oauthConnected =
-    isOAuth && globalIsConnected ? !!globalIsConnected(item.name) : false;
-  const anyOn = isOAuth
-    ? oauthConnected
-    : accountEntries.some(({ slot }) => slot.status === "on");
-
-  function addAccount({ email, label, color, icon }) {
-    const updated = { ...accounts };
-    if (!updated[item.name]) updated[item.name] = {};
-    if (!updated[item.name][email]) {
-      updated[item.name][email] = {
-        username: "",
-        password: "",
-        apiKey: "",
-        status: "off",
-        label,
-        color,
-        icon,
-      };
-    }
-    onAccountsChange(updated);
-    setAdding(false);
-    setExpanded(email);
-  }
-
-  function saveSlot(email, data) {
-    const updated = { ...accounts };
-    if (!updated[item.name]) updated[item.name] = {};
-    updated[item.name] = { ...updated[item.name] };
-    const current = updated[item.name][email] || {
-      username: "",
-      password: "",
-      apiKey: "",
-      status: "off",
-      label: email,
-      color: "#6aaedd",
-      icon: "👤",
-    };
-    const hasCredential = !!(data.apiKey || data.username || data.password);
-    const newEmail =
-      data.email && data.email.trim() ? data.email.trim() : email;
-    if (newEmail !== email) {
-      delete updated[item.name][email];
-    }
-    updated[item.name][newEmail] = {
-      ...current,
-      ...data,
-      email: undefined,
-      status: hasCredential ? "on" : current.status,
-    };
-    onAccountsChange(updated);
-    if (data.apiKey) {
-      try {
-        const local = JSON.parse(
-          localStorage.getItem("lifeos1_keys_v2") || "{}",
-        );
-        local[item.name] = data.apiKey;
-        localStorage.setItem("lifeos1_keys_v2", JSON.stringify(local));
-      } catch {}
-    }
-    const displayLabel = updated[item.name][newEmail].label || newEmail;
-    showToast(`✓ ${item.name} — ${displayLabel} saved`, C.teal);
-    setExpanded(null);
-    if (data.apiKey) {
-      storeKeyOnWorker(item.name, newEmail, data.apiKey, firebaseIdToken).catch(
-        () => {},
-      );
-    }
-    if (item.name === "Nylas" && data.username) {
-      fetch(`${WORKER_URL}/api/nylas/store-grant`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${firebaseIdToken}`,
-        },
-        body: JSON.stringify({ email: newEmail, grant_id: data.username }),
-      }).catch(() => {
-        fetch(`${WORKER_URL}/api/keys/store`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${firebaseIdToken}`,
-          },
-          body: JSON.stringify({
-            service: "nylas_grant_id",
-            key: data.username,
-          }),
-        }).catch(() => {});
-      });
-    }
-  }
-
-  function removeSlot(email) {
-    const updated = { ...accounts };
-    if (updated[item.name]?.[email]) {
-      updated[item.name][email] = {
-        ...updated[item.name][email],
-        username: "",
-        password: "",
-        apiKey: "",
-        status: "off",
-      };
-    }
-    onAccountsChange(updated);
-    showToast(`${item.name} disconnected`, C.red);
-    setExpanded(null);
-  }
-
-  function deleteSlot(email) {
-    const updated = { ...accounts };
-    if (updated[item.name]) delete updated[item.name][email];
-    onAccountsChange(updated);
-    showToast(`${item.name} — account removed`, "#888");
-    setExpanded(null);
-  }
-
-  // For OAuth socials/integrations, if not connected via the verified oauth status, force "Inactive" label and styling.
-  const effectiveAnyOn = anyOn;
-  const effectiveStatusText =
-    isOAuth && globalIsConnected && !globalIsConnected(item.name)
-      ? "● Inactive"
-      : isFree
-        ? "● Always On"
-        : anyOn
-          ? "● Active"
-          : accountEntries.length === 0
-            ? isOAuth
-              ? "OAuth →"
-              : isApiKey
-                ? "Add Key"
-                : "Connect"
-            : "Manage";
-  const statusBg =
-    effectiveAnyOn &&
-    !(isOAuth && globalIsConnected && !globalIsConnected(item.name))
-      ? "rgba(0,200,150,0.1)"
-      : "rgba(74,179,244,0.06)";
-  const statusBrd =
-    effectiveAnyOn &&
-    !(isOAuth && globalIsConnected && !globalIsConnected(item.name))
-      ? "rgba(0,200,150,0.3)"
-      : "rgba(74,179,244,0.15)";
-  const statusColor =
-    effectiveAnyOn &&
-    !(isOAuth && globalIsConnected && !globalIsConnected(item.name))
-      ? C.teal
-      : "#6aaedd";
-  const oauthActive = isOAuth
-    ? globalIsConnected
-      ? !!globalIsConnected(item.name)
-      : false
-    : false;
-
-  return (
-    <div
-      style={{
-        ...card,
-        overflow: "hidden",
-        transition: "box-shadow .2s",
-        boxShadow:
-          effectiveAnyOn &&
-          !(isOAuth && globalIsConnected && !globalIsConnected(item.name))
-            ? `0 0 0 1px ${item.color}44`
-            : "none",
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          padding: "11px 14px",
-          display: "flex",
-          gap: 10,
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 8,
-            background: item.color + "22",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 17,
-            flexShrink: 0,
-          }}
-        >
-          {item.icon}
-        </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              color: "#f0ede8",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {item.name}{" "}
-            {isFree && (
-              <span
-                style={{
-                  marginLeft: 6,
-                  fontSize: 9,
-                  color: "#ff8c42",
-                  fontWeight: 700,
-                  background: "rgba(255,140,66,0.12)",
-                  padding: "1px 5px",
-                  borderRadius: 8,
-                }}
-              >
-                FREE
-              </span>
-            )}
-          </div>
-          <div style={{ fontSize: 10, color: "#6aaedd" }}>{item.sub}</div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 5,
-            flexShrink: 0,
-          }}
-        >
-          <div
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background:
-                effectiveAnyOn &&
-                !(isOAuth && globalIsConnected && !globalIsConnected(item.name))
-                  ? "#00c896"
-                  : isFree
-                    ? "#ff8c42"
-                    : "#444",
-            }}
+          <Search size={14} className="text-white/40 shrink-0" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search integrations…"
+            className="bg-transparent outline-none text-white/80 placeholder:text-white/30 text-xs w-full font-display tracking-wide"
           />
-          <button
-            onClick={() => {
-              if (isFree) {
-                showToast(
-                  "☁ Workers AI is always free — no setup needed!",
-                  C.teal,
-                );
-                return;
-              }
-              setAdding(false);
-              if (accountEntries.length === 0) {
-                setAdding(true);
-                return;
-              }
-              setExpanded((e) => (e ? null : accountEntries[0].email));
-            }}
-            style={{
-              padding: "3px 9px",
-              borderRadius: 20,
-              fontSize: 9,
-              fontWeight: 700,
-              cursor: "pointer",
-              border: `0.5px solid ${statusBrd}`,
-              background: statusBg,
-              color: statusColor,
-            }}
-          >
-            {effectiveStatusText}
-          </button>
         </div>
-      </div>
 
-      {/* Dynamic account rows */}
-      {!isFree && (isApiKey || isOAuth) && accountEntries.length > 0 && (
-        <div style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)" }}>
-          {accountEntries.map(({ email, slot }) => {
-            const isExp = expanded === email;
-            const on = slot.status === "on";
-            const acctLbl = slot.label || email.split("@")[0] || email;
-            const acctClr = slot.color || "#6aaedd";
-            const acctIcon = slot.icon || "👤";
+        {/* Category tabs */}
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-white/10">
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat;
             return (
-              <RowWithDelete key={email} onDelete={() => deleteSlot(email)}>
-                <div
-                  style={{
-                    padding: "7px 14px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    cursor: "pointer",
-                    background: isExp
-                      ? "rgba(255,255,255,0.03)"
-                      : "transparent",
-                    borderBottom: isExp
-                      ? "none"
-                      : "0.5px solid rgba(255,255,255,0.03)",
-                    flex: 1,
-                    minWidth: 0,
-                  }}
-                  onClick={() =>
-                    setExpanded((e) => (e === email ? null : email))
-                  }
-                >
-                  <span style={{ fontSize: 12 }}>{acctIcon}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 600,
-                        color: on ? acctClr : "#888",
-                      }}
-                    >
-                      {acctLbl}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 9,
-                        color: "#444",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {email}
-                    </div>
-                  </div>
-                  {isOAuth ? (
-                    oauthActive ? (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          color: C.teal,
-                          fontWeight: 700,
-                          flexShrink: 0,
-                        }}
-                      >
-                        ● OAuth
-                      </span>
-                    ) : null
-                  ) : (
-                    on && (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          color: C.teal,
-                          fontWeight: 700,
-                          flexShrink: 0,
-                        }}
-                      >
-                        ● on
-                      </span>
-                    )
-                  )}
-                  {!isOAuth && on && slot.apiKey && (
-                    <span style={{ fontSize: 9, color: "#444", flexShrink: 0 }}>
-                      ••••{slot.apiKey.slice(-4)}
-                    </span>
-                  )}
-                  <span
-                    style={{
-                      fontSize: 9,
-                      color: isExp ? acctClr : "#444",
-                      fontWeight: 700,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {isExp ? "▲" : "▼"}
-                  </span>
-                </div>
-                {isExp && (
-                  <CredentialForm
-                    name={item.name}
-                    email={email}
-                    label={acctLbl}
-                    icon={acctIcon}
-                    color={acctClr}
-                    slot={slot}
-                    isOAuth={isOAuth}
-                    globalIsConnected={globalIsConnected}
-                    itemName={item.name}
-                    onSave={(data) => saveSlot(email, data)}
-                    onRemove={() => removeSlot(email)}
-                    onDelete={() => deleteSlot(email)}
-                    onClose={() => setExpanded(null)}
-                    firebaseIdToken={firebaseIdToken}
-                  />
-                )}
-              </RowWithDelete>
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className="shrink-0 px-3 py-1 rounded-md text-[10px] font-display tracking-widest uppercase transition-all cursor-pointer"
+                style={{
+                  background: isActive
+                    ? "oklch(0.55 0.22 20 / 30%)"
+                    : "oklch(0.12 0.04 20 / 40%)",
+                  border: isActive
+                    ? "1px solid oklch(0.55 0.22 20 / 60%)"
+                    : "1px solid oklch(0.55 0.22 20 / 15%)",
+                  color: isActive ? "oklch(0.75 0.22 20)" : "oklch(0.6 0.05 20)",
+                  boxShadow: isActive ? "0 0 8px oklch(0.55 0.22 20 / 30%)" : "none",
+                }}
+              >
+                {cat}
+              </button>
             );
           })}
         </div>
-      )}
+      </div>
 
-      {/* Add Account button */}
-      {!isFree && (isApiKey || isOAuth) && !addingAcct && (
-        <div
-          style={{
-            padding: "6px 14px 8px",
-            borderTop:
-              accountEntries.length > 0
-                ? "0.5px solid rgba(255,255,255,0.04)"
-                : "none",
-          }}
-        >
-          <button
-            onClick={() => {
-              setAdding(true);
-              setExpanded(null);
-            }}
-            style={{
-              width: "100%",
-              padding: "6px",
-              borderRadius: 7,
-              background: "rgba(74,179,244,0.04)",
-              border: "0.5px dashed rgba(74,179,244,0.2)",
-              color: "#4a7a9b",
-              fontSize: 10,
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            + Add Account
-          </button>
-        </div>
-      )}
+      {/* Results count */}
+      <div className="shrink-0 text-[10px] font-display tracking-widest" style={{ color: TEAL_LABEL }}>
+        {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+        {activeCategory !== "All" && ` in ${activeCategory}`}
+        {search && ` for "${search}"`}
+      </div>
 
-      {/* Add Account form */}
-      {addingAcct && (
-        <AddAccountForm
-          itemName={item.name}
-          existingAccounts={accounts[item.name] || {}}
-          onAdd={addAccount}
-          onCancel={() => setAdding(false)}
-        />
-      )}
-
-      {/* Data widgets (Stripe / Cloudflare) */}
-      {item.name === "Stripe" && <StripeDataWidget accounts={accounts} />}
-      {item.name === "Cloudflare" && (
-        <CloudflareDataWidget accounts={accounts} />
-      )}
-    </div>
+      {/* Grid */}
+      <div className="flex-1 overflow-y-auto pr-1">
+        {filtered.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-40 text-white/30 text-xs font-display tracking-widest">
+            No integrations found
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+            {filtered.map((integration) => {
+              const isConnected = connected.has(integration.name);
+              return (
+                <IntegrationCard
+                  key={integration.name}
+                  integration={integration}
+                  isConnected={isConnected}
+                  onToggleConnect={() => toggleConnected(integration.name)}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </PanelLayout>
   );
 }
 
-// ── Main Panel ────────────────────────────────────────────────────────────────
-export default function IntegrationsPanel() {
-  const [accounts, setAccounts] = useState(() => loadAccounts());
-  const [toast, setToast] = useState(null);
-  const toastTimer = useRef(null);
-  const { firebaseUser, getAuthToken } = useAuth();
-  const [firebaseIdToken, setFirebaseIdToken] = useState(null);
-  const { isConnected, connectedAccounts, refreshStatus } =
-    useOAuthStatus(firebaseUser);
-  useEffect(() => {
-    if (!firebaseUser) {
-      setFirebaseIdToken(null);
-      return;
-    }
-    getAuthToken()
-      .then((t) => setFirebaseIdToken(t))
-      .catch(() => {});
-  }, [firebaseUser]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    saveAccounts(accounts);
-  }, [accounts]);
-
-  // Auto-clean local account "on" status for any OAuth item whose verified isConnected is false.
-  useEffect(() => {
-    if (!connectedAccounts) return;
-    setAccounts((prev) => {
-      const u = { ...prev };
-      let changed = false;
-      Object.keys(OAUTH_PROVIDER).forEach((nm) => {
-        if (u[nm] && !isConnected(nm)) {
-          Object.keys(u[nm]).forEach((k) => {
-            if (k !== "_extras" && u[nm][k] && u[nm][k].status === "on") {
-              u[nm][k] = { ...u[nm][k], status: "off" };
-              changed = true;
-            }
-          });
-        }
-      });
-      return changed ? u : prev;
-    });
-  }, [connectedAccounts]);
-
-  // Force clean social OAuth local markers on mount
-  useEffect(() => {
-    const socialNames = [
-      "Facebook",
-      "Instagram",
-      "LinkedIn",
-      "TikTok",
-      "X (Twitter)",
-      "YouTube",
-      "Gmail",
-      "Google Cal.",
-    ];
-    setAccounts((prev) => {
-      const u = { ...prev };
-      let changed = false;
-      socialNames.forEach((nm) => {
-        if (u[nm]) {
-          Object.keys(u[nm]).forEach((k) => {
-            if (k !== "_extras" && u[nm][k] && u[nm][k].status === "on") {
-              u[nm][k] = { ...u[nm][k], status: "off" };
-              changed = true;
-            }
-          });
-        }
-      });
-      return changed ? u : prev;
-    });
-  }, []);
-
-  // Restore keys from Worker KV on mount if localStorage is empty
-  useEffect(() => {
-    const existing = loadAccounts();
-    const hasAny = Object.keys(existing).some(
-      (k) =>
-        Object.keys(existing[k] || {}).filter((e) => e !== "_extras").length >
-        0,
-    );
-    if (hasAny) return;
-
-    fetch(`${WORKER_URL}/api/keys/get-all`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((all) => {
-        if (!all || !Object.keys(all).length) return;
-        const PROVIDER_TO_NAME = {
-          claude: "Claude API",
-          openai: "OpenAI GPT",
-          gemini: "Gemini",
-          grok: "Grok (xAI)",
-          groq: "Groq",
-          deepseek: "DeepSeek",
-          perplexity: "Perplexity",
-          mistral: "Mistral",
-          cohere: "Cohere",
-          together: "Together AI",
-          fireworks: "Fireworks AI",
-          openrouter: "OpenRouter",
-          huggingface: "Hugging Face",
-          elevenlabs: "ElevenLabs",
-          runway: "Runway",
-          replicate: "Replicate",
-          anyscale: "Anyscale",
-          lepton: "Lepton AI",
-          novita: "NovitaAI",
-          ai21: "AI21 Labs",
-          brevo: "Brevo",
-          sendgrid: "SendGrid",
-          mailchimp: "Mailchimp",
-          nylas: "Nylas",
-          stripe: "Stripe",
-          cloudflare: "Cloudflare",
-          did: "D-ID",
-        };
-        const restored = {};
-        for (const [svc, key] of Object.entries(all)) {
-          if (!key) continue;
-          const displayName = PROVIDER_TO_NAME[svc] || svc;
-          const email = `${svc}@lifeos`;
-          restored[displayName] = {
-            [email]: {
-              username: email,
-              password: "",
-              apiKey: key,
-              status: "on",
-              label: svc,
-              icon: "🔑",
-              color: "#4ab3f4",
-            },
-          };
-        }
-        if (Object.keys(restored).length) {
-          setAccounts((prev) => ({ ...restored, ...prev }));
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  // OAuth popup success handler
-  useEffect(() => {
-    function onMsg(e) {
-      if (e.data?.type !== "oauth_success") return;
-      const provider = (e.data.provider || "").toLowerCase();
-      const identity = e.data.identity || {};
-      const email = identity.email || `${provider}_account`;
-      const name = identity.name || email.split("@")[0] || provider;
-
-      const providerMap = {
-        google: ["Gmail", "Google Cal.", "YouTube"],
-        microsoft: ["Outlook"],
-        facebook: ["Facebook", "Instagram"],
-        instagram: ["Instagram"],
-        linkedin: ["LinkedIn"],
-        twitter: ["X (Twitter)"],
-        tiktok: ["TikTok"],
-        slack: ["Slack"],
-        github: ["GitHub"],
-        zoom: ["Zoom"],
-        clickup: ["ClickUp"],
-        airtable: ["Airtable"],
-        calendly: ["Calendly"],
-        yahoo: ["Yahoo Mail"],
-        aol: ["AOL Mail"],
-      };
-
-      const names = providerMap[provider] || [];
-      if (!names.length) return;
-
-      setAccounts((prev) => {
-        const updated = { ...prev };
-        names.forEach((intName) => {
-          if (!updated[intName]) updated[intName] = {};
-          const existing = updated[intName][email] || {};
-          updated[intName][email] = {
-            ...existing,
-            label: existing.label || name,
-            icon: existing.icon || "👤",
-            color: existing.color || nextColor(updated[intName]),
-            status: "on",
-            username: email,
-            password: existing.password || "",
-            apiKey: existing.apiKey || "",
-          };
-        });
-        return updated;
-      });
-      showToast(`${names[0]} connected${email ? " — " + email : ""}`, C.teal);
-      refreshStatus();
-    }
-    window.addEventListener("message", onMsg);
-    return () => window.removeEventListener("message", onMsg);
-  }, [refreshStatus]);
-
-  function showToast(msg, color = C.teal) {
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({ msg, color });
-    toastTimer.current = setTimeout(() => setToast(null), 3500);
-  }
-
-  function handleAccountsChange(newAccounts) {
-    setAccounts(newAccounts);
-    saveAccounts(newAccounts);
-  }
-
-  const allItems = Object.values(INTEGRATIONS).flat();
-  const connectedServices = allItems.filter((item) => {
-    if (OAUTH_PROVIDER[item.name]) return isConnected(item.name);
-    return getAccountEntries(accounts, item.name).some(
-      ({ slot }) => slot.status === "on",
-    );
-  }).length;
-
-  const totalActiveSlots = allItems.reduce(
-    (sum, item) =>
-      sum +
-      getAccountEntries(accounts, item.name).filter(
-        ({ slot }) => slot.status === "on",
-      ).length,
-    0,
-  );
-
+function IntegrationCard({ integration, isConnected, onToggleConnect }) {
   return (
-    <div style={{ padding: 24, position: "relative", maxWidth: 1200 }}>
-      {toast && (
-        <div
-          style={{
-            position: "fixed",
-            top: 70,
-            right: 24,
-            zIndex: 9999,
-            padding: "10px 18px",
-            borderRadius: 10,
-            background: "#13141f",
-            border: `0.5px solid ${toast.color}`,
-            color: toast.color,
-            fontSize: 13,
-            fontWeight: 600,
-            boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
-          }}
-        >
-          {toast.msg}
-        </div>
-      )}
-
-      {/* Stats */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: 12,
-          marginBottom: 24,
-        }}
-      >
-        {[
-          ["Services On", connectedServices, C.teal],
-          ["Available", allItems.length - connectedServices, "#6aaedd"],
-          ["Active Keys", totalActiveSlots, C.purple],
-        ].map(([label, val, color]) => (
-          <div
-            key={label}
-            style={{ ...card, padding: 16, textAlign: "center" }}
-          >
-            <div style={{ fontSize: 28, fontWeight: 800, color }}>{val}</div>
-            <div style={{ fontSize: 11, color: "#6aaedd" }}>{label}</div>
+    <div
+      className="glass-crimson rounded-xl p-3 flex flex-col gap-2.5 group transition-all duration-200 hover:scale-[1.01]"
+      style={{
+        background: "oklch(0.1 0.04 20 / 55%)",
+        border: "1px solid oklch(0.55 0.22 20 / 20%)",
+        backdropFilter: "blur(12px)",
+      }}
+    >
+      {/* Top row: icon, name, connected dot */}
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="text-xl leading-none">{integration.icon}</span>
+          <div>
+            <p className="text-white/80 text-xs font-display tracking-wide leading-tight">
+              {integration.name}
+            </p>
+            <span
+              className="text-[9px] font-display tracking-widest uppercase"
+              style={{ color: "oklch(0.75 0.15 175)" }}
+            >
+              {integration.category}
+            </span>
           </div>
-        ))}
-      </div>
-
-      {/* OAuth re-verify helper */}
-      <div style={{ marginBottom: 16, fontSize: 11, color: "#6aaedd" }}>
-        OAuth status is driven by live server records + data test pulls.
+        </div>
+        {/* Connected status indicator */}
         <button
-          onClick={() => {
-            refreshStatus();
-            setAccounts((prev) => {
-              const u = { ...prev };
-              let changed = false;
-              Object.keys(OAUTH_PROVIDER).forEach((nm) => {
-                if (u[nm] && !isConnected(nm)) {
-                  Object.keys(u[nm]).forEach((k) => {
-                    if (k !== "_extras" && u[nm][k]?.status === "on") {
-                      u[nm][k] = { ...u[nm][k], status: "off" };
-                      changed = true;
-                    }
-                  });
-                }
-              });
-              return changed ? u : prev;
-            });
-          }}
-          style={{
-            marginLeft: 12,
-            padding: "2px 8px",
-            fontSize: 10,
-            borderRadius: 6,
-            background: "rgba(74,179,244,0.1)",
-            border: "0.5px solid #4ab3f4",
-            color: "#4ab3f4",
-            cursor: "pointer",
-          }}
+          onClick={onToggleConnect}
+          title={isConnected ? "Connected — click to disconnect" : "Not connected — click to connect"}
+          className="mt-0.5 shrink-0 cursor-pointer"
         >
-          ⟳ Re-verify OAuth
-        </button>
-        <button
-          onClick={() => {
-            const socialNames = [
-              "Facebook",
-              "Instagram",
-              "LinkedIn",
-              "TikTok",
-              "X (Twitter)",
-              "YouTube",
-              "Gmail",
-              "Google Cal.",
-            ];
-            setAccounts((prev) => {
-              const u = { ...prev };
-              socialNames.forEach((nm) => {
-                if (u[nm]) {
-                  Object.keys(u[nm]).forEach((k) => {
-                    if (k !== "_extras" && u[nm][k])
-                      u[nm][k] = { ...u[nm][k], status: "off" };
-                  });
-                }
-              });
-              return u;
-            });
-          }}
-          style={{
-            marginLeft: 8,
-            padding: "2px 8px",
-            fontSize: 10,
-            borderRadius: 6,
-            background: "rgba(255,79,94,0.1)",
-            border: "0.5px solid #ff4f5e",
-            color: "#ff4f5e",
-            cursor: "pointer",
-          }}
-        >
-          Clear local social markers
+          {isConnected ? (
+            <CheckCircle2
+              size={14}
+              style={{ color: "oklch(0.72 0.18 145)", filter: "drop-shadow(0 0 4px oklch(0.72 0.18 145 / 70%))" }}
+            />
+          ) : (
+            <Circle size={14} className="text-white/20" />
+          )}
         </button>
       </div>
 
-      {/* Sections */}
-      {Object.entries(INTEGRATIONS).map(([cat, items]) => (
-        <div key={cat} style={{ marginBottom: 28 }}>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              color: "#2a6fa8",
-              letterSpacing: ".12em",
-              textTransform: "uppercase",
-              marginBottom: 12,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <div
-              style={{
-                flex: 1,
-                height: "0.5px",
-                background: "rgba(255,255,255,0.06)",
-              }}
-            />
-            {cat}
-            <div
-              style={{
-                flex: 1,
-                height: "0.5px",
-                background: "rgba(255,255,255,0.06)",
-              }}
-            />
-          </div>
-          {cat === "AI Models" && <ModelSwitcherBar />}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))",
-              gap: 10,
-            }}
-          >
-            {items.map((item) => (
-              <IntegrationCard
-                key={item.name}
-                item={item}
-                accounts={accounts}
-                onAccountsChange={handleAccountsChange}
-                showToast={showToast}
-                isFree={FREE_INTEGRATIONS.has(item.name)}
-                firebaseIdToken={firebaseIdToken}
-                isConnected={isConnected}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+      {/* Description */}
+      <p className="text-white/50 text-[10px] leading-relaxed font-display tracking-wide line-clamp-2">
+        {integration.desc}
+      </p>
+
+      {/* Action buttons */}
+      <div className="flex gap-1.5 mt-auto">
+        <button
+          className="flex items-center gap-1 px-2 py-1 rounded-md text-[9px] font-display tracking-widest uppercase transition-all cursor-pointer hover:brightness-110 active:scale-95"
+          style={{
+            background: "oklch(0.55 0.22 20 / 18%)",
+            border: "1px solid oklch(0.55 0.22 20 / 35%)",
+            color: "oklch(0.78 0.18 20)",
+          }}
+        >
+          <Key size={9} />
+          API KEY
+        </button>
+        <button
+          className="flex items-center gap-1 px-2 py-1 rounded-md text-[9px] font-display tracking-widest uppercase transition-all cursor-pointer hover:brightness-110 active:scale-95"
+          style={{
+            background: "oklch(0.75 0.15 175 / 12%)",
+            border: "1px solid oklch(0.75 0.15 175 / 30%)",
+            color: "oklch(0.75 0.15 175)",
+          }}
+        >
+          <RefreshCw size={9} />
+          OAUTH
+        </button>
+      </div>
     </div>
   );
 }
