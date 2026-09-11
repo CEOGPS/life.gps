@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import GlobalMusicPlayer from "./GlobalMusicPlayer";
-import { PlayerProvider, usePlayer } from "@/lib/PlayerContext";
+import { PlayerProvider, usePlayer } from "../lib/PlayerContext";
 
 function PlayerWrapper() {
   const { currentTrack, onNext, onPrev, trackList } = usePlayer();

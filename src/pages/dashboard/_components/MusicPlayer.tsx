@@ -12,8 +12,7 @@ import {
   ListMusic,
   Check,
 } from "lucide-react";
-import { db } from "@/lib/veritonDb.ts";
-import { useAudio } from "@/lib/AudioProvider.tsx";
+import { useAudio } from "@/lib/AudioProvider";
 
 type Track = {
   id: string;
@@ -44,16 +43,19 @@ export default function MusicPlayer() {
     audioRef,
     currentTrack,
     setCurrentTrack,
-    playing,
-    setPlaying,
+    isPlaying,
+    setIsPlaying,
     progress,
     setProgress,
     duration,
     setDuration,
-    muted,
-    setMuted,
     volume,
     setVolume,
+    playTrack,
+    togglePlay: audioTogglePlay,
+    nextTrack,
+    prevTrack,
+    seekTo,
   } = useAudio();
 
   const [tracks, setTracks] = useState<Track[]>([]);
@@ -64,18 +66,21 @@ export default function MusicPlayer() {
   const [shuffled, setShuffled] = useState(false);
 
   useEffect(() => {
-    db.entities.Track.list("-created_date", 50).then((t: Track[]) =>
-      setTracks(t.filter((tr) => tr.audioFileUrl)),
-    );
-    db.entities.Playlist.list<Playlist>("-created_date", 100)
-      .then((p) =>
-        setPlaylists(
-          (Array.isArray(p) ? p : []).filter(
-            (pl) => Array.isArray(pl.trackIds) && pl.trackIds.length > 0,
-          ),
-        ),
-      )
-      .catch(() => setPlaylists([]));
+    // Load from localStorage for now
+    const saved = localStorage.getItem("lifeos_music_tracks");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setTracks(parsed.filter((t: Track) => t.audioFileUrl));
+      } catch {}
+    }
+    const savedPl = localStorage.getItem("lifeos_music_playlists");
+    if (savedPl) {
+      try {
+        const parsed = JSON.parse(savedPl);
+        setPlaylists(Array.isArray(parsed) ? parsed.filter((pl: Playlist) => Array.isArray(pl.trackIds) && pl.trackIds.length > 0) : []);
+      } catch {}
+    }
   }, []);
 
   const track = tracks[index];
@@ -87,7 +92,6 @@ export default function MusicPlayer() {
       .filter((t) => order.has(t.id))
       .sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
     if (queued.length > 0) {
-      // Rebuild tracks in playlist order and reset to first.
       setTracks((prev) => {
         const others = prev.filter((t) => !order.has(t.id));
         return [...queued, ...others].filter((t) => t.audioFileUrl);
@@ -101,7 +105,7 @@ export default function MusicPlayer() {
   // Sync local state with AudioProvider when track changes
   useEffect(() => {
     if (track?.audioFileUrl) {
-      setCurrentTrack({ title: track.title, audioFileUrl: track.audioFileUrl });
+      setCurrentTrack({ id: track.id, name: track.title, artist: track.genre || "VeritonOS1", url: track.audioFileUrl });
     }
   }, [track?.audioFileUrl, setCurrentTrack]);
 
@@ -110,10 +114,9 @@ export default function MusicPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handleTimeUpdate = () => setProgress(audio.currentTime);
+    const handleTimeUpdate = () => setProgress(audio.currentTime / (audio.duration || 1));
     const handleLoadedMetadata = () => setDuration(audio.duration);
     const handleEnded = () => {
-      // Play next track
       if (!tracks.length) return;
       setIndex(
         shuffled
@@ -133,10 +136,10 @@ export default function MusicPlayer() {
     };
   }, [audioRef, setProgress, setDuration, tracks.length, index, shuffled]);
 
-  const togglePlay = () => {
-      if (!track) return;
-      setPlaying(!playing);
-    };
+  const handleTogglePlay = () => {
+    if (!track) return;
+    audioTogglePlay();
+  };
 
   const pickNext = () => {
     if (!tracks.length) return;
@@ -177,12 +180,12 @@ export default function MusicPlayer() {
           <div
             className="h-full rounded-full bg-primary transition-all"
             style={{
-              width: duration ? `${(progress / duration) * 100}%` : "0%",
+              width: duration ? `${progress * 100}%` : "0%",
             }}
           />
         </div>
         <div className="flex justify-between text-[9px] text-white/20">
-          <span>{formatTime(progress)}</span>
+          <span>{formatTime(audioRef.current?.currentTime || 0)}</span>
           <span>{formatTime(duration)}</span>
         </div>
       </div>
@@ -205,11 +208,11 @@ export default function MusicPlayer() {
           <SkipBack size={16} />
         </button>
         <button
-          onClick={togglePlay}
+          onClick={handleTogglePlay}
           disabled={!track}
           className="w-9 h-9 rounded-full glass-crimson flex items-center justify-center text-primary hover:glow-crimson-sm transition-all disabled:opacity-40"
         >
-          {playing ? <Pause size={16} /> : <Play size={16} />}
+          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         </button>
         <button
           onClick={pickNext}
@@ -219,12 +222,10 @@ export default function MusicPlayer() {
           <SkipForward size={16} />
         </button>
         <button
-                  onClick={() => {
-                    setMuted(!muted);
-                  }}
-                  className="text-white/20 hover:text-white/50 transition-colors"
-                >
-          {muted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+          onClick={() => setVolume(volume > 0 ? 0 : 0.8)}
+          className="text-white/20 hover:text-white/50 transition-colors"
+        >
+          {volume > 0 ? <Volume2 size={13} /> : <VolumeX size={13} />}
         </button>
       </div>
 

@@ -1,0 +1,137 @@
+Category,Panel/Module/Feature,Route/Path,Component File,Status,Wired (Y/N),Working (Y/N),Issues/Notes,Fix Required
+CORE NAVIGATION,Dashboard,/,src/pages/Dashboard.tsx,Active,Y,Y,Main dashboard with all modules,None
+CORE NAVIGATION,Music Hub,/music,src/pages/MusicPanel.tsx,Active,Y,Y,Music player with YouTube integration,None
+CORE NAVIGATION,Contacts,/contacts,src/pages/ContactsPanel.tsx,Active,Y,Y,Full CRUD with 10 additional field spots,None
+CORE NAVIGATION,CRM,/crm,src/pages/CRMPanel.tsx,Active,Y,Y,Lead management with stage pipeline,None
+CORE NAVIGATION,Email,/email,src/pages/email_EmailPanel.jsx,Active,Y,Y,Email composition and management,Needs Supabase sync
+CORE NAVIGATION,Communications,/communications,src/pages/communications_MessagesPanel.jsx,Active,Y,Y,Message threads and SMS,Needs Supabase sync
+CORE NAVIGATION,Finance,/finance,src/pages/finance_FinancePanel.jsx,Active,Y,Y,"Budget, expenses, invoicing",Needs Supabase sync
+CORE NAVIGATION,Community,/community,src/pages/community_CommunityPanel.jsx,Active,Y,Y,Lead scanner & opportunity engine,Needs Supabase sync
+CORE NAVIGATION,CreatorOS1,/creator,src/pages/creator/page.tsx,Active,Y,Y,AI content studio with chat,Remove Base44 dependency
+CORE NAVIGATION,SocialLinkOS1,/social,src/pages/social_SocialPanel.jsx,Active,Y,Y,Social media management,Needs Supabase sync
+CORE NAVIGATION,Social Link,/sociallink,src/pages/social_SocialLinkOS1.jsx,Active,Y,Y,Social link management,Needs Supabase sync
+CORE NAVIGATION,Marketing,/marketing,src/pages/marketing_MarketingPanel.jsx,Active,Y,Y,Marketing analytics,Needs Supabase sync
+CORE NAVIGATION,Calendar,/calendar,src/pages/calendar_CalendarPanel.jsx,Active,Y,Y,Full month grid with event CRUD,Needs Supabase sync
+CORE NAVIGATION,Events,/events,src/pages/calendar_CalendarPanel.jsx,Active,Y,Y,Redirects to Calendar,None
+CORE NAVIGATION,Agents,/agents,src/pages/agents_AgentsPanel.jsx,Active,Y,Y,AgentZero with Erebus/Kranos,Erebus import issues fixed
+CORE NAVIGATION,OmniSearch,/omnisearch,src/pages/omnisearch.tsx,Active,Y,Y,Global search,Needs Supabase sync
+CORE NAVIGATION,Business Command,/business,src/pages/business.tsx,Active,Y,Y,Business dashboard,Needs Supabase sync
+CORE NAVIGATION,CEO GPS,/ceogps,src/pages/business.tsx,Active,Y,Y,Same as Business Command,None
+CORE NAVIGATION,Projects,/projects,src/pages/projects_ProjectsPanel.jsx,Active,Y,Y,Project management,Needs Supabase sync
+CORE NAVIGATION,Office,/office,src/pages/office_KPIPanelUI.jsx,Active,Y,Y,KPI modules for analytics,Needs Supabase sync
+CORE NAVIGATION,Maps,/maps,src/pages/maps_MapsPage.jsx,Active,Y,Y,Map integration,Needs Supabase sync
+CORE NAVIGATION,Family & Friends,/family,src/pages/family_FamilyPanel.jsx,Active,Y,Y,Family management,Needs Supabase sync
+CORE NAVIGATION,Health,/health,src/pages/health_HealthPanel.jsx,Active,Y,Y,Health tracking,Needs Supabase sync
+CORE NAVIGATION,Journal,/journal,src/pages/journal_JournalPanel.jsx,Active,Y,Y,Journal entries,Needs Supabase sync
+CORE NAVIGATION,Life Audit (Pulse),/pulse,src/components/layout/PlaceholderPanel.tsx,Placeholder,Y,N,No actual component - just placeholder,Create Pulse panel component
+CORE NAVIGATION,Media,/media,src/pages/MediaPanel.tsx,Active,Y,Y,Media management,Needs Supabase sync
+CORE NAVIGATION,Secure Vault,/vault,src/pages/vault.tsx,Active,Y,Y,Secure storage,Needs Supabase sync
+CORE NAVIGATION,Terminals,/terminals,src/pages/terminals_TerminalPanel.jsx,Active,Y,Y,Terminal emulator,Needs Supabase sync
+CORE NAVIGATION,Legal,/legal,src/pages/legal_LegalPage.jsx,Active,Y,Y,Legal documents,Needs Supabase sync
+CORE NAVIGATION,Privacy,/privacy,src/pages/legal_LegalPage.jsx,Active,Y,Y,Same as Legal,None
+CORE NAVIGATION,Simulators,/simulators,src/pages/simulators.tsx,Active,Y,Y,Simulators hub,Needs Supabase sync
+CORE NAVIGATION,Life RPG,/liferpg,src/pages/simulators.tsx,Active,Y,Y,Redirects to Simulators,None
+CORE NAVIGATION,Conflict Resolver,/conflict,src/pages/simulators.tsx,Active,Y,Y,Redirects to Simulators,None
+CORE NAVIGATION,Karma Credit,/karma,src/pages/simulators.tsx,Active,Y,Y,Redirects to Simulators,None
+CORE NAVIGATION,Integrations,/integrations,src/pages/integrations_IntegrationsPanel.jsx,Active,Y,Y,OAuth connections,Needs Supabase sync
+CORE NAVIGATION,VeritonOS1,/veriton,src/pages/veriton/src/App.jsx,Missing Route,N,N,Not wired in App.tsx,Add Route path=/veriton/*
+CORE NAVIGATION,Lucid Systems,/lucidsystems,src/pages/lucidsystems/src/App.jsx,Missing Route,N,N,Not wired in App.tsx,Add Route path=/lucidsystems/*
+CORE NAVIGATION,Insights,/insights,N/A,Missing,N,N,Sidebar has route but no component,Create Insights panel component
+DASHBOARD MODULES,Time & Weather,Dashboard,src/pages/dashboard__components_TimeDateWeather.tsx,Active,Y,Y,"Open-Meteo API, Fahrenheit/miles",None
+DASHBOARD MODULES,Notifications,Dashboard,src/pages/dashboard__components_NotificationsModule.tsx,Active,Y,Y,CRUD to Supabase notifications table,None
+DASHBOARD MODULES,Quick Links,Dashboard,src/pages/dashboard__components_QuickLinks.tsx,Active,Y,Y,Persistent via localStorage,None
+DASHBOARD MODULES,Browser Area,Dashboard,src/pages/dashboard__components_BrowserArea.tsx,Active,Y,Y,Standalone component,None
+DASHBOARD MODULES,Calendar,Dashboard,src/pages/dashboard__components_CalendarModule.tsx,Active,Y,Y,Full month grid with event CRUD,None
+DASHBOARD MODULES,Notes,Dashboard,src/pages/dashboard__components_NotesModule.tsx,Active,Y,Y,Full CRUD to Supabase notes table,None
+DASHBOARD MODULES,Leads,Dashboard,src/pages/dashboard__components_LeadsModule.tsx,Active,Y,Y,"Source filter chips, add/delete",None
+DASHBOARD MODULES,Tasks,Dashboard,src/pages/dashboard__components_TasksModule.tsx,Active,Y,Y,Priority system (low/mid/high),None
+DASHBOARD MODULES,Financial Stats,Dashboard,src/pages/dashboard__components_FinancialStats.tsx,Active,Y,Y,Budget/bills tracking,None
+DASHBOARD MODULES,ROI Analysis,Dashboard,src/pages/dashboard__components_RoiAnalysis.tsx,Active,Y,Y,Full CRUD with Supabase,None
+DASHBOARD MODULES,Credit Scores,Dashboard,src/pages/dashboard__components_CreditScore.tsx,Active,Y,Y,"Hardcoded FICO 632, Vantage 639",Connect to real APIs
+DASHBOARD MODULES,AI Money Tips,Dashboard,src/pages/dashboard__components_AiMoneyTips.tsx,Active,Y,Y,LLM-powered tips generation,None
+DASHBOARD MODULES,Life Hacks,Dashboard,src/pages/dashboard__components_LifeHacks.tsx,Active,Y,Y,Daily tips via local Ollama,None
+DASHBOARD MODULES,Social Analytics,Dashboard,src/pages/dashboard__components_SocialAnalytics.tsx,Active,Y,Y,"Instagram, FB, TikTok, Twitter, LinkedIn, YouTube",Connect real APIs
+DASHBOARD MODULES,Marketing Analytics,Dashboard,src/pages/dashboard__components_MarketingAnalytics.tsx,Active,Y,Y,"Activity feed from Stripe, GitHub, Gmail, CRM, Agent, System, Calendar, Slack",Connect real APIs
+DASHBOARD MODULES,Music Player,Dashboard,src/pages/dashboard__components_YoutubePlayer.tsx,Active,Y,Y,YouTube player with AudioProvider,None
+DASHBOARD MODULES,Budget Expenses,Dashboard,src/pages/dashboard__components_BudgetExpenses.tsx,Active,Y,Y,Expense tracking,None
+DASHBOARD MODULES,AI Insights,Dashboard,src/pages/dashboard__components_AiInsights.tsx,Active,Y,Y,AI-powered insights,None
+DASHBOARD MODULES,Agent Monitor,Dashboard,src/pages/dashboard__components_AgentMonitor.tsx,Active,Y,Y,Agent status monitoring,None
+DASHBOARD MODULES,Module Wrapper,Dashboard,src/pages/dashboard__components_Module.tsx,Active,Y,Y,Reusable module container,None
+OAUTH PROVIDERS,Google,OAuth,worker.js,Configured,Y,Y,PKCE + select_account prompt,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Microsoft,OAuth,worker.js,Configured,Y,Y,PKCE + select_account prompt,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,GitHub,OAuth,worker.js,Configured,Y,Y,Standard OAuth,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Slack,OAuth,worker.js,Configured,Y,Y,User scope support,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,LinkedIn,OAuth,worker.js,Configured,Y,Y,OpenID Connect,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Facebook,OAuth,worker.js,Configured,Y,Y,Popup + rerequest,Add APP_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Instagram,OAuth,worker.js,Configured,Y,Y,Same as Facebook,Add APP_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Twitter/X,OAuth,worker.js,Configured,Y,Y,PKCE + force_login,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Zoom,OAuth,worker.js,Configured,Y,Y,PKCE support,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,ClickUp,OAuth,worker.js,Configured,Y,Y,Standard OAuth,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Airtable,OAuth,worker.js,Configured,Y,Y,PKCE support,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,TikTok,OAuth,worker.js,Configured,Y,Y,Owned redirect URI,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Spotify,OAuth,worker.js,Configured,Y,Y,show_dialog=true,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Yahoo,OAuth,worker.js,Configured,Y,Y,OpenID Connect,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,AOL,OAuth,worker.js,Configured,Y,Y,Same as Yahoo,Add CLIENT_ID/SECRET to Cloudflare
+OAUTH PROVIDERS,Calendly,OAuth,worker.js,Configured,Y,Y,Scheduling scopes,Add CLIENT_ID/SECRET to Cloudflare
+API ENDPOINTS,Health Check,/api/health,src/api/health/routes.ts,Active,Y,Y,Returns healthy status,None
+API ENDPOINTS,Cron Jobs,/api/cron,src/api/cron/routes.ts,Active,Y,?,Scheduled tasks,Verify cron endpoints
+API ENDPOINTS,Webhooks,/api/webhooks,src/api/webhooks/routes.ts,Active,Y,?,Incoming webhooks,Verify webhook endpoints
+API ENDPOINTS,ZeroBounce,/api/webhooks/zerobounce,src/api/webhooks/zerobounce/routes.ts,Active,Y,?,Email verification webhook,Verify endpoint
+API ENDPOINTS,OAuth Start,/api/oauth/start,worker.js,Active,Y,Y,Initiates OAuth flow with PKCE,None
+API ENDPOINTS,OAuth Callback,/api/oauth/callback,worker.js,Active,Y,Y,Handles OAuth callback,None
+API ENDPOINTS,OAuth Status,/api/oauth/status,worker.js,Active,Y,Y,Returns connected providers,None
+API ENDPOINTS,OAuth Disconnect,/api/oauth/disconnect,worker.js,Active,Y,Y,Disconnects account,None
+API ENDPOINTS,CEO GPS Client,/api/ceogps,src/api/ceogpsclient.tsx,Active,Y,?,Business command API,Verify endpoints
+DATABASE TABLES,contacts,Supabase,migrations,Active,Y,Y,10 additional spots for phones/emails/websites/social,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,crm_contacts,Supabase,migrations,Active,Y,Y,10 additional spots for phones/emails/websites/social,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,user_settings,Supabase,migrations,Active,Y,Y,Key-value persistent storage,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,user_data,Supabase,migrations,Active,Y,Y,Generic user data storage,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,notifications,Supabase,migrations,Active,Y,Y,Notification system,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,tasks,Supabase,migrations,Active,Y,Y,Task management,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,events,Supabase,migrations,Active,Y,Y,Calendar events,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,notes,Supabase,migrations,Active,Y,Y,Notes with tags/color,Run complete_migration_with_10_spots.sql
+DATABASE TABLES,platform_tokens,Supabase,migrations,Active,Y,Y,OAuth token storage,Run complete_migration_with_10_spots.sql
+INTEGRATIONS,Supabase,Database,src/lib/supabase.ts,Active,Y,Y,PostgreSQL with anon key,Add env vars to Cloudflare Pages
+INTEGRATIONS,Cloudflare Workers,API,worker.js,Active,Y,Y,BFF pattern with itty-router,Deploy worker.js
+INTEGRATIONS,Cloudflare Pages,Frontend,dist/,Active,Y,Y,Static site hosting,Add env vars to Cloudflare Pages
+INTEGRATIONS,Firebase Auth,Auth,src/lib/FirebaseAuthContext.tsx,Legacy,Y,N,Migrating to Supabase Auth,Remove or complete migration
+INTEGRATIONS,Supabase Auth,Auth,src/lib/SupabaseAuthContext.tsx,Active,Y,Y,Replacing Firebase Auth,Complete integration
+INTEGRATIONS,Open-Meteo,Weather,src/pages/dashboard__components_TimeDateWeather.tsx,Active,Y,Y,Free weather API,None
+INTEGRATIONS,Ollama,Local LLM,src/lib/ollama.ts,Active,Y,Y,"Local AI models (deepseek-coder, qwen, mistral)",Configure models
+INTEGRATIONS,YouTube API,Media,src/pages/dashboard__components_YoutubePlayer.tsx,Active,Y,Y,Embedded player,Add API key for advanced features
+INTEGRATIONS,Stripe,Payments,worker.js,Configured,N,N,Not connected,Add STRIPE_SECRET_KEY
+INTEGRATIONS,SendGrid,Email,worker.js,Configured,N,N,Not connected,Add SENDGRID_API_KEY
+INTEGRATIONS,Twilio,SMS,worker.js,Configured,N,N,Not connected,Add TWILIO_ACCOUNT_SID/AUTH_TOKEN
+UI COMPONENTS,Sidebar,Layout,src/components/layout/Sidebar.tsx,Active,Y,Y,"42 routes, collapsible groups",None
+UI COMPONENTS,Topbar,Layout,src/components/layout/Topbar.tsx,Active,Y,Y,"User menu, notifications, search",None
+UI COMPONENTS,ErebusDock,AI Dock,src/components/ErebusDock.tsx,Active,Y,Y,AI assistant dock,Keep as-is per user request
+UI COMPONENTS,PanelLayout,Layout,src/components/layout/PanelLayout.tsx,Active,Y,Y,Standard panel wrapper,None
+UI COMPONENTS,PlaceholderPanel,Layout,src/components/layout/PlaceholderPanel.tsx,Active,Y,Y,For unimplemented routes,Replace with real components
+UI COMPONENTS,AuthCallback,Auth,src/components/AuthCallback.tsx,Active,Y,Y,OAuth callback handler,None
+UI COMPONENTS,ErrorBoundary,Error,src/components/ErrorBoundary.tsx,Active,Y,Y,React error boundary,None
+UI COMPONENTS,ScrollToTop,Layout,src/components/ScrollToTop.tsx,Active,Y,Y,Scroll restoration,None
+UI COMPONENTS,shadcn/ui,UI Kit,src/components/ui/,Active,Y,Y,Full component library,None
+AUTH & SECURITY,Supabase Anon Key,Auth,.env,Active,Y,Y,Used for all DB queries,Add to Cloudflare Pages env
+AUTH & SECURITY,Supabase Service Key,Auth,.env,Active,Y,Y,Worker server-side only,Add to Cloudflare Worker secrets
+AUTH & SECURITY,Worker Auth Context,Auth,src/contexts/WorkerAuthContext.tsx,Active,Y,Y,JWT validation from Worker,None
+AUTH & SECURITY,LifeOS Data Context,State,src/lib/LifeOSDataContext.tsx,Active,Y,Y,Global data provider,None
+AUTH & SECURITY,Audio Provider,State,src/lib/AudioProvider.tsx,Active,Y,Y,Global audio for Music Player,None
+AUTH & SECURITY,Persistent State Hook,State,src/lib/usePersistentState.ts,Active,Y,Y,localStorage persistence,None
+AUTH & SECURITY,PKCE Implementation,Security,worker.js,Active,Y,Y,RFC 7636 compliant,None
+AUTH & SECURITY,Multi-account OAuth,Security,worker.js,Active,Y,Y,Index by email per provider,None
+AUTH & SECURITY,Rate Limiting,Security,worker.js,Active,Y,Y,KV-based sliding window,None
+AUTH & SECURITY,CORS Headers,Security,worker.js,Active,Y,Y,All API endpoints,None
+MISSING/BROKEN,Insights Page,/insights,N/A,Missing,N,N,"Sidebar route exists, no component",Create Insights panel
+MISSING/BROKEN,Pulse Page,/pulse,PlaceholderPanel,Placeholder,Y,N,"Sidebar route exists, only placeholder",Create Pulse panel
+MISSING/BROKEN,VeritonOS1,/veriton,src/pages/veriton/,Not Wired,N,N,Embedded app with own routing,Wire in App.tsx with /*
+MISSING/BROKEN,Lucid Systems,/lucidsystems,src/pages/lucidsystems/,Not Wired,N,N,Embedded app with own routing,Wire in App.tsx with /*
+MISSING/BROKEN,Vault Page,/vault,src/pages/vault.tsx,Minimal,Y,?,Basic component only,Implement secure vault features
+MISSING/BROKEN,Terminals Page,/terminals,src/pages/terminals_TerminalPanel.jsx,Active,Y,?,Terminal emulator,Verify functionality
+MISSING/BROKEN,Social Analytics Real Data,Dashboard,SocialAnalytics.tsx,Mock Data,Y,N,All mock data,Connect real social APIs
+MISSING/BROKEN,Marketing Analytics Real Data,Dashboard,MarketingAnalytics.tsx,Mock Data,Y,N,All mock data,Connect real APIs
+MISSING/BROKEN,Credit Scores Real Data,Dashboard,CreditScore.tsx,Hardcoded,Y,N,"Hardcoded FICO 632, Vantage 639",Connect Experian/Credit Karma APIs
+MISSING/BROKEN,Firebase Auth Migration,Auth,FirebaseAuthContext.tsx,Incomplete,Y,N,Half-migrated to Supabase Auth,Complete migration or remove
+MISSING/BROKEN,Environment Variables,Deploy,Cloudflare Pages,Missing,N,N,"VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_WORKER_URL not set",Add to Cloudflare Pages dashboard
+MISSING/BROKEN,Worker KV Namespace,Worker,wrangler.worker.toml,Placeholder,N,N,Placeholder ID blocks deploy,Create real KV namespace or comment out
+MISSING/BROKEN,Worker Observability,Worker,wrangler.worker.toml,Broken,N,N,redact_query_string breaks deploy,Remove unsupported config
+MISSING/BROKEN,OpenWeatherMap API,Weather,worker.js,Invalid Key,N,N,API key returns 401,Use Open-Meteo or get valid key

@@ -93,14 +93,14 @@ export default function TimeDateWeather() {
         if (!cancelled) {
           const cond = conditionFromCode(cur.weather_code);
           setWeather({
-            temperature: Math.round(cur.temperature_2m),
-            condition: cond.text,
-            humidity: cur.relative_humidity_2m,
-            windSpeed: Math.round(cur.wind_speed_10m),
-            uvIndex: Math.round(cur.uv_index || 0),
-            emoji: cond.emoji,
-            icon: cond.icon,
-            location: geo.name,
+            temperature: Math.round(cur.temperature_2m * 9 / 5 + 32),
+                        condition: cond.text,
+                        humidity: cur.relative_humidity_2m,
+                        windSpeed: Math.round(cur.wind_speed_10m * 0.621371),
+                        uvIndex: Math.round(cur.uv_index || 0),
+                        emoji: cond.emoji,
+                        icon: cond.icon,
+                        location: geo.name,
           });
         }
       } catch (err) {
@@ -180,7 +180,7 @@ export default function TimeDateWeather() {
               {/* Large emoji weather icon */}
               <span style={{fontSize: '80px', lineHeight: 1}}>{weather.emoji}</span>
               <div className="text-center">
-                <div className="text-5xl text-white/95 font-display">{weather.temperature}°</div>
+                <div className="text-5xl text-white/95 font-display">{weather.temperature}°F</div>
                 <div className="text-sm text-white/60 capitalize mt-1">{weather.condition}</div>
               </div>
             </div>
@@ -194,12 +194,12 @@ export default function TimeDateWeather() {
                 <div className="text-xl text-white/80 font-display">{weather.humidity}%</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Wind size={12} className="text-teal-400" />
-                  <span className="text-[11px] text-white/40">Wind</span>
-                </div>
-                <div className="text-xl text-white/80 font-display">{weather.windSpeed} km/h</div>
-              </div>
+                              <div className="flex items-center justify-center gap-1 mb-1">
+                                <Wind size={12} className="text-teal-400" />
+                                <span className="text-[11px] text-white/40">Wind</span>
+                              </div>
+                              <div className="text-xl text-white/80 font-display">{weather.windSpeed} mph</div>
+                            </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
                   <Sun size={12} className="text-orange-400" />
@@ -217,7 +217,7 @@ export default function TimeDateWeather() {
           <div className="flex items-center justify-center gap-3">
             <span style={{fontSize: '24px'}}>☀️</span>
             <div>
-              <div className="text-2xl text-white/80 font-display">--°</div>
+              <div className="text-2xl text-white/80 font-display">--°F</div>
               <div className="text-[10px] text-white/30 tracking-wider">Loading weather</div>
             </div>
           </div>

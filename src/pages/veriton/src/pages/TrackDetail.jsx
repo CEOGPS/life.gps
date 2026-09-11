@@ -1,20 +1,3 @@
-const db = globalThis.__B44_DB__ || {
-  auth: { isAuthenticated: async () => false, me: async () => null },
-  entities: new Proxy(
-    {},
-    {
-      get: () => ({
-        filter: async () => [],
-        get: async () => null,
-        create: async () => ({}),
-        update: async () => ({}),
-        delete: async () => ({}),
-      }),
-    },
-  ),
-  integrations: { Core: { UploadFile: async () => ({ file_url: "" }) } },
-};
-
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -38,8 +21,8 @@ import {
   Music,
   Film,
 } from "lucide-react";
-import WaveformVisualizer from "@/components/WaveformVisualizer";
-import ExplodingButton from "@/components/ExplodingButton";
+import WaveformVisualizer from "../components/WaveformVisualizer";
+import ExplodingButton from "../components/ExplodingButton";
 import { motion, AnimatePresence } from "framer-motion";
 
 const EDIT_TOOLS = [

@@ -2,6 +2,37 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient.ts";
 
 /**
+ * Persist user email to localStorage and window cache
+ * Call this when user logs in or when email is known
+ */
+export function persistUserEmail(email: string): void {
+  if (!email) return;
+  try {
+    localStorage.setItem("lifeos_user_email", email);
+    if (typeof window !== "undefined") {
+      (window as any).__lifeosUserEmail = email;
+    }
+  } catch (e) {
+    console.warn("Failed to persist user email:", e);
+  }
+}
+
+/**
+ * Clear persisted user email
+ * Call this on logout
+ */
+export function clearUserEmail(): void {
+  try {
+    localStorage.removeItem("lifeos_user_email");
+    if (typeof window !== "undefined") {
+      (window as any).__lifeosUserEmail = null;
+    }
+  } catch (e) {
+    console.warn("Failed to clear user email:", e);
+  }
+}
+
+/**
  * Get the current user's email from multiple sources:
  * 1. Supabase Auth session (if using Supabase Auth)
  * 2. Firebase Auth currentUser (if using Firebase Auth)
@@ -12,13 +43,18 @@ export async function getCurrentUserEmail(): Promise<string | null> {
   // 1. Try Supabase Auth session
   try {
     const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user?.email) return session.user.email;
+    if (session?.user?.email) {
+      persistUserEmail(session.user.email);
+      return session.user.email;
+    }
   } catch {}
 
   // 2. Try Firebase Auth (if available)
   try {
     if (typeof window !== "undefined" && (window as any).auth?.currentUser?.email) {
-      return (window as any).auth.currentUser.email;
+      const email = (window as any).auth.currentUser.email;
+      persistUserEmail(email);
+      return email;
     }
   } catch {}
 
@@ -59,8 +95,10 @@ export function useUserEmail(): string | null {
     let supabaseUnsub: (() => void) | null = null;
     try {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-        if (session?.user?.email) setEmail(session.user.email);
-        else {
+        if (session?.user?.email) {
+          persistUserEmail(session.user.email);
+          setEmail(session.user.email);
+        } else {
           // Fallback to Firebase/localStorage
           const e = await getCurrentUserEmail();
           if (!cancelled) setEmail(e);
@@ -74,8 +112,10 @@ export function useUserEmail(): string | null {
     try {
       if (typeof window !== "undefined" && (window as any).auth) {
         firebaseUnsub = (window as any).auth.onAuthStateChanged(async (user: any) => {
-          if (user?.email) setEmail(user.email);
-          else {
+          if (user?.email) {
+            persistUserEmail(user.email);
+            setEmail(user.email);
+          } else {
             const e = await getCurrentUserEmail();
             if (!cancelled) setEmail(e);
           }

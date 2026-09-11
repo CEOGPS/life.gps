@@ -9,16 +9,16 @@ import Dashboard from "./pages/Dashboard.tsx";
 import PlaceholderPanel from "./components/layout/PlaceholderPanel.tsx";
 
 // ─── PANELS (flat structure) ───
-import MusicPanel from "./pages/music_MusicHub.jsx";
+import MusicPanel from "./pages/MusicPanel.tsx";
 import CreatorPanel from "./pages/creator/page.tsx";
-import ContactsPanel from "./pages/contacts_ContactsPanel.jsx";
-import CRMPanel from "./pages/crm_CRMPanel.jsx";
+import ContactsPanel from "./pages/ContactsPanel.tsx";
+import CRMPanel from "./pages/CRMPanel.tsx";
 import EmailPanel from "./pages/email_EmailPanel.jsx";
 import CommunicationsPanel from "./pages/communications_MessagesPanel.jsx";
 import FinancePanel from "./pages/finance_FinancePanel.jsx";
 import AgentsPanel from "./pages/agents_AgentsPanel.jsx";
 import CommunityPanel from "./pages/community_CommunityPanel.jsx";
-import SocialPanel from "./pages/social_SocialPanel.jsx";
+import SocialPanel from "./pages/SocialPanel.tsx";
 import SocialLinkOS1 from "./pages/social_SocialLinkOS1.jsx";
 import MarketingPanel from "./pages/marketing_MarketingPanel.jsx";
 import CalendarPanel from "./pages/calendar_CalendarPanel.jsx";
@@ -27,15 +27,21 @@ import HealthPanel from "./pages/health_HealthPanel.jsx";
 import JournalPanel from "./pages/journal_JournalPanel.jsx";
 import IntegrationsPanel from "./pages/integrations_IntegrationsPanel.jsx";
 import SimulatorsPanel from "./pages/simulators.tsx";
-import MediaPanel from "./pages/media_MediaPanel.jsx";
-import TerminalsPanel from "./pages/terminals_TerminalPanel.jsx";
+import MediaPanel from "./pages/MediaPanel.tsx";
+import TerminalsPanel from "./pages/TerminalsPanel.tsx";
 import ProjectsPanel from "./pages/projects_ProjectsPanel.jsx";
 import OfficePanel from "./pages/office_KPIPanelUI.jsx";
-import MapsPanel from "./pages/maps_MapsPage.jsx";
+import MapsPanel from "./pages/MapsPanel.tsx";
 import BusinessCommandPanel from "./pages/business.tsx";
 import OmniSearchPanel from "./pages/omnisearch.tsx";
-import LegalPanel from "./pages/legal_LegalPage.jsx";
-import VaultPanel from "./pages/vault.tsx";
+import LegalPanel from "./pages/LegalPanel.tsx";
+import VaultPanel from "./pages/VaultPanel.tsx";
+import InsightsPanel from "./pages/InsightsPanel.tsx";
+import PulsePanel from "./pages/PulsePanel.tsx";
+
+// ─── SUB-APPS (embedded with their own routing) ───
+import VeritonApp from "./pages/veriton/src/App.jsx";
+import LucidSystemsApp from "./pages/lucidsystems/src/App.jsx";
 
 export default function App() {
   return (
@@ -76,15 +82,8 @@ export default function App() {
                   <Route path="/journal" element={<JournalPanel />} />
                   {/* Life RPG folded into Simulators hub */}
                   <Route path="/liferpg" element={<SimulatorsPanel />} />
-                  <Route
-                    path="/pulse"
-                    element={
-                      <PlaceholderPanel
-                        name="Life Audit (Pulse)"
-                        description="Weekly 60-second audit correlating calendar, revenue, family time, and spending."
-                      />
-                    }
-                  />
+                  <Route path="/pulse" element={<PulsePanel />} />
+                  <Route path="/insights" element={<InsightsPanel />} />
                   <Route path="/media" element={<MediaPanel />} />
                   <Route path="/vault" element={<VaultPanel />} />
                   <Route path="/privacy" element={<LegalPanel />} />
@@ -95,6 +94,10 @@ export default function App() {
                   {/* Conflict Resolver + Karma Credit folded into Simulators hub */}
                   <Route path="/conflict" element={<SimulatorsPanel />} />
                   <Route path="/karma" element={<SimulatorsPanel />} />
+
+                  {/* SUB-APPS with nested routing */}
+                  <Route path="/veriton/*" element={<VeritonApp />} />
+                  <Route path="/lucidsystems/*" element={<LucidSystemsApp />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>

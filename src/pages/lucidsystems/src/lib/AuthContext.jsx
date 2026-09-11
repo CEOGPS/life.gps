@@ -17,7 +17,7 @@ const db = globalThis.__B44_DB__ || {
 
 import React, { createContext, useState, useContext, useEffect } from "react";
 
-import { appParams } from "@/lib/app-params";
+import { appParams } from "./app-params";
 
 const AuthContext = createContext();
 
