@@ -25,7 +25,7 @@ import CalendarPanel from "./pages/calendar_CalendarPanel.jsx";
 import FamilyPanel from "./pages/family_FamilyPanel.jsx";
 import HealthPanel from "./pages/health_HealthPanel.jsx";
 import JournalPanel from "./pages/journal_JournalPanel.jsx";
-import IntegrationsPanel from "./pages/integrations_IntegrationsPanel.jsx";
+import IntegrationsPanel from "./pages/integrations/IntegrationsPanel.jsx";
 import SimulatorsPanel from "./pages/simulators.tsx";
 import MediaPanel from "./pages/MediaPanel.tsx";
 import TerminalsPanel from "./pages/TerminalsPanel.tsx";
@@ -42,6 +42,9 @@ import PulsePanel from "./pages/PulsePanel.tsx";
 // ─── SUB-APPS (embedded with their own routing) ───
 import VeritonApp from "./pages/veriton/src/App.jsx";
 import LucidSystemsApp from "./pages/lucidsystems/src/App.jsx";
+
+// ─── SIMULATORS HUB ───
+import SimulatorsHub from "./pages/parts3/SimulatorsHub.tsx";
 
 export default function App() {
   return (
@@ -81,7 +84,7 @@ export default function App() {
                   <Route path="/health" element={<HealthPanel />} />
                   <Route path="/journal" element={<JournalPanel />} />
                   {/* Life RPG folded into Simulators hub */}
-                  <Route path="/liferpg" element={<SimulatorsPanel />} />
+                  <Route path="/liferpg" element={<SimulatorsHub />} />
                   <Route path="/pulse" element={<PulsePanel />} />
                   <Route path="/insights" element={<InsightsPanel />} />
                   <Route path="/media" element={<MediaPanel />} />
@@ -89,11 +92,11 @@ export default function App() {
                   <Route path="/privacy" element={<LegalPanel />} />
                   <Route path="/legal" element={<LegalPanel />} />
                   <Route path="/terminals" element={<TerminalsPanel />} />
-                  <Route path="/simulators" element={<SimulatorsPanel />} />
+                  <Route path="/simulators" element={<SimulatorsHub />} />
                   <Route path="/integrations" element={<IntegrationsPanel />} />
                   {/* Conflict Resolver + Karma Credit folded into Simulators hub */}
-                  <Route path="/conflict" element={<SimulatorsPanel />} />
-                  <Route path="/karma" element={<SimulatorsPanel />} />
+                  <Route path="/conflict" element={<SimulatorsHub />} />
+                  <Route path="/karma" element={<SimulatorsHub />} />
 
                   {/* SUB-APPS with nested routing */}
                   <Route path="/veriton/*" element={<VeritonApp />} />

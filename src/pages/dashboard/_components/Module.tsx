@@ -39,13 +39,7 @@ export default function Module({
       >
         <div className="flex items-center gap-2">
           <span className="text-primary">{icon}</span>
-          <span
-            className="font-display text-[10px] tracking-[0.2em] uppercase"
-            style={{
-              color: "oklch(0.62 0.22 20)",
-              textShadow: "0 0 10px oklch(0.55 0.22 20 / 70%)",
-            }}
-          >
+          <span className="font-display text-base tracking-wider uppercase text-white-90">
             {title}
           </span>
         </div>

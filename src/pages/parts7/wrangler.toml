@@ -1,0 +1,20 @@
+name = "lifeos1-api"
+main = "worker/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Deployed at oauth.ceogps.com — handles OAuth token exchange/refresh for
+# Integrations panel providers, and any server-side logic that shouldn't
+# run in the browser (secrets, webhooks).
+
+[vars]
+ENVIRONMENT = "production"
+
+# Bind Supabase service-role key as a secret, not a var:
+#   wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+#   wrangler secret put SUPABASE_URL
+# Per-provider OAuth client secrets also go in via `wrangler secret put`.
+
+[[kv_namespaces]]
+binding = "OAUTH_STATE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

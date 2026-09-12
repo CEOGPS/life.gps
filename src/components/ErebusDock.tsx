@@ -707,60 +707,60 @@ export default function ErebusDock() {
   };
 
   // Floating trigger button
-  if (!isOpen) {
+    if (!isOpen) {
+      return (
+        <motion.button
+          className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full glass-crimson glow-crimson cursor-pointer"
+          style={{ width: 44, height: 44 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsOpen(true)}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          <Bot size={18} className="text-white/90" />
+          <span
+            className="pulse-green absolute top-1 right-1 w-2 h-2 rounded-full"
+            style={{ background: "#4ade80" }}
+          />
+        </motion.button>
+      );
+    }
+
     return (
-      <motion.button
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full glass-crimson glow-crimson cursor-pointer"
-        style={{ width: 56, height: 56 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(true)}
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <Bot size={22} className="text-white/90" />
-        <span
-          className="pulse-green absolute top-1 right-1 w-2.5 h-2.5 rounded-full"
-          style={{ background: "#4ade80" }}
+      <>
+        {/* Drag constraint layer */}
+        <div
+          ref={constraintsRef}
+          className="fixed inset-0 z-40 pointer-events-none"
         />
-      </motion.button>
-    );
-  }
 
-  return (
-    <>
-      {/* Drag constraint layer */}
-      <div
-        ref={constraintsRef}
-        className="fixed inset-0 z-40 pointer-events-none"
-      />
-
-      <motion.div
-        drag
-        dragControls={dragControls}
-        dragListener={false}
-        dragConstraints={constraintsRef}
-        style={{
-          x,
-          y,
-          position: "fixed",
-          bottom: 24,
-          right: 24,
-          zIndex: 50,
-          width: 420,
-          background: "#000000",
-          borderRadius: 16,
-          border: "1px solid rgba(255,255,255,0.08)",
-          boxShadow:
-            "0 0 40px rgba(0,0,0,0.8), 0 0 20px oklch(0.55 0.22 20 / 0.15)",
-          overflow: "hidden",
-        }}
-        initial={{ opacity: 0, scale: 0.85, y: 40 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.85, y: 40 }}
-        transition={{ type: "spring", stiffness: 300, damping: 28 }}
-      >
+        <motion.div
+          drag
+          dragControls={dragControls}
+          dragListener={false}
+          dragConstraints={constraintsRef}
+          style={{
+            x,
+            y,
+            position: "fixed",
+            bottom: 24,
+            right: 24,
+            zIndex: 50,
+            width: 360,
+            background: "#000000",
+            borderRadius: 14,
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow:
+              "0 0 40px rgba(0,0,0,0.8), 0 0 20px oklch(0.55 0.22 20 / 0.15)",
+            overflow: "hidden",
+          }}
+          initial={{ opacity: 0, scale: 0.85, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.85, y: 40 }}
+          transition={{ type: "spring", stiffness: 300, damping: 28 }}
+        >
         {/* ── Drag Handle Header ── */}
         <div
           className="flex items-center justify-between px-3 py-2 cursor-grab active:cursor-grabbing select-none"

@@ -19,6 +19,11 @@ export default defineConfig(function (_a) {
                 '~': path.resolve(__dirname, './'),
             },
         },
+        build: {
+            rollupOptions: {
+                external: ['@mlc-ai/web-llm'],
+            },
+        },
         server: {
             port: 3000,
         },

@@ -11,6 +11,8 @@ import {
   Plus,
   X,
   Camera,
+  FileText,
+  Shield,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { usePersistentState } from "@/lib/usePersistentState.ts";
@@ -126,24 +128,34 @@ export default function Topbar() {
           title="Click to upload custom logo"
         >
           {logoSrc ? (
-            <img
-              src={logoSrc}
-              alt="Logo"
-              className="h-8 w-auto max-w-[120px] object-contain"
-            />
-          ) : (
-            <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform"
-              style={{
-                background:
-                  "linear-gradient(135deg, oklch(0.55 0.22 20 / 30%) 0%, oklch(0.55 0.22 20 / 10%) 100%)",
-                border: "1px solid oklch(0.55 0.22 20 / 40%)",
-                boxShadow: "0 0 14px oklch(0.55 0.22 20 / 40%)",
-              }}
-            >
-              CEO GPS
-            </div>
-          )}
+                      <img
+                        src={logoSrc}
+                        alt="Logo"
+                        className="h-10 w-auto max-w-[140px] object-contain"
+                      />
+                    ) : (
+                      <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, oklch(0.55 0.22 20 / 30%) 0%, oklch(0.55 0.22 20 / 10%) 100%)",
+                          border: "1px solid oklch(0.55 0.22 20 / 40%)",
+                          boxShadow: "0 0 12px oklch(0.55 0.22 20 / 35%)",
+                        }}
+                      >
+                        <span className="font-display text-[13px] tracking-wider text-primary">CEO GPS</span>
+                      </div>
+                    )}
+
+                    {/* Hidden file input for logo upload */}
+                    <input
+                      type="file"
+                      ref={logoInputRef}
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="hidden"
+                      id="logo-upload"
+                    />
         </div>
 
         {/* App name */}
@@ -285,18 +297,34 @@ export default function Topbar() {
                       },
                     },
                     {
-                      icon: <Settings size={13} />,
-                      label: "Settings",
-                      action: () => {
-                        setUserMenuOpen(false);
-                        navigate("/integrations");
-                      },
-                    },
-                    {
-                      icon: <LogOut size={13} />,
-                      label: "Sign Out",
-                      action: () => setUserMenuOpen(false),
-                    },
+                                        icon: <Settings size={13} />,
+                                        label: "Settings",
+                                        action: () => {
+                                          setUserMenuOpen(false);
+                                          navigate("/integrations");
+                                        },
+                                      },
+                                      {
+                                        icon: <FileText size={13} />,
+                                        label: "Terms & Conditions",
+                                        action: () => {
+                                          setUserMenuOpen(false);
+                                          window.open("https://ceogps.com/terms-and-conditions", "_blank");
+                                        },
+                                      },
+                                      {
+                                        icon: <Shield size={13} />,
+                                        label: "Privacy Policy",
+                                        action: () => {
+                                          setUserMenuOpen(false);
+                                          window.open("https://ceogps.com/privacy-policy", "_blank");
+                                        },
+                                      },
+                                      {
+                                        icon: <LogOut size={13} />,
+                                        label: "Sign Out",
+                                        action: () => setUserMenuOpen(false),
+                                      },
                   ].map((item) => (
                     <button
                       key={item.label}

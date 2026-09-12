@@ -48,33 +48,33 @@ export default function Dashboard() {
   return (
     <div className="p-4 min-h-full">
       {/* Welcome strip */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-3 mb-5"
-      >
-        <div>
-          <h1 className="font-display text-base tracking-[0.12em]">
-            <span
-              style={{
-                color: "oklch(0.65 0.22 20)",
-                textShadow: "0 0 14px oklch(0.55 0.22 20 / 80%)",
-              }}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 mb-5"
             >
-              Cagednreality
-            </span>
-          </h1>
-        </div>
-        <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 glass-crimson rounded-full">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-green" />
-          <span
-            className="text-[10px] font-display tracking-widest"
-            style={{ color: "oklch(0.75 0.22 20)" }}
-          >
-            LIFEOS ONLINE
-          </span>
-        </div>
-      </motion.div>
+              <div>
+                <h1 className="font-display text-xl tracking-[0.12em] text-foreground">
+                  <span
+                    style={{
+                      color: "oklch(0.65 0.22 20)",
+                      textShadow: "0 0 14px oklch(0.55 0.22 20 / 80%)",
+                    }}
+                  >
+                    Cagednreality
+                  </span>
+                </h1>
+              </div>
+              <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 glass-crimson rounded-full">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-green" />
+                <span
+                  className="text-xs font-display tracking-widest"
+                  style={{ color: "oklch(0.75 0.22 20)" }}
+                >
+                  LIFEOS ONLINE
+                </span>
+              </div>
+            </motion.div>
 
       {/* Module grid */}
       <div

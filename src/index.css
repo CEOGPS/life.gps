@@ -53,17 +53,17 @@
 :root {
   --radius: 0.75rem;
   --background: oklch(0 0 0);
-  --foreground: oklch(0.97 0 0);
+  --foreground: oklch(0.98 0 0);
   --card: oklch(0.08 0 0 / 55%);
-  --card-foreground: oklch(0.97 0 0);
+  --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.08 0 0 / 95%);
-  --popover-foreground: oklch(0.97 0 0);
+  --popover-foreground: oklch(0.98 0 0);
   --primary: oklch(0.55 0.22 20);
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.15 0.04 20 / 70%);
-  --secondary-foreground: oklch(0.9 0 0);
+  --secondary-foreground: oklch(0.92 0 0);
   --muted: oklch(0.18 0 0 / 60%);
-  --muted-foreground: oklch(0.6 0 0);
+  --muted-foreground: oklch(0.78 0 0);
   --accent: oklch(0.45 0.2 20);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.55 0.22 25);
@@ -76,11 +76,11 @@
   --chart-4: oklch(0.7 0 0);
   --chart-5: oklch(0.35 0 0);
   --sidebar: oklch(0.04 0 0);
-  --sidebar-foreground: oklch(0.88 0 0);
+  --sidebar-foreground: oklch(0.92 0 0);
   --sidebar-primary: oklch(0.55 0.22 20);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.55 0.22 20 / 15%);
-  --sidebar-accent-foreground: oklch(0.88 0 0);
+  --sidebar-accent-foreground: oklch(0.92 0 0);
   --sidebar-border: oklch(1 0 0 / 5%);
   --sidebar-ring: oklch(0.55 0.22 20 / 40%);
 
@@ -138,11 +138,16 @@
     outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
-  html,
+  html {
+    font-size: 15px;
+  }
+
   body {
     background: #000000;
     color: var(--foreground);
     font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
     overflow: hidden;
   }
 
@@ -385,3 +390,32 @@
 .border-crimson-gradient {
   border-image: linear-gradient(135deg, oklch(0.55 0.22 20), transparent) 1;
 }
+
+/* ─── Global text size utilities ─── */
+.text-xs { font-size: 0.75rem; line-height: 1.5; }
+.text-sm { font-size: 0.875rem; line-height: 1.5; }
+.text-base { font-size: 1rem; line-height: 1.6; }
+.text-lg { font-size: 1.125rem; line-height: 1.6; }
+.text-xl { font-size: 1.25rem; line-height: 1.5; }
+.text-2xl { font-size: 1.5rem; line-height: 1.4; }
+.text-3xl { font-size: 1.875rem; line-height: 1.3; }
+.text-4xl { font-size: 2.25rem; line-height: 1.2; }
+
+/* ─── Font weight utilities ─── */
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* ─── Lighter text color utilities ─── */
+.text-foreground { color: var(--foreground); }
+.text-muted-foreground { color: var(--muted-foreground); }
+.text-white-90 { color: oklch(0.98 0 0); }
+.text-white-80 { color: oklch(0.92 0 0); }
+.text-white-70 { color: oklch(0.85 0 0); }
+.text-white-60 { color: oklch(0.78 0 0); }
+.text-white-50 { color: oklch(0.7 0 0); }
+.text-white-40 { color: oklch(0.6 0 0); }
+.text-white-30 { color: oklch(0.5 0 0); }
+.text-white-20 { color: oklch(0.4 0 0); }

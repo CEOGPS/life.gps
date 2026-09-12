@@ -13,10 +13,7 @@ var CORS = {
 };
 
 var SUPABASE_URL = "https://mhvcdstgkyplhzjptgfr.supabase.co";
-var WORKER_BASE = "https://lifeos1-api.ceogps.workers.dev";
-
-// Import the API routes from src/api
-import apiRoutes from "./src/api/index.js";
+var WORKER_BASE = "https://lifeos1.ceogps.workers.dev";
 
 // ── In-memory KV fallback (when KV namespace not bound) ───────────────────────
 const memoryStore = new Map();
@@ -766,7 +763,7 @@ async function handleOAuthStatus(req, env, url) {
 
   if (provider) {
     // Check specific provider
-    const data = await env.LIFEOS_KV.get(`oauth_${provider}`, "json");
+    const data = await kvGet(env, `oauth_${provider}`, "json");
     return json({
       connected: !!(data?.connected || data?.access_token),
       provider,
@@ -780,7 +777,7 @@ async function handleOAuthStatus(req, env, url) {
   const statuses = {};
 
   for (const p of providers) {
-    const d = await env.LIFEOS_KV.get(`oauth_${p}`, "json");
+    const d = await kvGet(env, `oauth_${p}`, "json");
     if (d?.connected || d?.access_token) {
       statuses[p] = {
         connected: true,
@@ -1963,108 +1960,122 @@ export default {
     const path = url.pathname;
 
     // CORS preflight
-    if (req.method === "OPTIONS") {
-      return new Response(null, { headers: CORS });
-    }
-
-    // Health check (public, no auth required)
-    if (path === "/api/health" && req.method === "GET") {
-      return json({
-        status: "healthy",
-        timestamp: new Date().toISOString(),
-        version: "1.0.0",
-        services: {
-          supabase: "connected",
-          email: "operational",
-        },
-      });
-    }
-
-    // Weather (free, no API key - Open-Meteo)
-    if (path === "/api/weather" && req.method === "GET") {
-      const url = new URL(req.url);
-      const lat = url.searchParams.get("latitude");
-      const lon = url.searchParams.get("longitude");
-      
-      if (!lat || !lon) {
-        return json({ error: "Missing latitude/longitude" }, 400);
-      }
-
-      try {
-        const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,uv_index&timezone=America/New_York`
-        );
-        
-        if (!response.ok) {
-          return json({ error: "Weather service unavailable" }, 503);
-        }
-        
-        const data = await response.json();
-        return json(data);
-      } catch (e) {
-        return json({ error: e.message }, 500);
-      }
-    }
-
-    // Readiness check (public, no auth required)
-    if (path === "/api/health/ready" && req.method === "GET") {
-      return json({
-        status: "ready",
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    // Liveness check (public, no auth required)
-    if (path === "/api/health/live" && req.method === "GET") {
-      return json({
-        status: "alive",
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    // Auth for protected endpoints
-    const authHeader = req.headers.get("Authorization");
-    let currentUser = null;
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-      const token = authHeader.substring(7);
-      try {
-        const body = await req.json();
-        const code = body.code;
-        const grantType = body.grant_type;
-
-        if (grantType !== "authorization_code" || !code) {
-          return err("invalid_request", 400);
+        if (req.method === "OPTIONS") {
+          return new Response(null, { headers: CORS });
         }
 
-        const codeDataStr = await kvGet(env, `oauth_code:${code}`);
-        if (!codeDataStr) return err("invalid_grant", 400);
+        // Health check (public, no auth required)
+        if (path === "/api/health" && req.method === "GET") {
+          return json({
+            status: "healthy",
+            timestamp: new Date().toISOString(),
+            version: "1.0.0",
+            services: {
+              supabase: "connected",
+              email: "operational",
+            },
+          });
+        }
 
-        const codeData = JSON.parse(codeDataStr);
-        await kvDelete(env, `oauth_code:${code}`);
+        // Weather (free, no API key - Open-Meteo)
+        if (path === "/api/weather" && req.method === "GET") {
+          const lat = url.searchParams.get("latitude");
+          const lon = url.searchParams.get("longitude");
 
-        const accessToken = `lo_${crypto.randomUUID().replace(/-/g, "")}`;
-        const expiresIn = 3600;
-        await env.LIFEOS_KV.put(
-          `oauth_token:${accessToken}`,
-          JSON.stringify({
-            user_id: codeData.user_id,
-            client_id: codeData.client_id,
-            scope: codeData.scope,
-            created: Date.now()
-          }),
-          { expirationTtl: expiresIn + 60 }
-        );
+          if (!lat || !lon) {
+            return json({ error: "Missing latitude/longitude" }, 400);
+          }
 
-        return json({
-          access_token: accessToken,
-          token_type: "Bearer",
-          expires_in: expiresIn,
-          scope: codeData.scope
-        });
-      } catch (e) {
-        return err(`server_error: ${e.message}`, 500);
-      }
-    }
+          try {
+            const response = await fetch(
+              `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,uv_index&timezone=America/New_York`
+            );
+
+            if (!response.ok) {
+              return json({ error: "Weather service unavailable" }, 503);
+            }
+
+            const data = await response.json();
+            return json(data);
+          } catch (e) {
+            return json({ error: e.message }, 500);
+          }
+        }
+
+        // OAuth Status (public for checking connected providers)
+        if (path === "/api/oauth/status" && req.method === "GET") {
+          return handleOAuthStatus(req, env, url);
+        }
+        if (path === "/api/oauth/status/all" && req.method === "GET") {
+          return handleOAuthStatus(req, env, url);
+        }
+
+        // OAuth Start (public, no auth required)
+        if (path === "/api/oauth/start" && req.method === "GET") {
+          return handleOAuthStart(req, env, url);
+        }
+
+        // OAuth Callback (public, no auth required)
+        if (path === "/api/oauth/callback" && req.method === "GET") {
+          return handleOAuthCallback(req, env, url);
+        }
+
+        // Validate Key (public, no auth required)
+        if (path === "/api/validate-key" && req.method === "POST") {
+          return handleValidateKey(req, env);
+        }
+
+        // Webhook endpoints (public, no auth required)
+        if (path === "/api/webhook/telegram" && req.method === "POST") {
+          return handleWebhookTelegram(req, env);
+        }
+        if (path === "/api/webhook/meta" && req.method === "POST") {
+          return handleWebhookMeta(req, env);
+        }
+
+        // Auth for protected endpoints
+        const authHeader = req.headers.get("Authorization");
+        let currentUser = null;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+          const token = authHeader.substring(7);
+          try {
+            const body = await req.json();
+            const code = body.code;
+            const grantType = body.grant_type;
+
+            if (grantType !== "authorization_code" || !code) {
+              return err("invalid_request", 400);
+            }
+
+            const codeDataStr = await kvGet(env, `oauth_code:${code}`);
+            if (!codeDataStr) return err("invalid_grant", 400);
+
+            const codeData = JSON.parse(codeDataStr);
+            await kvDelete(env, `oauth_code:${code}`);
+
+            const accessToken = `lo_${crypto.randomUUID().replace(/-/g, "")}`;
+            const expiresIn = 3600;
+            await env.LIFEOS_KV.put(
+              `oauth_token:${accessToken}`,
+              JSON.stringify({
+                user_id: codeData.user_id,
+                client_id: codeData.client_id,
+                scope: codeData.scope,
+                created: Date.now()
+              }),
+              { expirationTtl: expiresIn + 60 }
+            );
+
+            return json({
+              access_token: accessToken,
+              token_type: "Bearer",
+              expires_in: expiresIn,
+              scope: codeData.scope
+            });
+          } catch (e) {
+            return err(`server_error: ${e.message}`, 500);
+          }
+        }
 
     // ── X/Twitter User Lookup ──────────────────────────────────────────────────────
     if (path === "/api/x/user" && req.method === "GET") {
@@ -2279,11 +2290,6 @@ export default {
       } catch (e) {
         return json({ ok: false, error: e.message }, 500);
       }
-    }
-
-    // Mount src/api routes
-    if (path.startsWith("/api/")) {
-      return await apiRoutes.fetch(req, env, {});
     }
 
     // Not Found

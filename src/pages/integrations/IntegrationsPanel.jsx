@@ -5,8 +5,8 @@ import {
   setPreferredModel,
   MODEL_OPTIONS,
   generatePKCE,
-} from "../../../api/ceogpsclient.jsx";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+} from "@/api/ceogpsclient.tsx";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 const C = {
   blue: "#4ab3f4",
@@ -124,17 +124,18 @@ const VALIDATOR_PROVIDER = {
   Cloudflare: "cloudflare",
 };
 
-async function storeKeyOnWorker(name, email, key, firebaseUserOrToken) {
+async function storeKeyOnWorker(name, email, key, supabaseUserOrToken) {
   const provider =
     VALIDATOR_PROVIDER[name] || name.toLowerCase().replace(/\W+/g, "_");
   const perAccount = provider + "_" + email.split("@")[0].replace(/\W+/g, "_");
 
   let idToken = "";
-  if (typeof firebaseUserOrToken === "string") {
-    idToken = firebaseUserOrToken;
-  } else if (firebaseUserOrToken) {
+  if (typeof supabaseUserOrToken === "string") {
+    idToken = supabaseUserOrToken;
+  } else if (supabaseUserOrToken) {
     try {
-      idToken = await firebaseUserOrToken.getIdToken();
+      const { data: { session } } = await supabase.auth.getSession();
+      idToken = session?.access_token || "";
     } catch {}
   }
 
@@ -163,16 +164,17 @@ async function storeKeyOnWorker(name, email, key, firebaseUserOrToken) {
   } catch {}
 }
 
-async function validateKeyOnWorker(name, key, firebaseUserOrToken) {
+async function validateKeyOnWorker(name, key, supabaseUserOrToken) {
   const provider = VALIDATOR_PROVIDER[name];
   if (!provider) return { valid: true };
 
   let idToken = "";
-  if (typeof firebaseUserOrToken === "string") {
-    idToken = firebaseUserOrToken;
-  } else if (firebaseUserOrToken) {
+  if (typeof supabaseUserOrToken === "string") {
+    idToken = supabaseUserOrToken;
+  } else if (supabaseUserOrToken) {
     try {
-      idToken = await firebaseUserOrToken.getIdToken();
+      const { data: { session } } = await supabase.auth.getSession();
+      idToken = session?.access_token || "";
     } catch {}
   }
 
@@ -231,16 +233,17 @@ const PROVIDER_MAP = {
   Calendly: "calendly",
 };
 
-function useOAuthStatus(firebaseUser) {
+function useOAuthStatus(supabaseUser) {
   const queryClient = useQueryClient();
 
   const { data = { accounts: [], kv: {} } } = useQuery({
     queryKey: ["oauth-status"],
     queryFn: async () => {
       let idToken = "";
-      if (firebaseUser) {
+      if (supabaseUser) {
         try {
-          idToken = await firebaseUser.getIdToken();
+          const { data: { session } } = await supabase.auth.getSession();
+          idToken = session?.access_token || "";
         } catch {}
       }
 
@@ -349,9 +352,9 @@ function useOAuthStatus(firebaseUser) {
         return next;
       });
     });
-  }, [connectedAccounts, firebaseUser]);
+  }, [connectedAccounts, supabaseUser]);
 
-  const isConnected = (name) => {
+    const isConnected = (name) => {
     const provider = PROVIDER_MAP[name];
     if (!provider) return false;
     const serverConnected =
@@ -383,10 +386,10 @@ function useOAuthStatus(firebaseUser) {
   return { isConnected, connectedAccounts, refreshStatus };
 }
 
-async function startOAuthFlow(name, firebaseUser) {
+async function startOAuthFlow(name, supabaseUser) {
   const cfg = OAUTH_PROVIDER[name];
   if (!cfg) return;
-  const uid = firebaseUser?.id || firebaseUser?.uid || "unknown";
+  const uid = supabaseUser?.id || "unknown";
   const width = 600,
     height = 700;
   const left = window.screenX + (window.outerWidth - width) / 2;
@@ -413,14 +416,15 @@ async function disconnectOAuth(
   provider,
   accountEmail,
   refreshStatus,
-  firebaseUser,
+  supabaseUser,
 ) {
-  if (!firebaseUser) return;
-  const uid = firebaseUser.id || firebaseUser.uid || "unknown";
+  if (!supabaseUser) return;
+  const uid = supabaseUser.id || "unknown";
 
   let idToken = "";
   try {
-    idToken = await firebaseUser.getIdToken();
+    const { data: { session } } = await supabase.auth.getSession();
+    idToken = session?.access_token || "";
   } catch {}
 
   const u = new URL(`${WORKER_URL}/api/oauth/disconnect`);
@@ -964,7 +968,7 @@ function CredentialForm({
   isOAuth,
   globalIsConnected,
   itemName,
-  firebaseIdToken,
+  authToken,
 }) {
   const [username, setUsername] = useState(slot.username || "");
   const [password, setPassword] = useState(slot.password || "");
@@ -975,33 +979,33 @@ function CredentialForm({
   const [validMsg, setValidMsg] = useState(null);
   const [showPass, setShowPass] = useState(false);
   const [confirmDel, setConfirmDel] = useState(false);
-  const { user } = useAuth(); // Gather target firebase profiles
+  const { supabaseUser } = useAuth(); // Gather target supabase profiles
   const isNylas = name === "Nylas";
   const isStripe = name === "Stripe";
   const isCF = name === "Cloudflare";
   const isApiOnly = API_KEY_SERVICES.has(name) && !isNylas;
 
   async function handleSave() {
-    setSaving(true);
-    setValidMsg(null);
-    if (apiKey && VALIDATOR_PROVIDER[name] && !isStripe && !isCF) {
-      const r = await validateKeyOnWorker(name, apiKey, firebaseIdToken);
-      if (!r.valid) {
-        setValidMsg({ ok: false, msg: r.detail || "Key validation failed" });
-        setSaving(false);
-        return;
+      setSaving(true);
+      setValidMsg(null);
+      if (apiKey && VALIDATOR_PROVIDER[name] && !isStripe && !isCF) {
+        const r = await validateKeyOnWorker(name, apiKey, authToken);
+        if (!r.valid) {
+          setValidMsg({ ok: false, msg: r.detail || "Key validation failed" });
+          setSaving(false);
+          return;
+        }
+        setValidMsg({ ok: true, msg: "Key validated ✓" });
       }
-      setValidMsg({ ok: true, msg: "Key validated ✓" });
+      await onSave({
+        username,
+        password,
+        apiKey,
+        label: editLabel,
+        email: editEmail,
+      });
+      setSaving(false);
     }
-    await onSave({
-      username,
-      password,
-      apiKey,
-      label: editLabel,
-      email: editEmail,
-    });
-    setSaving(false);
-  }
 
   const inp = {
     width: "100%",
@@ -1895,7 +1899,7 @@ function IntegrationCard({
   onAccountsChange,
   showToast,
   isFree,
-  firebaseIdToken,
+  authToken,
   isConnected: globalIsConnected,
 }) {
   const [expanded, setExpanded] = useState(null);
@@ -1969,31 +1973,31 @@ function IntegrationCard({
     showToast(`✓ ${item.name} — ${displayLabel} saved`, C.teal);
     setExpanded(null);
     if (data.apiKey) {
-      storeKeyOnWorker(item.name, newEmail, data.apiKey, firebaseIdToken).catch(
-        () => {},
-      );
-    }
-    if (item.name === "Nylas" && data.username) {
-      fetch(`${WORKER_URL}/api/nylas/store-grant`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${firebaseIdToken}`,
-        },
-        body: JSON.stringify({ email: newEmail, grant_id: data.username }),
-      }).catch(() => {
-        fetch(`${WORKER_URL}/api/keys/store`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${firebaseIdToken}`,
-          },
-          body: JSON.stringify({
-            service: "nylas_grant_id",
-            key: data.username,
-          }),
-        }).catch(() => {});
-      });
+          storeKeyOnWorker(item.name, newEmail, data.apiKey, authToken).catch(
+            () => {},
+          );
+        }
+        if (item.name === "Nylas" && data.username) {
+          fetch(`${WORKER_URL}/api/nylas/store-grant`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({ email: newEmail, grant_id: data.username }),
+          }).catch(() => {
+                      fetch(`${WORKER_URL}/api/keys/store`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${authToken}`,
+                    },
+                    body: JSON.stringify({
+                      service: "nylas_grant_id",
+                      key: data.username,
+                    }),
+                  }).catch(() => {});
+                });
     }
   }
 
@@ -2291,8 +2295,8 @@ function IntegrationCard({
                     onRemove={() => removeSlot(email)}
                     onDelete={() => deleteSlot(email)}
                     onClose={() => setExpanded(null)}
-                    firebaseIdToken={firebaseIdToken}
-                  />
+                                        authToken={authToken}
+                                      />
                 )}
               </RowWithDelete>
             );
@@ -2357,19 +2361,19 @@ export default function IntegrationsPanel() {
   const [accounts, setAccounts] = useState(() => loadAccounts());
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
-  const { firebaseUser, getAuthToken } = useAuth();
-  const [firebaseIdToken, setFirebaseIdToken] = useState(null);
+  const { supabaseUser, session, getAuthToken, isAuthenticated } = useAuth();
+  const [authToken, setAuthToken] = useState(null);
   const { isConnected, connectedAccounts, refreshStatus } =
-    useOAuthStatus(firebaseUser);
+    useOAuthStatus(supabaseUser);
   useEffect(() => {
-    if (!firebaseUser) {
-      setFirebaseIdToken(null);
+    if (!isAuthenticated || !session) {
+      setAuthToken(null);
       return;
     }
     getAuthToken()
-      .then((t) => setFirebaseIdToken(t))
+      .then((t) => setAuthToken(t))
       .catch(() => {});
-  }, [firebaseUser]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [supabaseUser, session, isAuthenticated]);
 
   useEffect(() => {
     saveAccounts(accounts);
@@ -2743,9 +2747,9 @@ export default function IntegrationsPanel() {
                 accounts={accounts}
                 onAccountsChange={handleAccountsChange}
                 showToast={showToast}
-                isFree={FREE_INTEGRATIONS.has(item.name)}
-                firebaseIdToken={firebaseIdToken}
-                isConnected={isConnected}
+                                isFree={FREE_INTEGRATIONS.has(item.name)}
+                                authToken={authToken}
+                                isConnected={isConnected}
               />
             ))}
           </div>
