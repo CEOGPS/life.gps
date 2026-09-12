@@ -7,6 +7,10 @@ import ErrorBoundary from "./components/ErrorBoundary.tsx";
 import AppLayout from "./components/layout/AppLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import PlaceholderPanel from "./components/layout/PlaceholderPanel.tsx";
+import ProtectedRoute from "./pages/auth/ProtectedRoute.tsx";
+import Login from "./pages/auth/Login.tsx";
+import Logout from "./pages/auth/Logout.tsx";
+import AuthCallback from "./pages/auth/AuthCallback.tsx";
 
 // ─── PANELS (flat structure) ───
 import MusicPanel from "./pages/MusicPanel.tsx";
@@ -54,53 +58,58 @@ export default function App() {
           <ErrorBoundary>
             <AudioProvider>
               <Routes>
-                <Route element={<AppLayout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/music" element={<MusicPanel />} />
-                  <Route path="/contacts" element={<ContactsPanel />} />
-                  <Route path="/crm" element={<CRMPanel />} />
-                  <Route path="/email" element={<EmailPanel />} />
-                  <Route path="/communications" element={<CommunicationsPanel />} />
-                  <Route path="/finance" element={<FinancePanel />} />
-                  <Route path="/community" element={<CommunityPanel />} />
-                  <Route path="/creator" element={<CreatorPanel />} />
-                  <Route path="/social" element={<SocialPanel />} />
-                  <Route path="/sociallink" element={<SocialLinkOS1 />} />
-                  <Route path="/marketing" element={<MarketingPanel />} />
-                  {/* Events moved into the Calendar panel */}
-                  <Route path="/events" element={<CalendarPanel />} />
-                  <Route path="/agents" element={<AgentsPanel />} />
-                  {/* Opportunity Engine folded into Community */}
-                  <Route path="/opportunity" element={<CommunityPanel />} />
-                  {/* AI Academy removed */}
-                  <Route path="/omnisearch" element={<OmniSearchPanel />} />
-                  <Route path="/ceogps" element={<BusinessCommandPanel />} />
-                  <Route path="/business" element={<BusinessCommandPanel />} />
-                  <Route path="/projects" element={<ProjectsPanel />} />
-                  <Route path="/calendar" element={<CalendarPanel />} />
-                  <Route path="/office" element={<OfficePanel />} />
-                  <Route path="/maps" element={<MapsPanel />} />
-                  <Route path="/family" element={<FamilyPanel />} />
-                  <Route path="/health" element={<HealthPanel />} />
-                  <Route path="/journal" element={<JournalPanel />} />
-                  {/* Life RPG folded into Simulators hub */}
-                  <Route path="/liferpg" element={<SimulatorsHub />} />
-                  <Route path="/pulse" element={<PulsePanel />} />
-                  <Route path="/insights" element={<InsightsPanel />} />
-                  <Route path="/media" element={<MediaPanel />} />
-                  <Route path="/vault" element={<VaultPanel />} />
-                  <Route path="/privacy" element={<LegalPanel />} />
-                  <Route path="/legal" element={<LegalPanel />} />
-                  <Route path="/terminals" element={<TerminalsPanel />} />
-                  <Route path="/simulators" element={<SimulatorsHub />} />
-                  <Route path="/integrations" element={<IntegrationsPanel />} />
-                  {/* Conflict Resolver + Karma Credit folded into Simulators hub */}
-                  <Route path="/conflict" element={<SimulatorsHub />} />
-                  <Route path="/karma" element={<SimulatorsHub />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
+                <Route element={<ProtectedRoute />}>
+                                  <Route element={<AppLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/music" element={<MusicPanel />} />
+                    <Route path="/contacts" element={<ContactsPanel />} />
+                    <Route path="/crm" element={<CRMPanel />} />
+                    <Route path="/email" element={<EmailPanel />} />
+                    <Route path="/communications" element={<CommunicationsPanel />} />
+                    <Route path="/finance" element={<FinancePanel />} />
+                    <Route path="/community" element={<CommunityPanel />} />
+                    <Route path="/creator" element={<CreatorPanel />} />
+                    <Route path="/social" element={<SocialPanel />} />
+                    <Route path="/sociallink" element={<SocialLinkOS1 />} />
+                    <Route path="/marketing" element={<MarketingPanel />} />
+                    {/* Events moved into the Calendar panel */}
+                    <Route path="/events" element={<CalendarPanel />} />
+                    <Route path="/agents" element={<AgentsPanel />} />
+                    {/* Opportunity Engine folded into Community */}
+                    <Route path="/opportunity" element={<CommunityPanel />} />
+                    {/* AI Academy removed */}
+                    <Route path="/omnisearch" element={<OmniSearchPanel />} />
+                    <Route path="/ceogps" element={<BusinessCommandPanel />} />
+                    <Route path="/business" element={<BusinessCommandPanel />} />
+                    <Route path="/projects" element={<ProjectsPanel />} />
+                    <Route path="/calendar" element={<CalendarPanel />} />
+                    <Route path="/office" element={<OfficePanel />} />
+                    <Route path="/maps" element={<MapsPanel />} />
+                    <Route path="/family" element={<FamilyPanel />} />
+                    <Route path="/health" element={<HealthPanel />} />
+                    <Route path="/journal" element={<JournalPanel />} />
+                    {/* Life RPG folded into Simulators hub */}
+                    <Route path="/liferpg" element={<SimulatorsHub />} />
+                    <Route path="/pulse" element={<PulsePanel />} />
+                    <Route path="/insights" element={<InsightsPanel />} />
+                    <Route path="/media" element={<MediaPanel />} />
+                    <Route path="/vault" element={<VaultPanel />} />
+                    <Route path="/privacy" element={<LegalPanel />} />
+                    <Route path="/legal" element={<LegalPanel />} />
+                    <Route path="/terminals" element={<TerminalsPanel />} />
+                    <Route path="/simulators" element={<SimulatorsHub />} />
+                    <Route path="/integrations" element={<IntegrationsPanel />} />
+                    {/* Conflict Resolver + Karma Credit folded into Simulators hub */}
+                    <Route path="/conflict" element={<SimulatorsHub />} />
+                    <Route path="/karma" element={<SimulatorsHub />} />
 
-                  {/* SUB-APPS with nested routing */}
-                  <Route path="/veriton/*" element={<VeritonApp />} />
-                  <Route path="/lucidsystems/*" element={<LucidSystemsApp />} />
+                    {/* SUB-APPS with nested routing */}
+                    <Route path="/veriton/*" element={<VeritonApp />} />
+                    <Route path="/lucidsystems/*" element={<LucidSystemsApp />} />
+                  </Route>
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
