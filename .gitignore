@@ -57,3 +57,14 @@ venv/
 __pycache__/
 Telegram Desktop/
 venv/
+
+# Quarantined files (leaked secrets, backups, build junk) - never re-track these
+/_quarantine/
+hermes/
+*.backup
+*.tar.gz
+*.tsbuildinfo
+worker-bundle.js
+worker_part1.js
+worker_part2.js
+Docs/clean_api_keys.md

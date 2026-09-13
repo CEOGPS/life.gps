@@ -27,9 +27,9 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import AuthLayout from "@/components/AuthLayout";
-import GoogleIcon from "@/components/GoogleIcon";
-import { toast } from "@/components/ui/use-toast";
+import AuthLayout from "../components/AuthLayout";
+import GoogleIcon from "../components/GoogleIcon";
+import { toast } from "../components/ui/use-toast";
 
 export default function Register() {
   const [email, setEmail] = useState("");
