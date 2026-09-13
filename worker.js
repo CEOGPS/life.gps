@@ -322,6 +322,8 @@ function getProviderConfig(env, provider, scope) {
   const redirectUri = `${WORKER_BASE}/api/oauth/callback`;
   const ownedRedirect = "https://oauth.ceogps.com/api/oauth/callback";
 
+  console.log(`[getProviderConfig] provider=${provider}, GOOGLE_CLIENT_ID=${env.GOOGLE_CLIENT_ID ? "SET" : "EMPTY"}`);
+  
   const configs = {
     google: {
       auth_url: "https://accounts.google.com/o/oauth2/v2/auth",
@@ -471,9 +473,13 @@ async function handleOAuthStart(req, env, url) {
   const loginHint = url.searchParams.get("hint") || "";
   const accountEmail = url.searchParams.get("account_email") || "";
 
+  console.log(`[OAUTH START] ENTERED - provider=${providerName}, userId=${userId}, env.LIFEOS_KV=${env.LIFEOS_KV ? "exists" : "MISSING"}`);
+
   const cfg = getProviderConfig(env, providerName, scope);
   if (!cfg) return new Response("Unknown provider", { status: 400 });
 
+  console.log(`[OAUTH START] cfg.client_id=${cfg.client_id ? "SET" : "EMPTY"}, client_secret=${cfg.client_secret ? "SET" : "EMPTY"}`);
+  
   if (!cfg.client_id) {
     return new Response(
       `<html><body style="background:#0d0e17;color:#f0ede8;font-family:system-ui;padding:40px">
@@ -484,24 +490,34 @@ async function handleOAuthStart(req, env, url) {
     );
   }
 
+  console.log(`[OAUTH START] Generating PKCE...`);
   const PKCE_PROVIDERS = new Set(["google", "microsoft", "twitter", "airtable", "linkedin", "zoom", "clickup", "slack", "spotify", "tiktok", "yahoo", "aol", "calendly"]);
   const usePKCE = PKCE_PROVIDERS.has(providerName);
   const state = crypto.randomUUID();
-  const { codeVerifier, codeChallenge } = await generatePKCE();
+  console.log(`[OAUTH START] State generated: ${state}`);
+  
+    const { codeVerifier, codeChallenge } = await generatePKCE();
+    console.log(`[OAUTH START] PKCE generated`);
 
-  await env.LIFEOS_KV.put(
-    `oauth_state:${state}`,
-    JSON.stringify({
-      provider: providerName,
-      codeVerifier,
-      usePKCE,
-      userId,
-      accountEmail,
-      scope,
-      timestamp: Date.now()
-    }),
-    { expirationTtl: 900 }
-  );
+    try {
+    await env.LIFEOS_KV.put(
+      `oauth_state:${state}`,
+      JSON.stringify({
+        provider: providerName,
+        codeVerifier,
+        usePKCE,
+        userId,
+        accountEmail,
+        scope,
+        timestamp: Date.now()
+      }),
+      { expirationTtl: 900 }
+    );
+    console.log(`[OAUTH START] KV put done`);
+  } catch (e) {
+    console.error(`[OAUTH START] KV put ERROR: ${e.message}`);
+    return new Response(`KV put failed: ${e.message}`, { status: 500 });
+  }
 
   const authUrl = new URL(cfg.auth_url);
   authUrl.searchParams.set("client_id", cfg.client_id);
