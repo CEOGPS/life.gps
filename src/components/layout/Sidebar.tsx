@@ -40,6 +40,7 @@ import {
   Gauge,
   MapPin,
   Music4,
+  Sparkles,
 } from "lucide-react";
 import { SIDEBAR_GROUPS } from "./sidebar-items.ts";
 
@@ -80,6 +81,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Swords: <Swords size={15} />,
   Star: <Star size={15} />,
   MapPin: <MapPin size={15} />,
+  Sparkles: <Sparkles size={15} />,
 };
 
 export default function Sidebar() {

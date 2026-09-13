@@ -7,6 +7,7 @@ import {
   generatePKCE,
 } from "@/api/ceogpsclient.tsx";
 import { useAuth } from "@/lib/SupabaseAuthContext";
+import { usePersistentState } from "@/lib/usePersistentState";
 
 const C = {
   blue: "#4ab3f4",
@@ -2358,7 +2359,7 @@ function IntegrationCard({
 
 // ── Main Panel ────────────────────────────────────────────────────────────────
 export default function IntegrationsPanel() {
-  const [accounts, setAccounts] = useState(() => loadAccounts());
+  const accounts = usePersistentState("lifeos1_accounts_v3", {});
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
   const { supabaseUser, session, getAuthToken, isAuthenticated } = useAuth();
@@ -2376,8 +2377,8 @@ export default function IntegrationsPanel() {
   }, [supabaseUser, session, isAuthenticated]);
 
   useEffect(() => {
-    saveAccounts(accounts);
-  }, [accounts]);
+      // No need to save - usePersistentState handles persistence automatically
+    }, [accounts]);
 
   // Auto-clean local account "on" status for any OAuth item whose verified isConnected is false.
   useEffect(() => {
@@ -2496,70 +2497,69 @@ export default function IntegrationsPanel() {
   }, []);
 
   // OAuth popup success handler
-  useEffect(() => {
-    function onMsg(e) {
-      if (e.data?.type !== "oauth_success") return;
-      const provider = (e.data.provider || "").toLowerCase();
-      const identity = e.data.identity || {};
-      const email = identity.email || `${provider}_account`;
-      const name = identity.name || email.split("@")[0] || provider;
+    useEffect(() => {
+      function onMsg(e) {
+        if (e.data?.type !== "oauth_success") return;
+        const provider = (e.data.provider || "").toLowerCase();
+        const identity = e.data.identity || {};
+        const email = identity.email || `${provider}_account`;
+        const name = identity.name || email.split("@")[0] || provider;
 
-      const providerMap = {
-        google: ["Gmail", "Google Cal.", "YouTube"],
-        microsoft: ["Outlook"],
-        facebook: ["Facebook", "Instagram"],
-        instagram: ["Instagram"],
-        linkedin: ["LinkedIn"],
-        twitter: ["X (Twitter)"],
-        tiktok: ["TikTok"],
-        slack: ["Slack"],
-        github: ["GitHub"],
-        zoom: ["Zoom"],
-        clickup: ["ClickUp"],
-        airtable: ["Airtable"],
-        calendly: ["Calendly"],
-        yahoo: ["Yahoo Mail"],
-        aol: ["AOL Mail"],
-      };
+        const providerMap = {
+          google: ["Gmail", "Google Cal.", "YouTube"],
+          microsoft: ["Outlook"],
+          facebook: ["Facebook", "Instagram"],
+          instagram: ["Instagram"],
+          linkedin: ["LinkedIn"],
+          twitter: ["X (Twitter)"],
+          tiktok: ["TikTok"],
+          slack: ["Slack"],
+          github: ["GitHub"],
+          zoom: ["Zoom"],
+          clickup: ["ClickUp"],
+          airtable: ["Airtable"],
+          calendly: ["Calendly"],
+          yahoo: ["Yahoo Mail"],
+          aol: ["AOL Mail"],
+        };
 
-      const names = providerMap[provider] || [];
-      if (!names.length) return;
+        const names = providerMap[provider] || [];
+        if (!names.length) return;
 
-      setAccounts((prev) => {
-        const updated = { ...prev };
-        names.forEach((intName) => {
-          if (!updated[intName]) updated[intName] = {};
-          const existing = updated[intName][email] || {};
-          updated[intName][email] = {
-            ...existing,
-            label: existing.label || name,
-            icon: existing.icon || "👤",
-            color: existing.color || nextColor(updated[intName]),
-            status: "on",
-            username: email,
-            password: existing.password || "",
-            apiKey: existing.apiKey || "",
-          };
+        accounts.setValue((prev) => {
+          const updated = { ...prev };
+          names.forEach((intName) => {
+            if (!updated[intName]) updated[intName] = {};
+            const existing = updated[intName][email] || {};
+            updated[intName][email] = {
+              ...existing,
+              label: existing.label || name,
+              icon: existing.icon || "👤",
+              color: existing.color || nextColor(updated[intName]),
+              status: "on",
+              username: email,
+              password: existing.password || "",
+              apiKey: "***",
+            };
+          });
+          return updated;
         });
-        return updated;
-      });
-      showToast(`${names[0]} connected${email ? " — " + email : ""}`, C.teal);
-      refreshStatus();
+        showToast(`${names[0]} connected${email ? " — " + email : ""}`, C.teal);
+        refreshStatus();
+      }
+      window.addEventListener("message", onMsg);
+      return () => window.removeEventListener("message", onMsg);
+    }, [accounts, refreshStatus]);
+
+    function showToast(msg, color = C.teal) {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+      setToast({ msg, color });
+      toastTimer.current = setTimeout(() => setToast(null), 3500);
     }
-    window.addEventListener("message", onMsg);
-    return () => window.removeEventListener("message", onMsg);
-  }, [refreshStatus]);
 
-  function showToast(msg, color = C.teal) {
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({ msg, color });
-    toastTimer.current = setTimeout(() => setToast(null), 3500);
-  }
-
-  function handleAccountsChange(newAccounts) {
-    setAccounts(newAccounts);
-    saveAccounts(newAccounts);
-  }
+    function handleAccountsChange(newAccounts) {
+      accounts.setValue(newAccounts);
+    }
 
   const allItems = Object.values(INTEGRATIONS).flat();
   const connectedServices = allItems.filter((item) => {

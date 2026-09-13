@@ -127,22 +127,28 @@ export const SIDEBAR_GROUPS = [
     ],
   },
   {
-    label: "MORE",
-    items: [
-      {
-        id: "simulators",
-        label: "Simulators",
-        icon: "GitBranch",
-        path: "/simulators",
-      },
-      {
-        id: "integrations",
-        label: "Integrations",
-        icon: "Plug",
-        path: "/integrations",
-      },
-    ],
-  },
+      label: "MORE",
+      items: [
+        {
+          id: "entertainment",
+          label: "Entertainment",
+          icon: "Sparkles",
+          path: "/entertainment",
+        },
+        {
+          id: "simulators",
+          label: "Simulators",
+          icon: "GitBranch",
+          path: "/simulators",
+        },
+        {
+          id: "integrations",
+          label: "Integrations",
+          icon: "Plug",
+          path: "/integrations",
+        },
+      ],
+    },
 ];
 
 // Sub-navigation map for panels with internal tabs

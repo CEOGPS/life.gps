@@ -33,21 +33,21 @@ export default function Module({
       style={{ willChange: "transform" }}
     >
       {/* Module header */}
-      <div
-        className={`flex items-center justify-between px-4 py-3 border-b shrink-0
-        ${accent ? "border-primary/25 bg-primary/6" : "border-white/6"}`}
-      >
-        <div className="flex items-center gap-2">
-          <span className="text-primary">{icon}</span>
-          <span className="font-display text-base tracking-wider uppercase text-white-90">
-            {title}
-          </span>
-        </div>
-        {headerRight && <div>{headerRight}</div>}
-      </div>
+            <div
+              className={`flex items-center justify-between px-4 py-3 border-b shrink-0
+              ${accent ? "border-primary/25 bg-primary/6" : "border-white/6"}`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-primary">{icon}</span>
+                <span className="font-display text-base tracking-wider uppercase text-white-90">
+                  {title}
+                </span>
+              </div>
+              {headerRight && <div>{headerRight}</div>}
+            </div>
 
-      {/* Body */}
-      <div className="flex-1 overflow-hidden p-4">{children}</div>
+            {/* Body */}
+            <div className="flex-1 overflow-hidden p-4 text-white-85">{children}</div>
     </motion.div>
   );
 }

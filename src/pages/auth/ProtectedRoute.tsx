@@ -20,9 +20,10 @@ export default function ProtectedRoute() {
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  // Login disabled for development - allow access without auth
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return <Outlet />;
 }

@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import BrandIcon from "@/components/lifeos/icons/BrandIcon";
 import { kvGet, kvSet } from "@/utils/storage";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/FirebaseAuthContext";
 import { getApiKey, saveApiKey } from "@/api/ceogpsclient.jsx";
+import { usePersistentState } from "@/lib/usePersistentState";
 import { Button, Input, Empty, HEX, fmt, Donut, LineChart, Gauge } from "@/lib/ui";
 import {
   Calendar,
@@ -681,22 +682,23 @@ function YouTubePlayer() {
 
 /** @param {DashboardPanelProps} props */
 export default function DashboardPanel({ setActive }) {
-  const [notes, setNotes] = useState(() => load("lifeos_dash_notes", ""));
-  const [previousNotes, setPreviousNotes] = useState(/** @type {string[]} */ (load("lifeos_dash_previous_notes", [])));
-  const [products, setProducts] = useState(() => load("lifeos_dash_products", [
+  // Persistent state with Supabase sync + localStorage fallback
+  const notes = usePersistentState("lifeos_dash_notes", "");
+  const previousNotes = usePersistentState("lifeos_dash_previous_notes", []);
+  const products = usePersistentState("lifeos_dash_products", [
     { name: "Online Course", moRev: 12450, ytdRev: 87200, moSales: 42, ytdSales: 298 },
     { name: "1:1 Coaching", moRev: 9800, ytdRev: 65100, moSales: 11, ytdSales: 72 },
     { name: "Ebook Bundle", moRev: 3150, ytdRev: 21850, moSales: 185, ytdSales: 1240 },
-  ]));
+  ]);
   const [editProducts, setEditProducts] = useState(false);
-  const [productInputs, setProductInputs] = useState(/** @type {InputMap} */ ({});
+  const [productInputs, setProductInputs] = useState(/** @type {InputMap} */ ({}));
   
   // Budget tracker states
   const [budgetDesc, setBudgetDesc] = useState("");
   const [budgetAmount, setBudgetAmount] = useState("");
-  const [budgetItems, setBudgetItems] = useState(/** @type {BudgetItem[]} */ (load("lifeos_dash_budget", [])));
-
-  const [financeInstitutions, setFinanceInstitutions] = useState(/** @type {FinanceInstitution[]} */ (load("lifeos_dash_finance_institutions", [
+  const budgetItems = usePersistentState("lifeos_dash_budget", []);
+  
+  const financeInstitutions = usePersistentState("lifeos_dash_finance_institutions", [
     { name: "Sofi", checking: 8500, savings: 42000 },
     { name: "Stripe", checking: 2450, savings: 0 },
     { name: "Square", checking: 1120, savings: 0 },
@@ -704,24 +706,24 @@ export default function DashboardPanel({ setActive }) {
     { name: "Venmo", checking: 290, savings: 0 },
     { name: "Paypal", checking: 1540, savings: 0 },
     { name: "OnePay", checking: 750, savings: 9800 },
-  ])));
+  ]);
   const [editFinance, setEditFinance] = useState(false);
   const [financeInputs, setFinanceInputs] = useState(/** @type {InputMap} */ ({}));
   const [editCredit, setEditCredit] = useState(false);
   const [credInput, setCredInput] = useState(/** @type {InputMap} */ ({}));
-
+  
   const [tasks, setTasks] = useState(/** @type {TaskItem[]} */ ([]));
-  const [links, setLinks] = useState(/** @type {LinkItem[]} */ (load("lifeos_dash_links", [])));
+  const links = usePersistentState("lifeos_dash_links", []);
   const [newLinkLabel, setNewLinkLabel] = useState("");
   const [newLinkUrl, setNewLinkUrl] = useState("");
   const [newTaskInput, setNewTaskInput] = useState("");
   const [leads, setLeads] = useState(/** @type {LeadItem[]} */ ([]));
-
+  
   const [social, setSocial] = useState(/** @type {SocialData|null} */ (null));
   const [activity, setActivity] = useState(/** @type {Array<any>} */ ([]));
   const [aiTips, setAiTips] = useState(/** @type {string[]} */ ([]));
   const [aiLoading, setAiLoading] = useState(false);
-  const [playlists] = useState(/** @type {PlaylistItem[]} */ (load("lifeos_music_playlists", [])));
+  const playlists = usePersistentState("lifeos_music_playlists", []);
   const [supabaseData, setSupabaseData] = useState(/** @type {SupabaseRow[]} */ ([]));
   const [sbStatus, setSbStatus] = useState(/** @type {"checking"|"connected"|"empty"|"no-op"} */ ("checking"));
   const [supabaseTodos, setSupabaseTodos] = useState(/** @type {SupabaseTodo[]} */ ([]));
@@ -729,51 +731,47 @@ export default function DashboardPanel({ setActive }) {
   const [bannerPic, setBannerPic] = useState(/** @type {string|null} */ (null));
   const bannerRef = useRef(/** @type {HTMLInputElement|null} */ (null));
   const [newTask, setNewTask] = useState("");
-
-  const [lifeHacks, setLifeHacks] = useState(() => load("lifeos_dash_hacks", [
+  
+  const lifeHacks = usePersistentState("lifeos_dash_hacks", [
     "Drink water first thing in the morning.",
     "Use the 80/20 rule for productivity.",
     "Batch similar tasks together."
-  ]));
+  ]);
 
   const { user: fbUser } = useAuth();
 
   const go = id => setActive && setActive(id);
 
   // ── Budget Handlers ──
-  function addBudget(desc, amount) {
-    if (!desc.trim() || !amount) return;
-    const next = [...budgetItems, { 
-      id: Date.now(), 
-      desc: desc.trim(), 
-      amount: Number(amount) || 0, 
-      paid: false 
-    }];
-    setBudgetItems(next);
-    save("lifeos_dash_budget", next);
-  }
+    function addBudget(desc, amount) {
+      if (!desc.trim() || !amount) return;
+      const next = [...budgetItems.value, { 
+        id: Date.now(), 
+        desc: desc.trim(), 
+        amount: Number(amount) || 0, 
+        paid: false 
+      }];
+      budgetItems.setValue(next);
+    }
 
-  function toggleBudgetPaid(id) {
-    const next = budgetItems.map(item => 
-      item.id === id ? { ...item, paid: !item.paid } : item
-    );
-    setBudgetItems(next);
-    save("lifeos_dash_budget", next);
-  }
+    function toggleBudgetPaid(id) {
+      const next = budgetItems.value.map(item => 
+        item.id === id ? { ...item, paid: !item.paid } : item
+      );
+      budgetItems.setValue(next);
+    }
 
-  function deleteBudget(id) {
-    const next = budgetItems.filter(item => item.id !== id);
-    setBudgetItems(next);
-    save("lifeos_dash_budget", next);
-  }
+    function deleteBudget(id) {
+      const next = budgetItems.value.filter(item => item.id !== id);
+      budgetItems.setValue(next);
+    }
 
-  // ── Life Hacks Handlers ──
-  function addHack(text) {
-    if (!text.trim()) return;
-    const next = [...lifeHacks, text.trim()];
-    setLifeHacks(next);
-    save("lifeos_dash_hacks", next);
-  }
+    // ── Life Hacks Handlers ──
+    function addHack(text) {
+      if (!text.trim()) return;
+      const next = [...lifeHacks.value, text.trim()];
+      lifeHacks.setValue(next);
+    }
 
   // ── Load data on mount ──
   useEffect(() => {
@@ -866,54 +864,52 @@ export default function DashboardPanel({ setActive }) {
   }, [social, aiTips.length]);
 
   // ── Product Handlers ──
-  function saveProducts() {
-    if (editProducts) {
-      const next = products.map((p, idx) => ({
-        name: productInputs[`${idx}-name`] ?? p.name,
-        moRev: Number(productInputs[`${idx}-moRev`] ?? p.moRev) || 0,
-        ytdRev: Number(productInputs[`${idx}-ytdRev`] ?? p.ytdRev) || 0,
-        moSales: Number(productInputs[`${idx}-moSales`] ?? p.moSales) || 0,
-        ytdSales: Number(productInputs[`${idx}-ytdSales`] ?? p.ytdSales) || 0,
-      }));
-      setProducts(next);
-      save("lifeos_dash_products", next);
-      setProductInputs({});
-    } else {
-      const seed = {};
-      products.forEach((p, idx) => {
-        seed[`${idx}-name`] = p.name;
-        seed[`${idx}-moRev`] = p.moRev;
-        seed[`${idx}-ytdRev`] = p.ytdRev;
-        seed[`${idx}-moSales`] = p.moSales;
-        seed[`${idx}-ytdSales`] = p.ytdSales;
-      });
-      setProductInputs(seed);
+    function saveProducts() {
+      if (editProducts) {
+        const next = products.value.map((p, idx) => ({
+          name: productInputs[`${idx}-name`] ?? p.name,
+          moRev: Number(productInputs[`${idx}-moRev`] ?? p.moRev) || 0,
+          ytdRev: Number(productInputs[`${idx}-ytdRev`] ?? p.ytdRev) || 0,
+          moSales: Number(productInputs[`${idx}-moSales`] ?? p.moSales) || 0,
+          ytdSales: Number(productInputs[`${idx}-ytdSales`] ?? p.ytdSales) || 0,
+        }));
+        products.setValue(next);
+        setProductInputs({});
+      } else {
+        const seed = {};
+        products.value.forEach((p, idx) => {
+          seed[`${idx}-name`] = p.name;
+          seed[`${idx}-moRev`] = p.moRev;
+          seed[`${idx}-ytdRev`] = p.ytdRev;
+          seed[`${idx}-moSales`] = p.moSales;
+          seed[`${idx}-ytdSales`] = p.ytdSales;
+        });
+        setProductInputs(seed);
+      }
+      setEditProducts(e => !e);
     }
-    setEditProducts(e => !e);
-  }
 
-  // ── Finance Handlers ──
-  function saveFinanceInstitutions() {
-    if (editFinance) {
-      const next = financeInstitutions.map((inst, idx) => ({
-        name: financeInputs[`${idx}-name`] ?? inst.name,
-        checking: Number(financeInputs[`${idx}-checking`] ?? inst.checking) || 0,
-        savings: Number(financeInputs[`${idx}-savings`] ?? inst.savings) || 0,
-      }));
-      setFinanceInstitutions(next);
-      save("lifeos_dash_finance_institutions", next);
-      setFinanceInputs({});
-    } else {
-      const seed = {};
-      financeInstitutions.forEach((inst, idx) => {
-        seed[`${idx}-name`] = inst.name;
-        seed[`${idx}-checking`] = inst.checking;
-        seed[`${idx}-savings`] = inst.savings;
-      });
-      setFinanceInputs(seed);
+    // ── Finance Handlers ──
+    function saveFinanceInstitutions() {
+      if (editFinance) {
+        const next = financeInstitutions.value.map((inst, idx) => ({
+          name: financeInputs[`${idx}-name`] ?? inst.name,
+          checking: Number(financeInputs[`${idx}-checking`] ?? inst.checking) || 0,
+          savings: Number(financeInputs[`${idx}-savings`] ?? inst.savings) || 0,
+        }));
+        financeInstitutions.setValue(next);
+        setFinanceInputs({});
+      } else {
+        const seed = {};
+        financeInstitutions.value.forEach((inst, idx) => {
+          seed[`${idx}-name`] = inst.name;
+          seed[`${idx}-checking`] = inst.checking;
+          seed[`${idx}-savings`] = inst.savings;
+        });
+        setFinanceInputs(seed);
+      }
+      setEditFinance(e => !e);
     }
-    setEditFinance(e => !e);
-  }
 
   // ── Task Handlers ──
   async function addTask() {
@@ -934,45 +930,39 @@ export default function DashboardPanel({ setActive }) {
   }
 
   // ── Link Handlers ──
-  function addLink() {
-    if (!newLinkLabel.trim() || !newLinkUrl.trim()) return;
-    const u = [...links, { label: newLinkLabel.trim(), url: newLinkUrl.trim(), brand: "link" }];
-    setLinks(u);
-    save("lifeos_dash_links", u);
-    setNewLinkLabel("");
-    setNewLinkUrl("");
-  }
+    function addLink() {
+      if (!newLinkLabel.trim() || !newLinkUrl.trim()) return;
+      const u = [...links.value, { label: newLinkLabel.trim(), url: newLinkUrl.trim(), brand: "link" }];
+      links.setValue(u);
+      setNewLinkLabel("");
+      setNewLinkUrl("");
+    }
 
-  function deleteLink(idx) {
-    const u = links.filter((_, i) => i !== idx);
-    setLinks(u);
-    save("lifeos_dash_links", u);
-  }
+    function deleteLink(idx) {
+      const u = links.value.filter((_, i) => i !== idx);
+      links.setValue(u);
+    }
 
-  // ── Note Handlers ──
-  function saveNote() {
-    if (!notes.trim()) return;
-    setPreviousNotes(prev => {
-      const next = [notes.trim(), ...prev];
-      save("lifeos_dash_previous_notes", next);
-      return next;
-    });
-    setNotes("");
-    save("lifeos_dash_notes", "");
-  }
+    // ── Note Handlers ──
+    function saveNote() {
+      if (!notes.value.trim()) return;
+      previousNotes.setValue(prev => {
+        const next = [notes.value.trim(), ...prev];
+        return next;
+      });
+      notes.setValue("");
+    }
 
-  function discardNote() {
-    setNotes("");
-    save("lifeos_dash_notes", "");
-  }
+    function discardNote() {
+      notes.setValue("");
+    }
 
-  function removePrevious(idx) {
-    setPreviousNotes(prev => {
-      const next = prev.filter((_, i) => i !== idx);
-      save("lifeos_dash_previous_notes", next);
-      return next;
-    });
-  }
+    function removePrevious(idx) {
+      previousNotes.setValue(prev => {
+        const next = prev.filter((_, i) => i !== idx);
+        return next;
+      });
+    }
 
   // ── Supabase Todo Handlers ──
   async function addSupabaseTodo() {
@@ -1154,66 +1144,65 @@ export default function DashboardPanel({ setActive }) {
         </GridCard>
 
         <GridCard title="NOTES" icon={<BookOpen size={14} />} gridColumn="span 4">
-          <div style={{ display: "flex", height: "100%", gap: 12 }}>
-            {/* Left: input box */}
-            <div style={{ flex: 3, display: "flex", flexDirection: "column" }}>
-              <textarea
-                value={notes}
-                onChange={e => { 
-                  const v = e.target.value; 
-                  setNotes(v); 
-                  save("lifeos_dash_notes", v); 
-                }}
-                placeholder="Type or generate notes here…"
-                style={{
-                  flex: 1,
-                  background: "rgba(255,255,255,0.05)",
-                  border: "0.5px solid rgba(255,255,255,0.08)",
-                  borderRadius: 6,
-                  padding: 8,
-                  color: "var(--t1)",
-                  fontSize: 11,
-                  resize: "none",
-                  fontFamily: "inherit",
-                  lineHeight: 1.35,
-                  minHeight: 60
-                }}
-              />
-              <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
-                <Button variant="ghost" style={{ padding: "2px 8px", fontSize: 9 }} onClick={saveNote}>Save</Button>
-              </div>
-            </div>
+                  <div style={{ display: "flex", height: "100%", gap: 12 }}>
+                    {/* Left: input box */}
+                    <div style={{ flex: 3, display: "flex", flexDirection: "column" }}>
+                      <textarea
+                        value={notes.value}
+                        onChange={e => { 
+                          const v = e.target.value; 
+                          notes.setValue(v); 
+                        }}
+                        placeholder="Type or generate notes here…"
+                        style={{
+                          flex: 1,
+                          background: "rgba(255,255,255,0.05)",
+                          border: "0.5px solid rgba(255,255,255,0.08)",
+                          borderRadius: 6,
+                          padding: 8,
+                          color: "var(--t1)",
+                          fontSize: 11,
+                          resize: "none",
+                          fontFamily: "inherit",
+                          lineHeight: 1.35,
+                          minHeight: 60
+                        }}
+                      />
+                      <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+                        <Button variant="ghost" style={{ padding: "2px 8px", fontSize: 9 }} onClick={saveNote}>Save</Button>
+                      </div>
+                    </div>
 
-            {/* Right: saved notes list */}
-            <div style={{ 
-              flex: 1, 
-              minWidth: 70, 
-              display: "flex", 
-              flexDirection: "column", 
-              gap: 2, 
-              fontSize: 9, 
-              color: "var(--t2)", 
-              overflowY: "auto",
-              maxHeight: 120
-            }}>
-              <div style={{ fontSize: 9, fontWeight: 600, marginBottom: 2, color: "var(--t1)" }}>Saved notes</div>
-              {previousNotes.length === 0 ? (
-                <div style={{ color: "var(--t3)" }}>No saved notes yet</div>
-              ) : (
-                previousNotes.map((note, idx) => (
-                  <div key={idx} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 4, padding: "1px 0" }}>
-                    <span style={{ flex: 1, wordBreak: "break-word" }}>{note}</span>
-                    <button 
-                      onClick={() => removePrevious(idx)} 
-                      style={{ background: "none", border: "none", color: "var(--t3)", cursor: "pointer", fontSize: 10, lineHeight: 1, flexShrink: 0, padding: "0 2px" }} 
-                      title="Delete"
-                    >×</button>
+                    {/* Right: saved notes list */}
+                    <div style={{ 
+                      flex: 1, 
+                      minWidth: 70, 
+                      display: "flex", 
+                      flexDirection: "column", 
+                      gap: 2, 
+                      fontSize: 9, 
+                      color: "var(--t2)", 
+                      overflowY: "auto",
+                      maxHeight: 120
+                    }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, marginBottom: 2, color: "var(--t1)" }}>Saved notes</div>
+                      {previousNotes.value.length === 0 ? (
+                        <div style={{ color: "var(--t3)" }}>No saved notes yet</div>
+                      ) : (
+                        previousNotes.value.map((note, idx) => (
+                          <div key={idx} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 4, padding: "1px 0" }}>
+                            <span style={{ flex: 1, wordBreak: "break-word" }}>{note}</span>
+                            <button 
+                              onClick={() => removePrevious(idx)} 
+                              style={{ background: "none", border: "none", color: "var(--t3)", cursor: "pointer", fontSize: 10, lineHeight: 1, flexShrink: 0, padding: "0 2px" }} 
+                              title="Delete"
+                            >×</button>
+                          </div>
+                        ))
+                      )}
+                    </div>
                   </div>
-                ))
-              )}
-            </div>
-          </div>
-        </GridCard>
+                </GridCard>
 
         {/* ── ROW 3: Product Revenue / Financial Balances / Credit ── */}
         <GridCard 
