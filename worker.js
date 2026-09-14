@@ -13,7 +13,7 @@ var CORS = {
 };
 
 var SUPABASE_URL = "https://mhvcdstgkyplhzjptgfr.supabase.co";
-var WORKER_BASE = "https://lifeos1.ceogps.workers.dev";
+var WORKER_BASE = "https://lifeos1-api.ceogps.workers.dev";
 
 // ── In-memory KV fallback (when KV namespace not bound) ───────────────────────
 const memoryStore = new Map();
@@ -325,53 +325,53 @@ function getProviderConfig(env, provider, scope) {
   console.log(`[getProviderConfig] provider=${provider}, GOOGLE_CLIENT_ID=${env.GOOGLE_CLIENT_ID ? "SET" : "EMPTY"}`);
   
   const configs = {
-    google: {
-      auth_url: "https://accounts.google.com/o/oauth2/v2/auth",
-      token_url: "https://oauth2.googleapis.com/token",
-      client_id: env.GOOGLE_CLIENT_ID || "",
-      client_secret: env.GOOGLE_CLIENT_SECRET || "",
-      scope: [
-        "email", "profile", "openid",
-        "https://mail.google.com/",
-        "https://www.googleapis.com/auth/gmail.modify",
-        "https://www.googleapis.com/auth/calendar",
-        "https://www.googleapis.com/auth/youtube",
-        "https://www.googleapis.com/auth/youtube.upload"
-      ].join(" "),
-      redirect_uri: ownedRedirect
-    },
-    microsoft: {
-      auth_url: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
-      token_url: "https://login.microsoftonline.com/common/oauth2/v2.0/token",
-      client_id: env.MICROSOFT_CLIENT_ID || "",
-      client_secret: env.MICROSOFT_CLIENT_SECRET || "",
-      scope: "Mail.Read email profile offline_access",
-      redirect_uri
-    },
-    github: {
-      auth_url: "https://github.com/login/oauth/authorize",
-      token_url: "https://github.com/login/oauth/access_token",
-      client_id: env.GITHUB_CLIENT_ID || "",
-      client_secret: env.GITHUB_CLIENT_SECRET || "",
-      scope: "repo user",
-      redirect_uri
-    },
-    slack: {
-      auth_url: "https://slack.com/oauth/v2/authorize",
-      token_url: "https://slack.com/api/oauth.v2.access",
-      client_id: env.SLACK_CLIENT_ID || "",
-      client_secret: env.SLACK_CLIENT_SECRET || "",
-      scope: "chat:write channels:read",
-      redirect_uri
-    },
-    linkedin: {
-      auth_url: "https://www.linkedin.com/oauth/v2/authorization",
-      token_url: "https://www.linkedin.com/oauth/v2/accessToken",
-      client_id: env.LINKEDIN_CLIENT_ID || "",
-      client_secret: env.LINKEDIN_CLIENT_SECRET || "",
-      scope: "openid profile email w_member_social r_organization_social rw_organization_admin",
-      redirect_uri
-    },
+      google: {
+        auth_url: "https://accounts.google.com/o/oauth2/v2/auth",
+        token_url: "https://oauth2.googleapis.com/token",
+        client_id: env.GOOGLE_CLIENT_ID || "",
+        client_secret: env.GOOGLE_CLIENT_SECRET || "",
+        scope: [
+          "email", "profile", "openid",
+          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.modify",
+          "https://www.googleapis.com/auth/calendar",
+          "https://www.googleapis.com/auth/youtube",
+          "https://www.googleapis.com/auth/youtube.upload"
+        ].join(" "),
+        redirect_uri: ownedRedirect
+      },
+      microsoft: {
+        auth_url: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        token_url: "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+        client_id: env.MICROSOFT_CLIENT_ID || "",
+        client_secret: env.MICROSOFT_CLIENT_SECRET || "",
+        scope: "Mail.Read email profile offline_access",
+        redirect_uri: ownedRedirect
+      },
+      github: {
+        auth_url: "https://github.com/login/oauth/authorize",
+        token_url: "https://github.com/login/oauth/access_token",
+        client_id: env.GITHUB_CLIENT_ID || "",
+        client_secret: env.GITHUB_CLIENT_SECRET || "",
+        scope: "repo user",
+        redirect_uri: ownedRedirect
+      },
+      slack: {
+        auth_url: "https://slack.com/oauth/v2/authorize",
+        token_url: "https://slack.com/api/oauth.v2.access",
+        client_id: env.SLACK_CLIENT_ID || "",
+        client_secret: env.SLACK_CLIENT_SECRET || "",
+        scope: "chat:write channels:read",
+        redirect_uri: ownedRedirect
+      },
+      linkedin: {
+        auth_url: "https://www.linkedin.com/oauth/v2/authorization",
+        token_url: "https://www.linkedin.com/oauth/v2/accessToken",
+        client_id: env.LINKEDIN_CLIENT_ID || "",
+        client_secret: env.LINKEDIN_CLIENT_SECRET || "",
+        scope: "openid profile email w_member_social r_organization_social rw_organization_admin",
+        redirect_uri: ownedRedirect
+      },
     facebook: {
       auth_url: "https://www.facebook.com/v25.0/dialog/oauth",
       token_url: "https://graph.facebook.com/v25.0/oauth/access_token",
@@ -389,91 +389,91 @@ function getProviderConfig(env, provider, scope) {
       redirect_uri: ownedRedirect
     },
     twitter: {
-      auth_url: "https://twitter.com/i/oauth2/authorize",
-      token_url: "https://api.twitter.com/2/oauth2/token",
-      client_id: env.TWITTER_CLIENT_ID || "",
-      client_secret: env.TWITTER_CLIENT_SECRET || "",
-      scope: "tweet.read tweet.write users.read offline.access",
-      redirect_uri
-    },
-    zoom: {
-      auth_url: "https://zoom.us/oauth/authorize",
-      token_url: "https://zoom.us/oauth/token",
-      client_id: env.ZOOM_CLIENT_ID || "",
-      client_secret: env.ZOOM_CLIENT_SECRET || "",
-      scope: "meeting:read meeting:write",
-      redirect_uri
-    },
-    clickup: {
-      auth_url: "https://app.clickup.com/api",
-      token_url: "https://api.clickup.com/api/v2/oauth/token",
-      client_id: env.CLICKUP_CLIENT_ID || "",
-      client_secret: env.CLICKUP_CLIENT_SECRET || "",
-      scope: "",
-      redirect_uri
-    },
-    airtable: {
-      auth_url: "https://airtable.com/oauth2/v1/authorize",
-      token_url: "https://airtable.com/oauth2/v1/token",
-      client_id: env.AIRTABLE_CLIENT_ID || "",
-      client_secret: env.AIRTABLE_CLIENT_SECRET || "",
-      scope: "data.records:read data.records:write",
-      redirect_uri
-    },
-    tiktok: {
-      auth_url: "https://www.tiktok.com/auth/authorize/",
-      token_url: "https://open-api.tiktok.com/oauth/access_token/",
-      client_id: env.TIKTOK_CLIENT_ID || "",
-      client_secret: env.TIKTOK_CLIENT_SECRET || "",
-      scope: "user.info.basic video.list",
-      redirect_uri: ownedRedirect
-    },
-    spotify: {
-      auth_url: "https://accounts.spotify.com/authorize",
-      token_url: "https://accounts.spotify.com/api/token",
-      client_id: env.SPOTIFY_CLIENT_ID || "",
-      client_secret: env.SPOTIFY_CLIENT_SECRET || "",
-      scope: "user-read-playback-state user-modify-playback-state playlist-read-private",
-      redirect_uri
-    },
-    yahoo: {
-      auth_url: "https://api.login.yahoo.com/oauth2/request_auth",
-      token_url: "https://api.login.yahoo.com/oauth2/get_token",
-      client_id: env.YAHOO_CLIENT_ID || "",
-      client_secret: env.YAHOO_CLIENT_SECRET || "",
-      scope: "mail-r mail-w",
-      redirect_uri
-    },
-    aol: {
-      auth_url: "https://api.login.aol.com/oauth2/request_auth",
-      token_url: "https://api.login.aol.com/oauth2/get_token",
-      client_id: env.YAHOO_CLIENT_ID || "",
-      client_secret: env.YAHOO_CLIENT_SECRET || "",
-      scope: "mail-r mail-w",
-      redirect_uri
-    },
-    calendly: {
-      auth_url: "https://auth.calendly.com/oauth/authorize",
-      token_url: "https://auth.calendly.com/oauth/token",
-      client_id: env.CALENDLY_CLIENT_ID || "",
-      client_secret: env.CALENDLY_CLIENT_SECRET || "",
-      scope: "scheduling:read scheduling:write user:read",
-      redirect_uri
-    }
+          auth_url: "https://twitter.com/i/oauth2/authorize",
+          token_url: "https://api.twitter.com/2/oauth2/token",
+          client_id: env.TWITTER_CLIENT_ID || "",
+          client_secret: env.TWITTER_CLIENT_SECRET || "",
+          scope: "tweet.read tweet.write users.read offline.access",
+          redirect_uri: ownedRedirect
+        },
+        zoom: {
+          auth_url: "https://zoom.us/oauth/authorize",
+          token_url: "https://zoom.us/oauth/token",
+          client_id: env.ZOOM_CLIENT_ID || "",
+          client_secret: env.ZOOM_CLIENT_SECRET || "",
+          scope: "meeting:read meeting:write",
+          redirect_uri: ownedRedirect
+        },
+        clickup: {
+          auth_url: "https://app.clickup.com/api",
+          token_url: "https://api.clickup.com/api/v2/oauth/token",
+          client_id: env.CLICKUP_CLIENT_ID || "",
+          client_secret: env.CLICKUP_CLIENT_SECRET || "",
+          scope: "",
+          redirect_uri: ownedRedirect
+        },
+        airtable: {
+          auth_url: "https://airtable.com/oauth2/v1/authorize",
+          token_url: "https://airtable.com/oauth2/v1/token",
+          client_id: env.AIRTABLE_CLIENT_ID || "",
+          client_secret: env.AIRTABLE_CLIENT_SECRET || "",
+          scope: "data.records:read data.records:write",
+          redirect_uri: ownedRedirect
+        },
+        tiktok: {
+          auth_url: "https://www.tiktok.com/auth/authorize/",
+          token_url: "https://open-api.tiktok.com/oauth/access_token/",
+          client_id: env.TIKTOK_CLIENT_ID || "",
+          client_secret: env.TIKTOK_CLIENT_SECRET || "",
+          scope: "user.info.basic video.list",
+          redirect_uri: ownedRedirect
+        },
+        spotify: {
+          auth_url: "https://accounts.spotify.com/authorize",
+          token_url: "https://accounts.spotify.com/api/token",
+          client_id: env.SPOTIFY_CLIENT_ID || "",
+          client_secret: env.SPOTIFY_CLIENT_SECRET || "",
+          scope: "user-read-playback-state user-modify-playback-state playlist-read-private",
+          redirect_uri: ownedRedirect
+        },
+        yahoo: {
+          auth_url: "https://api.login.yahoo.com/oauth2/request_auth",
+          token_url: "https://api.login.yahoo.com/oauth2/get_token",
+          client_id: env.YAHOO_CLIENT_ID || "",
+          client_secret: env.YAHOO_CLIENT_SECRET || "",
+          scope: "mail-r mail-w",
+          redirect_uri: ownedRedirect
+        },
+        aol: {
+          auth_url: "https://api.login.aol.com/oauth2/request_auth",
+          token_url: "https://api.login.aol.com/oauth2/get_token",
+          client_id: env.YAHOO_CLIENT_ID || "",
+          client_secret: env.YAHOO_CLIENT_SECRET || "",
+          scope: "mail-r mail-w",
+          redirect_uri: ownedRedirect
+        },
+        calendly: {
+          auth_url: "https://auth.calendly.com/oauth/authorize",
+          token_url: "https://auth.calendly.com/oauth/token",
+          client_id: env.CALENDLY_CLIENT_ID || "",
+          client_secret: env.CALENDLY_CLIENT_SECRET || "",
+          scope: "scheduling:read scheduling:write user:read",
+          redirect_uri: ownedRedirect
+        }
   };
   return configs[provider] || null;
 }
 __name(getProviderConfig, "getProviderConfig");
 
-// ── OAuth Handlers ───────────────────────────────────────────────────────────
 async function handleOAuthStart(req, env, url) {
-  const providerName = url.searchParams.get("provider");
-  const scope = url.searchParams.get("scope") || "";
-  const userId = url.searchParams.get("user_id") || "unknown";
-  const loginHint = url.searchParams.get("hint") || "";
-  const accountEmail = url.searchParams.get("account_email") || "";
+  try {
+    const providerName = url.searchParams.get("provider");
+    const scope = url.searchParams.get("scope") || "";
+    const userId = url.searchParams.get("user_id") || "unknown";
+    const loginHint = url.searchParams.get("hint") || "";
+    const accountEmail = url.searchParams.get("account_email") || "";
 
-  console.log(`[OAUTH START] ENTERED - provider=${providerName}, userId=${userId}, env.LIFEOS_KV=${env.LIFEOS_KV ? "exists" : "MISSING"}`);
+    console.log(`[OAUTH START] ENTERED - provider=${providerName}, userId=${userId}, env.LIFEOS_KV=${env.LIFEOS_KV ? "exists" : "MISSING"}`);
 
   const cfg = getProviderConfig(env, providerName, scope);
   if (!cfg) return new Response("Unknown provider", { status: 400 });
@@ -492,14 +492,22 @@ async function handleOAuthStart(req, env, url) {
 
   console.log(`[OAUTH START] Generating PKCE...`);
   const PKCE_PROVIDERS = new Set(["google", "microsoft", "twitter", "airtable", "linkedin", "zoom", "clickup", "slack", "spotify", "tiktok", "yahoo", "aol", "calendly"]);
-  const usePKCE = PKCE_PROVIDERS.has(providerName);
-  const state = crypto.randomUUID();
-  console.log(`[OAUTH START] State generated: ${state}`);
+    const usePKCE = PKCE_PROVIDERS.has(providerName);
+    const state = crypto.randomUUID();
+    console.log(`[OAUTH START] State generated: ${state}`);
   
-    const { codeVerifier, codeChallenge } = await generatePKCE();
-    console.log(`[OAUTH START] PKCE generated`);
-
+    let codeVerifier, codeChallenge;
     try {
+      const pkce = await generatePKCE();
+      codeVerifier = pkce.codeVerifier;
+      codeChallenge = pkce.codeChallenge;
+      console.log(`[OAUTH START] PKCE generated successfully`);
+    } catch (e) {
+      console.error(`[OAUTH START] PKCE generation FAILED: ${e.message}`, e.stack);
+      return new Response(`PKCE generation failed: ${e.message}`, { status: 500 });
+    }
+
+  try {
     await env.LIFEOS_KV.put(
       `oauth_state:${state}`,
       JSON.stringify({
@@ -519,7 +527,12 @@ async function handleOAuthStart(req, env, url) {
     return new Response(`KV put failed: ${e.message}`, { status: 500 });
   }
 
+  console.log(`[OAUTH START] Building auth URL for ${cfg.auth_url}`);
   const authUrl = new URL(cfg.auth_url);
+  console.log(`[OAUTH START] client_id: ${cfg.client_id ? cfg.client_id.substring(0, 20) + "..." : "EMPTY"}`);
+  console.log(`[OAUTH START] redirect_uri: ${cfg.redirect_uri}`);
+  console.log(`[OAUTH START] scope: ${cfg.scope}`);
+  
   authUrl.searchParams.set("client_id", cfg.client_id);
   authUrl.searchParams.set("redirect_uri", cfg.redirect_uri);
   authUrl.searchParams.set("response_type", "code");
@@ -550,8 +563,12 @@ async function handleOAuthStart(req, env, url) {
   }
 
   return Response.redirect(authUrl.toString(), 302);
-}
-__name(handleOAuthStart, "handleOAuthStart");
+    } catch (e) {
+      console.error(`[OAUTH START] FATAL ERROR: ${e.message}`, e.stack);
+      return new Response(`OAuth start failed: ${e.message}`, { status: 500 });
+    }
+  }
+  __name(handleOAuthStart, "handleOAuthStart");
 
 async function handleOAuthCallback(req, env, url) {
   const code = url.searchParams.get("code");
@@ -806,10 +823,28 @@ async function handleOAuthStatus(req, env, url) {
   }
 
   return json({ connected: Object.keys(statuses).filter(k => statuses[k].connected), statuses });
-}
-__name(handleOAuthStatus, "handleOAuthStatus");
+  }
+  __name(handleOAuthStatus, "handleOAuthStatus");
 
-async function handleOAuthDisconnect(req, env, url) {
+  async function handleOAuthVerify(req, env, url) {
+    const provider = url.searchParams.get("provider");
+    const userId = url.searchParams.get("user_id") || "";
+  
+    if (!provider) return err("provider required");
+  
+    const data = await kvGet(env, `oauth_${provider}`, "json");
+    const connected = !!(data?.connected || data?.access_token);
+  
+    return json({
+      connected,
+      provider,
+      identity: data?.identity || null,
+      user_id: userId
+    });
+  }
+  __name(handleOAuthVerify, "handleOAuthVerify");
+
+  async function handleOAuthDisconnect(req, env, url) {
   const provider = url.searchParams.get("provider");
   const userId = url.searchParams.get("user_id");
   const accountEmail = url.searchParams.get("account_email") || "";
@@ -2032,11 +2067,21 @@ export default {
         }
 
         // OAuth Callback (public, no auth required)
-        if (path === "/api/oauth/callback" && req.method === "GET") {
-          return handleOAuthCallback(req, env, url);
-        }
+                if (path === "/api/oauth/callback" && req.method === "GET") {
+                  return handleOAuthCallback(req, env, url);
+                }
 
-        // Validate Key (public, no auth required)
+                // OAuth Verify (public, checks if provider is connected)
+                if (path === "/api/oauth/verify" && req.method === "GET") {
+                  return handleOAuthVerify(req, env, url);
+                }
+
+                // OAuth Disconnect (requires auth)
+                if (path === "/api/oauth/disconnect" && req.method === "POST") {
+                  return handleOAuthDisconnect(req, env, url);
+                }
+
+                // Validate Key (public, no auth required)
         if (path === "/api/validate-key" && req.method === "POST") {
           return handleValidateKey(req, env);
         }
@@ -2121,9 +2166,9 @@ export default {
     // ── Protected Routes (require auth) ──
 
     // Check auth for protected routes
-    if (!currentUser && !["/api/health", "/api/oauth/start", "/api/oauth/callback", "/api/oauth/status", "/api/validate-key", "/api/webhook/telegram", "/api/webhook/meta"].includes(path)) {
-      return err("Unauthorized", 401);
-    }
+        if (!currentUser && !["/api/health", "/api/oauth/start", "/api/oauth/callback", "/api/oauth/status", "/api/oauth/verify", "/api/oauth/disconnect", "/api/validate-key", "/api/webhook/telegram", "/api/webhook/meta"].includes(path)) {
+          return err("Unauthorized", 401);
+        }
 
     // KV
     if (path === "/api/kv/get" && req.method === "GET") {
