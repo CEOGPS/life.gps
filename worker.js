@@ -1353,9 +1353,12 @@ async function handleMeta(req, env, url) {
   const path = url.pathname;
 
   const manualMeta = await env.LIFEOS_KV.get("manual_meta_token", "json").catch(() => null);
-  const META_TOKEN = manualMeta?.access_token || env.META_PAGE_ACCESS_TOKEN || "";
-  const META_PAGE_ID = (manualMeta?.page_id && manualMeta.page_id.length > 5 ? manualMeta.page_id : null) || env.META_PAGE_ID || "";
-  const META_IG_ID = (manualMeta?.ig_user_id && manualMeta.ig_user_id.length > 5 ? manualMeta.ig_user_id : null) || env.META_IG_USER_ID || "";
+  const oauthFB = await kvGet(env, "oauth_facebook", "json").catch(() => null);
+  const oauthIG = await kvGet(env, "oauth_instagram", "json").catch(() => null);
+  
+  const META_TOKEN = manualMeta?.access_token || oauthFB?.access_token || oauthIG?.access_token || env.META_PAGE_ACCESS_TOKEN || "";
+  const META_PAGE_ID = (manualMeta?.page_id && manualMeta.page_id.length > 5 ? manualMeta.page_id : null) || oauthFB?.identity?.id || env.META_PAGE_ID || "";
+  const META_IG_ID = (manualMeta?.ig_user_id && manualMeta.ig_user_id.length > 5 ? manualMeta.ig_user_id : null) || oauthIG?.identity?.id || env.META_IG_USER_ID || "";
 
   // GET /api/meta/status
   if (path === "/api/meta/status" && req.method === "GET") {
@@ -1477,7 +1480,12 @@ async function handleLinkedIn(req, env, url) {
 
   // GET /api/linkedin/status
   if (path === "/api/linkedin/status" && req.method === "GET") {
-    const tok = await liToken(env);
+    // Check both manual token and OAuth token
+    let tok = await liToken(env);
+    if (!tok) {
+      const oauthData = await kvGet(env, "oauth_linkedin", "json");
+      tok = oauthData?.access_token || null;
+    }
     if (!tok) return json({ connected: false });
     const me = await fetch("https://api.linkedin.com/v2/userinfo", {
       headers: { Authorization: "Bearer " + tok }
@@ -1490,7 +1498,11 @@ async function handleLinkedIn(req, env, url) {
 
   // GET /api/linkedin/posts
   if (path === "/api/linkedin/posts" && req.method === "GET") {
-    const tok = await liToken(env);
+    let tok = await liToken(env);
+    if (!tok) {
+      const oauthData = await kvGet(env, "oauth_linkedin", "json");
+      tok = oauthData?.access_token || null;
+    }
     if (!tok) return json({ data: [], error: "not_connected" });
     const me = await fetch("https://api.linkedin.com/v2/userinfo", {
       headers: { Authorization: "Bearer " + tok }
@@ -1503,7 +1515,11 @@ async function handleLinkedIn(req, env, url) {
 
   // POST /api/linkedin/post
   if (path === "/api/linkedin/post" && req.method === "POST") {
-    const tok = await liToken(env);
+    let tok = await liToken(env);
+    if (!tok) {
+      const oauthData = await kvGet(env, "oauth_linkedin", "json");
+      tok = oauthData?.access_token || null;
+    }
     if (!tok) return err("LinkedIn not connected", 401);
     const { text } = await req.json();
     const me = await fetch("https://api.linkedin.com/v2/userinfo", {
@@ -1534,7 +1550,8 @@ async function handleX(req, env, url) {
   const path = url.pathname;
 
   const manualX = await kvGet(env, "manual_x_token", "json").catch(() => null);
-  const bearer = manualX?.bearer_token || env.X_BEARER_TOKEN || "";
+  const oauthX = await kvGet(env, "oauth_twitter", "json").catch(() => null);
+  const bearer = manualX?.bearer_token || oauthX?.access_token || env.X_BEARER_TOKEN || "";
 
   // GET /api/x/user
   if (path === "/api/x/user" && req.method === "GET") {
@@ -2077,11 +2094,36 @@ export default {
                 }
 
                 // OAuth Disconnect (requires auth)
-                if (path === "/api/oauth/disconnect" && req.method === "POST") {
-                  return handleOAuthDisconnect(req, env, url);
-                }
+                                if (path === "/api/oauth/disconnect" && req.method === "POST") {
+                                  return handleOAuthDisconnect(req, env, url);
+                                }
 
-                // Validate Key (public, no auth required)
+                                // LinkedIn Status (public, no auth required)
+                                if (path === "/api/linkedin/status" && req.method === "GET") {
+                                  return handleLinkedIn(req, env, url);
+                                }
+
+                                // X Status (public, no auth required)
+                                if (path === "/api/x/user" && req.method === "GET") {
+                                  return handleX(req, env, url);
+                                }
+
+                                // X Timeline (public, no auth required)
+                                if (path === "/api/x/timeline" && req.method === "GET") {
+                                  return handleX(req, env, url);
+                                }
+
+                                // Meta Status (public, no auth required)
+                                if (path === "/api/meta/status" && req.method === "GET") {
+                                  return handleMeta(req, env, url);
+                                }
+
+                                // Meta Feed (public, no auth required)
+                                if (path === "/api/meta/feed" && req.method === "GET") {
+                                  return handleMeta(req, env, url);
+                                }
+
+                                // Validate Key (public, no auth required)
         if (path === "/api/validate-key" && req.method === "POST") {
           return handleValidateKey(req, env);
         }
@@ -2165,12 +2207,12 @@ export default {
 
     // ── Protected Routes (require auth) ──
 
-    // Check auth for protected routes
-        if (!currentUser && !["/api/health", "/api/oauth/start", "/api/oauth/callback", "/api/oauth/status", "/api/oauth/verify", "/api/oauth/disconnect", "/api/validate-key", "/api/webhook/telegram", "/api/webhook/meta"].includes(path)) {
-          return err("Unauthorized", 401);
-        }
+        // Check auth for protected routes
+            if (!currentUser && !["/api/health", "/api/oauth/start", "/api/oauth/callback", "/api/oauth/status", "/api/oauth/verify", "/api/oauth/disconnect", "/api/validate-key", "/api/webhook/telegram", "/api/webhook/meta", "/api/linkedin/status", "/api/x/user", "/api/x/timeline", "/api/meta/status", "/api/meta/feed"].includes(path)) {
+              return err("Unauthorized", 401);
+            }
 
-    // KV
+        // KV
     if (path === "/api/kv/get" && req.method === "GET") {
       const key = url.searchParams.get("key");
       if (!key) return err("key required");
