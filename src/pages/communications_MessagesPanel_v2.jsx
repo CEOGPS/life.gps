@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useMessaging } from "@/_core/hooks/usemessaging";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 const C = {
   blue: "#4ab3f4",

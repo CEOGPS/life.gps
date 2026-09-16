@@ -4,6 +4,7 @@ main = "worker.js"
 compatibility_date = "2026-08-22"
 
 [vars]
+# VITE_WEATHER_API_KEY removed - set via: wrangler secret put WEATHER_API_KEY
 SUPABASE_URL = "https://mhvcdstgkyplhzjptgfr.supabase.co"
 OAUTH_REDIRECT_URI = "https://oauth.ceogps.com/api/oauth/callback"
 

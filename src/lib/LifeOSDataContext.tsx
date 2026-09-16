@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from "react";
 import { supabase } from "@/lib/supabaseClient.ts";
-import { useAuth } from "@/lib/SupabaseAuthContext.tsx";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 export interface Contact {
   id: string;

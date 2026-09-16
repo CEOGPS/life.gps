@@ -1,6 +1,6 @@
 import { QueryClientProvider } from "./query-client.tsx";
 import { ThemeProvider } from "./theme.tsx";
-import { AuthProvider } from "@/lib/SupabaseAuthContext.tsx";
+import { AuthProvider } from "@/lib/SupabaseAuthContext";
 import { Toaster } from "../ui/sonner.tsx";
 import { TooltipProvider } from "../ui/tooltip.tsx";
 import { MusicProvider } from "@/lib/MusicContext";

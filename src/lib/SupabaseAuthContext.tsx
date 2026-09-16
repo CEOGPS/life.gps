@@ -1,4 +1,3 @@
-// /lib/SupabaseAuthContext.tsx
 // Supabase Auth Context - replaces FirebaseAuthContext
 import React, {
   createContext,

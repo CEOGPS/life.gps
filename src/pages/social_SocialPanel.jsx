@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { kvGet, kvSet, uploadToR2 } from "@/utils/storage";
 import BrandIcon from "@/components/lifeos/icons/BrandIcon";
 import { saveApiKey, getApiKey, generatePKCE } from "@/api/ceogpsclient.jsx";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 /* ─── Constants ─────────────────────────────────────────────── */
 // Worker base URL — holds all platform tokens + KV. Pages has no API routes.

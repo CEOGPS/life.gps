@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient.ts";
-import { useAuth } from "@/lib/SupabaseAuthContext.tsx";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 import type { LifeOSDataState } from "./LifeOSDataContext.tsx";
 
 /**

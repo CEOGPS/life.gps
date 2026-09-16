@@ -1,0 +1,99 @@
+
+:root {
+  --erebus-crimson: #ff000d;
+  --erebus-bg: rgba(10, 10, 10, 0.85);
+  --erebus-border: rgba(255, 0, 13, 0.3);
+  --erebus-glow: rgba(255, 0, 13, 0.15);
+}
+
+.erebus-dock-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  z-index: 9999;
+  font-family: "Lumina", monospace;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.erebus-dock-glass {
+  background: var(--erebus-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--erebus-border);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px var(--erebus-glow);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.erebus-avatar-section {
+  height: 120px;
+  background: radial-gradient(circle at center, #200 0%, #0a0a0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.erebus-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--erebus-crimson);
+  box-shadow: 0 0 15px var(--erebus-crimson);
+  animation: avatar-float 3s ease-in-out infinite;
+  background: #000;
+}
+
+.erebus-avatar-talking {
+  animation: avatar-pulse 0.5s ease-in-out infinite alternate;
+}
+
+.erebus-input-area {
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.erebus-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 12px;
+  transition: border 0.2s ease;
+}
+
+.erebus-input-wrapper:focus-within {
+  border-color: var(--erebus-crimson);
+  box-shadow: 0 0 8px var(--erebus-glow);
+}
+
+.erebus-input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 13px;
+  width: 100%;
+  outline: none;
+  font-family: inherit;
+}
+
+@keyframes avatar-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes avatar-pulse {
+  from { transform: scale(1); box-shadow: 0 0 15px var(--erebus-crimson); }
+  to { transform: scale(1.05); box-shadow: 0 0 25px var(--erebus-crimson); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

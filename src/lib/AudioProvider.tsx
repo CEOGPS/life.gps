@@ -10,43 +10,66 @@ interface Track {
   color?: string;
 }
 
+interface YoutubeState {
+  videoId: string | null;
+  isPlaying: boolean;
+  isMuted: boolean;
+  volume: number;
+  startTime: number;
+}
+
 interface AudioContextValue {
+  // Music State
   audioRef: React.RefObject<HTMLAudioElement>;
   currentTrack: Track | null;
-  isPlaying: boolean;
-  progress: number;
-  volume: number;
-  duration: number;
+  musicIsPlaying: boolean;
+  musicProgress: number;
+  musicVolume: number;
+  musicDuration: number;
   setCurrentTrack: (track: Track | null) => void;
-  setIsPlaying: (playing: boolean) => void;
-  setProgress: (progress: number) => void;
-  setVolume: (volume: number) => void;
-  setDuration: (duration: number) => void;
+  setMusicIsPlaying: (playing: boolean) => void;
+  setMusicProgress: (progress: number) => void;
+  setMusicVolume: (volume: number) => void;
+  setMusicDuration: (duration: number) => void;
   playTrack: (track: Track) => void;
-  togglePlay: () => void;
+  toggleMusicPlay: () => void;
   nextTrack: (tracks: Track[], currentTrackId: string | null, playlists: any[], activePl: string | null) => void;
   prevTrack: (tracks: Track[], currentTrackId: string | null, playlists: any[], activePl: string | null) => void;
-  seekTo: (progress: number) => void;
+  seekMusic: (progress: number) => void;
+
+  // YouTube State
+  ytVideoId: string | null;
+  ytIsPlaying: boolean;
+  ytIsMuted: boolean;
+  ytVolume: number;
+  setYtVideoId: (id: string | null) => void;
+  setYtIsPlaying: (playing: boolean) => void;
+  setYtIsMuted: (muted: boolean) => void;
+  setYtVolume: (vol: number) => void;
 }
 
 const AudioContext = createContext<AudioContextValue | null>(null);
 
 export function AudioProvider({ children }: { children: ReactNode }) {
+  // --- Music State ---
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
+  const [musicIsPlaying, setMusicIsPlaying] = useState(false);
+  const [musicProgress, setMusicProgress] = useState(0);
+  const [musicDuration, setMusicDuration] = useState(0);
+  const [musicVolume, setMusicVolume] = useState(1);
+
+  // --- YouTube State ---
+  const [ytVideoId, setYtVideoId] = useState<string | null>(null);
+  const [ytIsPlaying, setYtIsPlaying] = useState(false);
+  const [ytIsMuted, setYtIsMuted] = useState(false);
+  const [ytVolume, setYtVolume] = useState(100);
 
   // Initialize audio element
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio();
     }
-    return () => {
-      // Don't destroy audio element on unmount - it persists across routes
-    };
   }, []);
 
   // Audio progress tracking
@@ -54,8 +77,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const audio = audioRef.current;
     if (!audio) return;
     const tick = () => {
-      setProgress(audio.currentTime / (audio.duration || 1));
-      setDuration(audio.duration || 0);
+      setMusicProgress(audio.currentTime / (audio.duration || 1));
+      setMusicDuration(audio.duration || 0);
     };
     audio.addEventListener("timeupdate", tick);
     audio.addEventListener("loadedmetadata", tick);
@@ -69,24 +92,24 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.volume = volume;
-    if (isPlaying && currentTrack?.url) {
+    audio.volume = musicVolume;
+    if (musicIsPlaying && currentTrack?.url) {
       if (audio.src !== currentTrack.url) {
         audio.src = currentTrack.url;
       }
       audio.play().catch(console.error);
-    } else if (!isPlaying) {
+    } else if (!musicIsPlaying) {
       audio.pause();
     }
-  }, [isPlaying, currentTrack?.url, volume]);
+  }, [musicIsPlaying, currentTrack?.url, musicVolume]);
 
   const playTrack = useCallback((track: Track) => {
     setCurrentTrack(track);
-    setIsPlaying(true);
+    setMusicIsPlaying(true);
   }, []);
 
-  const togglePlay = useCallback(() => {
-    setIsPlaying(prev => !prev);
+  const toggleMusicPlay = useCallback(() => {
+    setMusicIsPlaying(prev => !prev);
   }, []);
 
   const nextTrack = useCallback((tracks: Track[], currentTrackId: string | null, playlists: any[], activePl: string | null) => {
@@ -109,7 +132,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     if (track) playTrack(track);
   }, [playTrack]);
 
-  const seekTo = useCallback((progress: number) => {
+  const seekMusic = useCallback((progress: number) => {
     const audio = audioRef.current;
     if (audio && audio.duration) {
       audio.currentTime = progress * audio.duration;
@@ -121,20 +144,28 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       value={{
         audioRef,
         currentTrack,
-        isPlaying,
-        progress,
-        volume,
-        duration,
+        musicIsPlaying,
+        musicProgress,
+        musicVolume,
+        musicDuration,
         setCurrentTrack,
-        setIsPlaying,
-        setProgress,
-        setVolume,
-        setDuration,
+        setMusicIsPlaying,
+        setMusicProgress,
+        setMusicVolume,
+        setMusicDuration,
         playTrack,
-        togglePlay,
+        toggleMusicPlay,
         nextTrack,
         prevTrack,
-        seekTo,
+        seekMusic,
+        ytVideoId,
+        ytIsPlaying,
+        ytIsMuted,
+        ytVolume,
+        setYtVideoId,
+        setYtIsPlaying,
+        setYtIsMuted,
+        setYtVolume,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Lumina&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 /* Tailwind CSS v4 directives are processed by Tailwind and are not standard CSS. */
@@ -8,9 +8,9 @@
 /* stylelint-disable-next-line at-rule-no-unknown */
 /* css-languageserver-disable-next-line unknownAtRules */
 @theme inline {
-  --font-sans: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Lumina", "Rajdhani", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Share Tech Mono", ui-monospace, monospace;
-  --font-display: "Orbitron", "Rajdhani", sans-serif;
+  --font-display: "Orbitron", "Lumina", sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -139,13 +139,13 @@
   }
 
   html {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   body {
     background: #000000;
     color: var(--foreground);
-    font-family: "Rajdhani", sans-serif;
+    font-family: "Lumina", "Rajdhani", sans-serif;
     font-size: 1rem;
     line-height: 1.6;
     overflow: hidden;
@@ -317,7 +317,24 @@
   z-index: 1;
 }
 
-/* ─── Module header accent ─── */
+/* ─── Weather Icon Components ─── */
+.weather-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.weather-icon-lg {
+  width: 3em;
+  height: 3em;
+}
+
+.weather-icon-sm {
+  width: 1em;
+  height: 1em;
+}
 .module-header::after {
   content: "";
   display: block;
@@ -407,6 +424,15 @@
 .font-medium { font-weight: 500; }
 .font-semibold { font-weight: 600; }
 .font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+
+/* ─── Lumina typewriter weights ─── */
+.font-lumina-thin { font-family: "Lumina", monospace; font-weight: 100; }
+.font-lumina-light { font-family: "Lumina", monospace; font-weight: 200; }
+.font-lumina-regular { font-family: "Lumina", monospace; font-weight: 300; }
+.font-lumina-medium { font-family: "Lumina", monospace; font-weight: 400; }
+.font-lumina-bold { font-family: "Lumina", monospace; font-weight: 500; }
+.font-lumina-black { font-family: "Lumina", monospace; font-weight: 600; }
 
 /* ─── Lighter text color utilities ─── */
 .text-foreground { color: var(--foreground); }
@@ -427,3 +453,22 @@
 .text-white-30 { color: oklch(0.5 0 0 / 0.3); }
 .text-white-25 { color: oklch(0.4 0 0 / 0.25); }
 .text-white-20 { color: oklch(0.4 0 0 / 0.2); }
+
+/* ─── Semantic text color utilities ─── */
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary-foreground); }
+.text-accent { color: var(--accent); }
+.text-crimson { color: var(--crimson); }
+.text-teal { color: var(--teal); }
+.text-blue-info { color: var(--blue); }
+.text-green { color: oklch(0.75 0.18 145); }
+.text-orange { color: oklch(0.75 0.18 60); }
+.text-pink { color: oklch(0.7 0.18 340); }
+.text-purple { color: oklch(0.65 0.18 280); }
+.text-yellow { color: oklch(0.85 0.18 90); }
+
+/* ─── High contrast text for readability ─── */
+.text-high { color: oklch(1 0 0); }
+.text-medium { color: oklch(0.85 0 0); }
+.text-low { color: oklch(0.65 0 0); }
+.text-subtle { color: oklch(0.5 0 0); }

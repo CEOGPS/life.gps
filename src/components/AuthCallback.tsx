@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/lib/SupabaseAuthContext.tsx";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 
 interface AuthCallbackProps {
   workerUrl: string;

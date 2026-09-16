@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, ReactNode, CSSProperties } from "react";
 import BrandIcon from "@/components/lifeos/icons/BrandIcon";
 import { kvGet, kvSet } from "@/utils/storage";
 import { supabase } from "@/lib/supabaseClient";
-import { useAuth } from "@/lib/FirebaseAuthContext";
+import { useAuth } from "@/lib/SupabaseAuthContext";
 import { getApiKey, saveApiKey } from "@/api/ceogpsclient.jsx";
 import { Button, Input, Empty, HEX, fmt, Donut, LineChart, Gauge } from "@/lib/ui";
 import {
